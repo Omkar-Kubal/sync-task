@@ -23,10 +23,11 @@ class SyncIconButton extends StatelessWidget {
       child: IconButton(
         onPressed: onPressed,
         tooltip: semanticLabel,
-        constraints: const BoxConstraints.tightFor(width: 48, height: 48),
+        constraints: const BoxConstraints.tightFor(width: 44, height: 44),
         style: IconButton.styleFrom(
+          backgroundColor: colors.surface,
           foregroundColor: colors.textPrimary,
-          side: BorderSide(color: colors.textPrimary),
+          side: BorderSide(color: colors.divider),
           shape: const CircleBorder(),
         ),
         icon: Icon(icon),

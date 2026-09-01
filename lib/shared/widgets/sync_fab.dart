@@ -19,7 +19,7 @@ class SyncFab extends StatelessWidget {
       button: true,
       label: semanticLabel,
       child: SizedBox.square(
-        dimension: 56,
+        dimension: 64,
         child: FloatingActionButton(
           onPressed: onPressed,
           tooltip: semanticLabel,
@@ -27,7 +27,7 @@ class SyncFab extends StatelessWidget {
           backgroundColor: colors.controlPrimary,
           foregroundColor: colors.controlForeground,
           shape: const CircleBorder(),
-          child: const Icon(Icons.add, size: 32),
+          child: const Icon(Icons.add, size: 40),
         ),
       ),
     );

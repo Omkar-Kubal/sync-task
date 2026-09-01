@@ -24,27 +24,40 @@ GoRouter appRouter() {
           );
         },
         routes: [
-          GoRoute(path: '/today', builder: (context, state) => const TodayScreen()),
-          GoRoute(path: '/upcoming', builder: (context, state) => const UpcomingScreen()),
-          GoRoute(path: '/focus', builder: (context, state) => const FocusScreen()),
-          GoRoute(path: '/lists', builder: (context, state) => const ListsScreen()),
+          GoRoute(
+            path: '/today',
+            builder: (context, state) => const TodayScreen(),
+          ),
+          GoRoute(
+            path: '/today/search',
+            builder: (context, state) => const SearchScreen(),
+          ),
+          GoRoute(
+            path: '/upcoming',
+            builder: (context, state) => const UpcomingScreen(),
+          ),
+          GoRoute(
+            path: '/focus',
+            builder: (context, state) => const FocusScreen(),
+          ),
+          GoRoute(
+            path: '/focus/attach-task',
+            builder: (context, state) =>
+                const Scaffold(body: Center(child: Text('Attach Task'))),
+          ),
+          GoRoute(
+            path: '/focus/insights',
+            builder: (context, state) => const InsightsScreen(),
+          ),
+          GoRoute(
+            path: '/lists',
+            builder: (context, state) => const ListsScreen(),
+          ),
+          GoRoute(
+            path: '/lists/settings',
+            builder: (context, state) => const SettingsScreen(),
+          ),
         ],
-      ),
-      GoRoute(
-        path: '/today/search',
-        builder: (context, state) => const SearchScreen(),
-      ),
-      GoRoute(
-        path: '/focus/attach-task',
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Attach Task'))),
-      ),
-      GoRoute(
-        path: '/focus/insights',
-        builder: (context, state) => const InsightsScreen(),
-      ),
-      GoRoute(
-        path: '/lists/settings',
-        builder: (context, state) => const SettingsScreen(),
       ),
     ],
   );

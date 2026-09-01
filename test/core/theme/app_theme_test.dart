@@ -16,6 +16,23 @@ void main() {
     expect(theme.textTheme.titleLarge!.letterSpacing, 0);
   });
 
+  test('light theme applies filled tactile component defaults', () {
+    final theme = buildSyncTaskTheme(Brightness.light);
+
+    expect(theme.inputDecorationTheme.filled, isTrue);
+    expect(theme.inputDecorationTheme.fillColor, const Color(0xFFE5E5EA));
+    expect(theme.inputDecorationTheme.border, InputBorder.none);
+    expect(theme.bottomSheetTheme.modalBarrierColor, const Color(0xB8000000));
+    expect(theme.dividerTheme.color, const Color(0xFFE5E5EA));
+
+    final outlinedShape = theme.outlinedButtonTheme.style!.shape!.resolve({});
+    expect(outlinedShape, isA<RoundedRectangleBorder>());
+    expect(
+      (outlinedShape! as RoundedRectangleBorder).borderRadius,
+      BorderRadius.circular(22),
+    );
+  });
+
   test('dark theme reverses primary control contrast', () {
     final theme = buildSyncTaskTheme(Brightness.dark);
     final colors = theme.extension<SyncTaskColorScheme>()!;

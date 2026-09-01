@@ -43,14 +43,18 @@ class TaskRow extends StatelessWidget {
           return false;
         },
         child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
           leading: Container(
-            width: 44,
-            height: 44,
+            width: 52,
+            height: 52,
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: colors.textPrimary, width: 1.5),
+              color: colors.surfaceSecondary,
+              borderRadius: BorderRadius.circular(16),
             ),
+            child: Icon(Icons.check, color: colors.textSecondary, size: 22),
           ),
           title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
           subtitle: metadata == null ? null : Text(metadata!),

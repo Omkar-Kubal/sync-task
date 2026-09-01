@@ -18,7 +18,7 @@ class SyncHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = SyncTaskColorScheme.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -32,9 +32,9 @@ class SyncHeader extends StatelessWidget {
                   Text(
                     subtitle!,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: colors.textSecondary,
-                          fontWeight: FontWeight.w400,
-                        ),
+                      color: colors.textSecondary,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ],
               ],

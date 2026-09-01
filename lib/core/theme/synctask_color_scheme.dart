@@ -29,7 +29,7 @@ class SyncTaskColorScheme extends ThemeExtension<SyncTaskColorScheme> {
   static const light = SyncTaskColorScheme(
     scaffold: Color(0xFFF2F2F7),
     surface: Color(0xFFFFFFFF),
-    surfaceSecondary: Color(0xFFF7F7FA),
+    surfaceSecondary: Color(0xFFE5E5EA),
     textPrimary: Color(0xFF000000),
     textSecondary: Color(0xFF8E8E93),
     divider: Color(0xFFE5E5EA),
@@ -96,7 +96,10 @@ class SyncTaskColorScheme extends ThemeExtension<SyncTaskColorScheme> {
   }
 
   @override
-  SyncTaskColorScheme lerp(ThemeExtension<SyncTaskColorScheme>? other, double t) {
+  SyncTaskColorScheme lerp(
+    ThemeExtension<SyncTaskColorScheme>? other,
+    double t,
+  ) {
     if (other is! SyncTaskColorScheme) {
       return this;
     }
@@ -104,12 +107,20 @@ class SyncTaskColorScheme extends ThemeExtension<SyncTaskColorScheme> {
     return SyncTaskColorScheme(
       scaffold: Color.lerp(scaffold, other.scaffold, t)!,
       surface: Color.lerp(surface, other.surface, t)!,
-      surfaceSecondary: Color.lerp(surfaceSecondary, other.surfaceSecondary, t)!,
+      surfaceSecondary: Color.lerp(
+        surfaceSecondary,
+        other.surfaceSecondary,
+        t,
+      )!,
       textPrimary: Color.lerp(textPrimary, other.textPrimary, t)!,
       textSecondary: Color.lerp(textSecondary, other.textSecondary, t)!,
       divider: Color.lerp(divider, other.divider, t)!,
       controlPrimary: Color.lerp(controlPrimary, other.controlPrimary, t)!,
-      controlForeground: Color.lerp(controlForeground, other.controlForeground, t)!,
+      controlForeground: Color.lerp(
+        controlForeground,
+        other.controlForeground,
+        t,
+      )!,
       destructive: Color.lerp(destructive, other.destructive, t)!,
       activityIntensity: [
         for (var i = 0; i < activityIntensity.length; i++)
