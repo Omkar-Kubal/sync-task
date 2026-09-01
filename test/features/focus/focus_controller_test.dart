@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/core/database/app_database.dart';
-import 'package:sync_task/features/focus/data/active_timer_repository.dart';
-import 'package:sync_task/features/focus/data/focus_history_repository.dart';
-import 'package:sync_task/features/focus/domain/focus_status.dart';
-import 'package:sync_task/features/focus/providers/focus_controller.dart';
+import 'package:synctask/core/database/app_database.dart';
+import 'package:synctask/features/focus/data/active_timer_repository.dart';
+import 'package:synctask/features/focus/data/focus_history_repository.dart';
+import 'package:synctask/features/focus/domain/focus_status.dart';
+import 'package:synctask/features/focus/providers/focus_controller.dart';
 
 void main() {
   late AppDatabase db;

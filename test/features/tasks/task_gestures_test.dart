@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/core/theme/app_theme.dart';
-import 'package:sync_task/features/tasks/widgets/task_row.dart';
+import 'package:synctask/core/theme/app_theme.dart';
+import 'package:synctask/features/tasks/widgets/task_row.dart';
 
 void main() {
   testWidgets('task row exposes complete and delete semantic actions', (
@@ -35,7 +35,34 @@ void main() {
     );
   });
 
-  testWidgets('task row uses a filled rounded-square icon well', (
+  testWidgets('task row checkbox completes the task without opening it', (
+    tester,
+  ) async {
+    var completed = false;
+    var opened = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildSyncTaskTheme(Brightness.light),
+        home: Scaffold(
+          body: TaskRow(
+            title: 'Write report',
+            metadata: 'Inbox',
+            onTap: () => opened = true,
+            onComplete: () => completed = true,
+            onDelete: () {},
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.byKey(const Key('task-row-checkbox-button')));
+
+    expect(completed, isTrue);
+    expect(opened, isFalse);
+  });
+
+  testWidgets('task row matches compact checkbox and folder style', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -53,17 +80,21 @@ void main() {
       ),
     );
 
-    final iconWell = tester
-        .widgetList<Container>(find.byType(Container))
-        .where(
-          (container) =>
-              container.constraints ==
-              const BoxConstraints.tightFor(width: 52, height: 52),
-        )
-        .single;
-    final decoration = iconWell.decoration! as BoxDecoration;
+    final checkbox = tester.widget<Container>(
+      find.byKey(const Key('task-row-checkbox')),
+    );
+    final decoration = checkbox.decoration! as BoxDecoration;
+    final titleText = tester.widget<Text>(find.text('Write report'));
+    final folderText = tester.widget<Text>(find.text('Inbox'));
 
-    expect(decoration.color, const Color(0xFFE5E5EA));
-    expect(decoration.borderRadius, BorderRadius.circular(16));
+    expect(
+      tester.getSize(find.byKey(const Key('task-row-checkbox'))),
+      const Size(22, 22),
+    );
+    expect(decoration.shape, BoxShape.circle);
+    expect(decoration.border?.top.width, 1.8);
+    expect(decoration.border?.top.color, const Color(0xFF000000));
+    expect(titleText.style?.fontSize, 15);
+    expect(folderText.style?.fontSize, 11);
   });
 }

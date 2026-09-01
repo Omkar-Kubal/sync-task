@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/features/settings/data/settings_repository.dart';
-import 'package:sync_task/features/settings/providers/settings_controller.dart';
+import 'package:synctask/features/settings/data/settings_repository.dart';
+import 'package:synctask/features/settings/providers/settings_controller.dart';
 
 void main() {
   test('settings controller persists theme focus sound and vibration preferences', () async {

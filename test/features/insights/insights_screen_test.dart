@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/core/theme/app_theme.dart';
-import 'package:sync_task/features/insights/domain/insights_summary.dart';
-import 'package:sync_task/features/insights/screens/insights_screen.dart';
-import 'package:sync_task/shared/widgets/sync_grouped_section.dart';
+import 'package:synctask/core/theme/app_theme.dart';
+import 'package:synctask/features/insights/domain/insights_summary.dart';
+import 'package:synctask/features/insights/screens/insights_screen.dart';
+import 'package:synctask/shared/widgets/sync_grouped_section.dart';
 
 void main() {
   testWidgets('insights screen renders V1 summary sections', (tester) async {

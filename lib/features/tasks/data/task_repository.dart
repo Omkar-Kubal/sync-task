@@ -10,8 +10,8 @@ class TaskRepository {
     this._db, {
     DateTime Function()? now,
     RecurrenceEngine? recurrenceEngine,
-  })  : _now = now ?? DateTime.now,
-        _recurrenceEngine = recurrenceEngine ?? RecurrenceEngine();
+  }) : _now = now ?? DateTime.now,
+       _recurrenceEngine = recurrenceEngine ?? RecurrenceEngine();
 
   final AppDatabase _db;
   final DateTime Function() _now;
@@ -23,7 +23,9 @@ class TaskRepository {
     final sortOrder = await _nextSortOrder();
 
     if (draft.recurrenceType == null) {
-      return _db.into(_db.tasks).insert(
+      return _db
+          .into(_db.tasks)
+          .insert(
             TasksCompanion.insert(
               folderId: folderId,
               title: draft.title,
@@ -42,7 +44,9 @@ class TaskRepository {
     }
 
     return _db.transaction(() async {
-      final seriesId = await _db.into(_db.taskSeries).insert(
+      final seriesId = await _db
+          .into(_db.taskSeries)
+          .insert(
             TaskSeriesCompanion.insert(
               title: draft.title,
               folderId: folderId,
@@ -68,6 +72,12 @@ class TaskRepository {
     });
   }
 
+  Future<void> updateTaskTitle(int id, String title) async {
+    await (_db.update(_db.tasks)..where((task) => task.id.equals(id))).write(
+      TasksCompanion(title: Value(title)),
+    );
+  }
+
   Future<domain.TaskSnapshot> completeTask(int id) async {
     return _db.transaction(() async {
       final task = await _taskById(id);
@@ -78,7 +88,9 @@ class TaskRepository {
         ),
       );
 
-      final successorId = task.seriesId == null ? null : await _createNextOccurrence(task);
+      final successorId = task.seriesId == null
+          ? null
+          : await _createNextOccurrence(task);
       return domain.TaskSnapshot(taskId: id, generatedSuccessorId: successorId);
     });
   }
@@ -86,7 +98,9 @@ class TaskRepository {
   Future<domain.TaskSnapshot> deleteTask(int id) async {
     return _db.transaction(() async {
       final task = await _taskById(id);
-      final successorId = task.seriesId == null ? null : await _createNextOccurrence(task);
+      final successorId = task.seriesId == null
+          ? null
+          : await _createNextOccurrence(task);
       await (_db.delete(_db.tasks)..where((row) => row.id.equals(id))).go();
       return domain.TaskSnapshot(taskId: id, generatedSuccessorId: successorId);
     });
@@ -99,7 +113,9 @@ class TaskRepository {
               ..where((task) => task.id.equals(snapshot.generatedSuccessorId!)))
             .go();
       }
-      await (_db.update(_db.tasks)..where((task) => task.id.equals(snapshot.taskId))).write(
+      await (_db.update(
+        _db.tasks,
+      )..where((task) => task.id.equals(snapshot.taskId))).write(
         const TasksCompanion(
           isCompleted: Value(false),
           completedAt: Value(null),
@@ -119,7 +135,7 @@ class TaskRepository {
   Future<List<Task>> listUpcomingTasks() async {
     final today = _dateOnly(_now());
     return (_activeTaskQuery()
-          ..where((task) => task.scheduledDate.isBiggerThanValue(today))
+          ..where((task) => task.scheduledDate.isBiggerOrEqualValue(today))
           ..orderBy(_taskOrdering))
         .get();
   }
@@ -146,7 +162,8 @@ class TaskRepository {
   }
 
   SimpleSelectStatement<$TasksTable, Task> _activeTaskQuery() {
-    return _db.select(_db.tasks)..where((task) => task.isCompleted.equals(false));
+    return _db.select(_db.tasks)
+      ..where((task) => task.isCompleted.equals(false));
   }
 
   List<OrderingTerm Function($TasksTable)> get _taskOrdering {
@@ -158,9 +175,9 @@ class TaskRepository {
   }
 
   Future<int> _createNextOccurrence(Task task) async {
-    final series = await (_db.select(_db.taskSeries)
-          ..where((row) => row.id.equals(task.seriesId!)))
-        .getSingle();
+    final series = await (_db.select(
+      _db.taskSeries,
+    )..where((row) => row.id.equals(task.seriesId!))).getSingle();
     if (!series.isActive) {
       throw StateError('Cannot create occurrence for inactive series.');
     }
@@ -195,7 +212,9 @@ class TaskRepository {
     required int globalSortOrder,
     required DateTime createdAt,
   }) {
-    return _db.into(_db.tasks).insert(
+    return _db
+        .into(_db.tasks)
+        .insert(
           TasksCompanion.insert(
             seriesId: Value(seriesId),
             folderId: folderId,
@@ -211,11 +230,15 @@ class TaskRepository {
   }
 
   Future<Task> _taskById(int id) async {
-    return (_db.select(_db.tasks)..where((task) => task.id.equals(id))).getSingle();
+    return (_db.select(
+      _db.tasks,
+    )..where((task) => task.id.equals(id))).getSingle();
   }
 
   Future<Folder> _inbox() async {
-    return (_db.select(_db.folders)..where((folder) => folder.name.equals('Inbox'))).getSingle();
+    return (_db.select(
+      _db.folders,
+    )..where((folder) => folder.name.equals('Inbox'))).getSingle();
   }
 
   Future<int> _nextSortOrder() async {
@@ -223,10 +246,15 @@ class TaskRepository {
     if (rows.isEmpty) {
       return 1;
     }
-    return rows.map((task) => task.globalSortOrder).reduce((a, b) => a > b ? a : b) + 1;
+    return rows
+            .map((task) => task.globalSortOrder)
+            .reduce((a, b) => a > b ? a : b) +
+        1;
   }
 
-  DateTime _dateOnly(DateTime value) => DateTime(value.year, value.month, value.day);
+  DateTime _dateOnly(DateTime value) =>
+      DateTime(value.year, value.month, value.day);
 
-  DateTime? _dateOnlyOrNull(DateTime? value) => value == null ? null : _dateOnly(value);
+  DateTime? _dateOnlyOrNull(DateTime? value) =>
+      value == null ? null : _dateOnly(value);
 }

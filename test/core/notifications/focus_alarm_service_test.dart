@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/core/notifications/focus_alarm_service.dart';
-import 'package:sync_task/core/notifications/notification_service.dart';
+import 'package:synctask/core/notifications/focus_alarm_service.dart';
+import 'package:synctask/core/notifications/notification_service.dart';
 
 void main() {
   test('focus alarm service schedules and cancels completion alarms separately', () async {

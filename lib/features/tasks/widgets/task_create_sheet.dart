@@ -36,17 +36,19 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
   Widget build(BuildContext context) {
     final colors = SyncTaskColorScheme.of(context);
     return AppBottomSheet(
-      minHeight: 330,
+      minHeight: 176,
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 18),
+      handleGap: 14,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            height: 92,
+            height: 48,
             child: TextField(
               controller: _controller,
               autofocus: true,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontSize: 28,
+                fontSize: 16,
                 fontWeight: FontWeight.w400,
                 letterSpacing: 0,
                 height: 1.15,
@@ -55,18 +57,25 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
               cursorWidth: 3,
               decoration: InputDecoration(
                 hintText: 'Task title',
-                filled: false,
-                contentPadding: EdgeInsets.zero,
+                filled: true,
+                fillColor: colors.surface,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
+                border: _titleBorder(colors),
+                enabledBorder: _titleBorder(colors),
+                focusedBorder: _titleBorder(colors),
                 hintStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: colors.textSecondary.withValues(alpha: 0.72),
-                  fontSize: 28,
+                  fontSize: 16,
                   fontWeight: FontWeight.w400,
                   letterSpacing: 0,
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -78,7 +87,7 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
                       OutlinedButton.icon(
                         onPressed: () {},
                         style: _chipStyle(context),
-                        icon: const Icon(Icons.inbox, size: 20),
+                        icon: const Icon(Icons.inbox, size: 18),
                         label: const Text('Inbox'),
                       ),
                       const SizedBox(width: 8),
@@ -87,7 +96,7 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
                         style: _chipStyle(context),
                         icon: const Icon(
                           Icons.calendar_month_outlined,
-                          size: 20,
+                          size: 18,
                         ),
                         label: const Text('Today'),
                       ),
@@ -106,7 +115,7 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
                             ),
                           ),
                           child: const ExcludeSemantics(
-                            child: Icon(Icons.flag_outlined, size: 24),
+                            child: Icon(Icons.flag_outlined, size: 20),
                           ),
                         ),
                       ),
@@ -115,17 +124,21 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
                 ),
               ),
               const SizedBox(width: 8),
-              SizedBox.square(
-                dimension: 52,
-                child: IconButton.filled(
-                  onPressed: () => widget.onSubmit(_controller.text),
-                  style: IconButton.styleFrom(
-                    backgroundColor: colors.controlPrimary,
-                    foregroundColor: colors.controlForeground,
-                    side: BorderSide.none,
-                    shape: const CircleBorder(),
+              Semantics(
+                label: 'Submit task',
+                button: true,
+                child: SizedBox.square(
+                  dimension: 44,
+                  child: IconButton.filled(
+                    onPressed: () => widget.onSubmit(_controller.text),
+                    style: IconButton.styleFrom(
+                      backgroundColor: colors.controlPrimary,
+                      foregroundColor: colors.controlForeground,
+                      side: BorderSide.none,
+                      shape: const CircleBorder(),
+                    ),
+                    icon: const Icon(Icons.arrow_upward, size: 22),
                   ),
-                  icon: const Icon(Icons.arrow_upward, size: 28),
                 ),
               ),
             ],
@@ -140,15 +153,22 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
     return OutlinedButton.styleFrom(
       backgroundColor: colors.surface,
       foregroundColor: colors.textPrimary,
-      minimumSize: const Size(0, 44),
+      minimumSize: const Size(0, 40),
       padding: const EdgeInsets.symmetric(horizontal: 10),
       side: BorderSide(color: colors.divider, width: 1.5),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-        fontSize: 15,
+        fontSize: 14,
         fontWeight: FontWeight.w600,
         letterSpacing: 0,
       ),
+    );
+  }
+
+  OutlineInputBorder _titleBorder(SyncTaskColorScheme colors) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(color: colors.divider, width: 1.2),
     );
   }
 }

@@ -42,23 +42,84 @@ class TaskRow extends StatelessWidget {
           }
           return false;
         },
-        child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
-          ),
-          leading: Container(
-            width: 52,
-            height: 52,
-            decoration: BoxDecoration(
-              color: colors.surfaceSecondary,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Icon(Icons.check, color: colors.textSecondary, size: 22),
-          ),
-          title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
-          subtitle: metadata == null ? null : Text(metadata!),
+        child: InkWell(
           onTap: onTap,
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Semantics(
+                  button: true,
+                  label: 'Complete task',
+                  child: InkResponse(
+                    key: const Key('task-row-checkbox-button'),
+                    onTap: onComplete,
+                    radius: 18,
+                    customBorder: const CircleBorder(),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 2,
+                        right: 2,
+                        bottom: 2,
+                      ),
+                      child: Container(
+                        key: const Key('task-row-checkbox'),
+                        width: 22,
+                        height: 22,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: colors.textPrimary,
+                            width: 1.8,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              color: colors.textPrimary,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 0,
+                              height: 1.08,
+                            ),
+                      ),
+                      if (metadata != null) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          metadata!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(
+                                color: colors.textSecondary,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 0,
+                                height: 1.1,
+                              ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

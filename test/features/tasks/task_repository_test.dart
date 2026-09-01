@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/core/database/app_database.dart';
-import 'package:sync_task/features/tasks/data/folder_repository.dart';
-import 'package:sync_task/features/tasks/data/task_repository.dart';
-import 'package:sync_task/features/tasks/domain/recurrence_type.dart';
-import 'package:sync_task/features/tasks/domain/task.dart';
+import 'package:synctask/core/database/app_database.dart';
+import 'package:synctask/features/tasks/data/folder_repository.dart';
+import 'package:synctask/features/tasks/data/task_repository.dart';
+import 'package:synctask/features/tasks/domain/recurrence_type.dart';
+import 'package:synctask/features/tasks/domain/task.dart';
 
 void main() {
   late AppDatabase db;
@@ -34,19 +34,41 @@ void main() {
   });
 
   test('queries today upcoming and completed tasks', () async {
-    final todayId = await tasks.createTask(TaskDraft(
-      title: 'Today task',
-      scheduledDate: DateTime(2026, 8, 31),
-    ));
-    await tasks.createTask(TaskDraft(
-      title: 'Future task',
-      scheduledDate: DateTime(2026, 9, 2),
-    ));
+    final todayId = await tasks.createTask(
+      TaskDraft(title: 'Today task', scheduledDate: DateTime(2026, 8, 31)),
+    );
+    await tasks.createTask(
+      TaskDraft(title: 'Future task', scheduledDate: DateTime(2026, 9, 2)),
+    );
     await tasks.completeTask(todayId);
 
     expect((await tasks.listTodayTasks()), isEmpty);
     expect((await tasks.listUpcomingTasks()).single.title, 'Future task');
     expect((await tasks.listCompletedTasks()).single.title, 'Today task');
+  });
+
+  test('upcoming includes active tasks scheduled for today', () async {
+    await tasks.createTask(
+      TaskDraft(title: 'Today task', scheduledDate: DateTime(2026, 8, 31)),
+    );
+    await tasks.createTask(
+      TaskDraft(title: 'Future task', scheduledDate: DateTime(2026, 9, 2)),
+    );
+
+    final upcoming = await tasks.listUpcomingTasks();
+
+    expect(upcoming.map((task) => task.title), ['Today task', 'Future task']);
+  });
+
+  test('updates an existing task title', () async {
+    final taskId = await tasks.createTask(
+      TaskDraft(title: 'Draft title', scheduledDate: DateTime(2026, 8, 31)),
+    );
+
+    await tasks.updateTaskTitle(taskId, 'Final title');
+
+    final today = await tasks.listTodayTasks();
+    expect(today.single.title, 'Final title');
   });
 
   test('deleting custom folder moves its tasks to Inbox', () async {
@@ -60,21 +82,27 @@ void main() {
     expect(inboxTasks.single.title, 'Folder task');
   });
 
-  test('completing recurring task generates next occurrence and undo rolls it back', () async {
-    final taskId = await tasks.createTask(TaskDraft(
-      title: 'Weekly review',
-      scheduledDate: DateTime(2026, 8, 31),
-      recurrenceType: RecurrenceType.weekly,
-    ));
+  test(
+    'completing recurring task generates next occurrence and undo rolls it back',
+    () async {
+      final taskId = await tasks.createTask(
+        TaskDraft(
+          title: 'Weekly review',
+          scheduledDate: DateTime(2026, 8, 31),
+          recurrenceType: RecurrenceType.weekly,
+        ),
+      );
 
-    final snapshot = await tasks.completeTask(taskId);
-    var active = await tasks.listUpcomingTasks();
-    expect(active.single.title, 'Weekly review');
-    expect(active.single.scheduledDate, DateTime(2026, 9, 7));
+      final snapshot = await tasks.completeTask(taskId);
+      var active = await tasks.listUpcomingTasks();
+      expect(active.single.title, 'Weekly review');
+      expect(active.single.scheduledDate, DateTime(2026, 9, 7));
 
-    await tasks.restoreTask(snapshot);
-    active = await tasks.listTodayTasks();
-    expect(active.single.id, taskId);
-    expect(await tasks.listUpcomingTasks(), isEmpty);
-  });
+      await tasks.restoreTask(snapshot);
+      active = await tasks.listTodayTasks();
+      expect(active.single.id, taskId);
+      active = await tasks.listUpcomingTasks();
+      expect(active.single.id, taskId);
+    },
+  );
 }

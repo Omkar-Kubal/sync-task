@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/core/theme/app_theme.dart';
-import 'package:sync_task/features/lists/screens/lists_screen.dart';
-import 'package:sync_task/shared/widgets/sync_grouped_section.dart';
+import 'package:synctask/core/theme/app_theme.dart';
+import 'package:synctask/features/lists/screens/lists_screen.dart';
+import 'package:synctask/shared/widgets/sync_grouped_section.dart';
 
 void main() {
   Future<void> useTallViewport(WidgetTester tester) async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/core/theme/app_theme.dart';
-import 'package:sync_task/shared/widgets/app_shell.dart';
+import 'package:synctask/core/theme/app_theme.dart';
+import 'package:synctask/shared/widgets/app_shell.dart';
 
 void main() {
   testWidgets(

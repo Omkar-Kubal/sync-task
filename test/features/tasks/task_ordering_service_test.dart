@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/features/tasks/domain/services/task_ordering_service.dart';
+import 'package:synctask/features/tasks/domain/services/task_ordering_service.dart';
 
 void main() {
   test('reorders visible tasks back into global order at the first visible slot', () {

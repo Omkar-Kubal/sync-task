@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/core/database/app_database.dart';
-import 'package:sync_task/features/insights/data/insights_repository.dart';
+import 'package:synctask/core/database/app_database.dart';
+import 'package:synctask/features/insights/data/insights_repository.dart';
 
 void main() {
   late AppDatabase db;

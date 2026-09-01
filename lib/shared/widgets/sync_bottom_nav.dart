@@ -25,27 +25,31 @@ class SyncBottomNav extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-        child: Container(
-          key: const Key('sync-bottom-nav-pill'),
-          height: 76,
-          decoration: BoxDecoration(
-            color: colors.surface,
-            border: Border.all(color: colors.textPrimary, width: 3),
-            borderRadius: BorderRadius.circular(48),
-          ),
-          child: Row(
-            children: [
-              for (var i = 0; i < _items.length; i++)
-                Expanded(
-                  child: _SyncBottomNavButton(
-                    index: i,
-                    item: _items[i],
-                    selected: currentIndex == i,
-                    onTap: () => onTap(i),
-                  ),
-                ),
-            ],
+        padding: const EdgeInsets.fromLTRB(16, 6, 16, 8),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 360),
+            child: Container(
+              key: const Key('sync-bottom-nav-pill'),
+              height: 52,
+              decoration: BoxDecoration(
+                color: colors.surface.withAlpha(0xD9),
+                borderRadius: BorderRadius.circular(40),
+              ),
+              child: Row(
+                children: [
+                  for (var i = 0; i < _items.length; i++)
+                    Expanded(
+                      child: _SyncBottomNavButton(
+                        index: i,
+                        item: _items[i],
+                        selected: currentIndex == i,
+                        onTap: () => onTap(i),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -84,7 +88,11 @@ class _SyncBottomNavButton extends StatelessWidget {
           child: SizedBox.expand(
             child: Center(
               child: ExcludeSemantics(
-                child: _SyncNavIcon(index: index, color: iconColor),
+                child: _SyncNavIcon(
+                  index: index,
+                  color: iconColor,
+                  selected: selected,
+                ),
               ),
             ),
           ),
@@ -101,42 +109,61 @@ class _SyncNavItem {
 }
 
 class _SyncNavIcon extends StatelessWidget {
-  const _SyncNavIcon({required this.index, required this.color});
+  const _SyncNavIcon({
+    required this.index,
+    required this.color,
+    required this.selected,
+  });
 
   final int index;
   final Color color;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
     return switch (index) {
-      0 => _TodayIcon(color: color),
-      1 => Icon(Icons.calendar_month_outlined, color: color, size: 34),
-      2 => Icon(Icons.adjust_outlined, color: color, size: 38),
-      _ => Icon(Icons.format_list_bulleted_outlined, color: color, size: 38),
+      0 => _TodayIcon(color: color, selected: selected),
+      1 => Icon(Icons.calendar_month_outlined, color: color, size: 28),
+      2 => Image.asset(
+        'assets/images/logo.png',
+        key: const Key('sync-bottom-nav-focus-logo'),
+        width: 32,
+        height: 32,
+        fit: BoxFit.contain,
+      ),
+      _ => Icon(Icons.format_list_bulleted_outlined, color: color, size: 32),
     };
   }
 }
 
 class _TodayIcon extends StatelessWidget {
-  const _TodayIcon({required this.color});
+  const _TodayIcon({required this.color, required this.selected});
 
   final Color color;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
+    final today = DateTime.now().day.toString();
+    final fillColor = selected ? color : Colors.transparent;
+    final foreground = selected
+        ? SyncTaskColorScheme.of(context).controlForeground
+        : color;
     return Container(
-      width: 38,
-      height: 38,
+      key: const Key('sync-bottom-nav-today-tile'),
+      width: 32,
+      height: 32,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        border: Border.all(color: color, width: 3),
+        color: fillColor,
+        border: Border.all(color: color, width: 2.5),
         borderRadius: BorderRadius.circular(7),
       ),
       child: Text(
-        '31',
+        today,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          color: color,
-          fontSize: 18,
+          color: foreground,
+          fontSize: 16,
           fontWeight: FontWeight.w800,
           letterSpacing: 0,
           height: 1,

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/core/analytics/analytics_service.dart';
+import 'package:synctask/core/analytics/analytics_service.dart';
 
 void main() {
   test('analytics service logs only safe SyncTask events and parameters', () {

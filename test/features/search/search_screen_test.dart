@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/core/theme/app_theme.dart';
-import 'package:sync_task/features/search/screens/search_screen.dart';
+import 'package:synctask/core/theme/app_theme.dart';
+import 'package:synctask/features/search/screens/search_screen.dart';
 
 void main() {
   testWidgets('search screen filters tasks by title only', (tester) async {

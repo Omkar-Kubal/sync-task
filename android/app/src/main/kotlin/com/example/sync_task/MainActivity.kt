@@ -1,4 +1,4 @@
-package com.example.sync_task
+package com.example.synctask
 
 import io.flutter.embedding.android.FlutterActivity
 

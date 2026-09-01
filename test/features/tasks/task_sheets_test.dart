@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/core/theme/app_theme.dart';
-import 'package:sync_task/features/tasks/widgets/task_create_sheet.dart';
-import 'package:sync_task/features/tasks/widgets/task_edit_sheet.dart';
-import 'package:sync_task/shared/sheets/app_bottom_sheet.dart';
+import 'package:synctask/core/theme/app_theme.dart';
+import 'package:synctask/features/tasks/widgets/task_create_sheet.dart';
+import 'package:synctask/features/tasks/widgets/task_edit_sheet.dart';
+import 'package:synctask/shared/sheets/app_bottom_sheet.dart';
 
 void main() {
   Widget wrap(Widget child) {
@@ -26,7 +26,7 @@ void main() {
     expect(find.bySemanticsLabel('Flag task'), findsOneWidget);
   });
 
-  testWidgets('create sheet uses borderless large title input chrome', (
+  testWidgets('create sheet uses compact outlined title input chrome', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -34,11 +34,26 @@ void main() {
     );
 
     final textField = tester.widget<TextField>(find.byType(TextField));
-    expect(textField.decoration!.border, isNull);
-    expect(textField.decoration!.filled, isFalse);
+    expect(textField.decoration!.border, isA<OutlineInputBorder>());
+    expect(textField.decoration!.filled, isTrue);
     expect(textField.decoration!.labelText, isNull);
     expect(textField.decoration!.hintText, 'Task title');
-    expect(textField.style?.fontSize, 28);
+    expect(textField.style?.fontSize, 16);
+    expect(tester.getSize(find.byType(TextField)).height, 48);
+  });
+
+  testWidgets('create sheet uses home two compact composer sizing', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(TaskCreateSheet(onSubmit: (_) {}, onTodaySelected: () {})),
+    );
+
+    expect(tester.getSize(find.byType(AppBottomSheet)).height, 176);
+    expect(
+      tester.getSize(find.bySemanticsLabel('Submit task')),
+      const Size(44, 44),
+    );
   });
 
   testWidgets('create sheet notifies when Today is selected', (tester) async {
@@ -72,7 +87,6 @@ void main() {
     for (final text in [
       'Cancel',
       'Done',
-      'Task title',
       'Tomorrow',
       'Next Week',
       'No Date',
@@ -85,6 +99,32 @@ void main() {
     ]) {
       expect(find.text(text), findsOneWidget);
     }
+    expect(find.byKey(const Key('edit-task-title-field')), findsOneWidget);
+    expect(find.text('Task title'), findsNothing);
+  });
+
+  testWidgets('edit sheet stays below the middle of the screen', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(
+        TaskEditSheet(
+          title: 'Write report',
+          focusDurationMinutes: 45,
+          onCancel: () {},
+          onDone: () {},
+          onStartFocus: () {},
+        ),
+      ),
+    );
+
+    final screenHeight =
+        tester.view.physicalSize.height / tester.view.devicePixelRatio;
+
+    expect(
+      tester.getSize(find.byType(AppBottomSheet)).height,
+      screenHeight * 0.58,
+    );
   });
 
   testWidgets('edit sheet groups controls into filled rounded sections', (
@@ -118,6 +158,12 @@ void main() {
     expect(
       groupedSections.every(
         (decoration) => decoration.color == const Color(0xFFFFFFFF),
+      ),
+      isTrue,
+    );
+    expect(
+      groupedSections.every(
+        (decoration) => decoration.border?.top.color == const Color(0xFFE5E5EA),
       ),
       isTrue,
     );

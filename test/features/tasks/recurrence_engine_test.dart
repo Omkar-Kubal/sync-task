@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sync_task/features/tasks/domain/recurrence_type.dart';
-import 'package:sync_task/features/tasks/domain/services/recurrence_engine.dart';
+import 'package:synctask/features/tasks/domain/recurrence_type.dart';
+import 'package:synctask/features/tasks/domain/services/recurrence_engine.dart';
 
 void main() {
   final engine = RecurrenceEngine();

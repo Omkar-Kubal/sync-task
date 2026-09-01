@@ -6,14 +6,19 @@ import '../../features/insights/screens/insights_screen.dart';
 import '../../features/lists/screens/lists_screen.dart';
 import '../../features/search/screens/search_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
+import '../../features/splash/screens/splash_screen.dart';
 import '../../features/tasks/screens/today_screen.dart';
 import '../../features/tasks/screens/upcoming_screen.dart';
 import '../../shared/widgets/app_shell.dart';
 
 GoRouter appRouter() {
   return GoRouter(
-    initialLocation: '/today',
+    initialLocation: '/splash',
     routes: [
+      GoRoute(
+        path: '/splash',
+        builder: (context, state) => const SplashScreen(),
+      ),
       ShellRoute(
         builder: (context, state, child) {
           final location = state.uri.path;

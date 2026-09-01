@@ -4,33 +4,58 @@ import '../../../core/theme/synctask_color_scheme.dart';
 import '../../../shared/sheets/app_bottom_sheet.dart';
 import '../../../shared/widgets/sync_button.dart';
 
-class TaskEditSheet extends StatelessWidget {
+class TaskEditSheet extends StatefulWidget {
   const TaskEditSheet({
     required this.title,
     required this.onCancel,
     required this.onDone,
     required this.onStartFocus,
     this.focusDurationMinutes,
+    this.scheduledDate,
+    this.onSaveTitle,
     super.key,
   });
 
   final String title;
   final int? focusDurationMinutes;
+  final DateTime? scheduledDate;
   final VoidCallback onCancel;
   final VoidCallback onDone;
   final VoidCallback onStartFocus;
+  final Future<void> Function(String title)? onSaveTitle;
+
+  @override
+  State<TaskEditSheet> createState() => _TaskEditSheetState();
+}
+
+class _TaskEditSheetState extends State<TaskEditSheet> {
+  late final TextEditingController _titleController;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController(text: widget.title);
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final colors = SyncTaskColorScheme.of(context);
+    final maxSheetHeight = MediaQuery.sizeOf(context).height * 0.58;
     return AppBottomSheet(
+      maxHeight: maxSheetHeight,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
               OutlinedButton(
-                onPressed: onCancel,
+                onPressed: widget.onCancel,
                 style: _topActionStyle(context),
                 child: const Text('Cancel'),
               ),
@@ -45,52 +70,38 @@ class TaskEditSheet extends StatelessWidget {
               ),
               const Spacer(),
               OutlinedButton(
-                onPressed: onDone,
+                onPressed: _saveAndClose,
                 style: _topActionStyle(context),
                 child: const Text('Done'),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           TextField(
-            controller: TextEditingController(text: title),
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontSize: 20,
-              fontWeight: FontWeight.w400,
+            key: const Key('edit-task-title-field'),
+            controller: _titleController,
+            textInputAction: TextInputAction.done,
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              color: colors.textPrimary,
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
               letterSpacing: 0,
+              height: 1.1,
             ),
-            decoration: InputDecoration(
-              hintText: 'Task title',
-              filled: false,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 18,
-                vertical: 14,
-              ),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: colors.textPrimary),
-                borderRadius: BorderRadius.circular(18),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: colors.textPrimary),
-                borderRadius: BorderRadius.circular(18),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: colors.textPrimary, width: 1.5),
-                borderRadius: BorderRadius.circular(18),
-              ),
-              hintStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: colors.textSecondary,
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0,
-              ),
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              isDense: true,
+              contentPadding: EdgeInsets.zero,
             ),
+            onSubmitted: (_) => _saveAndClose(),
           ),
           const SizedBox(height: 16),
           Container(
             decoration: BoxDecoration(
               color: colors.surface,
-              border: Border.all(color: colors.textPrimary, width: 1.2),
+              border: Border.all(color: colors.divider, width: 1.2),
               borderRadius: BorderRadius.circular(28),
             ),
             child: Row(
@@ -125,7 +136,7 @@ class TaskEditSheet extends StatelessWidget {
               _SheetRow(
                 icon: Icons.calendar_month_outlined,
                 label: 'Date',
-                trailing: _ValuePill(label: '31 Aug 2026'),
+                trailing: _ValuePill(label: _dateLabel()),
               ),
               _SheetRow(
                 icon: Icons.schedule,
@@ -136,10 +147,10 @@ class TaskEditSheet extends StatelessWidget {
                 icon: Icons.adjust_outlined,
                 label: 'Focus Timer',
                 trailing: _ValuePill(
-                  label: focusDurationMinutes == null
+                  label: widget.focusDurationMinutes == null
                       ? 'None'
-                      : '$focusDurationMinutes min',
-                  showChevron: focusDurationMinutes != null,
+                      : '${widget.focusDurationMinutes} min',
+                  showChevron: widget.focusDurationMinutes != null,
                 ),
               ),
             ],
@@ -163,11 +174,46 @@ class TaskEditSheet extends StatelessWidget {
           SyncButton.primary(
             label: 'Start Focus',
             height: 52,
-            onPressed: focusDurationMinutes == null ? null : onStartFocus,
+            onPressed: widget.focusDurationMinutes == null
+                ? null
+                : widget.onStartFocus,
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _saveAndClose() async {
+    final title = _titleController.text.trim();
+    if (title.isNotEmpty && title != widget.title) {
+      await widget.onSaveTitle?.call(title);
+    }
+    widget.onDone();
+  }
+
+  String _dateLabel() {
+    final scheduledDate = widget.scheduledDate;
+    if (scheduledDate == null) {
+      return '31 Aug 2026';
+    }
+    return '${scheduledDate.day} ${_monthLabel(scheduledDate.month)} ${scheduledDate.year}';
+  }
+
+  String _monthLabel(int month) {
+    return const [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ][month - 1];
   }
 
   ButtonStyle _topActionStyle(BuildContext context) {
@@ -177,7 +223,7 @@ class TaskEditSheet extends StatelessWidget {
       foregroundColor: colors.textPrimary,
       minimumSize: const Size(78, 40),
       padding: const EdgeInsets.symmetric(horizontal: 14),
-      side: BorderSide(color: colors.textPrimary, width: 1.2),
+      side: BorderSide(color: colors.divider, width: 1.2),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
         fontSize: 15,
@@ -230,7 +276,7 @@ class _GroupedRows extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: colors.surface,
-        border: Border.all(color: colors.textPrimary, width: 1.2),
+        border: Border.all(color: colors.divider, width: 1.2),
         borderRadius: BorderRadius.circular(28),
       ),
       child: Column(
