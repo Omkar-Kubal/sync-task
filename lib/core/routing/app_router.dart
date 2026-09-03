@@ -9,6 +9,8 @@ import '../../features/lists/screens/lists_screen.dart';
 import '../../features/search/screens/search_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import '../../features/splash/screens/splash_screen.dart';
+import '../../features/startup/domain/startup_step.dart';
+import '../../features/startup/screens/startup_flow_screen.dart';
 import '../../features/tasks/screens/today_screen.dart';
 import '../../features/tasks/screens/upcoming_screen.dart';
 import '../../shared/widgets/app_shell.dart';
@@ -20,6 +22,27 @@ GoRouter appRouter() {
       GoRoute(
         path: '/splash',
         builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: '/startup/tasks',
+        pageBuilder: (context, state) => _fadeSlidePage(
+          state: state,
+          child: const StartupFlowScreen(step: StartupStep.tasks),
+        ),
+      ),
+      GoRoute(
+        path: '/startup/focus',
+        pageBuilder: (context, state) => _fadeSlidePage(
+          state: state,
+          child: const StartupFlowScreen(step: StartupStep.focus),
+        ),
+      ),
+      GoRoute(
+        path: '/startup/done',
+        pageBuilder: (context, state) => _fadeSlidePage(
+          state: state,
+          child: const StartupFlowScreen(step: StartupStep.done),
+        ),
       ),
       ShellRoute(
         builder: (context, state, child) {
@@ -119,4 +142,33 @@ String _navPath(int index) {
     3 => '/lists',
     _ => '/today',
   };
+}
+
+CustomTransitionPage<void> _fadeSlidePage({
+  required GoRouterState state,
+  required Widget child,
+}) {
+  return CustomTransitionPage<void>(
+    key: state.pageKey,
+    transitionDuration: const Duration(milliseconds: 280),
+    reverseTransitionDuration: const Duration(milliseconds: 220),
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      final curved = CurvedAnimation(
+        parent: animation,
+        curve: Curves.easeOutCubic,
+        reverseCurve: Curves.easeInCubic,
+      );
+      return FadeTransition(
+        opacity: curved,
+        child: SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0.06, 0),
+            end: Offset.zero,
+          ).animate(curved),
+          child: child,
+        ),
+      );
+    },
+  );
 }

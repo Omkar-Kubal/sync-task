@@ -48,6 +48,30 @@ void main() {
     expect(find.text('Today'), findsOneWidget);
   });
 
+  testWidgets('startup routes animate between screens', (tester) async {
+    final router = appRouter();
+    addTearDown(router.dispose);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: MaterialApp.router(
+          theme: buildSyncTaskTheme(Brightness.light),
+          routerConfig: router,
+        ),
+      ),
+    );
+
+    router.go('/startup/tasks');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Next'));
+    await tester.pump();
+
+    expect(find.text('Plan your day'), findsOneWidget);
+
+    await tester.pumpAndSettle();
+    expect(find.text('Protect focus time'), findsOneWidget);
+  });
+
   testWidgets(
     'secondary pages render inside the shared bottom navigation shell',
     (tester) async {
