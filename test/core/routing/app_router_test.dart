@@ -104,6 +104,39 @@ void main() {
     expect(find.text('Protect focus time'), findsOneWidget);
   });
 
+  testWidgets('android back walks backward through startup flow', (
+    tester,
+  ) async {
+    final router = appRouter();
+    addTearDown(router.dispose);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: MaterialApp.router(
+          theme: buildSyncTaskTheme(Brightness.light),
+          routerConfig: router,
+        ),
+      ),
+    );
+
+    router.go('/startup/tasks');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Next'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Next'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('SyncTask is ready'), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.text('Protect focus time'), findsOneWidget);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.text('Plan your day'), findsOneWidget);
+  });
+
   testWidgets(
     'secondary pages render inside the shared bottom navigation shell',
     (tester) async {
