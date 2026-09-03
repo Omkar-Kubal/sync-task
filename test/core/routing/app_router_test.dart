@@ -7,6 +7,8 @@ import 'package:synctask/core/theme/app_theme.dart';
 import 'package:synctask/features/focus/data/active_timer_repository.dart';
 import 'package:synctask/features/focus/data/focus_history_repository.dart';
 import 'package:synctask/features/focus/providers/focus_controller.dart';
+import 'package:synctask/features/settings/data/settings_repository.dart';
+import 'package:synctask/features/settings/providers/settings_controller.dart';
 import 'package:synctask/features/tasks/data/task_repository.dart';
 import 'package:synctask/features/tasks/domain/task.dart' as domain;
 import 'package:synctask/features/tasks/providers/task_controller.dart';
@@ -20,7 +22,7 @@ void main() {
     router.dispose();
   });
 
-  testWidgets('splash screen shows the app logo before opening Today', (
+  testWidgets('splash opens startup flow before Today on first launch', (
     tester,
   ) async {
     final router = appRouter();
@@ -28,6 +30,11 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          settingsRepositoryProvider.overrideWithValue(
+            SettingsRepository.memory(),
+          ),
+        ],
         child: MaterialApp.router(
           theme: buildSyncTaskTheme(Brightness.light),
           routerConfig: router,
@@ -42,6 +49,31 @@ void main() {
     expect(router.routeInformationProvider.value.uri.path, '/splash');
 
     await tester.pump(const Duration(milliseconds: 2));
+    await tester.pumpAndSettle();
+
+    expect(router.routeInformationProvider.value.uri.path, '/startup/tasks');
+    expect(find.text('Plan your day'), findsOneWidget);
+  });
+
+  testWidgets('splash skips startup flow after completion', (tester) async {
+    final repository = SettingsRepository.memory();
+    await SettingsController(repository).setStartupFlowCompleted(true);
+    final router = appRouter();
+    addTearDown(router.dispose);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          settingsRepositoryProvider.overrideWithValue(repository),
+        ],
+        child: MaterialApp.router(
+          theme: buildSyncTaskTheme(Brightness.light),
+          routerConfig: router,
+        ),
+      ),
+    );
+
+    await tester.pump(const Duration(seconds: 2));
     await tester.pumpAndSettle();
 
     expect(router.routeInformationProvider.value.uri.path, '/today');
