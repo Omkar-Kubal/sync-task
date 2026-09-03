@@ -35,9 +35,19 @@ class FocusCompletionSheet extends StatelessWidget {
           const SizedBox(height: 20),
           Row(
             children: [
-              Expanded(child: OutlinedButton(onPressed: onExtendFive, child: const Text('+5 min'))),
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: onExtendFive,
+                  child: const Text('+5 min'),
+                ),
+              ),
               const SizedBox(width: 12),
-              Expanded(child: OutlinedButton(onPressed: onExtendTen, child: const Text('+10 min'))),
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: onExtendTen,
+                  child: const Text('+10 min'),
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 16),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/focus/domain/focus_launch.dart';
 import '../../features/focus/screens/focus_screen.dart';
 import '../../features/insights/screens/insights_screen.dart';
+import '../../features/lists/screens/black_placeholder_screen.dart';
 import '../../features/lists/screens/lists_screen.dart';
 import '../../features/search/screens/search_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
@@ -43,7 +45,11 @@ GoRouter appRouter() {
           ),
           GoRoute(
             path: '/focus',
-            builder: (context, state) => const FocusScreen(),
+            builder: (context, state) => FocusScreen(
+              launch: state.extra is FocusLaunch
+                  ? state.extra! as FocusLaunch
+                  : null,
+            ),
           ),
           GoRoute(
             path: '/focus/attach-task',
@@ -57,6 +63,30 @@ GoRouter appRouter() {
           GoRoute(
             path: '/lists',
             builder: (context, state) => const ListsScreen(),
+          ),
+          GoRoute(
+            path: '/lists/more',
+            builder: (context, state) => const BlackPlaceholderScreen(),
+          ),
+          GoRoute(
+            path: '/lists/all',
+            builder: (context, state) => const BlackPlaceholderScreen(),
+          ),
+          GoRoute(
+            path: '/lists/completed',
+            builder: (context, state) => const BlackPlaceholderScreen(),
+          ),
+          GoRoute(
+            path: '/lists/inbox',
+            builder: (context, state) => const BlackPlaceholderScreen(),
+          ),
+          GoRoute(
+            path: '/lists/reminders',
+            builder: (context, state) => const BlackPlaceholderScreen(),
+          ),
+          GoRoute(
+            path: '/lists/notion',
+            builder: (context, state) => const BlackPlaceholderScreen(),
           ),
           GoRoute(
             path: '/lists/settings',

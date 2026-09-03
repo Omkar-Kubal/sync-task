@@ -156,7 +156,7 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
       minimumSize: const Size(0, 40),
       padding: const EdgeInsets.symmetric(horizontal: 10),
       side: BorderSide(color: colors.divider, width: 1.5),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
         fontSize: 14,
         fontWeight: FontWeight.w600,
@@ -167,7 +167,7 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
 
   OutlineInputBorder _titleBorder(SyncTaskColorScheme colors) {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(4),
       borderSide: BorderSide(color: colors.divider, width: 1.2),
     );
   }

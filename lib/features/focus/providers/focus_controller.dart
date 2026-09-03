@@ -37,7 +37,11 @@ class FocusController {
 
   FocusStatus get status => activeFocus?.status ?? FocusStatus.idle;
 
-  Future<void> start({int? taskId, required Duration duration}) async {
+  Future<void> start({
+    int? taskId,
+    String? taskTitle,
+    required Duration duration,
+  }) async {
     if (duration <= Duration.zero) {
       throw ArgumentError('Focus duration must be greater than zero.');
     }
@@ -48,6 +52,7 @@ class FocusController {
     final startedAt = _now();
     activeFocus = ActiveFocus(
       taskId: taskId,
+      taskTitle: taskTitle,
       startedAt: startedAt,
       plannedDuration: duration,
       currentEndAt: startedAt.add(duration),
@@ -129,6 +134,36 @@ class FocusController {
 
   Future<void> restore() async {
     activeFocus = await activeTimers.load();
+    await resolveExpired();
+  }
+
+  Future<void> resolveExpired() async {
+    final focus = activeFocus;
+    if (focus == null ||
+        focus.status != FocusStatus.running ||
+        focus.currentEndAt == null ||
+        focus.currentEndAt!.isAfter(_now())) {
+      return;
+    }
+
+    activeFocus = focus.copyWith(status: FocusStatus.ringing);
+    await activeTimers.save(activeFocus!);
+  }
+
+  Duration remainingTime() {
+    final focus = activeFocus;
+    if (focus == null) {
+      return Duration.zero;
+    }
+    if (focus.status == FocusStatus.paused) {
+      return focus.pausedRemaining ?? Duration.zero;
+    }
+    final endAt = focus.currentEndAt;
+    if (endAt == null) {
+      return Duration.zero;
+    }
+    final remaining = endAt.difference(_now());
+    return remaining.isNegative ? Duration.zero : remaining;
   }
 
   ActiveFocus _requireStatus(FocusStatus expected) {

@@ -11,14 +11,14 @@ class FocusTimerDisplay extends StatelessWidget {
     final label = duration == null
         ? '--:--'
         : '${duration.inMinutes.remainder(60).toString().padLeft(2, '0')}:'
-            '${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}';
+              '${duration.inSeconds.remainder(60).toString().padLeft(2, '0')}';
     return Text(
       label,
       style: Theme.of(context).textTheme.displayLarge?.copyWith(
-            fontSize: 72,
-            fontWeight: FontWeight.w700,
-            fontFeatures: const [FontFeature.tabularFigures()],
-          ),
+        fontSize: 72,
+        fontWeight: FontWeight.w700,
+        fontFeatures: const [FontFeature.tabularFigures()],
+      ),
     );
   }
 }

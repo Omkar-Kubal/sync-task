@@ -31,6 +31,10 @@ class TaskController {
     return _repository.updateTaskTitle(taskId, title);
   }
 
+  Future<void> updateTask(int taskId, TaskDraft draft) {
+    return _repository.updateTask(taskId, draft);
+  }
+
   Future<TaskSnapshot> complete(int taskId) {
     return _repository.completeTask(taskId);
   }

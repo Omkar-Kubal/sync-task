@@ -6,23 +6,35 @@ void main() {
     final sink = RecordingAnalyticsSink();
     final service = AnalyticsService(sink);
 
-    service.logEvent('focus_completed', parameters: {'duration_minutes': 45, 'was_extended': false});
+    service.logEvent(
+      'focus_completed',
+      parameters: {'duration_minutes': 45, 'was_extended': false},
+    );
 
     expect(sink.events.single.name, 'focus_completed');
     expect(sink.events.single.parameters['duration_minutes'], 45);
   });
 
-  test('analytics service rejects user-content event names keys and values', () {
-    final service = AnalyticsService(RecordingAnalyticsSink());
+  test(
+    'analytics service rejects user-content event names keys and values',
+    () {
+      final service = AnalyticsService(RecordingAnalyticsSink());
 
-    expect(() => service.logEvent('search_query'), throwsArgumentError);
-    expect(
-      () => service.logEvent('task_created', parameters: {'task_title': 'Write report'}),
-      throwsArgumentError,
-    );
-    expect(
-      () => service.logEvent('task_created', parameters: {'label': 'Write report'}),
-      throwsArgumentError,
-    );
-  });
+      expect(() => service.logEvent('search_query'), throwsArgumentError);
+      expect(
+        () => service.logEvent(
+          'task_created',
+          parameters: {'task_title': 'Write report'},
+        ),
+        throwsArgumentError,
+      );
+      expect(
+        () => service.logEvent(
+          'task_created',
+          parameters: {'label': 'Write report'},
+        ),
+        throwsArgumentError,
+      );
+    },
+  );
 }

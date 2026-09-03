@@ -65,7 +65,7 @@ void main() {
     final dateText = tester.widget<Text>(find.text('${DateTime.now().day}'));
     final menuSize = tester.getSize(find.bySemanticsLabel('More options'));
 
-    expect(titleText.style?.fontSize, 30);
+    expect(titleText.style?.fontSize, 40);
     expect(dateText.style?.fontSize, 22);
     expect(menuSize, const Size(40, 40));
   });
@@ -188,7 +188,7 @@ void main() {
     expect(find.text('Edit Task'), findsOneWidget);
     expect(find.text('Done'), findsOneWidget);
     expect(find.text('Date'), findsOneWidget);
-    expect(find.text('31 Aug 2026'), findsOneWidget);
+    expect(find.text('None'), findsWidgets);
   });
 
   testWidgets('task sheets use the design-system modal veil', (tester) async {

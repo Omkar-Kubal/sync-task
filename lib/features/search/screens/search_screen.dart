@@ -16,10 +16,7 @@ class SearchTaskResult {
 }
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({
-    this.initialTasks = const [],
-    super.key,
-  });
+  const SearchScreen({this.initialTasks = const [], super.key});
 
   final List<SearchTaskResult> initialTasks;
 
@@ -33,7 +30,9 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final results = widget.initialTasks
-        .where((task) => task.title.toLowerCase().contains(_query.toLowerCase()))
+        .where(
+          (task) => task.title.toLowerCase().contains(_query.toLowerCase()),
+        )
         .toList();
     return Scaffold(
       body: SafeArea(

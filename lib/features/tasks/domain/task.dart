@@ -21,10 +21,7 @@ class TaskDraft {
 }
 
 class TaskSnapshot {
-  const TaskSnapshot({
-    required this.taskId,
-    this.generatedSuccessorId,
-  });
+  const TaskSnapshot({required this.taskId, this.generatedSuccessorId});
 
   final int taskId;
   final int? generatedSuccessorId;

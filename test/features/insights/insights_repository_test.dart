@@ -16,7 +16,9 @@ void main() {
 
   test('summarizes focus history tasks completed and streak', () async {
     final inbox = (await db.select(db.folders).get()).single;
-    await db.into(db.tasks).insert(
+    await db
+        .into(db.tasks)
+        .insert(
           TasksCompanion.insert(
             folderId: inbox.id,
             title: 'Done task',
@@ -27,7 +29,9 @@ void main() {
           ),
         );
     for (final day in [DateTime(2026, 8, 31), DateTime(2026, 9, 1)]) {
-      await db.into(db.focusHistory).insert(
+      await db
+          .into(db.focusHistory)
+          .insert(
             FocusHistoryCompanion.insert(
               startedAt: day.add(const Duration(hours: 9)),
               completedAt: day.add(const Duration(hours: 9, minutes: 30)),
@@ -38,7 +42,9 @@ void main() {
             ),
           );
     }
-    await db.into(db.focusHistory).insert(
+    await db
+        .into(db.focusHistory)
+        .insert(
           FocusHistoryCompanion.insert(
             startedAt: DateTime(2026, 8, 30, 9),
             completedAt: DateTime(2026, 8, 30, 9, 30),
@@ -48,7 +54,9 @@ void main() {
             createdAt: DateTime(2026, 8, 30, 9, 30),
           ),
         );
-    await db.into(db.focusHistory).insert(
+    await db
+        .into(db.focusHistory)
+        .insert(
           FocusHistoryCompanion.insert(
             startedAt: DateTime(2026, 9, 1, 10),
             completedAt: DateTime(2026, 9, 1, 10, 30),

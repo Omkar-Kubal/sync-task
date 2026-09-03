@@ -1,6 +1,1 @@
-enum FocusStatus {
-  idle,
-  running,
-  paused,
-  ringing,
-}
+enum FocusStatus { idle, running, paused, ringing }

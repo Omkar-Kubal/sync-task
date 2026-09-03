@@ -22,7 +22,8 @@ ThemeData buildSyncTaskTheme(Brightness brightness) {
     brightness: brightness,
     colorScheme: colorScheme,
     scaffoldBackgroundColor: tokens.scaffold,
-    fontFamily: 'Inter',
+    fontFamily: 'Geist',
+    fontFamilyFallback: const ['Poppins', 'Segoe UI', 'Helvetica', 'Arial'],
     extensions: const <ThemeExtension<dynamic>>[
       SyncTaskColorScheme.light,
       SyncTaskColorScheme.dark,
@@ -32,7 +33,7 @@ ThemeData buildSyncTaskTheme(Brightness brightness) {
   final textTheme = base.textTheme.apply(
     bodyColor: tokens.textPrimary,
     displayColor: tokens.textPrimary,
-    fontFamily: 'Inter',
+    fontFamily: 'Geist',
   );
 
   return base.copyWith(
@@ -43,33 +44,83 @@ ThemeData buildSyncTaskTheme(Brightness brightness) {
       elevation: 0,
       surfaceTintColor: Colors.transparent,
       titleTextStyle: textTheme.headlineMedium?.copyWith(
+        fontFamily: 'Poppins',
         fontWeight: FontWeight.w700,
         letterSpacing: 0,
       ),
     ),
     textTheme: textTheme.copyWith(
-      displayLarge: textTheme.displayLarge?.copyWith(letterSpacing: 0),
-      displayMedium: textTheme.displayMedium?.copyWith(letterSpacing: 0),
-      headlineLarge: textTheme.headlineLarge?.copyWith(
-        fontSize: 28,
+      displayLarge: textTheme.displayLarge?.copyWith(
+        fontFamily: 'Poppins',
+        fontSize: 64,
+        fontWeight: FontWeight.w700,
+        height: 1,
+        letterSpacing: 0,
+      ),
+      displayMedium: textTheme.displayMedium?.copyWith(
+        fontFamily: 'Poppins',
+        fontSize: 40,
+        fontWeight: FontWeight.w700,
+        height: 1.1,
+        letterSpacing: 0,
+      ),
+      displaySmall: textTheme.displaySmall?.copyWith(
+        fontFamily: 'Poppins',
         fontWeight: FontWeight.w700,
         letterSpacing: 0,
       ),
-      headlineMedium: textTheme.headlineMedium?.copyWith(letterSpacing: 0),
-      titleLarge: textTheme.titleLarge?.copyWith(
-        fontSize: 28,
+      headlineLarge: textTheme.headlineLarge?.copyWith(
+        fontFamily: 'Poppins',
+        fontSize: 26,
         fontWeight: FontWeight.w700,
+        height: 1.23,
+        letterSpacing: 0,
+      ),
+      headlineMedium: textTheme.headlineMedium?.copyWith(
+        fontFamily: 'Poppins',
+        fontSize: 22,
+        fontWeight: FontWeight.w700,
+        height: 1.27,
+        letterSpacing: 0,
+      ),
+      headlineSmall: textTheme.headlineSmall?.copyWith(
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w700,
+        letterSpacing: 0,
+      ),
+      titleLarge: textTheme.titleLarge?.copyWith(
+        fontFamily: 'Poppins',
+        fontSize: 40,
+        fontWeight: FontWeight.w700,
+        height: 1.1,
         letterSpacing: 0,
       ),
       titleMedium: textTheme.titleMedium?.copyWith(
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: FontWeight.w600,
+        height: 1.4,
         letterSpacing: 0,
       ),
-      bodyLarge: textTheme.bodyLarge?.copyWith(letterSpacing: 0),
-      bodyMedium: textTheme.bodyMedium?.copyWith(letterSpacing: 0),
-      labelLarge: textTheme.labelLarge?.copyWith(
+      bodyLarge: textTheme.bodyLarge?.copyWith(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        height: 1.5,
+        letterSpacing: 0,
+      ),
+      bodyMedium: textTheme.bodyMedium?.copyWith(
         fontSize: 15,
+        fontWeight: FontWeight.w400,
+        height: 1.33,
+        letterSpacing: 0,
+      ),
+      bodySmall: textTheme.bodySmall?.copyWith(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        height: 1.43,
+        letterSpacing: 0,
+      ),
+      labelLarge: textTheme.labelLarge?.copyWith(
+        fontSize: 12,
         fontWeight: FontWeight.w600,
         letterSpacing: 0,
       ),
@@ -82,7 +133,7 @@ ThemeData buildSyncTaskTheme(Brightness brightness) {
       modalBarrierColor: const Color(0xB8000000),
       surfaceTintColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
     ),
     filledButtonTheme: FilledButtonThemeData(
@@ -95,7 +146,7 @@ ThemeData buildSyncTaskTheme(Brightness brightness) {
         ),
         minimumSize: const Size(44, 56),
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -106,7 +157,7 @@ ThemeData buildSyncTaskTheme(Brightness brightness) {
         minimumSize: const Size(44, 44),
         padding: const EdgeInsets.symmetric(horizontal: 18),
         side: BorderSide(color: tokens.divider),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         textStyle: textTheme.labelLarge,
       ),
     ),
@@ -129,13 +180,28 @@ ThemeData buildSyncTaskTheme(Brightness brightness) {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: tokens.surfaceSecondary,
-      border: InputBorder.none,
-      enabledBorder: InputBorder.none,
-      focusedBorder: InputBorder.none,
-      errorBorder: InputBorder.none,
-      focusedErrorBorder: InputBorder.none,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+      fillColor: tokens.surface,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4),
+        borderSide: BorderSide(color: tokens.divider),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4),
+        borderSide: BorderSide(color: tokens.divider),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4),
+        borderSide: BorderSide(color: tokens.textPrimary),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4),
+        borderSide: BorderSide(color: tokens.destructive),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(4),
+        borderSide: BorderSide(color: tokens.destructive),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       labelStyle: textTheme.bodyLarge?.copyWith(color: tokens.textSecondary),
       hintStyle: textTheme.bodyLarge?.copyWith(color: tokens.textSecondary),
     ),

@@ -17,7 +17,9 @@ class FocusAlarmService {
         id: notificationId,
         channelId: channelId,
         title: 'Focus Complete',
-        body: taskTitle == null ? 'Your focus timer is complete.' : '$taskTitle focus timer is complete.',
+        body: taskTitle == null
+            ? 'Your focus timer is complete.'
+            : '$taskTitle focus timer is complete.',
         scheduledAt: endAt,
       ),
     );

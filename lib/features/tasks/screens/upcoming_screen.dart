@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctask_color_scheme.dart';
+import '../../focus/domain/focus_launch.dart';
 import '../../../shared/widgets/sync_fab.dart';
 import '../domain/task.dart' as domain;
 import '../providers/task_controller.dart';
@@ -39,10 +41,10 @@ class UpcomingScreen extends ConsumerWidget {
                     'Upcoming',
                     style: textTheme.displaySmall?.copyWith(
                       color: colors.textPrimary,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w800,
+                      fontSize: 40,
+                      fontWeight: FontWeight.w700,
                       letterSpacing: 0,
-                      height: 1,
+                      height: 1.1,
                     ),
                   ),
                 ),
@@ -78,7 +80,7 @@ class UpcomingScreen extends ConsumerWidget {
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
                 letterSpacing: 0,
-                height: 1,
+                height: 1.33,
               ),
             ),
             const SizedBox(height: 28),
@@ -109,7 +111,7 @@ class UpcomingScreen extends ConsumerWidget {
     final textStyle = Theme.of(context).textTheme.titleMedium?.copyWith(
       color: colors.textPrimary,
       fontSize: 15,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w400,
       letterSpacing: 0,
     );
 
@@ -121,7 +123,7 @@ class UpcomingScreen extends ConsumerWidget {
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         side: BorderSide(color: colors.divider),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(24),
       ),
       position: RelativeRect.fromLTRB(screenWidth - 212, 64, 20, 0),
       items: [
@@ -190,13 +192,24 @@ class UpcomingScreen extends ConsumerWidget {
           child: TaskEditSheet(
             title: task?.title ?? '',
             scheduledDate: task?.scheduledDate,
-            focusDurationMinutes: task?.focusDurationMinutes ?? 45,
+            scheduledTime: task?.scheduledTime,
+            focusDurationMinutes: task?.focusDurationMinutes,
             onCancel: () => Navigator.of(sheetContext).pop(),
             onDone: () => Navigator.of(sheetContext).pop(),
-            onStartFocus: () => Navigator.of(sheetContext).pop(),
-            onSaveTitle: task == null
+            onStartFocus: () =>
+                _startFocusFromTask(context, sheetContext, task),
+            onStartFocusWithUpdate: task == null
                 ? null
-                : (title) => _updateTaskTitle(ref, task.id, title),
+                : (update) => _saveAndStartFocusFromTask(
+                    context,
+                    sheetContext,
+                    ref,
+                    task,
+                    update,
+                  ),
+            onSave: task == null
+                ? null
+                : (update) => _updateTask(ref, task.id, update),
           ),
         );
       },
@@ -237,9 +250,71 @@ class UpcomingScreen extends ConsumerWidget {
     _invalidateTaskLists(ref);
   }
 
-  Future<void> _updateTaskTitle(WidgetRef ref, int taskId, String title) async {
-    await ref.read(taskControllerProvider).updateTitle(taskId, title);
+  Future<void> _updateTask(
+    WidgetRef ref,
+    int taskId,
+    TaskEditUpdate update,
+  ) async {
+    await ref
+        .read(taskControllerProvider)
+        .updateTask(taskId, _draftFromUpdate(update));
     _invalidateTaskLists(ref);
+  }
+
+  Future<void> _saveAndStartFocusFromTask(
+    BuildContext context,
+    BuildContext sheetContext,
+    WidgetRef ref,
+    Task task,
+    TaskEditUpdate update,
+  ) async {
+    if (update.focusDurationMinutes == null) {
+      return;
+    }
+    await _updateTask(ref, task.id, update);
+    if (!context.mounted || !sheetContext.mounted) {
+      return;
+    }
+    Navigator.of(sheetContext).pop();
+    context.go(
+      '/focus',
+      extra: FocusLaunch(
+        taskId: task.id,
+        taskTitle: update.title,
+        duration: Duration(minutes: update.focusDurationMinutes!),
+      ),
+    );
+  }
+
+  domain.TaskDraft _draftFromUpdate(TaskEditUpdate update) {
+    return domain.TaskDraft(
+      title: update.title,
+      scheduledDate: update.scheduledDate,
+      scheduledTime: update.scheduledTime,
+      reminderTime: update.reminderTime,
+      focusDurationMinutes: update.focusDurationMinutes,
+      recurrenceType: update.recurrenceType,
+    );
+  }
+
+  void _startFocusFromTask(
+    BuildContext context,
+    BuildContext sheetContext,
+    Task? task,
+  ) {
+    final focusDurationMinutes = task?.focusDurationMinutes;
+    if (task == null || focusDurationMinutes == null) {
+      return;
+    }
+    Navigator.of(sheetContext).pop();
+    context.go(
+      '/focus',
+      extra: FocusLaunch(
+        taskId: task.id,
+        taskTitle: task.title,
+        duration: Duration(minutes: focusDurationMinutes),
+      ),
+    );
   }
 
   Future<void> _deleteTask(WidgetRef ref, int taskId) async {

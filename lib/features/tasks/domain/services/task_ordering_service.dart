@@ -11,7 +11,9 @@ class TaskOrderingService {
     if (originalSet.length != reorderedSet.length ||
         !originalSet.containsAll(reorderedSet) ||
         !reorderedSet.containsAll(originalSet)) {
-      throw ArgumentError('Reordered visible ids must contain the same task ids.');
+      throw ArgumentError(
+        'Reordered visible ids must contain the same task ids.',
+      );
     }
 
     final firstVisibleIndex = globalIds.indexWhere(originalSet.contains);

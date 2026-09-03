@@ -22,8 +22,11 @@ class SettingsRepository {
       return _memorySettings;
     }
     return AppSettings(
-      themeMode: ThemeMode.values.byName(preferences.getString(_themeModeKey) ?? ThemeMode.system.name),
-      notificationsEnabled: preferences.getBool(_notificationsEnabledKey) ?? true,
+      themeMode: ThemeMode.values.byName(
+        preferences.getString(_themeModeKey) ?? ThemeMode.system.name,
+      ),
+      notificationsEnabled:
+          preferences.getBool(_notificationsEnabledKey) ?? true,
       focusSound: preferences.getBool(_focusSoundKey) ?? true,
       focusVibration: preferences.getBool(_focusVibrationKey) ?? true,
     );
@@ -36,7 +39,10 @@ class SettingsRepository {
       return;
     }
     await preferences.setString(_themeModeKey, settings.themeMode.name);
-    await preferences.setBool(_notificationsEnabledKey, settings.notificationsEnabled);
+    await preferences.setBool(
+      _notificationsEnabledKey,
+      settings.notificationsEnabled,
+    );
     await preferences.setBool(_focusSoundKey, settings.focusSound);
     await preferences.setBool(_focusVibrationKey, settings.focusVibration);
   }

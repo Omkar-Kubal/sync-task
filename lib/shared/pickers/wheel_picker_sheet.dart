@@ -36,9 +36,15 @@ class WheelPickerSheet extends StatelessWidget {
           const SizedBox(height: 24),
           Row(
             children: [
-              TextButton(onPressed: () => Navigator.of(context).maybePop(), child: const Text('Cancel')),
+              TextButton(
+                onPressed: () => Navigator.of(context).maybePop(),
+                child: const Text('Cancel'),
+              ),
               const Spacer(),
-              TextButton(onPressed: () => onDone(initialMinutes), child: const Text('Done')),
+              TextButton(
+                onPressed: () => onDone(initialMinutes),
+                child: const Text('Done'),
+              ),
             ],
           ),
         ],

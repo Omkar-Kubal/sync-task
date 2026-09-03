@@ -53,7 +53,9 @@ class AnalyticsService {
       }
       final value = entry.value;
       if (value is String) {
-        throw ArgumentError('String analytics parameter values may contain user content.');
+        throw ArgumentError(
+          'String analytics parameter values may contain user content.',
+        );
       }
     }
 

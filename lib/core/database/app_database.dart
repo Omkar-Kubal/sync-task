@@ -34,7 +34,9 @@ class AppDatabase extends _$AppDatabase {
   }
 
   Future<void> _ensureInboxFolder() async {
-    final existing = await (select(folders)..where((folder) => folder.name.equals('Inbox'))).get();
+    final existing = await (select(
+      folders,
+    )..where((folder) => folder.name.equals('Inbox'))).get();
     if (existing.isNotEmpty) {
       return;
     }

@@ -30,7 +30,7 @@ class SyncButton extends StatelessWidget {
             alpha: 0.64,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
+            borderRadius: BorderRadius.circular(18),
           ),
         ),
         child: Text(label),

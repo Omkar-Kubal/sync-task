@@ -34,7 +34,7 @@ class SyncBottomNav extends StatelessWidget {
               height: 52,
               decoration: BoxDecoration(
                 color: colors.surface.withAlpha(0xD9),
-                borderRadius: BorderRadius.circular(40),
+                borderRadius: BorderRadius.circular(28),
               ),
               child: Row(
                 children: [
@@ -157,14 +157,14 @@ class _TodayIcon extends StatelessWidget {
       decoration: BoxDecoration(
         color: fillColor,
         border: Border.all(color: color, width: 2.5),
-        borderRadius: BorderRadius.circular(7),
+        borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
         today,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
           color: foreground,
           fontSize: 16,
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w600,
           letterSpacing: 0,
           height: 1,
         ),

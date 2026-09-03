@@ -9,7 +9,9 @@ class FocusHistoryRepository {
   final AppDatabase _db;
 
   Future<int> insertCompletedRun(FocusRun run) {
-    return _db.into(_db.focusHistory).insert(
+    return _db
+        .into(_db.focusHistory)
+        .insert(
           FocusHistoryCompanion.insert(
             taskId: Value(run.taskId),
             startedAt: run.startedAt,

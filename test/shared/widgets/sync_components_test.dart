@@ -4,6 +4,7 @@ import 'package:synctask/core/theme/app_theme.dart';
 import 'package:synctask/shared/widgets/sync_bottom_nav.dart';
 import 'package:synctask/shared/widgets/sync_button.dart';
 import 'package:synctask/shared/widgets/sync_fab.dart';
+import 'package:synctask/shared/widgets/sync_grouped_section.dart';
 import 'package:synctask/shared/widgets/sync_header.dart';
 import 'package:synctask/shared/widgets/sync_icon_button.dart';
 
@@ -108,6 +109,7 @@ void main() {
     expect(tester.getSize(navPill).height, 52);
     expect(navDecoration.color, const Color(0xD9FFFFFF));
     expect(navDecoration.border, isNull);
+    expect(navDecoration.borderRadius, BorderRadius.circular(28));
   });
 
   testWidgets('bottom navigation stays responsive when Upcoming is selected', (
@@ -151,5 +153,29 @@ void main() {
       tester.getSize(find.byType(FloatingActionButton)),
       const Size(48, 48),
     );
+
+    final button = tester.widget<FilledButton>(
+      find.widgetWithText(FilledButton, 'Start Focus'),
+    );
+    final buttonShape = button.style!.shape!.resolve({});
+    expect(
+      (buttonShape! as RoundedRectangleBorder).borderRadius,
+      BorderRadius.circular(18),
+    );
+  });
+
+  testWidgets('grouped sections use rounded app card radius', (tester) async {
+    await tester.pumpWidget(
+      wrap(
+        const SyncGroupedSection(children: [ListTile(title: Text('Inbox'))]),
+      ),
+    );
+
+    final section = tester.widget<DecoratedBox>(
+      find.byType(DecoratedBox).first,
+    );
+    final decoration = section.decoration as BoxDecoration;
+
+    expect(decoration.borderRadius, BorderRadius.circular(24));
   });
 }

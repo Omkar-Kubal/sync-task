@@ -78,6 +78,70 @@ class TaskRepository {
     );
   }
 
+  Future<void> updateTask(int id, domain.TaskDraft draft) async {
+    await _db.transaction(() async {
+      final current = await _taskById(id);
+      final folderId = draft.folderId ?? current.folderId;
+      final scheduledDate = _dateOnlyOrNull(draft.scheduledDate);
+      final recurrenceType = draft.recurrenceType;
+      int? seriesId = current.seriesId;
+
+      if (recurrenceType == null && current.seriesId != null) {
+        await (_db.update(_db.taskSeries)
+              ..where((series) => series.id.equals(current.seriesId!)))
+            .write(const TaskSeriesCompanion(isActive: Value(false)));
+        seriesId = null;
+      } else if (recurrenceType != null) {
+        if (scheduledDate == null) {
+          throw ArgumentError('Recurring tasks require a scheduled date.');
+        }
+        if (current.seriesId == null) {
+          seriesId = await _db
+              .into(_db.taskSeries)
+              .insert(
+                TaskSeriesCompanion.insert(
+                  title: draft.title,
+                  folderId: folderId,
+                  repeatType: recurrenceType.name,
+                  anchorDate: scheduledDate,
+                  time: Value(draft.scheduledTime),
+                  reminderTime: Value(draft.reminderTime),
+                  focusDurationMinutes: Value(draft.focusDurationMinutes),
+                  createdAt: _now(),
+                ),
+              );
+        } else {
+          await (_db.update(
+            _db.taskSeries,
+          )..where((series) => series.id.equals(current.seriesId!))).write(
+            TaskSeriesCompanion(
+              title: Value(draft.title),
+              folderId: Value(folderId),
+              repeatType: Value(recurrenceType.name),
+              anchorDate: Value(scheduledDate),
+              time: Value(draft.scheduledTime),
+              reminderTime: Value(draft.reminderTime),
+              focusDurationMinutes: Value(draft.focusDurationMinutes),
+              isActive: const Value(true),
+            ),
+          );
+        }
+      }
+
+      await (_db.update(_db.tasks)..where((task) => task.id.equals(id))).write(
+        TasksCompanion(
+          seriesId: Value(seriesId),
+          folderId: Value(folderId),
+          title: Value(draft.title),
+          scheduledDate: Value(scheduledDate),
+          scheduledTime: Value(draft.scheduledTime),
+          reminderTime: Value(draft.reminderTime),
+          focusDurationMinutes: Value(draft.focusDurationMinutes),
+        ),
+      );
+    });
+  }
+
   Future<domain.TaskSnapshot> completeTask(int id) async {
     return _db.transaction(() async {
       final task = await _taskById(id);

@@ -16,7 +16,10 @@ void main() {
     );
     await service.cancelTask(42);
 
-    expect(notifications.scheduled.single.channelId, TaskReminderService.channelId);
+    expect(
+      notifications.scheduled.single.channelId,
+      TaskReminderService.channelId,
+    );
     expect(notifications.scheduled.single.id, 42);
     expect(notifications.scheduled.single.scheduledAt, reminderAt);
     expect(notifications.cancelled.single, 42);

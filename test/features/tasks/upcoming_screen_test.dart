@@ -47,7 +47,7 @@ void main() {
     expect(find.bySemanticsLabel('Create task'), findsOneWidget);
 
     final titleText = tester.widget<Text>(find.text('Upcoming'));
-    expect(titleText.style?.fontSize, 30);
+    expect(titleText.style?.fontSize, 40);
     expect(
       tester.getSize(find.bySemanticsLabel('More options')),
       const Size(40, 40),

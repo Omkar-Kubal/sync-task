@@ -71,6 +71,49 @@ void main() {
     expect(today.single.title, 'Final title');
   });
 
+  test('updates task schedule focus timer and repeat fields', () async {
+    final taskId = await tasks.createTask(const TaskDraft(title: 'Plan'));
+
+    await tasks.updateTask(
+      taskId,
+      TaskDraft(
+        title: 'Plan updated',
+        scheduledDate: DateTime(2026, 9, 1),
+        scheduledTime: DateTime(2026, 9, 1, 14, 30),
+        focusDurationMinutes: 35,
+        recurrenceType: RecurrenceType.weekly,
+      ),
+    );
+
+    final upcoming = await tasks.listUpcomingTasks();
+    expect(upcoming.single.title, 'Plan updated');
+    expect(upcoming.single.scheduledDate, DateTime(2026, 9, 1));
+    expect(upcoming.single.scheduledTime, DateTime(2026, 9, 1, 14, 30));
+    expect(upcoming.single.focusDurationMinutes, 35);
+    expect(upcoming.single.seriesId, isNotNull);
+  });
+
+  test('repeat none deactivates series and keeps current task', () async {
+    final taskId = await tasks.createTask(
+      TaskDraft(
+        title: 'Weekly review',
+        scheduledDate: DateTime(2026, 8, 31),
+        recurrenceType: RecurrenceType.weekly,
+      ),
+    );
+
+    await tasks.updateTask(
+      taskId,
+      TaskDraft(title: 'Weekly review', scheduledDate: DateTime(2026, 8, 31)),
+    );
+
+    final active = await tasks.listTodayTasks();
+    expect(active.single.id, taskId);
+    expect(active.single.seriesId, isNull);
+    final seriesRows = await db.select(db.taskSeries).get();
+    expect(seriesRows.single.isActive, isFalse);
+  });
+
   test('deleting custom folder moves its tasks to Inbox', () async {
     final work = await folders.createFolder('Work');
     await tasks.createTask(TaskDraft(title: 'Folder task', folderId: work.id));

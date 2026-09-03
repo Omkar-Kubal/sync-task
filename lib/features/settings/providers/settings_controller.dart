@@ -6,7 +6,9 @@ import '../data/settings_repository.dart';
 import '../domain/app_settings.dart';
 
 final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
-  throw UnimplementedError('SharedPreferences must be overridden during bootstrap.');
+  throw UnimplementedError(
+    'SharedPreferences must be overridden during bootstrap.',
+  );
 });
 
 final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
