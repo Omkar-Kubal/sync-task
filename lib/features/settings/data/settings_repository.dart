@@ -15,8 +15,7 @@ class SettingsRepository {
   static const _notificationsEnabledKey = 'settings.notificationsEnabled';
   static const _focusSoundKey = 'settings.focusSound';
   static const _focusVibrationKey = 'settings.focusVibration';
-  static const _hasCompletedStartupFlowKey =
-      'settings.hasCompletedStartupFlow';
+  static const _hasCompletedStartupFlowKey = 'settings.hasCompletedStartupFlow';
 
   Future<AppSettings> load() async {
     final preferences = _preferences;

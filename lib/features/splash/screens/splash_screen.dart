@@ -28,9 +28,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     if (!mounted) {
       return;
     }
-    context.go(
-      settings.hasCompletedStartupFlow ? '/today' : '/startup/tasks',
-    );
+    context.go(settings.hasCompletedStartupFlow ? '/today' : '/startup/tasks');
   }
 
   @override

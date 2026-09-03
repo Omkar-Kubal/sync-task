@@ -63,9 +63,7 @@ void main() {
 
     await tester.pumpWidget(
       ProviderScope(
-        overrides: [
-          settingsRepositoryProvider.overrideWithValue(repository),
-        ],
+        overrides: [settingsRepositoryProvider.overrideWithValue(repository)],
         child: MaterialApp.router(
           theme: buildSyncTaskTheme(Brightness.light),
           routerConfig: router,
