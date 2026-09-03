@@ -6,6 +6,7 @@ class AppSettings {
     this.notificationsEnabled = true,
     this.focusSound = true,
     this.focusVibration = true,
+    this.hasCompletedStartupFlow = false,
     this.defaultFolderId,
   });
 
@@ -13,6 +14,7 @@ class AppSettings {
   final bool notificationsEnabled;
   final bool focusSound;
   final bool focusVibration;
+  final bool hasCompletedStartupFlow;
   final int? defaultFolderId;
 
   AppSettings copyWith({
@@ -20,6 +22,7 @@ class AppSettings {
     bool? notificationsEnabled,
     bool? focusSound,
     bool? focusVibration,
+    bool? hasCompletedStartupFlow,
     int? defaultFolderId,
   }) {
     return AppSettings(
@@ -27,6 +30,8 @@ class AppSettings {
       notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
       focusSound: focusSound ?? this.focusSound,
       focusVibration: focusVibration ?? this.focusVibration,
+      hasCompletedStartupFlow:
+          hasCompletedStartupFlow ?? this.hasCompletedStartupFlow,
       defaultFolderId: defaultFolderId ?? this.defaultFolderId,
     );
   }

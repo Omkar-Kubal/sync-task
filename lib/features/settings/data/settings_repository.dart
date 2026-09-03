@@ -15,6 +15,8 @@ class SettingsRepository {
   static const _notificationsEnabledKey = 'settings.notificationsEnabled';
   static const _focusSoundKey = 'settings.focusSound';
   static const _focusVibrationKey = 'settings.focusVibration';
+  static const _hasCompletedStartupFlowKey =
+      'settings.hasCompletedStartupFlow';
 
   Future<AppSettings> load() async {
     final preferences = _preferences;
@@ -29,6 +31,8 @@ class SettingsRepository {
           preferences.getBool(_notificationsEnabledKey) ?? true,
       focusSound: preferences.getBool(_focusSoundKey) ?? true,
       focusVibration: preferences.getBool(_focusVibrationKey) ?? true,
+      hasCompletedStartupFlow:
+          preferences.getBool(_hasCompletedStartupFlowKey) ?? false,
     );
   }
 
@@ -45,5 +49,9 @@ class SettingsRepository {
     );
     await preferences.setBool(_focusSoundKey, settings.focusSound);
     await preferences.setBool(_focusVibrationKey, settings.focusVibration);
+    await preferences.setBool(
+      _hasCompletedStartupFlowKey,
+      settings.hasCompletedStartupFlow,
+    );
   }
 }

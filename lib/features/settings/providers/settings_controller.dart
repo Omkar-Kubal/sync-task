@@ -42,4 +42,11 @@ class SettingsController {
     final settings = await _repository.load();
     await _repository.save(settings.copyWith(focusVibration: enabled));
   }
+
+  Future<void> setStartupFlowCompleted(bool completed) async {
+    final settings = await _repository.load();
+    await _repository.save(
+      settings.copyWith(hasCompletedStartupFlow: completed),
+    );
+  }
 }

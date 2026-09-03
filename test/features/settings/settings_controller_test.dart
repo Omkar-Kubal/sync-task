@@ -20,4 +20,15 @@ void main() {
       expect(settings.focusVibration, isFalse);
     },
   );
+
+  test('settings controller persists startup flow completion', () async {
+    final repository = SettingsRepository.memory();
+    final controller = SettingsController(repository);
+
+    expect((await repository.load()).hasCompletedStartupFlow, isFalse);
+
+    await controller.setStartupFlowCompleted(true);
+
+    expect((await repository.load()).hasCompletedStartupFlow, isTrue);
+  });
 }
