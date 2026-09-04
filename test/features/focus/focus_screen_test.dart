@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -44,39 +46,40 @@ void main() {
     );
   }
 
-  testWidgets('focus idle screen matches the set time mockup', (tester) async {
+  testWidgets('focus idle screen shows the monochrome set timer dial', (
+    tester,
+  ) async {
     await tester.pumpWidget(wrap());
 
     expect(find.text('Focus'), findsOneWidget);
-    expect(find.bySemanticsLabel('More options'), findsOneWidget);
+    expect(find.bySemanticsLabel('More options'), findsNothing);
     expect(find.byKey(const Key('focus-idle-stopwatch')), findsNothing);
-    expect(find.text('Set time'), findsOneWidget);
+    expect(find.text('Set Timer'), findsOneWidget);
+    expect(find.text('25'), findsOneWidget);
+    expect(find.text('min'), findsOneWidget);
+    expect(find.text('Focus session'), findsOneWidget);
+    expect(find.byKey(const Key('focus-duration-dial')), findsOneWidget);
     expect(find.text('View Insights'), findsOneWidget);
     expect(find.text('Streak 0 days'), findsOneWidget);
     expect(find.text('Reset'), findsOneWidget);
-    expect(find.text('00'), findsNWidgets(3));
-    expect(find.text('HH'), findsOneWidget);
-    expect(find.text('MM'), findsOneWidget);
-    expect(find.text('SS'), findsOneWidget);
+    expect(find.text('15'), findsNothing);
+    expect(find.text('45'), findsNothing);
+    expect(find.text('60'), findsNothing);
+    expect(find.text('Custom'), findsNothing);
+    expect(find.text('HH'), findsNothing);
+    expect(find.text('MM'), findsNothing);
+    expect(find.text('SS'), findsNothing);
     expect(find.text('--:--'), findsNothing);
     expect(find.text('+5'), findsNothing);
     expect(find.text('+10'), findsNothing);
   });
 
-  testWidgets('standalone focus start is disabled until duration is selected', (
+  testWidgets('standalone focus starts the selected dial duration', (
     tester,
   ) async {
     await tester.pumpWidget(wrap());
 
-    var startButton = tester.widget<IconButton>(
-      find.byKey(const Key('focus-start-button')),
-    );
-    expect(startButton.onPressed, isNull);
-
-    await tester.tap(find.bySemanticsLabel('Increase minutes'));
-    await tester.pumpAndSettle();
-
-    startButton = tester.widget<IconButton>(
+    final startButton = tester.widget<IconButton>(
       find.byKey(const Key('focus-start-button')),
     );
     expect(startButton.onPressed, isNotNull);
@@ -84,13 +87,16 @@ void main() {
     await tester.tap(find.byKey(const Key('focus-start-button')));
     await tester.pumpAndSettle();
 
-    expect(controller.activeFocus!.plannedDuration, const Duration(minutes: 1));
+    expect(
+      controller.activeFocus!.plannedDuration,
+      const Duration(minutes: 25),
+    );
     expect(
       find.bySemanticsLabel('Focus timer progress 100 percent'),
       findsOneWidget,
     );
     expect(find.byKey(const Key('focus-idle-stopwatch')), findsNothing);
-    expect(find.text('01:00'), findsOneWidget);
+    expect(find.text('25:00'), findsOneWidget);
   });
 
   testWidgets('running focus ring reflects elapsed timer progress', (
@@ -115,12 +121,40 @@ void main() {
     expect(find.text('05:00'), findsOneWidget);
   });
 
-  testWidgets('reset clears the selected focus duration', (tester) async {
+  testWidgets('dragging freely can select any minute on the dial', (
+    tester,
+  ) async {
     await tester.pumpWidget(wrap());
 
-    await tester.tap(find.bySemanticsLabel('Increase hours'));
+    final dialFinder = find.byKey(const Key('focus-duration-dial'));
+    final dialCenter = tester.getCenter(dialFinder);
+    const radius = 90.0;
+    final targetAngle = -math.pi / 2 + (math.pi * 2 * 37 / 60);
+    final target = Offset(
+      dialCenter.dx + math.cos(targetAngle) * radius,
+      dialCenter.dy + math.sin(targetAngle) * radius,
+    );
+
+    final gesture = await tester.startGesture(dialCenter);
+    await gesture.moveTo(target);
+    await gesture.up();
     await tester.pumpAndSettle();
-    expect(find.text('01'), findsOneWidget);
+
+    expect(find.text('37'), findsOneWidget);
+  });
+
+  testWidgets('reset returns the selected dial duration to default', (
+    tester,
+  ) async {
+    await tester.pumpWidget(wrap());
+
+    final dialFinder = find.byKey(const Key('focus-duration-dial'));
+    final dialCenter = tester.getCenter(dialFinder);
+    final gesture = await tester.startGesture(dialCenter);
+    await gesture.moveTo(dialCenter + const Offset(0, 90));
+    await gesture.up();
+    await tester.pumpAndSettle();
+    expect(find.text('30'), findsOneWidget);
 
     await tester.tap(find.text('Reset'));
     await tester.pumpAndSettle();
@@ -128,8 +162,8 @@ void main() {
     final startButton = tester.widget<IconButton>(
       find.byKey(const Key('focus-start-button')),
     );
-    expect(startButton.onPressed, isNull);
-    expect(find.text('00'), findsNWidgets(3));
+    expect(startButton.onPressed, isNotNull);
+    expect(find.text('25'), findsOneWidget);
   });
 
   testWidgets('focus running screen matches the timer mockup', (tester) async {
@@ -152,7 +186,7 @@ void main() {
     expect(find.bySemanticsLabel('Stop focus'), findsOneWidget);
     expect(find.bySemanticsLabel('Resume focus'), findsOneWidget);
     expect(find.bySemanticsLabel('Pause focus'), findsOneWidget);
-    expect(find.text('Set time'), findsNothing);
+    expect(find.text('Set Timer'), findsNothing);
   });
 
   testWidgets('standalone running focus does not show a fake task card', (

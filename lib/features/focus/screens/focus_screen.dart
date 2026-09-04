@@ -23,8 +23,12 @@ class FocusScreen extends ConsumerStatefulWidget {
 }
 
 class _FocusScreenState extends ConsumerState<FocusScreen> {
+  static const _defaultFocusDuration = Duration(minutes: 25);
+  static const _minFocusMinutes = 1;
+  static const _maxFocusMinutes = 60;
+
   bool _locallyRunning = false;
-  Duration? _selectedDuration;
+  Duration _selectedDuration = _defaultFocusDuration;
   bool _launchConsumed = false;
   Timer? _ticker;
 
@@ -66,7 +70,7 @@ class _FocusScreenState extends ConsumerState<FocusScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _FocusHeader(onMore: () => _showMoreMenu(context)),
+            const _FocusHeader(),
             Expanded(
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 180),
@@ -96,11 +100,11 @@ class _FocusScreenState extends ConsumerState<FocusScreen> {
                         selectedDuration: _selectedDuration,
                         onDurationChanged: _changeSelectedDuration,
                         onResetDuration: () {
-                          setState(() => _selectedDuration = null);
+                          setState(
+                            () => _selectedDuration = _defaultFocusDuration,
+                          );
                         },
-                        onStart: _selectedDuration == null
-                            ? null
-                            : () => unawaited(_startFocus()),
+                        onStart: () => unawaited(_startFocus()),
                         streak: streak,
                         onViewInsights: () => context.go('/focus/insights'),
                       ),
@@ -134,21 +138,19 @@ class _FocusScreenState extends ConsumerState<FocusScreen> {
   }
 
   Future<void> _startFocus() async {
-    final duration = _selectedDuration;
-    if (duration == null) {
-      return;
-    }
-    await ref.read(focusControllerProvider).start(duration: duration);
+    await ref.read(focusControllerProvider).start(duration: _selectedDuration);
     if (mounted) {
       setState(() => _locallyRunning = true);
     }
   }
 
   void _changeSelectedDuration(Duration delta) {
-    final current = _selectedDuration ?? Duration.zero;
-    final next = current + delta;
+    final next = _selectedDuration + delta;
     setState(() {
-      _selectedDuration = next <= Duration.zero ? null : next;
+      _selectedDuration = next.clampMinutes(
+        min: _minFocusMinutes,
+        max: _maxFocusMinutes,
+      );
     });
   }
 
@@ -192,52 +194,10 @@ class _FocusScreenState extends ConsumerState<FocusScreen> {
       setState(() => _locallyRunning = false);
     }
   }
-
-  Future<void> _showMoreMenu(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
-    final screenWidth = MediaQuery.sizeOf(context).width;
-    final textStyle = Theme.of(context).textTheme.titleMedium?.copyWith(
-      color: colors.textPrimary,
-      fontSize: 15,
-      fontWeight: FontWeight.w500,
-      letterSpacing: 0,
-    );
-
-    return showMenu<void>(
-      context: context,
-      color: colors.surface,
-      elevation: 10,
-      shadowColor: colors.textPrimary.withValues(alpha: 0.12),
-      surfaceTintColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: colors.divider),
-        borderRadius: BorderRadius.circular(24),
-      ),
-      position: RelativeRect.fromLTRB(screenWidth - 212, 64, 20, 0),
-      items: [
-        PopupMenuItem<void>(
-          height: 54,
-          child: Row(
-            children: [
-              Icon(
-                Icons.insights_outlined,
-                color: colors.textPrimary,
-                size: 22,
-              ),
-              const SizedBox(width: 18),
-              Text('Insights', style: textStyle),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 class _FocusHeader extends StatelessWidget {
-  const _FocusHeader({required this.onMore});
-
-  final VoidCallback onMore;
+  const _FocusHeader();
 
   @override
   Widget build(BuildContext context) {
@@ -258,25 +218,6 @@ class _FocusHeader extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 12),
-        Semantics(
-          button: true,
-          label: 'More options',
-          child: IconButton(
-            onPressed: onMore,
-            tooltip: 'More options',
-            constraints: const BoxConstraints.tightFor(width: 40, height: 40),
-            style: IconButton.styleFrom(
-              backgroundColor: colors.surface,
-              foregroundColor: colors.textPrimary,
-              padding: EdgeInsets.zero,
-              side: BorderSide.none,
-              shape: const CircleBorder(),
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            ),
-            icon: const Icon(Icons.more_horiz, size: 22),
-          ),
-        ),
       ],
     );
   }
@@ -293,7 +234,7 @@ class _IdleFocusBody extends StatelessWidget {
     super.key,
   });
 
-  final Duration? selectedDuration;
+  final Duration selectedDuration;
   final ValueChanged<Duration> onDurationChanged;
   final VoidCallback onResetDuration;
   final VoidCallback? onStart;
@@ -304,8 +245,9 @@ class _IdleFocusBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
+        final compact = constraints.maxHeight < 620;
         return SingleChildScrollView(
-          padding: const EdgeInsets.only(top: 28, bottom: 108),
+          padding: EdgeInsets.only(top: compact ? 18 : 28, bottom: 108),
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: constraints.maxHeight - 108),
             child: Column(
@@ -316,6 +258,7 @@ class _IdleFocusBody extends StatelessWidget {
                   onDurationChanged: onDurationChanged,
                   onResetDuration: onResetDuration,
                   onStart: onStart,
+                  compact: compact,
                 ),
                 const SizedBox(height: 16),
                 _ViewInsightsCard(streak: streak, onPressed: onViewInsights),
@@ -471,33 +414,48 @@ class _SetTimePanel extends StatelessWidget {
     required this.onDurationChanged,
     required this.onResetDuration,
     required this.onStart,
+    required this.compact,
   });
 
-  final Duration? selectedDuration;
+  final Duration selectedDuration;
   final ValueChanged<Duration> onDurationChanged;
   final VoidCallback onResetDuration;
   final VoidCallback? onStart;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     final colors = SyncTaskColorScheme.of(context);
     return Container(
       constraints: const BoxConstraints(maxWidth: 360),
-      padding: const EdgeInsets.fromLTRB(18, 18, 18, 18),
+      padding: EdgeInsets.fromLTRB(
+        18,
+        compact ? 16 : 20,
+        18,
+        compact ? 20 : 26,
+      ),
       decoration: BoxDecoration(
-        color: colors.surface.withValues(alpha: 0.92),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: colors.divider),
+        color: colors.surface.withValues(alpha: 0.9),
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(color: colors.divider.withValues(alpha: 0.86)),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            colors.surface.withValues(alpha: 0.98),
+            colors.surfaceSecondary.withValues(alpha: 0.42),
+          ],
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
+            color: colors.textPrimary.withValues(alpha: 0.05),
+            blurRadius: 18,
+            offset: const Offset(0, -1),
           ),
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 2,
-            offset: const Offset(0, 1),
+            color: Colors.black.withValues(alpha: 0.2),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
           ),
         ],
       ),
@@ -507,83 +465,65 @@ class _SetTimePanel extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Set time',
+                'Set Timer',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: colors.textPrimary,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
                   letterSpacing: 0,
                 ),
               ),
               const Spacer(),
-              OutlinedButton(
-                onPressed: selectedDuration == null ? null : onResetDuration,
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: colors.textPrimary,
-                  minimumSize: const Size(64, 32),
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  side: BorderSide(color: colors.divider),
+              TextButton.icon(
+                onPressed: onResetDuration,
+                style: TextButton.styleFrom(
+                  foregroundColor: colors.textSecondary,
+                  minimumSize: const Size(82, 36),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18),
+                    side: BorderSide(
+                      color: colors.divider.withValues(alpha: 0.72),
+                    ),
                   ),
                   textStyle: const TextStyle(
                     fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     letterSpacing: 0,
                   ),
                 ),
-                child: const Text('Reset'),
+                icon: const Icon(Icons.refresh_rounded, size: 18),
+                label: const Text('Reset'),
               ),
             ],
           ),
-          const SizedBox(height: 18),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _TimeColumn(
-                value: _hours,
-                label: 'HH',
-                onIncrease: () => onDurationChanged(const Duration(hours: 1)),
-                onDecrease: _hours == 0
-                    ? null
-                    : () => onDurationChanged(const Duration(hours: -1)),
-              ),
-              const _Colon(),
-              _TimeColumn(
-                value: _minutes,
-                label: 'MM',
-                onIncrease: () => onDurationChanged(const Duration(minutes: 1)),
-                onDecrease: _minutes == 0 && _hours == 0
-                    ? null
-                    : () => onDurationChanged(const Duration(minutes: -1)),
-              ),
-              const _Colon(),
-              _TimeColumn(
-                value: _seconds,
-                label: 'SS',
-                onIncrease: () =>
-                    onDurationChanged(const Duration(seconds: 15)),
-                onDecrease: _seconds == 0 && _minutes == 0 && _hours == 0
-                    ? null
-                    : () => onDurationChanged(const Duration(seconds: -15)),
-              ),
-            ],
+          SizedBox(height: compact ? 14 : 22),
+          _SetTimerDial(
+            duration: selectedDuration,
+            onDurationChanged: onDurationChanged,
+            maxMinutes: _FocusScreenState._maxFocusMinutes,
+            size: compact ? 202 : 254,
           ),
-          const SizedBox(height: 18),
+          SizedBox(height: compact ? 18 : 28),
           Semantics(
             button: true,
             label: 'Start focus',
             child: SizedBox.square(
-              dimension: 44,
-              child: IconButton.filled(
+              dimension: compact ? 50 : 58,
+              child: IconButton(
                 key: const Key('focus-start-button'),
                 onPressed: onStart,
                 style: IconButton.styleFrom(
-                  backgroundColor: colors.controlPrimary,
-                  foregroundColor: colors.controlForeground,
+                  backgroundColor: colors.surface.withValues(alpha: 0.32),
+                  foregroundColor: colors.textPrimary,
                   shape: const CircleBorder(),
+                  side: BorderSide(
+                    color: colors.textPrimary.withValues(alpha: 0.76),
+                  ),
+                  shadowColor: colors.textPrimary.withValues(alpha: 0.18),
+                  elevation: 8,
                 ),
-                icon: const Icon(Icons.play_arrow_rounded, size: 26),
+                icon: const Icon(Icons.play_arrow_rounded, size: 32),
               ),
             ),
           ),
@@ -591,126 +531,240 @@ class _SetTimePanel extends StatelessWidget {
       ),
     );
   }
-
-  int get _hours => selectedDuration?.inHours ?? 0;
-
-  int get _minutes => selectedDuration?.inMinutes.remainder(60) ?? 0;
-
-  int get _seconds => selectedDuration?.inSeconds.remainder(60) ?? 0;
 }
 
-class _TimeColumn extends StatelessWidget {
-  const _TimeColumn({
-    required this.value,
-    required this.label,
-    required this.onIncrease,
-    required this.onDecrease,
+class _SetTimerDial extends StatefulWidget {
+  const _SetTimerDial({
+    required this.duration,
+    required this.onDurationChanged,
+    required this.maxMinutes,
+    required this.size,
   });
 
-  final int value;
-  final String label;
-  final VoidCallback onIncrease;
-  final VoidCallback? onDecrease;
+  final Duration duration;
+  final ValueChanged<Duration> onDurationChanged;
+  final int maxMinutes;
+  final double size;
+
+  @override
+  State<_SetTimerDial> createState() => _SetTimerDialState();
+}
+
+class _SetTimerDialState extends State<_SetTimerDial> {
+  ScrollHoldController? _scrollHold;
+
+  void _handlePointerDown(PointerDownEvent event) {
+    _scrollHold?.cancel();
+    _scrollHold = Scrollable.maybeOf(context)?.position.hold(() {});
+    _updateDurationFromPosition(event.localPosition);
+  }
+
+  void _handlePointerMove(PointerMoveEvent event) {
+    _updateDurationFromPosition(event.localPosition);
+  }
+
+  void _handlePointerEnd(PointerEvent event) {
+    _scrollHold?.cancel();
+    _scrollHold = null;
+  }
+
+  @override
+  void dispose() {
+    _scrollHold?.cancel();
+    super.dispose();
+  }
+
+  void _updateDurationFromPosition(Offset localPosition) {
+    final center = Offset(widget.size / 2, widget.size / 2);
+    final vector = localPosition - center;
+    if (vector.distance < widget.size * 0.18) {
+      return;
+    }
+
+    final angle = math.atan2(vector.dy, vector.dx);
+    final normalized = (angle + math.pi / 2) % (math.pi * 2);
+    final minutes = (normalized / (math.pi * 2) * widget.maxMinutes)
+        .round()
+        .clamp(1, widget.maxMinutes);
+    final next = Duration(minutes: minutes);
+    if (next != widget.duration) {
+      widget.onDurationChanged(next - widget.duration);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final colors = SyncTaskColorScheme.of(context);
     final textTheme = Theme.of(context).textTheme;
-    return SizedBox(
-      width: 74,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _DurationStepButton(
-            icon: Icons.keyboard_arrow_up_rounded,
-            semanticLabel: 'Increase ${label.toLowerCaseLabel()}',
-            onPressed: onIncrease,
-          ),
-          Text(
-            value.toString().padLeft(2, '0'),
-            style: textTheme.headlineMedium?.copyWith(
-              color: colors.textPrimary,
-              fontSize: 28,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 0,
-              height: 1,
-            ),
-          ),
-          _DurationStepButton(
-            icon: Icons.keyboard_arrow_down_rounded,
-            semanticLabel: 'Decrease ${label.toLowerCaseLabel()}',
-            onPressed: onDecrease,
-          ),
-          const SizedBox(height: 6),
-          Text(
-            label,
-            style: textTheme.bodyMedium?.copyWith(
-              color: colors.textPrimary.withValues(alpha: 0.72),
-              fontSize: 13,
-              letterSpacing: 0,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+    final minutes = widget.duration.inMinutes;
+    final progress = (minutes / widget.maxMinutes).clamp(0.02, 1).toDouble();
 
-class _DurationStepButton extends StatelessWidget {
-  const _DurationStepButton({
-    required this.icon,
-    required this.semanticLabel,
-    required this.onPressed,
-  });
-
-  final IconData icon;
-  final String semanticLabel;
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
     return Semantics(
-      button: true,
-      label: semanticLabel,
-      child: IconButton(
-        onPressed: onPressed,
-        visualDensity: VisualDensity.compact,
-        constraints: const BoxConstraints.tightFor(width: 34, height: 30),
-        padding: EdgeInsets.zero,
-        color: colors.textPrimary,
-        disabledColor: colors.textSecondary.withValues(alpha: 0.35),
-        icon: Icon(icon, size: 24),
+      label: 'Set timer duration $minutes minutes',
+      child: Listener(
+        key: const Key('focus-duration-dial'),
+        behavior: HitTestBehavior.opaque,
+        onPointerDown: _handlePointerDown,
+        onPointerMove: _handlePointerMove,
+        onPointerUp: _handlePointerEnd,
+        onPointerCancel: _handlePointerEnd,
+        child: SizedBox.square(
+          dimension: widget.size,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              CustomPaint(
+                size: Size.square(widget.size),
+                painter: _SetTimerDialPainter(
+                  progress: progress,
+                  colors: colors,
+                ),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        '$minutes',
+                        style: textTheme.displayLarge?.copyWith(
+                          color: colors.textPrimary,
+                          fontSize: 60,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0,
+                          height: 0.92,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 6),
+                        child: Text(
+                          'min',
+                          style: textTheme.titleMedium?.copyWith(
+                            color: colors.textPrimary,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0,
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    'Focus session',
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colors.textSecondary,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 0,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
-extension on String {
-  String toLowerCaseLabel() {
-    return switch (this) {
-      'HH' => 'hours',
-      'MM' => 'minutes',
-      'SS' => 'seconds',
-      _ => toLowerCase(),
-    };
-  }
-}
+class _SetTimerDialPainter extends CustomPainter {
+  const _SetTimerDialPainter({required this.progress, required this.colors});
 
-class _Colon extends StatelessWidget {
-  const _Colon();
+  final double progress;
+  final SyncTaskColorScheme colors;
 
   @override
-  Widget build(BuildContext context) {
-    return Text(
-      ':',
-      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-        color: SyncTaskColorScheme.of(context).textPrimary,
-        fontSize: 26,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-      ),
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = size.width * 0.42;
+    final strokeWidth = 8.0;
+    final rect = Rect.fromCircle(center: center, radius: radius);
+    final startAngle = -math.pi / 2;
+    final sweepAngle = math.pi * 2 * progress;
+
+    final trackPaint = Paint()
+      ..color = colors.divider.withValues(alpha: 0.7)
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..strokeWidth = strokeWidth;
+    final progressPaint = Paint()
+      ..shader = SweepGradient(
+        startAngle: startAngle,
+        endAngle: startAngle + math.pi * 2,
+        colors: [
+          colors.textPrimary.withValues(alpha: 0.95),
+          colors.textSecondary.withValues(alpha: 0.82),
+          colors.textPrimary.withValues(alpha: 0.95),
+        ],
+      ).createShader(rect)
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..strokeWidth = strokeWidth;
+
+    canvas.drawCircle(center, radius, trackPaint);
+
+    for (var i = 0; i < 36; i += 1) {
+      final tickAngle = startAngle + (math.pi * 2 * i / 36);
+      final isMajor = i % 9 == 0;
+      final tickLength = isMajor ? 10.0 : 5.0;
+      final outer = Offset(
+        center.dx + math.cos(tickAngle) * (radius - 20),
+        center.dy + math.sin(tickAngle) * (radius - 20),
+      );
+      final inner = Offset(
+        center.dx + math.cos(tickAngle) * (radius - 20 - tickLength),
+        center.dy + math.sin(tickAngle) * (radius - 20 - tickLength),
+      );
+      final tickPaint = Paint()
+        ..color = colors.textPrimary.withValues(alpha: isMajor ? 0.72 : 0.24)
+        ..strokeWidth = isMajor ? 2 : 1.2
+        ..strokeCap = StrokeCap.round;
+      canvas.drawLine(inner, outer, tickPaint);
+    }
+
+    canvas.drawArc(rect, startAngle, sweepAngle, false, progressPaint);
+
+    final knobAngle = startAngle + sweepAngle;
+    final knob = Offset(
+      center.dx + math.cos(knobAngle) * radius,
+      center.dy + math.sin(knobAngle) * radius,
     );
+    canvas.drawCircle(
+      knob,
+      23,
+      Paint()..color = colors.textPrimary.withValues(alpha: 0.12),
+    );
+    canvas.drawCircle(
+      knob,
+      14,
+      Paint()
+        ..color = colors.textPrimary
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.6),
+    );
+    canvas.drawCircle(
+      knob,
+      14,
+      Paint()..color = colors.surface.withValues(alpha: 0.24),
+    );
+    canvas.drawCircle(knob, 10, Paint()..color = colors.textPrimary);
+  }
+
+  @override
+  bool shouldRepaint(covariant _SetTimerDialPainter oldDelegate) {
+    return oldDelegate.progress != progress || oldDelegate.colors != colors;
+  }
+}
+
+extension on Duration {
+  Duration clampMinutes({required int min, required int max}) {
+    final minutes = inMinutes.clamp(min, max);
+    return Duration(minutes: minutes);
   }
 }
 

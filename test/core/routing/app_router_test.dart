@@ -149,6 +149,39 @@ void main() {
     expect(find.text('Second task'), findsOneWidget);
   });
 
+  testWidgets('Today edit sheet can save a new task', (tester) async {
+    final db = AppDatabase.memory();
+    final router = appRouter();
+    addTearDown(router.dispose);
+    addTearDown(db.close);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [appDatabaseProvider.overrideWithValue(db)],
+        child: MaterialApp.router(
+          theme: buildSyncTaskTheme(Brightness.light),
+          routerConfig: router,
+        ),
+      ),
+    );
+
+    router.go('/today');
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.bySemanticsLabel('Create task'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Today'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const Key('edit-task-title-field')),
+      'Saved from edit',
+    );
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Done'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Saved from edit'), findsOneWidget);
+  });
+
   testWidgets('Today edit sheet keeps Start Focus blocked without a timer', (
     tester,
   ) async {
@@ -416,6 +449,38 @@ void main() {
     await tester.pumpAndSettle();
     expect(router.routeInformationProvider.value.uri.path, '/lists/settings');
   });
+
+  testWidgets('bottom nav route transitions follow navigation direction', (
+    tester,
+  ) async {
+    final router = appRouter();
+    addTearDown(router.dispose);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: MaterialApp.router(
+          theme: buildSyncTaskTheme(Brightness.light),
+          routerConfig: router,
+        ),
+      ),
+    );
+
+    router.go('/today');
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.bySemanticsLabel('Upcoming'));
+    await tester.pump();
+    final forwardDx = _routeSlideDx(tester);
+    expect(forwardDx, greaterThan(0));
+    expect(forwardDx, lessThan(0.5));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.bySemanticsLabel('Today'));
+    await tester.pump();
+    final backwardDx = _routeSlideDx(tester);
+    expect(backwardDx, lessThan(0));
+    expect(backwardDx.abs(), lessThan(0.5));
+  });
 }
 
 Future<void> _createTodayTask(WidgetTester tester, String title) async {
@@ -424,4 +489,16 @@ Future<void> _createTodayTask(WidgetTester tester, String title) async {
   await tester.enterText(find.byType(TextField), title);
   await tester.tap(find.bySemanticsLabel('Submit task'));
   await tester.pumpAndSettle();
+}
+
+double _routeSlideDx(WidgetTester tester) {
+  final transitions = tester
+      .widgetList<SlideTransition>(find.byKey(const Key('nav-page-slide')))
+      .toList();
+  expect(transitions, isNotEmpty);
+  final activeTransition = transitions.where(
+    (transition) => transition.position.value.dx != 0,
+  );
+  expect(activeTransition, isNotEmpty);
+  return activeTransition.first.position.value.dx;
 }

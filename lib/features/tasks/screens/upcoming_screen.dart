@@ -191,8 +191,9 @@ class UpcomingScreen extends ConsumerWidget {
           ),
           child: TaskEditSheet(
             title: task?.title ?? '',
-            scheduledDate: task?.scheduledDate,
+            scheduledDate: task?.scheduledDate ?? _tomorrowDate(),
             scheduledTime: task?.scheduledTime,
+            reminderTime: task?.reminderTime,
             focusDurationMinutes: task?.focusDurationMinutes,
             onCancel: () => Navigator.of(sheetContext).pop(),
             onDone: () => Navigator.of(sheetContext).pop(),
@@ -208,7 +209,7 @@ class UpcomingScreen extends ConsumerWidget {
                     update,
                   ),
             onSave: task == null
-                ? null
+                ? (update) => _createTaskFromUpdate(ref, update)
                 : (update) => _updateTask(ref, task.id, update),
           ),
         );
@@ -243,6 +244,14 @@ class UpcomingScreen extends ConsumerWidget {
     if (sheetContext.mounted) {
       Navigator.of(sheetContext).pop();
     }
+  }
+
+  Future<void> _createTaskFromUpdate(
+    WidgetRef ref,
+    TaskEditUpdate update,
+  ) async {
+    await ref.read(taskControllerProvider).create(_draftFromUpdate(update));
+    _invalidateTaskLists(ref);
   }
 
   Future<void> _completeTask(WidgetRef ref, int taskId) async {
@@ -295,6 +304,11 @@ class UpcomingScreen extends ConsumerWidget {
       focusDurationMinutes: update.focusDurationMinutes,
       recurrenceType: update.recurrenceType,
     );
+  }
+
+  DateTime _tomorrowDate() {
+    final tomorrow = DateTime.now().add(const Duration(days: 1));
+    return DateTime(tomorrow.year, tomorrow.month, tomorrow.day);
   }
 
   void _startFocusFromTask(
