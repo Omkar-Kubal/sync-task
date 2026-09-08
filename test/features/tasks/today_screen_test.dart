@@ -256,6 +256,70 @@ void main() {
     expect(find.text("You're clear for today."), findsNothing);
   });
 
+  testWidgets('yesterday incomplete task stays on Today in red', (
+    tester,
+  ) async {
+    final repository = TaskRepository(db);
+    final yesterday = DateTime.now().subtract(const Duration(days: 1));
+    await repository.createTask(
+      domain.TaskDraft(
+        title: 'Missed follow up',
+        scheduledDate: DateTime(yesterday.year, yesterday.month, yesterday.day),
+      ),
+    );
+
+    await tester.pumpWidget(wrap());
+    await tester.pumpAndSettle();
+
+    final titleText = tester.widget<Text>(find.text('Missed follow up'));
+
+    expect(titleText.style?.color, const Color(0xFFD92D20));
+    expect(find.widgetWithText(TextButton, 'Reschedule'), findsOneWidget);
+  });
+
+  testWidgets('reschedule action moves overdue task to today', (tester) async {
+    final repository = TaskRepository(db);
+    final yesterday = DateTime.now().subtract(const Duration(days: 1));
+    final taskId = await repository.createTask(
+      domain.TaskDraft(
+        title: 'Move missed task',
+        scheduledDate: DateTime(yesterday.year, yesterday.month, yesterday.day),
+      ),
+    );
+
+    await tester.pumpWidget(wrap());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(TextButton, 'Reschedule'));
+    await tester.pumpAndSettle();
+
+    final today = DateTime.now();
+    final expectedDate = DateTime(today.year, today.month, today.day);
+    final task = await repository.getTask(taskId);
+    final titleText = tester.widget<Text>(find.text('Move missed task'));
+
+    expect(task?.scheduledDate, expectedDate);
+    expect(titleText.style?.color, const Color(0xFF000000));
+    expect(find.widgetWithText(TextButton, 'Reschedule'), findsNothing);
+  });
+
+  testWidgets('today incomplete task stays normal instead of red', (
+    tester,
+  ) async {
+    final repository = TaskRepository(db);
+    await repository.createTask(
+      domain.TaskDraft(title: 'Due today', scheduledDate: DateTime.now()),
+    );
+
+    await tester.pumpWidget(wrap());
+    await tester.pumpAndSettle();
+
+    final titleText = tester.widget<Text>(find.text('Due today'));
+
+    expect(titleText.style?.color, const Color(0xFF000000));
+    expect(find.widgetWithText(TextButton, 'Reschedule'), findsNothing);
+  });
+
   testWidgets('editing a task title updates the Today list', (tester) async {
     await tester.pumpWidget(wrap());
 
@@ -448,5 +512,3 @@ void main() {
     expect(barrierColors, contains(const Color(0xB8000000)));
   });
 }
-
-

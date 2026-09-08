@@ -12,6 +12,7 @@ class SyncTasksColorScheme extends ThemeExtension<SyncTasksColorScheme> {
     required this.controlPrimary,
     required this.controlForeground,
     required this.destructive,
+    required this.completed,
     required this.activityIntensity,
   });
 
@@ -24,6 +25,7 @@ class SyncTasksColorScheme extends ThemeExtension<SyncTasksColorScheme> {
   final Color controlPrimary;
   final Color controlForeground;
   final Color destructive;
+  final Color completed;
   final List<Color> activityIntensity;
 
   static const light = SyncTasksColorScheme(
@@ -36,6 +38,7 @@ class SyncTasksColorScheme extends ThemeExtension<SyncTasksColorScheme> {
     controlPrimary: Color(0xFF000000),
     controlForeground: Color(0xFFFFFFFF),
     destructive: Color(0xFFD92D20),
+    completed: Color(0xFF248A3D),
     activityIntensity: [
       Color(0xFFE5E5EA),
       Color(0xFFC7C7CC),
@@ -55,6 +58,7 @@ class SyncTasksColorScheme extends ThemeExtension<SyncTasksColorScheme> {
     controlPrimary: Color(0xFFFFFFFF),
     controlForeground: Color(0xFF000000),
     destructive: Color(0xFFFF453A),
+    completed: Color(0xFF30D158),
     activityIntensity: [
       Color(0xFF2C2C2E),
       Color(0xFF48484A),
@@ -79,6 +83,7 @@ class SyncTasksColorScheme extends ThemeExtension<SyncTasksColorScheme> {
     Color? controlPrimary,
     Color? controlForeground,
     Color? destructive,
+    Color? completed,
     List<Color>? activityIntensity,
   }) {
     return SyncTasksColorScheme(
@@ -91,6 +96,7 @@ class SyncTasksColorScheme extends ThemeExtension<SyncTasksColorScheme> {
       controlPrimary: controlPrimary ?? this.controlPrimary,
       controlForeground: controlForeground ?? this.controlForeground,
       destructive: destructive ?? this.destructive,
+      completed: completed ?? this.completed,
       activityIntensity: activityIntensity ?? this.activityIntensity,
     );
   }
@@ -122,6 +128,7 @@ class SyncTasksColorScheme extends ThemeExtension<SyncTasksColorScheme> {
         t,
       )!,
       destructive: Color.lerp(destructive, other.destructive, t)!,
+      completed: Color.lerp(completed, other.completed, t)!,
       activityIntensity: [
         for (var i = 0; i < activityIntensity.length; i++)
           Color.lerp(activityIntensity[i], other.activityIntensity[i], t)!,
@@ -129,5 +136,3 @@ class SyncTasksColorScheme extends ThemeExtension<SyncTasksColorScheme> {
     );
   }
 }
-
-

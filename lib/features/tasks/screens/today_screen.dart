@@ -224,6 +224,8 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                 onTaskLongPress: _selectTask,
                 onSelectionToggle: _toggleTaskSelection,
                 onComplete: (task) => unawaited(_completeTask(ref, task)),
+                onRescheduleToday: (task) =>
+                    unawaited(_rescheduleTaskToToday(ref, task)),
                 onDelete: (task) => unawaited(_deleteTask(ref, task)),
               ),
             ),
@@ -585,6 +587,13 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
     invalidateTaskListProviders(ref, folderIds: [task.folderId]);
   }
 
+  Future<void> _rescheduleTaskToToday(WidgetRef ref, Task task) async {
+    await ref.read(taskControllerProvider).rescheduleTasks([
+      task.id,
+    ], _todayDate());
+    invalidateTaskListProviders(ref, folderIds: [task.folderId]);
+  }
+
   Future<void> _updateTask(
     WidgetRef ref,
     Task task,
@@ -638,6 +647,7 @@ class _TodayBody extends StatelessWidget {
     required this.onCreate,
     required this.onTaskTap,
     required this.onComplete,
+    required this.onRescheduleToday,
     required this.onDelete,
     required this.selectionMode,
     required this.selectedTaskIds,
@@ -650,6 +660,7 @@ class _TodayBody extends StatelessWidget {
   final VoidCallback onCreate;
   final ValueChanged<Task> onTaskTap;
   final ValueChanged<Task> onComplete;
+  final ValueChanged<Task> onRescheduleToday;
   final ValueChanged<Task> onDelete;
   final bool selectionMode;
   final Set<int> selectedTaskIds;
@@ -668,6 +679,7 @@ class _TodayBody extends StatelessWidget {
           padding: const EdgeInsets.only(top: 26, bottom: 108),
           itemBuilder: (context, index) {
             final task = tasks[index];
+            final isOverdueIncomplete = _isOverdueIncomplete(task);
             return TaskRow(
               title: task.title,
               metadata: taskMetadataFor(
@@ -675,12 +687,18 @@ class _TodayBody extends StatelessWidget {
                 folderNamesById: folderNamesById,
                 includeDate: false,
               ),
+              textState: isOverdueIncomplete
+                  ? TaskRowTextState.overdueIncomplete
+                  : TaskRowTextState.normal,
               selectionMode: selectionMode,
               isSelected: selectedTaskIds.contains(task.id),
               onSelectionToggle: () => onSelectionToggle(task),
               onLongPress: () => onTaskLongPress(task),
               onTap: () => onTaskTap(task),
               onComplete: () => onComplete(task),
+              onRescheduleToday: isOverdueIncomplete
+                  ? () => onRescheduleToday(task)
+                  : null,
               onDelete: () => onDelete(task),
             );
           },
@@ -691,6 +709,18 @@ class _TodayBody extends StatelessWidget {
       loading: () => _EmptyTodayState(onCreate: onCreate),
       error: (error, stackTrace) => _EmptyTodayState(onCreate: onCreate),
     );
+  }
+
+  bool _isOverdueIncomplete(Task task) {
+    final scheduledDate = task.scheduledDate;
+    if (task.isCompleted || scheduledDate == null) {
+      return false;
+    }
+    return _dateOnly(scheduledDate).isBefore(_dateOnly(DateTime.now()));
+  }
+
+  DateTime _dateOnly(DateTime value) {
+    return DateTime(value.year, value.month, value.day);
   }
 }
 
@@ -710,5 +740,3 @@ class _EmptyTodayState extends StatelessWidget {
     );
   }
 }
-
-

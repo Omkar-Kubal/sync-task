@@ -230,7 +230,7 @@ class TaskRepository {
   Future<List<Task>> listTodayTasks() async {
     final today = _dateOnly(_now());
     return (_activeTaskQuery()
-          ..where((task) => task.scheduledDate.equals(today))
+          ..where((task) => task.scheduledDate.isSmallerOrEqualValue(today))
           ..orderBy(_taskOrdering))
         .get();
   }
@@ -395,5 +395,3 @@ class TaskRepository {
   DateTime? _dateOnlyOrNull(DateTime? value) =>
       value == null ? null : _dateOnly(value);
 }
-
-

@@ -47,6 +47,29 @@ void main() {
     expect((await tasks.listCompletedTasks()).single.title, 'Today task');
   });
 
+  test('today includes active overdue and today tasks only', () async {
+    await tasks.createTask(
+      TaskDraft(title: 'Overdue task', scheduledDate: DateTime(2026, 8, 30)),
+    );
+    await tasks.createTask(
+      TaskDraft(title: 'Today task', scheduledDate: DateTime(2026, 8, 31)),
+    );
+    await tasks.createTask(
+      TaskDraft(title: 'Future task', scheduledDate: DateTime(2026, 9, 1)),
+    );
+    final completedId = await tasks.createTask(
+      TaskDraft(
+        title: 'Completed overdue task',
+        scheduledDate: DateTime(2026, 8, 30),
+      ),
+    );
+    await tasks.completeTask(completedId);
+
+    final today = await tasks.listTodayTasks();
+
+    expect(today.map((task) => task.title), ['Overdue task', 'Today task']);
+  });
+
   test('all active tasks excludes completed tasks', () async {
     await tasks.createTask(const TaskDraft(title: 'Active no date'));
     final completedId = await tasks.createTask(
@@ -205,5 +228,3 @@ void main() {
     },
   );
 }
-
-

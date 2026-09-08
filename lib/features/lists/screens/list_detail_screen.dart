@@ -589,6 +589,7 @@ class _CompletedTaskList extends StatelessWidget {
                   onComplete: () => onRestore(task),
                   onDelete: () => onDelete(task),
                   isCompleted: true,
+                  textState: TaskRowTextState.completed,
                 ),
               ),
             ),
@@ -788,5 +789,3 @@ class _MissingFolderScreen extends StatelessWidget {
 String? _metadataFor(Task task) {
   return taskMetadataFor(task);
 }
-
-

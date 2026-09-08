@@ -236,6 +236,88 @@ void main() {
       const Size(44, 44),
     );
   });
+
+  testWidgets('overdue task row uses red title and shows reschedule action', (
+    tester,
+  ) async {
+    var rescheduled = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildSyncTasksTheme(Brightness.light),
+        home: Scaffold(
+          body: TaskRow(
+            title: 'File taxes',
+            textState: TaskRowTextState.overdueIncomplete,
+            onTap: () {},
+            onComplete: () {},
+            onDelete: () {},
+            onRescheduleToday: () => rescheduled = true,
+          ),
+        ),
+      ),
+    );
+
+    final titleText = tester.widget<Text>(find.text('File taxes'));
+
+    expect(titleText.style?.color, const Color(0xFFD92D20));
+    expect(titleText.style?.decoration, TextDecoration.none);
+    expect(find.widgetWithText(TextButton, 'Reschedule'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(TextButton, 'Reschedule'));
+
+    expect(rescheduled, isTrue);
+  });
+
+  testWidgets('completed task row uses green title and keeps strikethrough', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildSyncTasksTheme(Brightness.light),
+        home: Scaffold(
+          body: TaskRow(
+            title: 'Ship release',
+            isCompleted: true,
+            textState: TaskRowTextState.completed,
+            onTap: () {},
+            onComplete: () {},
+            onDelete: () {},
+          ),
+        ),
+      ),
+    );
+
+    final titleText = tester.widget<Text>(find.text('Ship release'));
+
+    expect(titleText.style?.color, const Color(0xFF248A3D));
+    expect(titleText.style?.decoration, TextDecoration.lineThrough);
+    expect(find.widgetWithText(TextButton, 'Reschedule'), findsNothing);
+  });
+
+  testWidgets('normal task row keeps primary title color without reschedule', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildSyncTasksTheme(Brightness.light),
+        home: Scaffold(
+          body: TaskRow(
+            title: 'Write report',
+            onTap: () {},
+            onComplete: () {},
+            onDelete: () {},
+          ),
+        ),
+      ),
+    );
+
+    final titleText = tester.widget<Text>(find.text('Write report'));
+
+    expect(titleText.style?.color, const Color(0xFF000000));
+    expect(titleText.style?.decoration, TextDecoration.none);
+    expect(find.widgetWithText(TextButton, 'Reschedule'), findsNothing);
+  });
 }
 
 List<Object?> _captureHaptics(WidgetTester tester) {
@@ -257,5 +339,3 @@ List<Object?> _captureHaptics(WidgetTester tester) {
   );
   return calls;
 }
-
-

@@ -5,6 +5,8 @@ import '../../../core/theme/synctasks_color_scheme.dart';
 import '../../../shared/motion/sync_motion.dart';
 import '../../../shared/services/sync_haptics.dart';
 
+enum TaskRowTextState { normal, overdueIncomplete, completed }
+
 class TaskRow extends StatelessWidget {
   const TaskRow({
     required this.title,
@@ -12,16 +14,19 @@ class TaskRow extends StatelessWidget {
     required this.onComplete,
     required this.onDelete,
     this.metadata,
+    this.textState = TaskRowTextState.normal,
     this.isCompleted = false,
     this.selectionMode = false,
     this.isSelected = false,
     this.onSelectionToggle,
     this.onLongPress,
+    this.onRescheduleToday,
     super.key,
   });
 
   final String title;
   final String? metadata;
+  final TaskRowTextState textState;
   final VoidCallback onTap;
   final VoidCallback onComplete;
   final VoidCallback onDelete;
@@ -30,12 +35,24 @@ class TaskRow extends StatelessWidget {
   final bool isSelected;
   final VoidCallback? onSelectionToggle;
   final VoidCallback? onLongPress;
+  final VoidCallback? onRescheduleToday;
 
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
     final label = metadata == null ? title : '$title, $metadata';
     final showCheckmark = selectionMode ? isSelected : isCompleted;
+    final effectiveTextState =
+        textState == TaskRowTextState.normal && isCompleted
+        ? TaskRowTextState.completed
+        : textState;
+    final titleColor = switch (effectiveTextState) {
+      TaskRowTextState.overdueIncomplete => colors.destructive,
+      TaskRowTextState.completed => colors.completed,
+      TaskRowTextState.normal => colors.textPrimary,
+    };
+    final isCompletedText = effectiveTextState == TaskRowTextState.completed;
+
     void handleTap() {
       SyncHaptics.selection();
       if (selectionMode) {
@@ -178,12 +195,12 @@ class TaskRow extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
-                              color: colors.textPrimary,
+                              color: titleColor,
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               letterSpacing: 0,
                               height: 1.08,
-                              decoration: isCompleted
+                              decoration: isCompletedText
                                   ? TextDecoration.lineThrough
                                   : null,
                               decorationColor: colors.textSecondary,
@@ -207,6 +224,27 @@ class TaskRow extends StatelessWidget {
                               ),
                         ),
                       ],
+                      if (!selectionMode && onRescheduleToday != null) ...[
+                        const SizedBox(height: 2),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: TextButton.icon(
+                            onPressed: onRescheduleToday,
+                            style: TextButton.styleFrom(
+                              foregroundColor: colors.destructive,
+                              visualDensity: VisualDensity.compact,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              padding: EdgeInsets.zero,
+                              minimumSize: const Size(0, 30),
+                            ),
+                            icon: const Icon(
+                              Icons.event_repeat_rounded,
+                              size: 16,
+                            ),
+                            label: const Text('Reschedule'),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -218,5 +256,3 @@ class TaskRow extends StatelessWidget {
     );
   }
 }
-
-

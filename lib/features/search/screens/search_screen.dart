@@ -153,6 +153,9 @@ class _SearchResultsState extends ConsumerState<_SearchResults> {
                 onComplete: () => _toggleComplete(ref, task),
                 onDelete: () => _deleteTask(ref, task),
                 isCompleted: _isCompleted(task),
+                textState: _isCompleted(task)
+                    ? TaskRowTextState.completed
+                    : TaskRowTextState.normal,
               ),
           ],
         );
@@ -325,5 +328,3 @@ class _SearchEmptyState extends StatelessWidget {
     );
   }
 }
-
-
