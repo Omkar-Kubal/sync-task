@@ -24,12 +24,17 @@ class OptionSheet<T> extends StatelessWidget {
           Text(title, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 12),
           for (final entry in options.entries)
-            ListTile(
-              title: Text(entry.value),
-              onTap: () => onSelected(entry.key),
+            Material(
+              color: Colors.transparent,
+              child: ListTile(
+                title: Text(entry.value),
+                onTap: () => onSelected(entry.key),
+              ),
             ),
         ],
       ),
     );
   }
 }
+
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="widget_bg">#141414</color>
+    <color name="widget_text_primary">#FFFFFF</color>
+    <color name="widget_text_secondary">#8E8E93</color>
+    <color name="widget_divider">#262628</color>
+    <color name="widget_add_btn_bg">#2C2C2E</color>
+    <color name="widget_add_btn_stroke">#3A3A3C</color>
+    <color name="widget_time_bg">#202022</color>
+    <color name="widget_time_stroke">#2C2C2E</color>
+</resources>

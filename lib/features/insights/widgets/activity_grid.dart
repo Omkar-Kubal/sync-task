@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../core/theme/synctask_color_scheme.dart';
+import '../../../core/theme/synctasks_color_scheme.dart';
 import '../domain/activity_day.dart';
 
 class ActivityGrid extends StatelessWidget {
@@ -11,7 +11,7 @@ class ActivityGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
+    final colors = SyncTasksColorScheme.of(context);
     return Wrap(
       spacing: 4,
       runSpacing: 4,
@@ -19,7 +19,7 @@ class ActivityGrid extends StatelessWidget {
         for (final day in days)
           Semantics(
             label:
-                '${DateFormat.yMMMMd().format(day.date)}: ${day.completedFocusRunCount} completed focus runs',
+                '${DateFormat.yMMMMd().format(day.date)}: ${day.completedTaskCount} completed tasks',
             child: Container(
               width: 10,
               height: 10,
@@ -30,3 +30,5 @@ class ActivityGrid extends StatelessWidget {
     );
   }
 }
+
+

@@ -6,3 +6,5 @@ class Folders extends Table {
   DateTimeColumn get createdAt => dateTime()();
   IntColumn get sortOrder => integer()();
 }
+
+

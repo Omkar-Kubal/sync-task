@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
-import '../../../core/theme/synctask_color_scheme.dart';
+import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../shared/motion/sync_motion.dart';
+import '../../../shared/services/sync_haptics.dart';
 
 class TaskRow extends StatelessWidget {
   const TaskRow({
@@ -10,6 +12,11 @@ class TaskRow extends StatelessWidget {
     required this.onComplete,
     required this.onDelete,
     this.metadata,
+    this.isCompleted = false,
+    this.selectionMode = false,
+    this.isSelected = false,
+    this.onSelectionToggle,
+    this.onLongPress,
     super.key,
   });
 
@@ -18,68 +25,148 @@ class TaskRow extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onComplete;
   final VoidCallback onDelete;
+  final bool isCompleted;
+  final bool selectionMode;
+  final bool isSelected;
+  final VoidCallback? onSelectionToggle;
+  final VoidCallback? onLongPress;
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
+    final colors = SyncTasksColorScheme.of(context);
     final label = metadata == null ? title : '$title, $metadata';
+    final showCheckmark = selectionMode ? isSelected : isCompleted;
+    void handleTap() {
+      SyncHaptics.selection();
+      if (selectionMode) {
+        onSelectionToggle?.call();
+      } else {
+        onTap();
+      }
+    }
+
+    void handleComplete() {
+      SyncHaptics.complete();
+      if (selectionMode) {
+        onSelectionToggle?.call();
+      } else {
+        onComplete();
+      }
+    }
+
+    void handleDelete() {
+      SyncHaptics.destructive();
+      onDelete();
+    }
+
     return Semantics(
       label: label,
       button: true,
-      onTap: onTap,
-      onDismiss: onDelete,
+      onTap: handleTap,
+      onDismiss: selectionMode ? null : handleDelete,
       customSemanticsActions: {
-        CustomSemanticsAction(label: 'Complete'): onComplete,
-        CustomSemanticsAction(label: 'Delete'): onDelete,
+        if (selectionMode)
+          CustomSemanticsAction(label: isSelected ? 'Deselect' : 'Select'):
+              handleTap
+        else ...{
+          CustomSemanticsAction(label: isCompleted ? 'Restore' : 'Complete'):
+              handleComplete,
+          CustomSemanticsAction(label: 'Delete'): handleDelete,
+        },
       },
       child: Dismissible(
         key: ValueKey(title),
+        direction: selectionMode
+            ? DismissDirection.none
+            : DismissDirection.horizontal,
         confirmDismiss: (direction) async {
           if (direction == DismissDirection.startToEnd) {
-            onComplete();
+            handleComplete();
           } else {
-            onDelete();
+            handleDelete();
           }
           return false;
         },
         child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(18),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
+          onTap: handleTap,
+          onLongPress: () {
+            SyncHaptics.selection();
+            onLongPress?.call();
+          },
+          borderRadius: BorderRadius.circular(14),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 44),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Semantics(
                   button: true,
-                  label: 'Complete task',
+                  label: selectionMode
+                      ? (isSelected ? 'Deselect task' : 'Select task')
+                      : (isCompleted ? 'Restore task' : 'Complete task'),
                   child: InkResponse(
                     key: const Key('task-row-checkbox-button'),
-                    onTap: onComplete,
-                    radius: 18,
+                    onTap: handleComplete,
+                    radius: 17,
                     customBorder: const CircleBorder(),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 2,
-                        right: 2,
-                        bottom: 2,
-                      ),
-                      child: Container(
-                        key: const Key('task-row-checkbox'),
-                        width: 22,
-                        height: 22,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: colors.textPrimary,
-                            width: 1.8,
+                    child: SizedBox.square(
+                      dimension: 44,
+                      child: Center(
+                        child: AnimatedScale(
+                          key: const Key('task-row-checkbox-completion-scale'),
+                          scale: showCheckmark ? 1.08 : 1,
+                          duration: SyncMotion.shortDuration,
+                          curve: SyncMotion.enterCurve,
+                          child: Container(
+                            key: const Key('task-row-checkbox'),
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: showCheckmark ? colors.textPrimary : null,
+                              border: Border.all(
+                                color: colors.textPrimary,
+                                width: 1.6,
+                              ),
+                            ),
+                            child: AnimatedSwitcher(
+                              key: const Key(
+                                'task-row-checkbox-completion-switcher',
+                              ),
+                              duration: SyncMotion.shortDuration,
+                              reverseDuration: SyncMotion.microDuration,
+                              switchInCurve: SyncMotion.enterCurve,
+                              switchOutCurve: SyncMotion.exitCurve,
+                              transitionBuilder: (child, animation) {
+                                return FadeTransition(
+                                  opacity: animation,
+                                  child: ScaleTransition(
+                                    scale: animation,
+                                    child: child,
+                                  ),
+                                );
+                              },
+                              child: showCheckmark
+                                  ? Icon(
+                                      Icons.check_rounded,
+                                      key: const Key(
+                                        'task-row-checkbox-completed-icon',
+                                      ),
+                                      size: 15,
+                                      color: colors.scaffold,
+                                    )
+                                  : const SizedBox.shrink(
+                                      key: Key(
+                                        'task-row-checkbox-incomplete-icon',
+                                      ),
+                                    ),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 14),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,10 +179,14 @@ class TaskRow extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               color: colors.textPrimary,
-                              fontSize: 15,
+                              fontSize: 14,
                               fontWeight: FontWeight.w500,
                               letterSpacing: 0,
                               height: 1.08,
+                              decoration: isCompleted
+                                  ? TextDecoration.lineThrough
+                                  : null,
+                              decorationColor: colors.textSecondary,
                             ),
                       ),
                       if (metadata != null) ...[
@@ -106,7 +197,9 @@ class TaskRow extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(
-                                color: colors.textSecondary,
+                                color: colors.textSecondary.withValues(
+                                  alpha: 0.82,
+                                ),
                                 fontSize: 11,
                                 fontWeight: FontWeight.w400,
                                 letterSpacing: 0,
@@ -125,3 +218,5 @@ class TaskRow extends StatelessWidget {
     );
   }
 }
+
+

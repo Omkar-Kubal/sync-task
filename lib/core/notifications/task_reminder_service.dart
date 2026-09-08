@@ -1,4 +1,13 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'notification_service.dart';
+
+final notificationServiceProvider = Provider<NotificationScheduler>((ref) {
+  return NotificationService();
+});
+
+final taskReminderServiceProvider = Provider<TaskReminderService>((ref) {
+  return TaskReminderService(ref.watch(notificationServiceProvider));
+});
 
 class TaskReminderService {
   const TaskReminderService(this._notifications);
@@ -33,3 +42,5 @@ class TaskReminderService {
     return _notifications.cancel(taskId);
   }
 }
+
+

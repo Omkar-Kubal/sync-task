@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme/synctask_color_scheme.dart';
+import '../../core/theme/synctasks_color_scheme.dart';
 
 class SyncGroupedSection extends StatelessWidget {
   const SyncGroupedSection({
@@ -14,21 +14,15 @@ class SyncGroupedSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
+    final colors = SyncTasksColorScheme.of(context);
     return DecoratedBox(
       decoration: BoxDecoration(
         color: colors.surface,
-        border: Border.all(color: colors.divider),
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-          BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 2,
+            blurRadius: 8,
             offset: const Offset(0, 1),
           ),
         ],
@@ -53,3 +47,5 @@ class SyncGroupedSection extends StatelessWidget {
     );
   }
 }
+
+

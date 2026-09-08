@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:synctask/core/database/app_database.dart';
+import 'package:synctasks/core/database/app_database.dart';
 
 void main() {
   late AppDatabase db;
@@ -13,8 +13,8 @@ void main() {
     await db.close();
   });
 
-  test('database starts at explicit schema version one', () {
-    expect(db.schemaVersion, 1);
+  test('database starts at explicit schema version two', () {
+    expect(db.schemaVersion, 2);
   });
 
   test('database starts with permanent Inbox folder', () async {
@@ -60,3 +60,5 @@ void main() {
     },
   );
 }
+
+

@@ -5,40 +5,42 @@ class RecurrenceEngine {
     required DateTime anchorDate,
     required RecurrenceType type,
     required DateTime after,
+    int interval = 1,
   }) {
     final anchor = _dateOnly(anchorDate);
     final boundary = _dateOnly(after);
+    final step = interval < 1 ? 1 : interval;
     return switch (type) {
-      RecurrenceType.daily => _nextDaily(anchor, boundary),
-      RecurrenceType.weekly => _nextWeekly(anchor, boundary),
-      RecurrenceType.monthly => _nextMonthly(anchor, boundary),
+      RecurrenceType.daily => _nextDaily(anchor, boundary, step),
+      RecurrenceType.weekly => _nextWeekly(anchor, boundary, step),
+      RecurrenceType.monthly => _nextMonthly(anchor, boundary, step),
     };
   }
 
-  DateTime _nextDaily(DateTime anchor, DateTime boundary) {
+  DateTime _nextDaily(DateTime anchor, DateTime boundary, int step) {
     var candidate = anchor;
     while (!candidate.isAfter(boundary)) {
-      candidate = candidate.add(const Duration(days: 1));
+      candidate = candidate.add(Duration(days: step));
     }
     return candidate;
   }
 
-  DateTime _nextWeekly(DateTime anchor, DateTime boundary) {
+  DateTime _nextWeekly(DateTime anchor, DateTime boundary, int step) {
     var candidate = anchor;
     while (!candidate.isAfter(boundary)) {
-      candidate = candidate.add(const Duration(days: 7));
+      candidate = candidate.add(Duration(days: step * 7));
     }
     return candidate;
   }
 
-  DateTime _nextMonthly(DateTime anchor, DateTime boundary) {
-    var monthOffset = 1;
+  DateTime _nextMonthly(DateTime anchor, DateTime boundary, int step) {
+    var monthOffset = step;
     while (true) {
       final candidate = _clampedMonthDate(anchor, monthOffset);
       if (candidate.isAfter(boundary)) {
         return candidate;
       }
-      monthOffset++;
+      monthOffset += step;
     }
   }
 
@@ -52,3 +54,5 @@ class RecurrenceEngine {
   DateTime _dateOnly(DateTime value) =>
       DateTime(value.year, value.month, value.day);
 }
+
+

@@ -15,3 +15,5 @@ class FocusHistory extends Table {
   BoolColumn get wasExtended => boolean()();
   DateTimeColumn get createdAt => dateTime()();
 }
+
+

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../motion/sync_motion.dart';
 import 'sync_bottom_nav.dart';
 
 class AppShell extends StatefulWidget {
@@ -7,30 +8,33 @@ class AppShell extends StatefulWidget {
     required this.currentIndex,
     required this.onDestinationSelected,
     required this.child,
-    this.activeFocusBar,
     super.key,
   });
 
   final int currentIndex;
   final ValueChanged<int> onDestinationSelected;
   final Widget child;
-  final Widget? activeFocusBar;
 
   @override
   State<AppShell> createState() => _AppShellState();
 }
 
 class _AppShellState extends State<AppShell> {
-  static const _slideDistance = 0.22;
+  static const _slideDistance = SyncMotion.pageSlideDistance;
 
+  var _animatePageSwitch = false;
   var _slideDirection = 0;
 
   @override
   void didUpdateWidget(covariant AppShell oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _slideDirection = widget.currentIndex == oldWidget.currentIndex
-        ? 0
-        : (widget.currentIndex > oldWidget.currentIndex ? 1 : -1);
+    final sameTab = widget.currentIndex == oldWidget.currentIndex;
+    final includesTopBarRoute =
+        widget.currentIndex < 0 || oldWidget.currentIndex < 0;
+    _animatePageSwitch = !sameTab && !includesTopBarRoute;
+    _slideDirection = _animatePageSwitch
+        ? (widget.currentIndex > oldWidget.currentIndex ? 1 : -1)
+        : 0;
   }
 
   @override
@@ -38,20 +42,27 @@ class _AppShellState extends State<AppShell> {
     return Scaffold(
       body: SafeArea(
         child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 340),
-          reverseDuration: const Duration(milliseconds: 300),
+          duration: _animatePageSwitch
+              ? SyncMotion.pageDuration
+              : Duration.zero,
+          reverseDuration: _animatePageSwitch
+              ? SyncMotion.pageReverseDuration
+              : Duration.zero,
           transitionBuilder: (child, animation) {
+            if (!_animatePageSwitch) {
+              return child;
+            }
             final position = animation.drive(
               Tween<Offset>(
                 begin: Offset(_slideDirection * _slideDistance, 0),
                 end: Offset.zero,
-              ).chain(CurveTween(curve: Curves.easeInOutCubic)),
+              ).chain(CurveTween(curve: SyncMotion.standardCurve)),
             );
             final opacity = animation.drive(
               Tween<double>(
-                begin: 0.86,
+                begin: 0.94,
                 end: 1,
-              ).chain(CurveTween(curve: Curves.easeOut)),
+              ).chain(CurveTween(curve: SyncMotion.enterCurve)),
             );
             return SlideTransition(
               key: const Key('nav-page-slide'),
@@ -68,7 +79,6 @@ class _AppShellState extends State<AppShell> {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (widget.activeFocusBar != null) widget.activeFocusBar!,
           SyncBottomNav(
             currentIndex: widget.currentIndex,
             onTap: widget.onDestinationSelected,
@@ -78,3 +88,5 @@ class _AppShellState extends State<AppShell> {
     );
   }
 }
+
+

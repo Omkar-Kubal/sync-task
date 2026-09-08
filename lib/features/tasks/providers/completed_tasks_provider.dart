@@ -6,3 +6,5 @@ import 'task_controller.dart';
 final completedTasksProvider = FutureProvider<List<Task>>((ref) {
   return ref.watch(taskRepositoryProvider).listCompletedTasks();
 });
+
+

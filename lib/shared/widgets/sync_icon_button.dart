@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme/synctask_color_scheme.dart';
+import '../../core/theme/synctasks_color_scheme.dart';
 
 class SyncIconButton extends StatelessWidget {
   const SyncIconButton({
@@ -16,7 +16,7 @@ class SyncIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
+    final colors = SyncTasksColorScheme.of(context);
     return Semantics(
       button: true,
       label: semanticLabel,
@@ -25,13 +25,19 @@ class SyncIconButton extends StatelessWidget {
         tooltip: semanticLabel,
         constraints: const BoxConstraints.tightFor(width: 44, height: 44),
         style: IconButton.styleFrom(
+          fixedSize: const Size.square(44),
+          minimumSize: const Size.square(44),
           backgroundColor: colors.surface,
           foregroundColor: colors.textPrimary,
+          padding: EdgeInsets.zero,
           side: BorderSide(color: colors.divider),
           shape: const CircleBorder(),
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
-        icon: Icon(icon),
+        icon: Icon(icon, size: 22),
       ),
     );
   }
 }
+
+

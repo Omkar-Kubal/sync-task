@@ -4,5 +4,7 @@ import '../../../core/database/app_database.dart';
 import 'task_controller.dart';
 
 final upcomingTasksProvider = FutureProvider<List<Task>>((ref) {
-  return ref.watch(taskRepositoryProvider).listUpcomingTasks();
+  return ref.watch(taskRepositoryProvider).listAllActiveTasks();
 });
+
+

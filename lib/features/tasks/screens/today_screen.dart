@@ -1,34 +1,50 @@
+import '../domain/recurrence_type.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/database/app_database.dart';
-import '../../../core/theme/synctask_color_scheme.dart';
-import '../../focus/domain/focus_launch.dart';
+import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../shared/icons/sync_icons.dart';
+import '../../../shared/services/sync_haptics.dart';
+import '../../../shared/widgets/sync_empty_state.dart';
 import '../../../shared/widgets/sync_fab.dart';
+import '../../lists/providers/list_tasks_provider.dart';
+import '../../settings/screens/settings_screen.dart';
 import '../domain/task.dart' as domain;
+import '../providers/folders_provider.dart';
 import '../providers/task_controller.dart';
 import '../providers/today_tasks_provider.dart';
-import '../providers/upcoming_tasks_provider.dart';
+import '../widgets/task_bulk_action_bar.dart';
 import '../widgets/task_create_sheet.dart';
 import '../widgets/task_edit_sheet.dart';
+import '../widgets/task_metadata.dart';
 import '../widgets/task_row.dart';
+import 'upcoming_screen.dart';
 
-class TodayScreen extends ConsumerWidget {
+class TodayScreen extends ConsumerStatefulWidget {
   const TodayScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TodayScreen> createState() => _TodayScreenState();
+}
+
+class _TodayScreenState extends ConsumerState<TodayScreen> {
+  final Set<int> _selectedTaskIds = {};
+
+  @override
+  Widget build(BuildContext context) {
     final now = DateTime.now();
-    final colors = SyncTaskColorScheme.of(context);
+    final colors = SyncTasksColorScheme.of(context);
     final textTheme = Theme.of(context).textTheme;
     final tasksValue = ref.watch(todayTasksProvider);
+    final foldersById = _foldersById(ref.watch(foldersProvider).value);
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+        padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -36,75 +52,179 @@ class TodayScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: Text(
-                    'Today',
-                    style: textTheme.displaySmall?.copyWith(
-                      color: colors.textPrimary,
-                      fontSize: 40,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0,
-                      height: 1.1,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Today',
+                        style: textTheme.displaySmall?.copyWith(
+                          color: colors.textPrimary,
+                          fontSize: 29,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0,
+                          height: 1.18,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '${now.day}',
+                        style: textTheme.headlineLarge?.copyWith(
+                          color: colors.textPrimary,
+                          fontSize: 19,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0,
+                          height: 1,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        _monthLabel(now.month),
+                        style: textTheme.titleLarge?.copyWith(
+                          color: colors.textSecondary,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 0,
+                          height: 1.43,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      DateFormat('d').format(now),
-                      style: textTheme.headlineLarge?.copyWith(
-                        color: colors.textPrimary,
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0,
-                        height: 1,
+                Container(
+                  key: const Key('today-top-actions-pill'),
+                  height: 52,
+                  padding: const EdgeInsets.symmetric(horizontal: 3),
+                  decoration: BoxDecoration(
+                    color: colors.surface,
+                    borderRadius: BorderRadius.circular(28),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Semantics(
+                        button: true,
+                        label: 'Open Upcoming',
+                        child: IconButton(
+                          onPressed: () {
+                            SyncHaptics.selection();
+                            _showUpcomingSheet(context);
+                          },
+                          style: IconButton.styleFrom(
+                            fixedSize: const Size(46, 46),
+                            minimumSize: const Size(46, 46),
+                            foregroundColor: colors.textPrimary,
+                            padding: EdgeInsets.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            shape: const CircleBorder(),
+                          ),
+                          tooltip: 'Open Upcoming',
+                          icon: ExcludeSemantics(
+                            child: HugeIcon(
+                              icon: HugeIcons.strokeRoundedCalendar04,
+                              size: 28,
+                              color: colors.textPrimary,
+                              strokeWidth: 1.5,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      DateFormat('MMM').format(now),
-                      style: textTheme.titleLarge?.copyWith(
-                        color: colors.textSecondary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 0,
-                        height: 1.43,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: VerticalDivider(
+                          width: 1,
+                          thickness: 1,
+                          color: colors.divider,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(width: 12),
-                Semantics(
-                  button: true,
-                  label: 'More options',
-                  child: IconButton(
-                    onPressed: () => _showMoreMenu(context),
-                    tooltip: 'More options',
-                    constraints: const BoxConstraints.tightFor(
-                      width: 40,
-                      height: 40,
-                    ),
-                    style: IconButton.styleFrom(
-                      backgroundColor: colors.surface,
-                      foregroundColor: colors.textPrimary,
-                      padding: EdgeInsets.zero,
-                      side: BorderSide.none,
-                      shape: const CircleBorder(),
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
-                    icon: const Icon(Icons.more_horiz, size: 22),
+                      Semantics(
+                        button: true,
+                        label: 'Search tasks',
+                        child: IconButton(
+                          onPressed: () {
+                            SyncHaptics.selection();
+                            context.go('/today/search');
+                          },
+                          style: IconButton.styleFrom(
+                            fixedSize: const Size(46, 46),
+                            minimumSize: const Size(46, 46),
+                            foregroundColor: colors.textPrimary,
+                            padding: EdgeInsets.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            shape: const CircleBorder(),
+                          ),
+                          tooltip: 'Search',
+                          icon: ExcludeSemantics(
+                            child: Icon(
+                              SyncIcons.search,
+                              size: 28,
+                              color: colors.textPrimary,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: VerticalDivider(
+                          width: 1,
+                          thickness: 1,
+                          color: colors.divider,
+                        ),
+                      ),
+                      Semantics(
+                        button: true,
+                        label: 'Settings',
+                        child: IconButton(
+                          key: const Key('today-settings-button'),
+                          onPressed: () {
+                            SyncHaptics.selection();
+                            _showSettingsSheet(context);
+                          },
+                          style: IconButton.styleFrom(
+                            fixedSize: const Size(46, 46),
+                            minimumSize: const Size(46, 46),
+                            foregroundColor: colors.textPrimary,
+                            padding: EdgeInsets.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            shape: const CircleBorder(),
+                          ),
+                          tooltip: 'Settings',
+                          icon: ExcludeSemantics(
+                            child: HugeIcon(
+                              icon: HugeIcons.strokeRoundedSetting07,
+                              size: 28,
+                              color: colors.textPrimary,
+                              strokeWidth: 1.5,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
+            if (_selectedTaskIds.isNotEmpty)
+              TaskBulkActionBar(
+                selectedCount: _selectedTaskIds.length,
+                onCancel: _clearSelection,
+                onReschedule: () => _showBulkRescheduleSheet(context),
+                onMove: () => _showBulkMoveSheet(context),
+                onComplete: () => unawaited(_completeSelectedTasks()),
+                onDelete: () => unawaited(_deleteSelectedTasks()),
+              ),
             Expanded(
               child: _TodayBody(
                 tasksValue: tasksValue,
+                folderNamesById: foldersById,
                 onCreate: () => _showCreateSheet(context, ref),
                 onTaskTap: (task) => _showEditSheet(context, ref, task: task),
-                onComplete: (task) => unawaited(_completeTask(ref, task.id)),
-                onDelete: (task) => unawaited(_deleteTask(ref, task.id)),
+                selectionMode: _selectedTaskIds.isNotEmpty,
+                selectedTaskIds: _selectedTaskIds,
+                onTaskLongPress: _selectTask,
+                onSelectionToggle: _toggleTaskSelection,
+                onComplete: (task) => unawaited(_completeTask(ref, task)),
+                onDelete: (task) => unawaited(_deleteTask(ref, task)),
               ),
             ),
           ],
@@ -120,47 +240,217 @@ class TodayScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _showMoreMenu(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
-    final screenWidth = MediaQuery.sizeOf(context).width;
-    final textStyle = Theme.of(context).textTheme.titleMedium?.copyWith(
-      color: colors.textPrimary,
-      fontSize: 15,
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0,
-    );
+  void _selectTask(Task task) {
+    setState(() {
+      _selectedTaskIds.add(task.id);
+    });
+  }
 
-    return showMenu<void>(
+  void _toggleTaskSelection(Task task) {
+    setState(() {
+      if (!_selectedTaskIds.add(task.id)) {
+        _selectedTaskIds.remove(task.id);
+      }
+    });
+  }
+
+  void _clearSelection() {
+    setState(_selectedTaskIds.clear);
+  }
+
+  Future<void> _completeSelectedTasks() async {
+    final taskIds = _selectedTaskIds.toList(growable: false);
+    if (taskIds.isEmpty) {
+      return;
+    }
+    final folderIds = await _folderIdsFor(taskIds);
+    await ref.read(taskControllerProvider).completeTasks(taskIds);
+    if (!mounted) {
+      return;
+    }
+    _clearSelection();
+    invalidateTaskListProviders(ref, folderIds: folderIds);
+  }
+
+  Future<void> _deleteSelectedTasks() async {
+    final taskIds = _selectedTaskIds.toList(growable: false);
+    if (taskIds.isEmpty) {
+      return;
+    }
+    final folderIds = await _folderIdsFor(taskIds);
+    await ref.read(taskControllerProvider).deleteTasks(taskIds);
+    if (!mounted) {
+      return;
+    }
+    _clearSelection();
+    invalidateTaskListProviders(ref, folderIds: folderIds);
+  }
+
+  Future<void> _rescheduleSelectedTasks(DateTime? scheduledDate) async {
+    final taskIds = _selectedTaskIds.toList(growable: false);
+    if (taskIds.isEmpty) {
+      return;
+    }
+    final folderIds = await _folderIdsFor(taskIds);
+    await ref
+        .read(taskControllerProvider)
+        .rescheduleTasks(taskIds, scheduledDate);
+    if (!mounted) {
+      return;
+    }
+    _clearSelection();
+    invalidateTaskListProviders(ref, folderIds: folderIds);
+  }
+
+  Future<void> _moveSelectedTasksToFolder(int folderId) async {
+    final taskIds = _selectedTaskIds.toList(growable: false);
+    if (taskIds.isEmpty) {
+      return;
+    }
+    final folderIds = await _folderIdsFor(taskIds)
+      ..add(folderId);
+    await ref.read(taskControllerProvider).moveTasksToFolder(taskIds, folderId);
+    if (!mounted) {
+      return;
+    }
+    _clearSelection();
+    invalidateTaskListProviders(ref, folderIds: folderIds);
+  }
+
+  Future<Set<int>> _folderIdsFor(Iterable<int> taskIds) async {
+    final repository = ref.read(taskRepositoryProvider);
+    final folderIds = <int>{};
+    for (final taskId in taskIds) {
+      final task = await repository.getTask(taskId);
+      if (task != null) {
+        folderIds.add(task.folderId);
+      }
+    }
+    return folderIds;
+  }
+
+  void _showBulkRescheduleSheet(BuildContext context) {
+    final today = _todayDate();
+    final tomorrow = today.add(const Duration(days: 1));
+    final nextWeek = today.add(const Duration(days: 7));
+    showModalBottomSheet<void>(
       context: context,
-      color: colors.surface,
-      elevation: 10,
-      shadowColor: colors.textPrimary.withValues(alpha: 0.12),
-      surfaceTintColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: colors.divider),
-        borderRadius: BorderRadius.circular(24),
-      ),
-      position: RelativeRect.fromLTRB(screenWidth - 212, 64, 20, 0),
-      items: [
-        PopupMenuItem<void>(
-          height: 54,
-          child: _HomeMenuRow(
-            icon: Icons.tune,
-            label: 'View',
-            textStyle: textStyle,
+      useRootNavigator: true,
+      barrierColor: Theme.of(context).bottomSheetTheme.modalBarrierColor,
+      builder: (sheetContext) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: const Text('Today'),
+                onTap: () {
+                  Navigator.of(sheetContext).pop();
+                  unawaited(_rescheduleSelectedTasks(today));
+                },
+              ),
+              ListTile(
+                title: const Text('Tomorrow'),
+                onTap: () {
+                  Navigator.of(sheetContext).pop();
+                  unawaited(_rescheduleSelectedTasks(tomorrow));
+                },
+              ),
+              ListTile(
+                title: const Text('Next week'),
+                onTap: () {
+                  Navigator.of(sheetContext).pop();
+                  unawaited(_rescheduleSelectedTasks(nextWeek));
+                },
+              ),
+              ListTile(
+                title: const Text('No date'),
+                onTap: () {
+                  Navigator.of(sheetContext).pop();
+                  unawaited(_rescheduleSelectedTasks(null));
+                },
+              ),
+            ],
           ),
-        ),
-        PopupMenuDivider(height: 1, color: colors.divider),
-        PopupMenuItem<void>(
-          height: 54,
-          child: _HomeMenuRow(
-            icon: Icons.copy_outlined,
-            label: 'Select tasks',
-            textStyle: textStyle,
-          ),
-        ),
-      ],
+        );
+      },
     );
+  }
+
+  void _showBulkMoveSheet(BuildContext context) {
+    final folders = ref.read(foldersProvider).value ?? const <Folder>[];
+    showModalBottomSheet<void>(
+      context: context,
+      useRootNavigator: true,
+      barrierColor: Theme.of(context).bottomSheetTheme.modalBarrierColor,
+      builder: (sheetContext) {
+        return SafeArea(
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              for (final folder in folders)
+                ListTile(
+                  title: Text(folder.name),
+                  onTap: () {
+                    Navigator.of(sheetContext).pop();
+                    unawaited(_moveSelectedTasksToFolder(folder.id));
+                  },
+                ),
+              if (folders.isEmpty)
+                const ListTile(title: Text('No folders available')),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showUpcomingSheet(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useRootNavigator: true,
+      useSafeArea: true,
+      backgroundColor: colors.scaffold,
+      constraints: BoxConstraints.tight(MediaQuery.sizeOf(context)),
+      builder: (sheetContext) {
+        return UpcomingScreen(onClose: () => Navigator.of(sheetContext).pop());
+      },
+    );
+  }
+
+  void _showSettingsSheet(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useRootNavigator: true,
+      useSafeArea: true,
+      backgroundColor: colors.scaffold,
+      constraints: BoxConstraints.tight(MediaQuery.sizeOf(context)),
+      builder: (sheetContext) {
+        return SettingsScreen(onClose: () => Navigator.of(sheetContext).pop());
+      },
+    );
+  }
+
+  String _monthLabel(int month) {
+    return switch (month) {
+      1 => 'Jan',
+      2 => 'Feb',
+      3 => 'Mar',
+      4 => 'Apr',
+      5 => 'May',
+      6 => 'Jun',
+      7 => 'Jul',
+      8 => 'Aug',
+      9 => 'Sept',
+      10 => 'Oct',
+      11 => 'Nov',
+      12 => 'Dec',
+      _ => '',
+    };
   }
 
   void _showCreateSheet(BuildContext context, WidgetRef ref) {
@@ -176,13 +466,13 @@ class TodayScreen extends ConsumerWidget {
             bottom: MediaQuery.viewInsetsOf(sheetContext).bottom,
           ),
           child: TaskCreateSheet(
-            onSubmit: (title) =>
-                unawaited(_createTask(sheetContext, ref, title)),
-            onTodaySelected: () {
+            onSubmit: (title, folderId) =>
+                unawaited(_createTask(sheetContext, ref, title, folderId)),
+            onTodaySelected: (title, folderId) {
               Navigator.of(sheetContext).pop();
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 if (context.mounted) {
-                  _showEditSheet(context, ref);
+                  _showEditSheet(context, ref, initialTitle: title.trim());
                 }
               });
             },
@@ -192,7 +482,25 @@ class TodayScreen extends ConsumerWidget {
     );
   }
 
-  void _showEditSheet(BuildContext context, WidgetRef ref, {Task? task}) {
+  void _showEditSheet(
+    BuildContext context,
+    WidgetRef ref, {
+    Task? task,
+    String? initialTitle,
+  }) async {
+    RecurrenceType? recurrenceType;
+    TaskSery? series;
+    if (task?.seriesId != null) {
+      series = await ref
+          .read(taskRepositoryProvider)
+          .getSeriesForTask(task!.seriesId!);
+      if (series != null) {
+        recurrenceType = RecurrenceType.fromStorage(series.repeatType);
+      }
+    }
+
+    if (!context.mounted) return;
+
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -205,27 +513,19 @@ class TodayScreen extends ConsumerWidget {
             bottom: MediaQuery.viewInsetsOf(sheetContext).bottom,
           ),
           child: TaskEditSheet(
-            title: task?.title ?? '',
+            title: task?.title ?? initialTitle ?? '',
             scheduledDate: task?.scheduledDate ?? _todayDate(),
             scheduledTime: task?.scheduledTime,
             reminderTime: task?.reminderTime,
             focusDurationMinutes: task?.focusDurationMinutes,
+            recurrenceType: recurrenceType,
+            recurrenceInterval: series?.recurrenceInterval,
+            customRepeatLabel: series?.customRepeatLabel,
             onCancel: () => Navigator.of(sheetContext).pop(),
             onDone: () => Navigator.of(sheetContext).pop(),
-            onStartFocus: () =>
-                _startFocusFromTask(context, sheetContext, task),
-            onStartFocusWithUpdate: task == null
-                ? null
-                : (update) => _saveAndStartFocusFromTask(
-                    context,
-                    sheetContext,
-                    ref,
-                    task,
-                    update,
-                  ),
             onSave: task == null
                 ? (update) => _createTaskFromUpdate(ref, update)
-                : (update) => _updateTask(ref, task.id, update),
+                : (update) => _updateTask(ref, task, update),
           ),
         );
       },
@@ -235,23 +535,32 @@ class TodayScreen extends ConsumerWidget {
   Future<void> _createTask(
     BuildContext sheetContext,
     WidgetRef ref,
-    String title,
-  ) async {
+    String title, [
+    int? folderId,
+  ]) async {
     final trimmedTitle = title.trim();
     if (trimmedTitle.isEmpty) {
       return;
     }
 
     final now = DateTime.now();
-    await ref
+    final id = await ref
         .read(taskControllerProvider)
         .create(
           domain.TaskDraft(
             title: trimmedTitle,
+            folderId: folderId,
             scheduledDate: DateTime(now.year, now.month, now.day),
           ),
         );
-    _invalidateTaskLists(ref);
+    final task = await ref.read(taskRepositoryProvider).getTask(id);
+    invalidateTaskListProviders(
+      ref,
+      folderIds: [
+        if (task != null) task.folderId,
+        if (folderId != null) folderId,
+      ],
+    );
     if (sheetContext.mounted) {
       Navigator.of(sheetContext).pop();
     }
@@ -261,48 +570,33 @@ class TodayScreen extends ConsumerWidget {
     WidgetRef ref,
     TaskEditUpdate update,
   ) async {
-    await ref.read(taskControllerProvider).create(_draftFromUpdate(update));
-    _invalidateTaskLists(ref);
+    final id = await ref
+        .read(taskControllerProvider)
+        .create(_draftFromUpdate(update));
+    final task = await ref.read(taskRepositoryProvider).getTask(id);
+    invalidateTaskListProviders(
+      ref,
+      folderIds: [if (task != null) task.folderId],
+    );
   }
 
-  Future<void> _completeTask(WidgetRef ref, int taskId) async {
-    await ref.read(taskControllerProvider).complete(taskId);
-    _invalidateTaskLists(ref);
+  Future<void> _completeTask(WidgetRef ref, Task task) async {
+    await ref.read(taskControllerProvider).complete(task.id);
+    invalidateTaskListProviders(ref, folderIds: [task.folderId]);
   }
 
   Future<void> _updateTask(
     WidgetRef ref,
-    int taskId,
+    Task task,
     TaskEditUpdate update,
   ) async {
     await ref
         .read(taskControllerProvider)
-        .updateTask(taskId, _draftFromUpdate(update));
-    _invalidateTaskLists(ref);
-  }
-
-  Future<void> _saveAndStartFocusFromTask(
-    BuildContext context,
-    BuildContext sheetContext,
-    WidgetRef ref,
-    Task task,
-    TaskEditUpdate update,
-  ) async {
-    if (update.focusDurationMinutes == null) {
-      return;
-    }
-    await _updateTask(ref, task.id, update);
-    if (!context.mounted || !sheetContext.mounted) {
-      return;
-    }
-    Navigator.of(sheetContext).pop();
-    context.go(
-      '/focus',
-      extra: FocusLaunch(
-        taskId: task.id,
-        taskTitle: update.title,
-        duration: Duration(minutes: update.focusDurationMinutes!),
-      ),
+        .updateTask(task.id, _draftFromUpdate(update));
+    final updated = await ref.read(taskRepositoryProvider).getTask(task.id);
+    invalidateTaskListProviders(
+      ref,
+      folderIds: [task.folderId, if (updated != null) updated.folderId],
     );
   }
 
@@ -314,6 +608,8 @@ class TodayScreen extends ConsumerWidget {
       reminderTime: update.reminderTime,
       focusDurationMinutes: update.focusDurationMinutes,
       recurrenceType: update.recurrenceType,
+      recurrenceInterval: update.recurrenceInterval,
+      customRepeatLabel: update.customRepeatLabel,
     );
   }
 
@@ -322,51 +618,43 @@ class TodayScreen extends ConsumerWidget {
     return DateTime(now.year, now.month, now.day);
   }
 
-  void _startFocusFromTask(
-    BuildContext context,
-    BuildContext sheetContext,
-    Task? task,
-  ) {
-    final focusDurationMinutes = task?.focusDurationMinutes;
-    if (task == null || focusDurationMinutes == null) {
-      return;
+  Future<void> _deleteTask(WidgetRef ref, Task task) async {
+    await ref.read(taskControllerProvider).delete(task.id);
+    invalidateTaskListProviders(ref, folderIds: [task.folderId]);
+  }
+
+  Map<int, String> _foldersById(List<Folder>? folders) {
+    if (folders == null) {
+      return const {};
     }
-    Navigator.of(sheetContext).pop();
-    context.go(
-      '/focus',
-      extra: FocusLaunch(
-        taskId: task.id,
-        taskTitle: task.title,
-        duration: Duration(minutes: focusDurationMinutes),
-      ),
-    );
-  }
-
-  Future<void> _deleteTask(WidgetRef ref, int taskId) async {
-    await ref.read(taskControllerProvider).delete(taskId);
-    _invalidateTaskLists(ref);
-  }
-
-  void _invalidateTaskLists(WidgetRef ref) {
-    ref.invalidate(todayTasksProvider);
-    ref.invalidate(upcomingTasksProvider);
+    return {for (final folder in folders) folder.id: folder.name};
   }
 }
 
 class _TodayBody extends StatelessWidget {
   const _TodayBody({
     required this.tasksValue,
+    required this.folderNamesById,
     required this.onCreate,
     required this.onTaskTap,
     required this.onComplete,
     required this.onDelete,
+    required this.selectionMode,
+    required this.selectedTaskIds,
+    required this.onTaskLongPress,
+    required this.onSelectionToggle,
   });
 
   final AsyncValue<List<Task>> tasksValue;
+  final Map<int, String> folderNamesById;
   final VoidCallback onCreate;
   final ValueChanged<Task> onTaskTap;
   final ValueChanged<Task> onComplete;
   final ValueChanged<Task> onDelete;
+  final bool selectionMode;
+  final Set<int> selectedTaskIds;
+  final ValueChanged<Task> onTaskLongPress;
+  final ValueChanged<Task> onSelectionToggle;
 
   @override
   Widget build(BuildContext context) {
@@ -382,7 +670,15 @@ class _TodayBody extends StatelessWidget {
             final task = tasks[index];
             return TaskRow(
               title: task.title,
-              metadata: _metadataFor(task),
+              metadata: taskMetadataFor(
+                task,
+                folderNamesById: folderNamesById,
+                includeDate: false,
+              ),
+              selectionMode: selectionMode,
+              isSelected: selectedTaskIds.contains(task.id),
+              onSelectionToggle: () => onSelectionToggle(task),
+              onLongPress: () => onTaskLongPress(task),
               onTap: () => onTaskTap(task),
               onComplete: () => onComplete(task),
               onDelete: () => onDelete(task),
@@ -396,10 +692,6 @@ class _TodayBody extends StatelessWidget {
       error: (error, stackTrace) => _EmptyTodayState(onCreate: onCreate),
     );
   }
-
-  String? _metadataFor(Task task) {
-    return 'Inbox';
-  }
 }
 
 class _EmptyTodayState extends StatelessWidget {
@@ -409,260 +701,14 @@ class _EmptyTodayState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Center(
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: SizedBox(
-              width: constraints.maxWidth,
-              child: Transform.translate(
-                offset: const Offset(0, -8),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const _EmptyTaskIllustration(),
-                    const SizedBox(height: 22),
-                    Text(
-                      'No tasks found',
-                      style: textTheme.titleLarge?.copyWith(
-                        color: colors.textPrimary,
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0,
-                        height: 1.12,
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    Text(
-                      "Looks like you're all clear for today.",
-                      textAlign: TextAlign.center,
-                      style: textTheme.bodyLarge?.copyWith(
-                        color: colors.textSecondary,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 0,
-                        height: 1.34,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Create a task to get started.',
-                      textAlign: TextAlign.center,
-                      style: textTheme.bodyLarge?.copyWith(
-                        color: colors.textSecondary,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 0,
-                        height: 1.34,
-                      ),
-                    ),
-                    const SizedBox(height: 22),
-                    FilledButton(
-                      onPressed: onCreate,
-                      style: FilledButton.styleFrom(
-                        fixedSize: const Size(160, 40),
-                        minimumSize: const Size(160, 40),
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        textStyle: textTheme.titleMedium?.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0,
-                        ),
-                      ),
-                      child: Text(
-                        'Create new task',
-                        style: textTheme.titleMedium?.copyWith(
-                          color: colors.controlForeground,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
+    return SyncEmptyState(
+      icon: SyncIcons.completed,
+      title: "You're clear for today.",
+      message: 'Create a task whenever something pops up.',
+      actionLabel: 'Create new task',
+      onAction: onCreate,
     );
   }
 }
 
-class _EmptyTaskIllustration extends StatelessWidget {
-  const _EmptyTaskIllustration();
 
-  @override
-  Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
-    return SizedBox(
-      width: 168,
-      height: 128,
-      child: CustomPaint(
-        painter: _EmptyTaskIllustrationPainter(colors: colors),
-      ),
-    );
-  }
-}
-
-class _HomeMenuRow extends StatelessWidget {
-  const _HomeMenuRow({
-    required this.icon,
-    required this.label,
-    required this.textStyle,
-  });
-
-  final IconData icon;
-  final String label;
-  final TextStyle? textStyle;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
-    return Row(
-      children: [
-        Icon(icon, color: colors.textPrimary, size: 22),
-        const SizedBox(width: 18),
-        Text(label, style: textStyle),
-      ],
-    );
-  }
-}
-
-class _EmptyTaskIllustrationPainter extends CustomPainter {
-  const _EmptyTaskIllustrationPainter({required this.colors});
-
-  final SyncTaskColorScheme colors;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height * 0.62);
-    final haze = Paint()
-      ..color = colors.surfaceSecondary.withValues(alpha: 0.34)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 28);
-    canvas.drawOval(
-      Rect.fromCenter(
-        center: center,
-        width: size.width * 0.96,
-        height: size.height * 0.86,
-      ),
-      haze,
-    );
-
-    final cardRect = RRect.fromRectAndRadius(
-      Rect.fromLTWH(size.width * 0.28, 16, 104, 138),
-      const Radius.circular(24),
-    );
-    final cardPaint = Paint()..color = colors.surface.withValues(alpha: 0.94);
-    canvas.drawRRect(cardRect, cardPaint);
-
-    final iconPaint = Paint()
-      ..color = colors.surfaceSecondary.withValues(alpha: 0.78);
-    canvas.drawCircle(Offset(size.width * 0.48, 64), 26, iconPaint);
-
-    final checkPaint = Paint()
-      ..color = colors.surface
-      ..strokeWidth = 5
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
-    final checkPath = Path()
-      ..moveTo(size.width * 0.42, 64)
-      ..lineTo(size.width * 0.47, 70)
-      ..lineTo(size.width * 0.55, 58);
-    canvas.drawPath(checkPath, checkPaint);
-
-    final linePaint = Paint()
-      ..color = colors.surfaceSecondary.withValues(alpha: 0.58)
-      ..strokeWidth = 10
-      ..strokeCap = StrokeCap.round;
-    canvas.drawLine(
-      Offset(size.width * 0.36, 112),
-      Offset(size.width * 0.72, 112),
-      linePaint,
-    );
-    canvas.drawLine(
-      Offset(size.width * 0.36, 134),
-      Offset(size.width * 0.58, 134),
-      linePaint,
-    );
-
-    final calendarRect = RRect.fromRectAndRadius(
-      Rect.fromLTWH(size.width * 0.58, 100, 86, 70),
-      const Radius.circular(18),
-    );
-    canvas.drawRRect(calendarRect, cardPaint);
-
-    final bindingPaint = Paint()
-      ..color = colors.textPrimary.withValues(alpha: 0.9)
-      ..strokeWidth = 8
-      ..strokeCap = StrokeCap.round;
-    canvas.drawLine(
-      Offset(size.width * 0.65, 96),
-      Offset(size.width * 0.65, 110),
-      bindingPaint,
-    );
-    canvas.drawLine(
-      Offset(size.width * 0.84, 96),
-      Offset(size.width * 0.84, 110),
-      bindingPaint,
-    );
-
-    final dotPaint = Paint()
-      ..color = colors.textSecondary.withValues(alpha: 0.34);
-    for (var row = 0; row < 3; row++) {
-      for (var col = 0; col < 4; col++) {
-        canvas.drawCircle(
-          Offset(size.width * 0.64 + col * 16, 130 + row * 16),
-          3.8,
-          dotPaint,
-        );
-      }
-    }
-
-    _drawSparkle(canvas, Offset(size.width * 0.10, 58), 20);
-    _drawSparkle(canvas, Offset(size.width * 0.86, 18), 14);
-  }
-
-  void _drawSparkle(Canvas canvas, Offset center, double radius) {
-    final paint = Paint()..color = colors.textSecondary.withValues(alpha: 0.28);
-    final path = Path()
-      ..moveTo(center.dx, center.dy - radius)
-      ..quadraticBezierTo(
-        center.dx + radius * 0.18,
-        center.dy - radius * 0.18,
-        center.dx + radius,
-        center.dy,
-      )
-      ..quadraticBezierTo(
-        center.dx + radius * 0.18,
-        center.dy + radius * 0.18,
-        center.dx,
-        center.dy + radius,
-      )
-      ..quadraticBezierTo(
-        center.dx - radius * 0.18,
-        center.dy + radius * 0.18,
-        center.dx - radius,
-        center.dy,
-      )
-      ..quadraticBezierTo(
-        center.dx - radius * 0.18,
-        center.dy - radius * 0.18,
-        center.dx,
-        center.dy - radius,
-      )
-      ..close();
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant _EmptyTaskIllustrationPainter oldDelegate) {
-    return oldDelegate.colors != colors;
-  }
-}

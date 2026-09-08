@@ -9,6 +9,8 @@ class TaskDraft {
     this.reminderTime,
     this.focusDurationMinutes,
     this.recurrenceType,
+    this.recurrenceInterval,
+    this.customRepeatLabel,
   });
 
   final String title;
@@ -18,6 +20,8 @@ class TaskDraft {
   final DateTime? reminderTime;
   final int? focusDurationMinutes;
   final RecurrenceType? recurrenceType;
+  final int? recurrenceInterval;
+  final String? customRepeatLabel;
 }
 
 class TaskSnapshot {
@@ -26,3 +30,5 @@ class TaskSnapshot {
   final int taskId;
   final int? generatedSuccessorId;
 }
+
+

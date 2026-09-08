@@ -1,11 +1,13 @@
 class ActivityDay {
   const ActivityDay({
     required this.date,
-    required this.completedFocusRunCount,
+    required this.completedTaskCount,
     required this.intensity,
   });
 
   final DateTime date;
-  final int completedFocusRunCount;
+  final int completedTaskCount;
   final int intensity;
 }
+
+

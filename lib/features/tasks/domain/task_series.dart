@@ -19,3 +19,5 @@ class TaskSeriesDraft {
   final DateTime? reminderTime;
   final int? focusDurationMinutes;
 }
+
+

@@ -1,0 +1,27 @@
+--------- beginning of system
+09-08 18:37:09.018  3033  3033 I Quality : Skipped: false 6 cost 143.13449 refreshRate 0 processName com.appylab.synctasks
+09-08 18:37:09.346  3033  3033 I Quality : Skipped: true 1 cost 24.480268 refreshRate 0 processName com.appylab.synctasks
+09-08 18:37:09.449  3033  3033 I Quality : Skipped: true 4 cost 75.70625 refreshRate 0 processName com.appylab.synctasks
+09-08 18:37:09.544  3033  3033 I Quality : Skipped: true 1 cost 17.745611 refreshRate 0 processName com.appylab.synctasks
+09-08 18:37:26.201  3033  3033 I Quality : Skipped: false 15 cost 336.75958 refreshRate 0 processName com.appylab.synctasks
+--------- beginning of main
+09-08 18:37:26.314  3033  3033 E Parcel  : Reading a NULL string not supported here.
+09-08 18:37:38.919  3033  3033 I flutter : Analytics screen_view: today
+09-08 18:37:39.126  3033  3033 I Quality : Skipped: false 12 cost 203.31732 refreshRate 0 processName com.appylab.synctasks
+09-08 18:37:39.134  3033  3033 E Parcel  : Reading a NULL string not supported here.
+09-08 18:38:53.261  3033  3227 D SessionLifecycleClient: Sending lifecycle 2 to service
+09-08 18:38:53.262  3033  3924 D SessionLifecycleService: Activity backgrounding at 269092066
+09-08 18:38:53.336  3033  3033 E Parcel  : Reading a NULL string not supported here.
+09-08 18:38:54.314  3033  3479 I BufferQueueProducer: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1(BLAST Consumer)1](id:bd900000001,api:1,p:3033,c:3033) disconnect: api 1
+09-08 18:38:54.316  3033  3479 E BLASTBufferQueue: BLASTBufferItemConsumer::onDisconnect()
+09-08 18:38:54.316  3033  3033 I BufferQueueProducer: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1(BLAST Consumer)1](id:bd900000001,api:0,p:-1,c:3033) disconnect: api -1
+09-08 18:38:54.316  3033  3033 I BLASTBufferQueue: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1] destructor()
+09-08 18:38:54.316  3033  3033 I BufferQueueConsumer: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1(BLAST Consumer)1](id:bd900000001,api:0,p:-1,c:3033) disconnect
+09-08 18:38:54.321  3033  3280 I BufferQueueProducer: [ViewRootImpl[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#0(BLAST Consumer)0](id:bd900000000,api:1,p:3033,c:3033) disconnect: api 1
+09-08 18:38:54.322  3033  3280 E BLASTBufferQueue: BLASTBufferItemConsumer::onDisconnect()
+09-08 18:38:54.330  3033  4304 I BLASTBufferQueue: releaseBufferCallbackThunk bufferId:13026635808775 framenumber:410 blastBufferQueue is dead
+09-08 18:38:54.331  3033  3033 I BLASTBufferQueue: [ViewRootImpl[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#0] destructor()
+09-08 18:38:54.331  3033  3033 I BufferQueueConsumer: [ViewRootImpl[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#0(BLAST Consumer)0](id:bd900000000,api:0,p:-1,c:3033) disconnect
+09-08 18:38:55.300  3033  5068 I FA      : Application backgrounded at: timestamp_millis: 1788872933297
+09-08 18:38:55.914  3033  4304 I BLASTBufferQueue: releaseBufferCallbackThunk bufferId:13026635808780 framenumber:89 blastBufferQueue is dead
+09-08 18:38:55.917  3033  3280 I GED     : ged_boost_gpu_freq, level 100, eOrigin 2, final_idx 42, oppidx_max 42, oppidx_min 0

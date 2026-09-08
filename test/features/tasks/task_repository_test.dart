@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:synctask/core/database/app_database.dart';
-import 'package:synctask/features/tasks/data/folder_repository.dart';
-import 'package:synctask/features/tasks/data/task_repository.dart';
-import 'package:synctask/features/tasks/domain/recurrence_type.dart';
-import 'package:synctask/features/tasks/domain/task.dart';
+import 'package:synctasks/core/database/app_database.dart';
+import 'package:synctasks/features/tasks/data/folder_repository.dart';
+import 'package:synctasks/features/tasks/data/task_repository.dart';
+import 'package:synctasks/features/tasks/domain/recurrence_type.dart';
+import 'package:synctasks/features/tasks/domain/task.dart';
 
 void main() {
   late AppDatabase db;
@@ -45,6 +45,41 @@ void main() {
     expect((await tasks.listTodayTasks()), isEmpty);
     expect((await tasks.listUpcomingTasks()).single.title, 'Future task');
     expect((await tasks.listCompletedTasks()).single.title, 'Today task');
+  });
+
+  test('all active tasks excludes completed tasks', () async {
+    await tasks.createTask(const TaskDraft(title: 'Active no date'));
+    final completedId = await tasks.createTask(
+      TaskDraft(title: 'Completed today', scheduledDate: DateTime(2026, 8, 31)),
+    );
+    await tasks.completeTask(completedId);
+
+    final active = await tasks.listAllActiveTasks();
+
+    expect(active.map((task) => task.title), ['Active no date']);
+  });
+
+  test('reminder tasks includes only active tasks with reminders', () async {
+    await tasks.createTask(
+      TaskDraft(
+        title: 'Remind me',
+        scheduledDate: DateTime(2026, 8, 31),
+        reminderTime: DateTime(2026, 8, 31, 8),
+      ),
+    );
+    await tasks.createTask(const TaskDraft(title: 'No reminder'));
+    final completedReminderId = await tasks.createTask(
+      TaskDraft(
+        title: 'Completed reminder',
+        scheduledDate: DateTime(2026, 8, 31),
+        reminderTime: DateTime(2026, 8, 31, 7),
+      ),
+    );
+    await tasks.completeTask(completedReminderId);
+
+    final reminders = await tasks.listReminderTasks();
+
+    expect(reminders.map((task) => task.title), ['Remind me']);
   });
 
   test('upcoming includes active tasks scheduled for today', () async {
@@ -148,4 +183,27 @@ void main() {
       expect(active.single.id, taskId);
     },
   );
+
+  test(
+    'custom recurring task uses its interval for the next occurrence',
+    () async {
+      final taskId = await tasks.createTask(
+        TaskDraft(
+          title: 'Quarterly-ish review',
+          scheduledDate: DateTime(2026, 8, 31),
+          recurrenceType: RecurrenceType.weekly,
+          recurrenceInterval: 3,
+          customRepeatLabel: 'Every 3 weeks',
+        ),
+      );
+
+      await tasks.completeTask(taskId);
+
+      final active = await tasks.listUpcomingTasks();
+      expect(active.single.title, 'Quarterly-ish review');
+      expect(active.single.scheduledDate, DateTime(2026, 9, 21));
+    },
+  );
 }
+
+

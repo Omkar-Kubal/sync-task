@@ -7,3 +7,5 @@ enum RecurrenceType {
     return RecurrenceType.values.firstWhere((type) => type.name == value);
   }
 }
+
+

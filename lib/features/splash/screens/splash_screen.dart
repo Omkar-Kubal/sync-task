@@ -1,27 +1,36 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class SplashScreen extends StatefulWidget {
+import '../../settings/providers/settings_controller.dart';
+
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-  static const _delay = Duration(seconds: 2);
+class _SplashScreenState extends ConsumerState<SplashScreen> {
+  static const _delay = Duration(milliseconds: 700);
   Timer? _timer;
 
   @override
   void initState() {
     super.initState();
     _timer = Timer(_delay, () {
-      if (mounted) {
-        context.go('/today');
-      }
+      unawaited(_openNextScreen());
     });
+  }
+
+  Future<void> _openNextScreen() async {
+    final settings = await ref.read(settingsControllerProvider).load();
+    if (!mounted) {
+      return;
+    }
+    context.go(settings.hasCompletedOnboarding ? '/today' : '/onboarding');
   }
 
   @override
@@ -45,3 +54,5 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
+

@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme/synctask_color_scheme.dart';
+import '../../core/theme/synctasks_color_scheme.dart';
 
 class SyncHeader extends StatelessWidget {
   const SyncHeader({
     required this.title,
     this.subtitle,
     this.trailing,
+    this.compact = false,
     super.key,
   });
 
   final String title;
   final String? subtitle;
   final Widget? trailing;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
+    final colors = SyncTasksColorScheme.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 24, 16, 20),
+      padding: compact
+          ? const EdgeInsets.fromLTRB(20, 18, 20, 16)
+          : const EdgeInsets.fromLTRB(16, 20, 16, 16),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: compact
+            ? CrossAxisAlignment.center
+            : CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Column(
@@ -28,11 +34,12 @@ class SyncHeader extends StatelessWidget {
               children: [
                 Text(title, style: Theme.of(context).textTheme.titleLarge),
                 if (subtitle != null) ...[
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 6),
                   Text(
                     subtitle!,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: colors.textSecondary,
+                      fontSize: 15,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -46,3 +53,5 @@ class SyncHeader extends StatelessWidget {
     );
   }
 }
+
+

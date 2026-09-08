@@ -9,3 +9,5 @@ final activityGridProvider = FutureProvider.family<List<ActivityDay>, int>((
 ) {
   return ref.watch(insightsRepositoryProvider).yearActivity(year);
 });
+
+

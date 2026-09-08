@@ -1,29 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/theme/synctask_color_scheme.dart';
+import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../shared/icons/sync_icons.dart';
+import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/sheets/app_bottom_sheet.dart';
+import '../providers/folders_provider.dart';
 
-class TaskCreateSheet extends StatefulWidget {
+class TaskCreateSheet extends ConsumerStatefulWidget {
   const TaskCreateSheet({
     required this.onSubmit,
     required this.onTodaySelected,
+    this.folderLabel = 'Inbox',
+    this.initialFolderId,
     super.key,
   });
 
-  final ValueChanged<String> onSubmit;
-  final VoidCallback onTodaySelected;
+  final void Function(String title, int? folderId) onSubmit;
+  final void Function(String title, int? folderId) onTodaySelected;
+  final String folderLabel;
+  final int? initialFolderId;
 
   @override
-  State<TaskCreateSheet> createState() => _TaskCreateSheetState();
+  ConsumerState<TaskCreateSheet> createState() => _TaskCreateSheetState();
 }
 
-class _TaskCreateSheetState extends State<TaskCreateSheet> {
+class _TaskCreateSheetState extends ConsumerState<TaskCreateSheet> {
+  static const _inboxFolderOptionId = -1;
+
   late final TextEditingController _controller;
+  late String _selectedFolderLabel;
+  late int? _selectedFolderId;
+  var _hasChosenFolder = false;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    _selectedFolderLabel = widget.folderLabel;
+    _selectedFolderId = widget.initialFolderId;
   }
 
   @override
@@ -33,8 +48,27 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
   }
 
   @override
+  void didUpdateWidget(covariant TaskCreateSheet oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_hasChosenFolder) {
+      return;
+    }
+    if (oldWidget.initialFolderId != widget.initialFolderId ||
+        oldWidget.folderLabel != widget.folderLabel) {
+      _selectedFolderId = widget.initialFolderId;
+      _selectedFolderLabel = widget.folderLabel;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
+    final colors = SyncTasksColorScheme.of(context);
+    final folders = ref.watch(foldersProvider).value ?? const [];
+    final folderOptions = <int, String>{
+      _inboxFolderOptionId: 'Inbox',
+      for (final folder in folders.where((folder) => folder.name != 'Inbox'))
+        folder.id: folder.name,
+    };
     return AppBottomSheet(
       minHeight: 176,
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 18),
@@ -85,39 +119,24 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
                   child: Row(
                     children: [
                       OutlinedButton.icon(
-                        onPressed: () {},
+                        onPressed: () =>
+                            _showFolderPicker(context, folderOptions),
                         style: _chipStyle(context),
-                        icon: const Icon(Icons.inbox, size: 18),
-                        label: const Text('Inbox'),
+                        icon: const Icon(SyncIcons.folder, size: 18),
+                        label: Text(_selectedFolderLabel),
                       ),
                       const SizedBox(width: 8),
                       OutlinedButton.icon(
-                        onPressed: widget.onTodaySelected,
+                        onPressed: () {
+                          SyncHaptics.selection();
+                          widget.onTodaySelected(
+                            _controller.text,
+                            _selectedFolderId,
+                          );
+                        },
                         style: _chipStyle(context),
-                        icon: const Icon(
-                          Icons.calendar_month_outlined,
-                          size: 18,
-                        ),
+                        icon: const Icon(SyncIcons.date, size: 18),
                         label: const Text('Today'),
-                      ),
-                      const SizedBox(width: 8),
-                      Semantics(
-                        label: 'Flag task',
-                        button: true,
-                        child: OutlinedButton(
-                          onPressed: () {},
-                          style: _chipStyle(context).copyWith(
-                            minimumSize: const WidgetStatePropertyAll(
-                              Size(44, 44),
-                            ),
-                            padding: const WidgetStatePropertyAll(
-                              EdgeInsets.zero,
-                            ),
-                          ),
-                          child: const ExcludeSemantics(
-                            child: Icon(Icons.flag_outlined, size: 20),
-                          ),
-                        ),
                       ),
                     ],
                   ),
@@ -130,14 +149,17 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
                 child: SizedBox.square(
                   dimension: 44,
                   child: IconButton.filled(
-                    onPressed: () => widget.onSubmit(_controller.text),
+                    onPressed: () {
+                      SyncHaptics.action();
+                      widget.onSubmit(_controller.text, _selectedFolderId);
+                    },
                     style: IconButton.styleFrom(
                       backgroundColor: colors.controlPrimary,
                       foregroundColor: colors.controlForeground,
                       side: BorderSide.none,
                       shape: const CircleBorder(),
                     ),
-                    icon: const Icon(Icons.arrow_upward, size: 22),
+                    icon: const Icon(SyncIcons.submit, size: 22),
                   ),
                 ),
               ),
@@ -148,8 +170,65 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
     );
   }
 
+  Future<void> _showFolderPicker(
+    BuildContext context,
+    Map<int, String> options,
+  ) async {
+    final colors = SyncTasksColorScheme.of(context);
+    SyncHaptics.selection();
+
+    if (options.isEmpty) {
+      return;
+    }
+
+    final selectedId = await showMenu<int>(
+      context: context,
+      color: colors.surface,
+      elevation: 18,
+      shadowColor: colors.textPrimary.withValues(alpha: 0.14),
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: colors.divider),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      constraints: BoxConstraints(
+        minWidth: MediaQuery.sizeOf(context).width * 0.64,
+        maxWidth: MediaQuery.sizeOf(context).width * 0.72,
+      ),
+      position: RelativeRect.fromLTRB(
+        MediaQuery.sizeOf(context).width * 0.28,
+        MediaQuery.sizeOf(context).height * 0.58,
+        MediaQuery.sizeOf(context).width * 0.08,
+        0,
+      ),
+      items: [
+        for (final option in options.entries)
+          PopupMenuItem<int>(
+            value: option.key,
+            height: 52,
+            child: _FolderMenuOptionRow(
+              label: option.value,
+              selected:
+                  option.key == (_selectedFolderId ?? _inboxFolderOptionId),
+            ),
+          ),
+      ],
+    );
+    if (selectedId == null) {
+      return;
+    }
+
+    setState(() {
+      _hasChosenFolder = true;
+      _selectedFolderId = selectedId == _inboxFolderOptionId
+          ? null
+          : selectedId;
+      _selectedFolderLabel = options[selectedId] ?? 'Inbox';
+    });
+  }
+
   ButtonStyle _chipStyle(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
+    final colors = SyncTasksColorScheme.of(context);
     return OutlinedButton.styleFrom(
       backgroundColor: colors.surface,
       foregroundColor: colors.textPrimary,
@@ -165,10 +244,46 @@ class _TaskCreateSheetState extends State<TaskCreateSheet> {
     );
   }
 
-  OutlineInputBorder _titleBorder(SyncTaskColorScheme colors) {
+  OutlineInputBorder _titleBorder(SyncTasksColorScheme colors) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(4),
       borderSide: BorderSide(color: colors.divider, width: 1.2),
     );
   }
 }
+
+class _FolderMenuOptionRow extends StatelessWidget {
+  const _FolderMenuOptionRow({required this.label, required this.selected});
+
+  final String label;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    return Row(
+      children: [
+        SizedBox(
+          width: 28,
+          child: selected
+              ? Icon(SyncIcons.check, color: colors.textPrimary, size: 22)
+              : null,
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: colors.textPrimary,
+              fontSize: 17,
+              fontWeight: FontWeight.w400,
+              letterSpacing: 0,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+

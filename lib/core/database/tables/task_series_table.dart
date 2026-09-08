@@ -10,6 +10,9 @@ class TaskSeries extends Table {
   TextColumn get title => text()();
   IntColumn get folderId => integer().references(Folders, #id)();
   TextColumn get repeatType => text()();
+  IntColumn get recurrenceInterval =>
+      integer().withDefault(const Constant(1))();
+  TextColumn get customRepeatLabel => text().nullable()();
   DateTimeColumn get anchorDate => dateTime()();
   DateTimeColumn get time => dateTime().nullable()();
   DateTimeColumn get reminderTime => dateTime().nullable()();
@@ -17,3 +20,5 @@ class TaskSeries extends Table {
   BoolColumn get isActive => boolean().withDefault(const Constant(true))();
   DateTimeColumn get createdAt => dateTime()();
 }
+
+

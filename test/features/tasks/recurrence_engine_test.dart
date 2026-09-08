@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:synctask/features/tasks/domain/recurrence_type.dart';
-import 'package:synctask/features/tasks/domain/services/recurrence_engine.dart';
+import 'package:synctasks/features/tasks/domain/recurrence_type.dart';
+import 'package:synctasks/features/tasks/domain/services/recurrence_engine.dart';
 
 void main() {
   final engine = RecurrenceEngine();
@@ -35,3 +35,5 @@ void main() {
     expect(next, DateTime(2026, 2, 28));
   });
 }
+
+

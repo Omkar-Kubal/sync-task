@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:synctask/core/notifications/notification_service.dart';
-import 'package:synctask/core/notifications/task_reminder_service.dart';
+import 'package:synctasks/core/notifications/notification_service.dart';
+import 'package:synctasks/core/notifications/task_reminder_service.dart';
 
 void main() {
   test('task reminder service schedules and cancels task reminders', () async {
@@ -40,3 +40,5 @@ void main() {
     expect(notifications.cancelled.single, 42);
   });
 }
+
+

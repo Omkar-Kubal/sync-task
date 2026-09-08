@@ -11,3 +11,5 @@ final insightsRepositoryProvider = Provider<InsightsRepository>((ref) {
 final insightsProvider = FutureProvider<InsightsSummary>((ref) {
   return ref.watch(insightsRepositoryProvider).summary();
 });
+
+

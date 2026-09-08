@@ -17,3 +17,5 @@ class Tasks extends Table {
   IntColumn get globalSortOrder => integer()();
   DateTimeColumn get createdAt => dateTime()();
 }
+
+

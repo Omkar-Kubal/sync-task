@@ -19,13 +19,19 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.memory() : super(NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
       onCreate: (m) async {
         await m.createAll();
+      },
+      onUpgrade: (m, from, to) async {
+        if (from < 2) {
+          await m.addColumn(taskSeries, taskSeries.recurrenceInterval);
+          await m.addColumn(taskSeries, taskSeries.customRepeatLabel);
+        }
       },
       beforeOpen: (details) async {
         await _ensureInboxFolder();
@@ -54,7 +60,10 @@ class AppDatabase extends _$AppDatabase {
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final directory = await getApplicationDocumentsDirectory();
-    final file = File(p.join(directory.path, 'synctask.sqlite'));
+    final file = File(p.join(directory.path, 'synctasks.sqlite'));
     return NativeDatabase.createInBackground(file);
   });
 }
+
+
+

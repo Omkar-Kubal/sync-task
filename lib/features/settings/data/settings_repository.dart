@@ -13,8 +13,11 @@ class SettingsRepository {
 
   static const _themeModeKey = 'settings.themeMode';
   static const _notificationsEnabledKey = 'settings.notificationsEnabled';
-  static const _focusSoundKey = 'settings.focusSound';
-  static const _focusVibrationKey = 'settings.focusVibration';
+  static const _notificationSoundKey = 'settings.notificationSound';
+  static const _notificationVibrationKey = 'settings.notificationVibration';
+  static const _mildHapticsKey = 'settings.mildHaptics';
+  static const _defaultFolderIdKey = 'settings.defaultFolderId';
+  static const _hasCompletedOnboardingKey = 'settings.hasCompletedOnboarding';
 
   Future<AppSettings> load() async {
     final preferences = _preferences;
@@ -27,8 +30,13 @@ class SettingsRepository {
       ),
       notificationsEnabled:
           preferences.getBool(_notificationsEnabledKey) ?? true,
-      focusSound: preferences.getBool(_focusSoundKey) ?? true,
-      focusVibration: preferences.getBool(_focusVibrationKey) ?? true,
+      notificationSound: preferences.getBool(_notificationSoundKey) ?? true,
+      notificationVibration:
+          preferences.getBool(_notificationVibrationKey) ?? true,
+      mildHaptics: preferences.getBool(_mildHapticsKey) ?? true,
+      defaultFolderId: preferences.getInt(_defaultFolderIdKey),
+      hasCompletedOnboarding:
+          preferences.getBool(_hasCompletedOnboardingKey) ?? false,
     );
   }
 
@@ -43,7 +51,26 @@ class SettingsRepository {
       _notificationsEnabledKey,
       settings.notificationsEnabled,
     );
-    await preferences.setBool(_focusSoundKey, settings.focusSound);
-    await preferences.setBool(_focusVibrationKey, settings.focusVibration);
+    await preferences.setBool(
+      _notificationSoundKey,
+      settings.notificationSound,
+    );
+    await preferences.setBool(
+      _notificationVibrationKey,
+      settings.notificationVibration,
+    );
+    await preferences.setBool(_mildHapticsKey, settings.mildHaptics);
+    final defaultFolderId = settings.defaultFolderId;
+    if (defaultFolderId == null) {
+      await preferences.remove(_defaultFolderIdKey);
+    } else {
+      await preferences.setInt(_defaultFolderIdKey, defaultFolderId);
+    }
+    await preferences.setBool(
+      _hasCompletedOnboardingKey,
+      settings.hasCompletedOnboarding,
+    );
   }
 }
+
+

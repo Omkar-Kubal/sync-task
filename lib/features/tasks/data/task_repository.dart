@@ -17,6 +17,18 @@ class TaskRepository {
   final DateTime Function() _now;
   final RecurrenceEngine _recurrenceEngine;
 
+  Future<TaskSery?> getSeriesForTask(int seriesId) async {
+    return (_db.select(
+      _db.taskSeries,
+    )..where((row) => row.id.equals(seriesId))).getSingleOrNull();
+  }
+
+  Future<Task?> getTask(int id) async {
+    return (_db.select(
+      _db.tasks,
+    )..where((task) => task.id.equals(id))).getSingleOrNull();
+  }
+
   Future<int> createTask(domain.TaskDraft draft) async {
     final folderId = draft.folderId ?? (await _inbox()).id;
     final createdAt = _now();
@@ -51,6 +63,8 @@ class TaskRepository {
               title: draft.title,
               folderId: folderId,
               repeatType: draft.recurrenceType!.name,
+              recurrenceInterval: Value(draft.recurrenceInterval ?? 1),
+              customRepeatLabel: Value(draft.customRepeatLabel),
               anchorDate: _dateOnlyOrNull(draft.scheduledDate)!,
               time: Value(draft.scheduledTime),
               reminderTime: Value(draft.reminderTime),
@@ -103,6 +117,8 @@ class TaskRepository {
                   title: draft.title,
                   folderId: folderId,
                   repeatType: recurrenceType.name,
+                  recurrenceInterval: Value(draft.recurrenceInterval ?? 1),
+                  customRepeatLabel: Value(draft.customRepeatLabel),
                   anchorDate: scheduledDate,
                   time: Value(draft.scheduledTime),
                   reminderTime: Value(draft.reminderTime),
@@ -118,6 +134,8 @@ class TaskRepository {
               title: Value(draft.title),
               folderId: Value(folderId),
               repeatType: Value(recurrenceType.name),
+              recurrenceInterval: Value(draft.recurrenceInterval ?? 1),
+              customRepeatLabel: Value(draft.customRepeatLabel),
               anchorDate: Value(scheduledDate),
               time: Value(draft.scheduledTime),
               reminderTime: Value(draft.reminderTime),
@@ -170,6 +188,27 @@ class TaskRepository {
     });
   }
 
+  Future<void> rescheduleTasks(Iterable<int> ids, DateTime? scheduledDate) {
+    final taskIds = ids.toSet();
+    if (taskIds.isEmpty) {
+      return Future.value();
+    }
+    return (_db.update(
+      _db.tasks,
+    )..where((task) => task.id.isIn(taskIds))).write(
+      TasksCompanion(scheduledDate: Value(_dateOnlyOrNull(scheduledDate))),
+    );
+  }
+
+  Future<void> moveTasksToFolder(Iterable<int> ids, int folderId) {
+    final taskIds = ids.toSet();
+    if (taskIds.isEmpty) {
+      return Future.value();
+    }
+    return (_db.update(_db.tasks)..where((task) => task.id.isIn(taskIds)))
+        .write(TasksCompanion(folderId: Value(folderId)));
+  }
+
   Future<void> restoreTask(domain.TaskSnapshot snapshot) async {
     await _db.transaction(() async {
       if (snapshot.generatedSuccessorId != null) {
@@ -204,9 +243,20 @@ class TaskRepository {
         .get();
   }
 
+  Future<List<Task>> listAllActiveTasks() async {
+    return (_activeTaskQuery()..orderBy(_taskOrdering)).get();
+  }
+
   Future<List<Task>> listCompletedTasks() async {
     return (_db.select(_db.tasks)
           ..where((task) => task.isCompleted.equals(true))
+          ..orderBy(_taskOrdering))
+        .get();
+  }
+
+  Future<List<Task>> listReminderTasks() async {
+    return (_activeTaskQuery()
+          ..where((task) => task.reminderTime.isNotNull())
           ..orderBy(_taskOrdering))
         .get();
   }
@@ -218,11 +268,33 @@ class TaskRepository {
         .get();
   }
 
-  Future<List<Task>> searchTasks(String query) async {
-    return (_db.select(_db.tasks)
-          ..where((task) => task.title.contains(query))
-          ..orderBy(_taskOrdering))
-        .get();
+  Future<List<Task>> searchTasks(
+    String query, {
+    bool? isCompleted,
+    DateTime? scheduledDate,
+    DateTime? scheduledFrom,
+    int? folderId,
+  }) async {
+    final statement = _db.select(_db.tasks)
+      ..where((task) => task.title.contains(query));
+    if (isCompleted != null) {
+      statement.where((task) => task.isCompleted.equals(isCompleted));
+    }
+    if (scheduledDate != null) {
+      statement.where(
+        (task) => task.scheduledDate.equals(_dateOnly(scheduledDate)),
+      );
+    }
+    if (scheduledFrom != null) {
+      statement.where(
+        (task) =>
+            task.scheduledDate.isBiggerOrEqualValue(_dateOnly(scheduledFrom)),
+      );
+    }
+    if (folderId != null) {
+      statement.where((task) => task.folderId.equals(folderId));
+    }
+    return (statement..orderBy(_taskOrdering)).get();
   }
 
   SimpleSelectStatement<$TasksTable, Task> _activeTaskQuery() {
@@ -250,6 +322,7 @@ class TaskRepository {
       anchorDate: series.anchorDate,
       type: RecurrenceType.fromStorage(series.repeatType),
       after: _now(),
+      interval: series.recurrenceInterval,
     );
 
     return _insertOccurrence(
@@ -322,3 +395,5 @@ class TaskRepository {
   DateTime? _dateOnlyOrNull(DateTime? value) =>
       value == null ? null : _dateOnly(value);
 }
+
+

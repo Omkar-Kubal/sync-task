@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme/synctask_color_scheme.dart';
+import '../../core/theme/synctasks_color_scheme.dart';
 
 class SyncButton extends StatelessWidget {
   const SyncButton.primary({
     required this.label,
     required this.onPressed,
     this.height = 56,
+    this.isLoading = false,
     super.key,
   });
 
   final String label;
   final VoidCallback? onPressed;
   final double height;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
+    final colors = SyncTasksColorScheme.of(context);
     return SizedBox(
       height: height,
       width: double.infinity,
       child: FilledButton(
-        onPressed: onPressed,
+        onPressed: isLoading ? null : onPressed,
         style: FilledButton.styleFrom(
           backgroundColor: colors.controlPrimary,
           disabledBackgroundColor: colors.textSecondary.withValues(alpha: 0.28),
@@ -33,8 +35,18 @@ class SyncButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(18),
           ),
         ),
-        child: Text(label),
+        child: isLoading
+            ? SizedBox.square(
+                dimension: 18,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: colors.controlForeground.withValues(alpha: 0.72),
+                ),
+              )
+            : Text(label),
       ),
     );
   }
 }
+
+

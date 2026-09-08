@@ -1,0 +1,1214 @@
+--------- beginning of main
+09-08 18:33:31.793  3033  3033 I pylab.synctask: Late-enabling -Xcheck:jni
+09-08 18:33:31.857  3033  3033 E pylab.synctask: Unknown bits set in runtime_flags: 0x40000000
+09-08 18:33:31.857  3033  3033 I pylab.synctask: Using generational CollectorTypeCC GC.
+09-08 18:33:31.872  3033  3033 D ProcessState: Binder ioctl to enable oneway spam detection failed: Invalid argument
+09-08 18:33:32.065  3033  3033 I OneTrace: Mark active for pid=3033? true
+09-08 18:33:32.065  3033  3033 D cutils-dev: otrace_set_tracing_enabled? true
+09-08 18:33:32.071  3033  3047 D cutils-dev: properties changed in otrace_seq_number_changed!
+09-08 18:33:32.165  3033  3033 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10690; state: ENABLED
+09-08 18:33:32.166  3033  3033 I oplus.android.OplusFrameworkFactoryImpl: get feature:IOplusAutoResolutionFeature
+09-08 18:33:32.166  3033  3033 I oplus.android.OplusFrameworkFactoryImpl: getOplusAutoResolutionFeature
+09-08 18:33:32.167  3033  3033 D CompactWindowAppManager: initCompactApplicationInfo 
+09-08 18:33:32.186  3033  3033 W libc    : Access denied finding property "ro.odm.prev.product.name"
+09-08 18:33:32.189  3033  3033 D OplusFeatureConfigManager: Milliseconds spent on initOplusFeatureCache(): 2
+09-08 18:33:32.192  3033  3033 D LoadedApk: mApplicationInfo overrideDisplayId:null
+09-08 18:33:32.199  3033  3033 D nativeloader: Configuring clns-4 for other apk /apex/com.android.extservices/javalib/android.ext.adservices.jar. target_sdk_version=36, uses_libraries=ALL, library_path=/data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/lib/arm64:/data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.appylab.synctasks
+09-08 18:33:32.199  3033  3033 D nativeloader: Extending system_exposed_libraries: libapuwareapusys.mtk.so:libapuwareapusys_v2.mtk.so:libapuwarexrp.mtk.so:libapuwarexrp_v2.mtk.so:libapuwareutils.mtk.so:libapuwareutils_v2.mtk.so:libapuwarehmp.mtk.so:libmcv_runtime_usdk.mtk.so:libneuron_graph_delegate.mtk.so:libneuronusdk_adapter.mtk.so:libtflite_mtk.mtk.so:libarmnn_ndk.mtk.so:libcmdl_ndk.mtk.so:libnir_neon_driver_ndk.mtk.so:libmvpu_runtime.mtk.so:libmvpu_runtime_pub.mtk.so:libmvpu_engine_pub.mtk.so:libmvpu_pattern_pub.mtk.so:libmvpuop_mtk_cv.mtk.so:libmvpuop_mtk_nn.mtk.so:libteeservice_client.trustonic.so:libSloganJni.oplus.so:libsuperNight.oplus.so
+09-08 18:33:32.201  3033  3033 D nativeloader: InitApexLibraries:
+09-08 18:33:32.201  3033  3033 D nativeloader:   com_android_appsearch: libicing.so
+09-08 18:33:32.201  3033  3033 D nativeloader:   com_android_art: libartservice.so
+09-08 18:33:32.201  3033  3033 D nativeloader:   com_android_conscrypt: libjavacrypto.so
+09-08 18:33:32.201  3033  3033 D nativeloader:   com_android_extservices: libtflite_support_classifiers_native.so
+09-08 18:33:32.201  3033  3033 D nativeloader:   com_android_mediaprovider: libpdfclient.so
+09-08 18:33:32.201  3033  3033 D nativeloader:   com_android_os_statsd: libstats_jni.so
+09-08 18:33:32.201  3033  3033 D nativeloader:   com_android_tethering: libandroid_net_connectivity_com_android_net_module_util_jni.so:libandroid_net_connectivity_com_android_net_module_util_jni_CommonConnectivityJni.so:libcrypto_httpengine.so:libframework-connectivity-jni.so:libframework-connectivity-tiramisu-jni.so:libhttpengine.so:libservice-connectivity.so:libservice-thread-jni.so
+09-08 18:33:32.678  3033  3033 D nativeloader: Configuring clns-5 for other apk /data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/lib/arm64:/data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.appylab.synctasks
+--------- beginning of system
+09-08 18:33:32.680  3033  3033 I Quality : ActivityThread: createClassLoader delay 479 /data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/base.apk 3033
+09-08 18:33:32.687  3033  3033 I Quality : ActivityThread: createOrUpdateClassLoaderLocked delay 494 com.appylab.synctasks 3033
+09-08 18:33:32.702  3033  3033 V GraphicsEnvironment: ANGLE Developer option for 'com.appylab.synctasks' set to: 'default'
+09-08 18:33:32.702  3033  3033 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+09-08 18:33:32.709  3033  3033 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+09-08 18:33:32.710  3033  3033 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+09-08 18:33:32.809  3033  3033 D SessionsDependencies: Dependency to CRASHLYTICS added.
+09-08 18:33:32.848  3033  3033 I FirebaseApp: Device unlocked: initializing all Firebase APIs for app [DEFAULT]
+09-08 18:33:32.893  3033  3033 I FirebaseCrashlytics: Initializing Firebase Crashlytics 19.4.4 for com.appylab.synctasks
+09-08 18:33:32.946  3033  3033 D SessionsDependencies: Subscriber CRASHLYTICS registered.
+09-08 18:33:32.997  3033  3221 W pylab.synctask: ClassLoaderContext classpath size mismatch. expected=1, found=0 (DLC[];PCL[base.apk*321968244]{PCL[/system/framework/org.apache.http.legacy.jar*3291421075]#PCL[/apex/com.android.extservices/javalib/android.ext.adservices.jar*4107572224]#PCL[/system/framework/com.android.location.provider.jar*3633238672]#PCL[/system/framework/com.android.media.remotedisplay.jar*3472798123]#PCL[/apex/com.android.extservices/javalib/android.ext.adservices.jar*4107572224]} | DLC[];PCL[])
+09-08 18:33:33.008  3033  3221 I DynamiteModule: Considering local module com.google.android.gms.measurement.dynamite:152 and remote module com.google.android.gms.measurement.dynamite:205
+09-08 18:33:33.008  3033  3221 I DynamiteModule: Selected remote version of com.google.android.gms.measurement.dynamite, version >= 205
+09-08 18:33:33.008  3033  3221 V DynamiteModule: Dynamite loader version >= 2, using loadModule2NoCrashUtils
+09-08 18:33:33.014  3033  3033 D FirebaseSessions: Initializing Firebase Sessions SDK.
+09-08 18:33:33.030  3033  3033 I FirebaseInitProvider: FirebaseApp initialization successful
+09-08 18:33:33.035  3033  3033 D WM-WrkMgrInitializer: Initializing WorkManager with default configuration.
+09-08 18:33:33.064  3033  3221 W System  : ClassLoader referenced unknown path: 
+09-08 18:33:33.068  3033  3221 D nativeloader: Configuring clns-6 for other apk . target_sdk_version=37, uses_libraries=, library_path=/data/app/~~ipdTNzB2oG-keqWypQQz_g==/com.google.android.gms-Y1MvIX1Q1I2QIxBWHuhchA==/lib/arm64:/data/app/~~ipdTNzB2oG-keqWypQQz_g==/com.google.android.gms-Y1MvIX1Q1I2QIxBWHuhchA==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.gms
+09-08 18:33:33.073  3033  3033 D WM-PackageManagerHelper: Skipping component enablement for androidx.work.impl.background.systemjob.SystemJobService
+09-08 18:33:33.073  3033  3033 D WM-Schedulers: Created SystemJobScheduler and enabled SystemJobService
+09-08 18:33:33.079  3033  3263 D WM-ForceStopRunnable: The default process name was not specified.
+09-08 18:33:33.080  3033  3263 D WM-ForceStopRunnable: Performing cleanup operations.
+09-08 18:33:33.088  3033  3228 I FirebaseCrashlytics: Saved version control info
+09-08 18:33:33.092  3033  3033 I Quality : ActivityThread: bindApplication delay 928 com.appylab.synctasks 3033
+09-08 18:33:33.119  3033  3292 D libMEOW : meow new tls: 0xb400007af8fc2c40
+09-08 18:33:33.122  3033  3292 D libMEOW : meow reload base cfg path: na
+09-08 18:33:33.123  3033  3292 D libMEOW : meow reload overlay cfg path: na
+09-08 18:33:33.146  3033  3292 E QT      : [QT]file does not exist
+09-08 18:33:33.147  3033  3316 D FlutterJNI: Beginning load of flutter...
+09-08 18:33:33.147  3033  3292 D libMEOW : applied 1 plugins for [com.appylab.synctasks]:
+09-08 18:33:33.147  3033  3292 D libMEOW :   plugin 1: [libMEOW_gift.so]: 0xb400007ae7eca440
+09-08 18:33:33.148  3033  3292 D libMEOW : rebuild call chain: 0xb400007af2e8f280
+09-08 18:33:33.148  3033  3292 D libMEOW : meow delete tls: 0xb400007af8fc2c40
+09-08 18:33:33.151  3033  3221 W pylab.synctask: ClassLoaderContext classpath element checksum mismatch. expected=321968244, found=3959724563 (DLC[];PCL[base.apk*321968244]{PCL[/system/framework/org.apache.http.legacy.jar*3291421075]#PCL[/apex/com.android.extservices/javalib/android.ext.adservices.jar*4107572224]#PCL[/system/framework/com.android.location.provider.jar*3633238672]#PCL[/system/framework/com.android.media.remotedisplay.jar*3472798123]#PCL[/apex/com.android.extservices/javalib/android.ext.adservices.jar*4107572224]} | DLC[];PCL[/data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/base.apk*3959724563]{PCL[/apex/com.android.extservices/javalib/android.ext.adservices.jar*4107572224]})
+09-08 18:33:33.152  3033  3317 I ResourceExtractor: Found extracted resources res_timestamp-1-1788872181795
+09-08 18:33:33.152  3033  3317 I ResourceExtractor: Resource version mismatch res_timestamp-1-1788872609547
+09-08 18:33:33.153  3033  3263 D CompatibilityChangeReporter: Compat change id reported: 160794467; UID 10690; state: ENABLED
+09-08 18:33:33.160  3033  3263 D WM-ForceStopRunnable: Application was force-stopped, rescheduling.
+09-08 18:33:33.211  3033  3237 D LifecycleServiceBinder: Binding service to application.
+09-08 18:33:33.250  3033  3348 I pylab.synctask: hiddenapi: Accessing hidden method Ldalvik/system/VMStack;->getStackClass2()Ljava/lang/Class; (runtime_flags=0, domain=core-platform, api=unsupported) from Lm7/aon; (domain=app, TargetSdkVersion=36) using reflection: allowed
+09-08 18:33:33.260  3033  3327 D WM-PackageManagerHelper: Skipping component enablement for androidx.work.impl.background.systemalarm.RescheduleReceiver
+09-08 18:33:33.261  3033  3332 E Parcel  : Reading a NULL string not supported here.
+09-08 18:33:33.277  3033  3338 E pylab.synctask: No package ID 6a found for ID 0x6a0b0013.
+09-08 18:33:33.280  3033  3338 I FA      : App measurement initialized, version: 181006
+09-08 18:33:33.280  3033  3338 I FA      : To enable debug logging run: adb shell setprop log.tag.FA VERBOSE
+09-08 18:33:33.280  3033  3338 I FA      : To enable faster debug mode event logging run:
+09-08 18:33:33.280  3033  3338 I FA      :   adb shell setprop debug.firebase.analytics.app com.appylab.synctasks
+09-08 18:33:33.286  3033  3316 D nativeloader: Load /data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/base.apk!/lib/arm64-v8a/libflutter.so using class loader ns clns-5 (caller=/data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/base.apk!classes17.dex): ok
+09-08 18:33:33.288  3033  3316 D FlutterJNI: flutter (null) was loaded normally!
+09-08 18:33:33.300  3033  3369 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+09-08 18:33:34.001  3033  3317 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/kernel_blob.bin
+09-08 18:33:34.002  3033  3317 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/vm_snapshot_data
+09-08 18:33:34.101  3033  3317 I ResourceExtractor: Extracted baseline resource assets/flutter_assets/isolate_snapshot_data
+09-08 18:33:34.130  3033  3033 E pylab.synctask: hiddenapi: Accessing hidden method Landroid/view/SurfaceControl$Builder;->setHidden(Z)Landroid/view/SurfaceControl$Builder; (runtime_flags=0, domain=platform, api=blocked) from /data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/base.apk!classes17.dex (domain=app, TargetSdkVersion=36) using linking: denied
+09-08 18:33:34.196  3033  3479 D vulkan  : searching for layers in '/data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/lib/arm64'
+09-08 18:33:34.196  3033  3479 D vulkan  : searching for layers in '/data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/base.apk!/lib/arm64-v8a'
+09-08 18:33:34.200  3033  3479 D vulkan  : added global layer 'VK_LAYER_KHRONOS_validation' from library '/data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/base.apk!/lib/arm64-v8a/libVkLayer_khronos_validation.so'
+09-08 18:33:34.201  3033  3479 D vulkan  : searching for layers in '/vendor/lib64'
+09-08 18:33:34.205  3033  3479 W libc    : Access denied finding property "vendor.debug.forcibly_enable_mtk_ray_tracing"
+09-08 18:33:34.217  3033  3479 D hw-ProcessState: Binder ioctl to enable oneway spam detection failed: Invalid argument
+09-08 18:33:34.245  3033  3479 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_vk_impeller.cc(62)] Using the Impeller rendering backend (Vulkan).
+09-08 18:33:34.333  3033  3514 I flutter : The Dart VM service is listening on http://127.0.0.1:33813/_tim19HBvM4=/
+09-08 18:33:34.835  3033  3033 D nativeloader: Load /data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/base.apk!/lib/arm64-v8a/libdartjni.so using class loader ns clns-5 (caller=/data/app/~~QJf-6D0BsyHzpFNOr6Sjrg==/com.appylab.synctasks-PxcXfRQBB_nKDB_35w4hIQ==/base.apk!classes8.dex): ok
+09-08 18:33:34.850  3033  3033 I oplus.android.OplusFrameworkFactoryImpl: Unknow feature:IOplusTextViewRTLUtilForUG
+09-08 18:33:34.862  3033  3033 I SurfaceFactory: [static] sSurfaceFactory = com.mediatek.view.impl.SurfaceFactoryImpl@cad7f7f
+09-08 18:33:34.875  3033  3033 D OplusInputMethodUtil: init DEBUG to false, update DEBUG_IME to false
+09-08 18:33:34.875  3033  3033 D OplusInputMethodUtil: init DEBUG to false, update DEBUG_IME to false
+09-08 18:33:34.898  3033  3033 I pylab.synctask: hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported,test-api) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+09-08 18:33:34.899  3033  3033 I pylab.synctask: hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+09-08 18:33:34.899  3033  3033 I pylab.synctask: hiddenapi: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+09-08 18:33:34.899  3033  3033 I pylab.synctask: hiddenapi: Accessing hidden method Landroid/util/LongArray;->get(I)J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+09-08 18:33:34.920  3033  3033 D FlutterRenderer: Width is zero. 0,0
+09-08 18:33:34.961  3033  3033 I Quality : ActivityThread: activityStart delay 1869 com.appylab.synctasks 3033
+09-08 18:33:34.968  3033  3228 D SessionLifecycleClient: Queued message 1. Queue size 1
+09-08 18:33:34.972  3033  3338 I FA      : Tag Manager is not found and thus will not be used
+09-08 18:33:34.974  3033  3033 I MsyncFactory: [static] sMsyncFactory = com.mediatek.view.impl.MsyncFactoryImpl@1a897e4
+09-08 18:33:34.975  3033  3707 D OpenMsyncAppList: loadTunerAppList + 
+09-08 18:33:34.980  3033  3033 I OplusSlideAnimOptHelper: checkListMode: is blacklist mode = true
+09-08 18:33:34.981  3033  3033 D OplusSlideAnimOptHelper: com.appylab.synctasks scrollEffectOpt enable = true
+09-08 18:33:34.982  3033  3707 D OpenMsyncAppList: loadTunerAppList - 
+09-08 18:33:34.992  3033  3033 D WindowManager: Add to mViews: DecorView@e6b466f[MainActivity],pkg= com.appylab.synctasks
+09-08 18:33:34.998  3033  3280 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+09-08 18:33:35.004  3033  3280 D ExtensionsLoader: Opened libhwuiextimpl.so
+09-08 18:33:35.004  3033  3033 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+09-08 18:33:35.007  3033  3033 D ExtensionsLoader: Opened libSchedAssistExtImpl.so
+09-08 18:33:35.007  3033  3033 E pylab.synctask: ofbOpen failed with error=No such file or directory
+09-08 18:33:35.007  3033  3033 E pylab.synctask: sysOpen failed with error=No such file or directory
+09-08 18:33:35.018  3033  3033 D ViewRootImpl[MainActivity]: hardware acceleration = true, sRendererEnabled = true, forceHwAccelerated = false
+09-08 18:33:35.032  3033  3033 D libMEOW : meow new tls: 0xb400007af4c8b8c0
+09-08 18:33:35.032  3033  3033 D libMEOW : applied 1 plugins for [com.appylab.synctasks]:
+09-08 18:33:35.032  3033  3033 D libMEOW :   plugin 1: [libMEOW_gift.so]: 0xb400007ae7eca440
+09-08 18:33:35.032  3033  3033 D libMEOW : rebuild call chain: 0xb400007af4c9a980
+09-08 18:33:35.034  3033  3033 I Quality : ActivityThread: activityResume delay 69 com.appylab.synctasks 3033
+09-08 18:33:35.035  3033  3033 E ANR_LOG : >>> msg's executing time is too long
+09-08 18:33:35.035  3033  3033 E ANR_LOG : Blocked msg = { when=-2s899ms what=159 target=android.app.ActivityThread$H obj=android.app.servertransaction.ClientTransaction@e6570324 } , cost  = 1943 ms
+09-08 18:33:35.035  3033  3033 E ANR_LOG : >>>Current msg List is:
+09-08 18:33:35.036  3033  3033 E ANR_LOG : Current msg <1> = { when=-2s898ms what=159 target=android.app.ActivityThread$H obj=android.app.servertransaction.ClientTransaction@32a45a21 }
+09-08 18:33:35.036  3033  3033 E ANR_LOG : Current msg <2> = { when=-2s726ms what=149 target=android.app.ActivityThread$H obj=android.os.BinderProxy@97d423c }
+09-08 18:33:35.037  3033  3033 E ANR_LOG : Current msg <3> = { when=-2s315ms what=164 target=android.app.ActivityThread$H obj=com.appylab.synctasks }
+09-08 18:33:35.037  3033  3033 E ANR_LOG : Current msg <4> = { when=-1s893ms what=0 target=android.app.ActivityThread$H callback=android.app.ActivityThread$$ExternalSyntheticLambda1 }
+09-08 18:33:35.037  3033  3033 E ANR_LOG : Current msg <5> = { when=-1s816ms what=114 target=android.app.ActivityThread$H obj=CreateServiceData{token=android.os.BinderProxy@69eb8b2 className=com.google.firebase.sessions.SessionLifecycleService packageName=com.appylab.synctasks intent=null} }
+09-08 18:33:35.037  3033  3033 E ANR_LOG : Current msg <6> = { when=-1s815ms what=121 target=android.app.ActivityThread$H obj=BindServiceData{token=android.os.BinderProxy@69eb8b2 intent=Intent { act=3033 pkg=com.appylab.synctasks cmp=com.appylab.synctasks/com.google.firebase.sessions.SessionLifecycleService (has extras) }} }
+09-08 18:33:35.038  3033  3033 E ANR_LOG : Current msg <7> = { when=-1s740ms what=0 target=m7.il callback=m7.yg }
+09-08 18:33:35.038  3033  3033 E ANR_LOG : Current msg <8> = { when=-1s718ms what=0 target=m7.il callback=m7.yg }
+09-08 18:33:35.038  3033  3033 E ANR_LOG : Current msg <9> = { when=-1s688ms what=0 target=android.app.ActivityThread$H callback=android.app.LoadedApk$ServiceDispatcher$RunConnection }
+09-08 18:33:35.038  3033  3033 E ANR_LOG : Current msg <10> = { when=-820ms what=131 target=android.app.ActivityThread$H obj=android.app.ActivityThread$ProviderRefCount@9871003 }
+09-08 18:33:35.038  3033  3033 E ANR_LOG : >>>CURRENT MSG DUMP OVER<<<
+09-08 18:33:35.038  3033  3033 I Quality : ActivityThread: activityLifecycle delay 1946 com.appylab.synctasks 3033
+09-08 18:33:35.040  3033  3102 I Quality : Blocked msg = Package name: com.appylab.synctasks [ schedGroup: 5 schedPolicy: 0 ] process the message: { when=-2s902ms what=159 target=android.app.ActivityThread$H obj=android.app.servertransaction.ClientTransaction@e6570324 } took 1946 ms
+09-08 18:33:35.042  3033  3033 D nativeloader: Load libpowerhalwrap_jni.so using system ns (caller=/system/framework/mediatek-framework.jar): ok
+09-08 18:33:35.042  3033  3033 I PowerHalWrapper: PowerHalWrapper.getInstance 
+09-08 18:33:35.357  3033  3033 I Choreographer: Skipped 101 frames!  The application may be doing too much work on its main thread.
+09-08 18:33:35.357  3033  3033 I Quality : Skipped: false 101 cost 2258.7698 refreshRate 0 processName com.appylab.synctasks
+09-08 18:33:35.363  3033  3033 D nativeloader: Load libSchedAssistJni.so using system ns (caller=/system/framework/oplus-framework.jar): ok
+09-08 18:33:35.363  3033  3033 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+09-08 18:33:35.364  3033  3033 D ExtensionsLoader: Opened libSchedAssistExtImpl.so
+09-08 18:33:35.422  3033  3033 D FlutterRenderer: Width is zero. 0,0
+09-08 18:33:35.438  3033  3033 I BufferQueueConsumer: [](id:bd900000000,api:0,p:-1,c:3033) connect: controlledByApp=false
+09-08 18:33:35.440  3033  3033 I BLASTBufferQueue: [ViewRootImpl[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#0] constructor()
+09-08 18:33:35.441  3033  3033 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+09-08 18:33:35.441  3033  3033 D ExtensionsLoader: Opened libSchedAssistExtImpl.so
+09-08 18:33:35.444  3033  3033 V ZoomWindowDecorView: setLastReportedMergedConfiguration mZoomDisplayHeight: 2400 getDecorView.241911407
+09-08 18:33:35.445  3033  3280 D libMEOW : meow new tls: 0xb400007af4cb9d80
+09-08 18:33:35.445  3033  3280 D libMEOW : applied 1 plugins for [com.appylab.synctasks]:
+09-08 18:33:35.445  3033  3280 D libMEOW :   plugin 1: [libMEOW_gift.so]: 0xb400007ae7eca440
+09-08 18:33:35.446  3033  3280 D libMEOW : rebuild call chain: 0xb400007af4d573c0
+09-08 18:33:35.449  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:35.466  3033  3280 I GED     : [GT]_get_procNameprocess pid(3033)
+09-08 18:33:35.466  3033  3280 I GED     : [GT]_getprocess name(com.appylab.synctasks)
+09-08 18:33:35.466  3033  3280 I pylab.synctask: [GT] ret(1) gt_status(00000000) aniso_debug_level(0) gt_aniso_max_level(16) ani so mask(00000001) tri mask(00000002)
+09-08 18:33:35.472  3033  3033 I BufferQueueConsumer: [](id:bd900000001,api:0,p:-1,c:3033) connect: controlledByApp=false
+09-08 18:33:35.473  3033  3033 I BLASTBufferQueue: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1] constructor()
+09-08 18:33:35.476  3033  3479 I BufferQueueProducer: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1(BLAST Consumer)1](id:bd900000001,api:1,p:3033,c:3033) connect: api=1 producerControlledByApp=true
+09-08 18:33:35.476  3033  3280 I BufferQueueProducer: [ViewRootImpl[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#0(BLAST Consumer)0](id:bd900000000,api:1,p:3033,c:3033) connect: api=1 producerControlledByApp=true
+09-08 18:33:35.485  3033  3479 I BufferQueueProducer: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1(BLAST Consumer)1](id:bd900000001,api:1,p:3033,c:3033) disconnect: api 1
+09-08 18:33:35.485  3033  3479 E BLASTBufferQueue: BLASTBufferItemConsumer::onDisconnect()
+09-08 18:33:35.485  3033  3479 I BufferQueueProducer: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1(BLAST Consumer)1](id:bd900000001,api:1,p:3033,c:3033) connect: api=1 producerControlledByApp=true
+09-08 18:33:35.491  3033  3479 E ion     : ioctl c0044901 failed with code -1: Invalid argument
+09-08 18:33:35.492  3033  3479 D hw-ProcessState: Binder ioctl to enable oneway spam detection failed: Invalid argument
+09-08 18:33:35.831  3033  3033 D SessionLifecycleService: Service created on process 3033
+09-08 18:33:35.832  3033  3033 D SessionLifecycleService: Service bound to new client on process 3033
+09-08 18:33:35.842  3033  3924 D SessionLifecycleService: App has not yet foregrounded. Using previously stored session.
+09-08 18:33:35.842  3033  3924 D SessionLifecycleService: Client android.os.Messenger@360a95f bound at 268774636. Clients: 1
+09-08 18:33:35.874  3033  3033 I Quality : Skipped: false 20 cost 452.71405 refreshRate 0 processName com.appylab.synctasks
+09-08 18:33:35.894  3033  3033 D SessionLifecycleClient: Connected to SessionLifecycleService. Queue size 1
+09-08 18:33:35.906  3033  3033 E Parcel  : Reading a NULL string not supported here.
+09-08 18:33:35.908  3033  3228 D SessionLifecycleClient: Sending lifecycle 1 to service
+09-08 18:33:35.909  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:35.911  3033  3924 D SessionLifecycleService: Activity foregrounding at 268774713.
+09-08 18:33:35.911  3033  3924 D SessionLifecycleService: Cold start detected.
+09-08 18:33:35.913  3033  3924 D SessionLifecycleService: Generated new session.
+09-08 18:33:35.914  3033  3924 D SessionLifecycleService: Broadcasting new session
+09-08 18:33:35.919  3033  3237 D SessionFirelogPublisher: Data Collection is enabled for at least one Subscriber
+09-08 18:33:35.972  3033  3033 D SessionLifecycleClient: Session update received.
+09-08 18:33:35.974  3033  3033 I Quality : Skipped: false 1 cost 31.271029 refreshRate 0 processName com.appylab.synctasks
+09-08 18:33:36.011  3033  3237 D SessionLifecycleClient: Notified CRASHLYTICS of new session 9d57d74eaa2a404c87b1127748d22231
+09-08 18:33:36.017  3033  3227 D EventGDTLogger: Session Event Type: SESSION_START
+09-08 18:33:36.018  3033  3227 D SessionFirelogPublisher: Successfully logged Session Start event.
+09-08 18:33:37.604  3033  3033 I flutter : Analytics screen_view: splash
+09-08 18:33:38.248  3033  3088 D SurfaceComposerClient: VRR [FRTC] client handle [bufferId:18446744073709551615 framenumber:0] [ffffffff, ffffffff]
+09-08 18:33:38.275  3033  3033 I Choreographer: Skipped 100 frames!  The application may be doing too much work on its main thread.
+09-08 18:33:38.275  3033  3033 I Quality : Skipped: false 100 cost 2242.2654 refreshRate 0 processName com.appylab.synctasks
+09-08 18:33:38.432  3033  3100 E BLASTBufferQueue: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1](f:0,a:2) isEGL=1, mPendingRelease.size()=1, mMaxAcquiredBuffers=4, currentMaxAcquiredBufferCount=2
+09-08 18:33:38.444  3033  3033 I Quality : Skipped: false 7 cost 157.29234 refreshRate 0 processName com.appylab.synctasks
+09-08 18:33:38.455  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:38.489  3033  3280 E OpenGLRenderer: fbcNotifyFrameComplete error: undefined symbol: fbcNotifyFrameComplete
+09-08 18:33:38.489  3033  3280 E OpenGLRenderer: fbcNotifyNoRender error: undefined symbol: fbcNotifyNoRender
+09-08 18:33:38.511  3033  3100 D SurfaceComposerClient: VRR [FRTC] client handle [bufferId:18446744073709551615 framenumber:0] [ffffffff, ffffffff]
+09-08 18:33:38.558  3033  3100 E BLASTBufferQueue: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1](f:0,a:3) isEGL=1, mPendingRelease.size()=2, mMaxAcquiredBuffers=4, currentMaxAcquiredBufferCount=2
+09-08 18:33:38.606  3033  3033 I flutter : Analytics screen_view: today
+09-08 18:33:38.675  3033  3100 E BLASTBufferQueue: [ViewRootImpl[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#0](f:0,a:2) isEGL=1, mPendingRelease.size()=1, mMaxAcquiredBuffers=4, currentMaxAcquiredBufferCount=2
+09-08 18:33:38.768  3033  3033 I flutter : WARNING (drift): It looks like you've created the database class AppDatabase multiple times. When these two databases use the same QueryExecutor, race conditions will occur and might corrupt the database. 
+09-08 18:33:38.768  3033  3033 I flutter : Try to follow the advice at https://drift.simonbinder.eu/faq/#using-the-database or, if you know what you're doing, set driftRuntimeOptions.dontWarnAboutMultipleDatabases = true
+09-08 18:33:38.768  3033  3033 I flutter : Here is the stacktrace from when the database was opened a second time:
+09-08 18:33:38.768  3033  3033 I flutter : #0      GeneratedDatabase._handleInstantiated (package:drift/src/runtime/api/db_base.dart:96:30)
+09-08 18:33:38.768  3033  3033 I flutter : #1      GeneratedDatabase._whenConstructed (package:drift/src/runtime/api/db_base.dart:73:12)
+09-08 18:33:38.768  3033  3033 I flutter : #2      new GeneratedDatabase (package:drift/src/runtime/api/db_base.dart:64:5)
+09-08 18:33:38.768  3033  3033 I flutter : #3      new _$AppDatabase (package:synctasks/core/database/app_database.g.dart:2318:36)
+09-08 18:33:38.768  3033  3033 I flutter : #4      new AppDatabase (package:synctasks/core/database/app_database.dart:17:19)
+09-08 18:33:38.768  3033  3033 I flutter : #5      appDatabaseProvider.<anonymous closure> (package:synctasks/features/tasks/providers/task_controller.dart:13:20)
+09-08 18:33:38.768  3033  3033 I flutter : #6      Provider.create (package:riverpod/src/providers/provider.dart:59:36)
+09-08 18:33:38.768  3033  3033 I flutter : #7      $ProviderElement.create (package:riverpod/src/providers/provider.dart:343:32)
+09-08 18:33:38.768  3033  3033 I flutter : #8      ProviderElement.buildState (package:riverpod/src/core/element.dart:665:28)
+09-08 18:33:38.768  3033  3033 I flutter : #9      ProviderElement.mount (package:riverpod/src/core/element.dart:517:7)
+09-08 18:33:38.768  3033  3033 I flutter : #10     ProviderElement.flush (package:riverpod/src/core/element.dart:620:7)
+09-08 18:33:38.768  3033  3033 I flutter : #11     $ProviderBaseImpl._addListener (package:riverpod/src/core/provider/provider.dart:117:24)
+09-08 18:33:38.768  3033  3033 I flutter : #12     ProviderElement.listen (package:riverpod/src/core/element.dart:901:28)
+09-08 18:33:38.768  3033  3033 I flutter : #13     Ref.watch (package:riverpod/src/core/ref.dart:639:20)
+09-08 18:33:38.768  3033  3033 I flutter : #14     taskRepositoryProvider.<anonymous closure> (package:synctasks/features/tasks/providers/task_controller.dart:19:29)
+09-08 18:33:38.768  3033  3033 I flutter : #15     Provider.create (package:riverpod/src/providers/provider.dart:59:36)
+09-08 18:33:38.768  3033  3033 I flutter : #16     $ProviderElement.create (package:riverpod/src/providers/provider.dart:343:32)
+09-08 18:33:38.768  3033  3033 I flutter : #17     ProviderElement.buildState (package:riverpod/src/core/element.dart:665:28)
+09-08 18:33:38.768  3033  3033 I flutter : #18     ProviderElement.mount (package:riverpod/src/core/element.dart:517:7)
+09-08 18:33:38.768  3033  3033 I flutter : #19     ProviderElement.flush (package:riverpod/src/core/element.dart:620:7)
+09-08 18:33:38.768  3033  3033 I flutter : #20     $ProviderBaseImpl._addListener (package:riverpod/src/core/provider/provider.dart:117:24)
+09-08 18:33:38.769  3033  3033 I flutter : #21     ProviderElement.listen (package:riverpod/src/core/element.dart:901:28)
+09-08 18:33:38.769  3033  3033 I flutter : #22     Ref.watch (package:riverpod/src/core/ref.dart:639:20)
+09-08 18:33:38.769  3033  3033 I flutter : #23     todayTasksProvider.<anonymous closure> (package:synctasks/features/tasks/providers/today_tasks_provider.dart:7:14)
+09-08 18:33:38.769  3033  3033 I flutter : #24     FutureProvider.create (package:riverpod/src/providers/future_provider.dart:142:46)
+09-08 18:33:38.769  3033  3033 I flutter : #25     $FutureProviderElement.create.<anonymous closure> (package:riverpod/src/providers/future_provider.dart:167:45)
+09-08 18:33:38.769  3033  3033 I flutter : #26     ElementWithFuture.handleFuture.<anonymous closure> (package:riverpod/src/core/element.dart:206:30)
+09-08 18:33:38.769  3033  3033 I flutter : #27     ElementWithFuture._handleAsync (package:riverpod/src/core/element.dart:265:35)
+09-08 18:33:38.769  3033  3033 I flutter : #28     ElementWithFuture.handleFuture (package:riverpod/src/core/element.dart:200:12)
+09-08 18:33:38.769  3033  3033 I flutter : #29     $FutureProviderElement.create (package:riverpod/src/providers/future_provider.dart:167:12)
+09-08 18:33:38.769  3033  3033 I flutter : #30     ProviderElement.buildState (package:riverpod/src/core/element.dart:665:28)
+09-08 18:33:38.769  3033  3033 I flutter : #31     ProviderElement.mount (package:riverpod/src/core/element.dart:517:7)
+09-08 18:33:38.769  3033  3033 I flutter : #32     ProviderElement.flush (package:riverpod/src/core/element.dart:620:7)
+09-08 18:33:38.769  3033  3033 I flutter : #33     $ProviderBaseImpl._addListener (package:riverpod/src/core/provider/provider.dart:117:24)
+09-08 18:33:38.769  3033  3033 I flutter : #34     ProviderContainer.listen (package:riverpod/src/core/provider_container.dart:954:26)
+09-08 18:33:38.769  3033  3033 I flutter : #35     ConsumerStatefulElement.watch.<anonymous closure> (package:flutter_riverpod/src/core/consumer.dart:451:37)
+09-08 18:33:38.769  3033  3033 I flutter : #36     _LinkedHashMapMixin.putIfAbsent (dart:_compact_hash:682:23)
+09-08 18:33:38.769  3033  3033 I flutter : #37     ConsumerStatefulElement.watch (package:flutter_riverpod/src/core/consumer.dart:444:14)
+09-08 18:33:38.769  3033  3033 I flutter : #38     _TodayScreenState.build (package:synctasks/features/tasks/screens/today_screen.dart:43:28)
+09-08 18:33:38.769  3033  3033 I flutter : #39     StatefulElement.build (package:flutter/src/widgets/framework.dart:5931:27)
+09-08 18:33:38.769  3033  3033 I flutter : #40     ConsumerStatefulElement.build (package:flutter_riverpod/src/core/consumer.dart:421:20)
+09-08 18:33:38.769  3033  3033 I flutter : #41     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5817:15)
+09-08 18:33:38.769  3033  3033 I flutter : #42     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.769  3033  3033 I flutter : #43     Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.769  3033  3033 I flutter : #44     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.769  3033  3033 I flutter : #45     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.769  3033  3033 I flutter : #46     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.769  3033  3033 I flutter : #47     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.769  3033  3033 I flutter : #48     Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.769  3033  3033 I flutter : #49     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.769  3033  3033 I flutter : #50     Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.769  3033  3033 I flutter : #51     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.770  3033  3033 I flutter : #52     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.770  3033  3033 I flutter : #53     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.770  3033  3033 I flutter : #54     Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.770  3033  3033 I flutter : #55     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.770  3033  3033 I flutter : #56     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.770  3033  3033 I flutter : #57     Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.770  3033  3033 I flutter : #58     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.770  3033  3033 I flutter : #59     Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.770  3033  3033 I flutter : #60     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.770  3033  3033 I flutter : #61     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.770  3033  3033 I flutter : #62     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.770  3033  3033 I flutter : #63     Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.770  3033  3033 I flutter : #64     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.770  3033  3033 I flutter : #65     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.770  3033  3033 I flutter : #66     Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.770  3033  3033 I flutter : #67     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.770  3033  3033 I flutter : #68     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.770  3033  3033 I flutter : #69     Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.770  3033  3033 I flutter : #70     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.770  3033  3033 I flutter : #71     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.770  3033  3033 I flutter : #72     Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.770  3033  3033 I flutter : #73     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.770  3033  3033 I flutter : #74     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.770  3033  3033 I flutter : #75     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.770  3033  3033 I flutter : #76     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.770  3033  3033 I flutter : #77     Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.770  3033  3033 I flutter : #78     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.770  3033  3033 I flutter : #79     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.770  3033  3033 I flutter : #80     Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.770  3033  3033 I flutter : #81     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.770  3033  3033 I flutter : #82     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.771  3033  3033 I flutter : #83     Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.771  3033  3033 I flutter : #84     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.771  3033  3033 I flutter : #85     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.771  3033  3033 I flutter : #86     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.771  3033  3033 I flutter : #87     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.771  3033  3033 I flutter : #88     Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.771  3033  3033 I flutter : #89     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.771  3033  3033 I flutter : #90     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.771  3033  3033 I flutter : #91     Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.771  3033  3033 I flutter : #92     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.771  3033  3033 I flutter : #93     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.771  3033  3033 I flutter : #94     Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.771  3033  3033 I flutter : #95     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.771  3033  3033 I flutter : #96     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.771  3033  3033 I flutter : #97     Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.771  3033  3033 I flutter : #98     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.771  3033  3033 I flutter : #99     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.771  3033  3033 I flutter : #100    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.771  3033  3033 I flutter : #101    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.771  3033  3033 I flutter : #102    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.771  3033  3033 I flutter : #103    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.771  3033  3033 I flutter : #104    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.771  3033  3033 I flutter : #105    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.771  3033  3033 I flutter : #106    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.771  3033  3033 I flutter : #107    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.771  3033  3033 I flutter : #108    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.771  3033  3033 I flutter : #109    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.771  3033  3033 I flutter : #110    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.771  3033  3033 I flutter : #111    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.771  3033  3033 I flutter : #112    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.771  3033  3033 I flutter : #113    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.771  3033  3033 I flutter : #114    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.771  3033  3033 I flutter : #115    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.771  3033  3033 I flutter : #116    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.771  3033  3033 I flutter : #117    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.771  3033  3033 I flutter : #118    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.771  3033  3033 I flutter : #119    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.772  3033  3033 I flutter : #120    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.772  3033  3033 I flutter : #121    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.772  3033  3033 I flutter : #122    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.772  3033  3033 I flutter : #123    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.772  3033  3033 I flutter : #124    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.772  3033  3033 I flutter : #125    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.772  3033  3033 I flutter : #126    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.772  3033  3033 I flutter : #127    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.772  3033  3033 I flutter : #128    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.772  3033  3033 I flutter : #129    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.772  3033  3033 I flutter : #130    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.772  3033  3033 I flutter : #131    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.772  3033  3033 I flutter : #132    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.772  3033  3033 I flutter : #133    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.772  3033  3033 I flutter : #134    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.772  3033  3033 I flutter : #135    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.772  3033  3033 I flutter : #136    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.772  3033  3033 I flutter : #137    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.772  3033  3033 I flutter : #138    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.772  3033  3033 I flutter : #139    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.772  3033  3033 I flutter : #140    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.772  3033  3033 I flutter : #141    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.772  3033  3033 I flutter : #142    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.772  3033  3033 I flutter : #143    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.772  3033  3033 I flutter : #144    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.772  3033  3033 I flutter : #145    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.772  3033  3033 I flutter : #146    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.772  3033  3033 I flutter : #147    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.772  3033  3033 I flutter : #148    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.772  3033  3033 I flutter : #149    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.772  3033  3033 I flutter : #150    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.772  3033  3033 I flutter : #151    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.772  3033  3033 I flutter : #152    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.772  3033  3033 I flutter : #153    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.772  3033  3033 I flutter : #154    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.772  3033  3033 I flutter : #155    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.772  3033  3033 I flutter : #156    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.772  3033  3033 I flutter : #157    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.773  3033  3033 I flutter : #158    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.773  3033  3033 I flutter : #159    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.773  3033  3033 I flutter : #160    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.773  3033  3033 I flutter : #161    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.773  3033  3033 I flutter : #162    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.773  3033  3033 I flutter : #163    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.773  3033  3033 I flutter : #164    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.773  3033  3033 I flutter : #165    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.773  3033  3033 I flutter : #166    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.773  3033  3033 I flutter : #167    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.773  3033  3033 I flutter : #168    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.773  3033  3033 I flutter : #169    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.773  3033  3033 I flutter : #170    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.773  3033  3033 I flutter : #171    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.773  3033  3033 I flutter : #172    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.773  3033  3033 I flutter : #173    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.773  3033  3033 I flutter : #174    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.773  3033  3033 I flutter : #175    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.773  3033  3033 I flutter : #176    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.773  3033  3033 I flutter : #177    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.773  3033  3033 I flutter : #178    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.773  3033  3033 I flutter : #179    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.773  3033  3033 I flutter : #180    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.773  3033  3033 I flutter : #181    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.773  3033  3033 I flutter : #182    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.773  3033  3033 I flutter : #183    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.773  3033  3033 I flutter : #184    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.773  3033  3033 I flutter : #185    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.773  3033  3033 I flutter : #186    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.773  3033  3033 I flutter : #187    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.773  3033  3033 I flutter : #188    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.774  3033  3033 I flutter : #189    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.774  3033  3033 I flutter : #190    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.774  3033  3033 I flutter : #191    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.774  3033  3033 I flutter : #192    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.774  3033  3033 I flutter : #193    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.774  3033  3033 I flutter : #194    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.774  3033  3033 I flutter : #195    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.774  3033  3033 I flutter : #196    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.774  3033  3033 I flutter : #197    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.774  3033  3033 I flutter : #198    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.774  3033  3033 I flutter : #199    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.774  3033  3033 I flutter : #200    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.774  3033  3033 I flutter : #201    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.774  3033  3033 I flutter : #202    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.774  3033  3033 I flutter : #203    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.774  3033  3033 I flutter : #204    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.774  3033  3033 I flutter : #205    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.774  3033  3033 I flutter : #206    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.774  3033  3033 I flutter : #207    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.774  3033  3033 I flutter : #208    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.774  3033  3033 I flutter : #209    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.774  3033  3033 I flutter : #210    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.774  3033  3033 I flutter : #211    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.774  3033  3033 I flutter : #212    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.774  3033  3033 I flutter : #213    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.774  3033  3033 I flutter : #214    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.774  3033  3033 I flutter : #215    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.774  3033  3033 I flutter : #216    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.774  3033  3033 I flutter : #217    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.774  3033  3033 I flutter : #218    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.774  3033  3033 I flutter : #219    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.775  3033  3033 I flutter : #220    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.775  3033  3033 I flutter : #221    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.775  3033  3033 I flutter : #222    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.775  3033  3033 I flutter : #223    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.775  3033  3033 I flutter : #224    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.775  3033  3033 I flutter : #225    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.775  3033  3033 I flutter : #226    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.775  3033  3033 I flutter : #227    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.775  3033  3033 I flutter : #228    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.775  3033  3033 I flutter : #229    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.775  3033  3033 I flutter : #230    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.775  3033  3033 I flutter : #231    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.775  3033  3033 I flutter : #232    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.775  3033  3033 I flutter : #233    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.775  3033  3033 I flutter : #234    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.775  3033  3033 I flutter : #235    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.775  3033  3033 I flutter : #236    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.775  3033  3033 I flutter : #237    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.775  3033  3033 I flutter : #238    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.775  3033  3033 I flutter : #239    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.775  3033  3033 I flutter : #240    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.775  3033  3033 I flutter : #241    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.775  3033  3033 I flutter : #242    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.775  3033  3033 I flutter : #243    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.775  3033  3033 I flutter : #244    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.775  3033  3033 I flutter : #245    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.775  3033  3033 I flutter : #246    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.775  3033  3033 I flutter : #247    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.775  3033  3033 I flutter : #248    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.776  3033  3033 I flutter : #249    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.776  3033  3033 I flutter : #250    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.776  3033  3033 I flutter : #251    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.776  3033  3033 I flutter : #252    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.776  3033  3033 I flutter : #253    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.776  3033  3033 I flutter : #254    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.776  3033  3033 I flutter : #255    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.776  3033  3033 I flutter : #256    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.776  3033  3033 I flutter : #257    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.776  3033  3033 I flutter : #258    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.776  3033  3033 I flutter : #259    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.776  3033  3033 I flutter : #260    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.776  3033  3033 I flutter : #261    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.776  3033  3033 I flutter : #262    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.776  3033  3033 I flutter : #263    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.776  3033  3033 I flutter : #264    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.776  3033  3033 I flutter : #265    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.776  3033  3033 I flutter : #266    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.776  3033  3033 I flutter : #267    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.776  3033  3033 I flutter : #268    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.776  3033  3033 I flutter : #269    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.776  3033  3033 I flutter : #270    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.776  3033  3033 I flutter : #271    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.776  3033  3033 I flutter : #272    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.776  3033  3033 I flutter : #273    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.776  3033  3033 I flutter : #274    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.776  3033  3033 I flutter : #275    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.776  3033  3033 I flutter : #276    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.776  3033  3033 I flutter : #277    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.776  3033  3033 I flutter : #278    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.776  3033  3033 I flutter : #279    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.777  3033  3033 I flutter : #280    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.777  3033  3033 I flutter : #281    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.777  3033  3033 I flutter : #282    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.777  3033  3033 I flutter : #283    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.777  3033  3033 I flutter : #284    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.777  3033  3033 I flutter : #285    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.777  3033  3033 I flutter : #286    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.777  3033  3033 I flutter : #287    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.777  3033  3033 I flutter : #288    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.777  3033  3033 I flutter : #289    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.777  3033  3033 I flutter : #290    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.777  3033  3033 I flutter : #291    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.777  3033  3033 I flutter : #292    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.777  3033  3033 I flutter : #293    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.777  3033  3033 I flutter : #294    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.777  3033  3033 I flutter : #295    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.777  3033  3033 I flutter : #296    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.777  3033  3033 I flutter : #297    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.777  3033  3033 I flutter : #298    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.777  3033  3033 I flutter : #299    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.777  3033  3033 I flutter : #300    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.777  3033  3033 I flutter : #301    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.777  3033  3033 I flutter : #302    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.777  3033  3033 I flutter : #303    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.777  3033  3033 I flutter : #304    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.777  3033  3033 I flutter : #305    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.777  3033  3033 I flutter : #306    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.777  3033  3033 I flutter : #307    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.777  3033  3033 I flutter : #308    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.777  3033  3033 I flutter : #309    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.777  3033  3033 I flutter : #310    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.778  3033  3033 I flutter : #311    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.778  3033  3033 I flutter : #312    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.778  3033  3033 I flutter : #313    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7264:36)
+09-08 18:33:38.778  3033  3033 I flutter : #314    MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7279:32)
+09-08 18:33:38.778  3033  3033 I flutter : #315    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.778  3033  3033 I flutter : #316    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.778  3033  3033 I flutter : #317    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.778  3033  3033 I flutter : #318    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.778  3033  3033 I flutter : #319    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.778  3033  3033 I flutter : #320    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.778  3033  3033 I flutter : #321    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.778  3033  3033 I flutter : #322    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.778  3033  3033 I flutter : #323    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.778  3033  3033 I flutter : #324    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.778  3033  3033 I flutter : #325    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.778  3033  3033 I flutter : #326    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.778  3033  3033 I flutter : #327    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.778  3033  3033 I flutter : #328    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.778  3033  3033 I flutter : #329    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.778  3033  3033 I flutter : #330    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.778  3033  3033 I flutter : #331    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.778  3033  3033 I flutter : #332    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.778  3033  3033 I flutter : #333    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.778  3033  3033 I flutter : #334    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.778  3033  3033 I flutter : #335    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.778  3033  3033 I flutter : #336    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.778  3033  3033 I flutter : #337    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.778  3033  3033 I flutter : #338    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.778  3033  3033 I flutter : #339    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.778  3033  3033 I flutter : #340    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.778  3033  3033 I flutter : #341    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.778  3033  3033 I flutter : #342    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.779  3033  3033 I flutter : #343    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.779  3033  3033 I flutter : #344    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.779  3033  3033 I flutter : #345    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.779  3033  3033 I flutter : #346    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.779  3033  3033 I flutter : #347    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.779  3033  3033 I flutter : #348    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.779  3033  3033 I flutter : #349    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.779  3033  3033 I flutter : #350    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.779  3033  3033 I flutter : #351    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.779  3033  3033 I flutter : #352    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.779  3033  3033 I flutter : #353    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.779  3033  3033 I flutter : #354    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.779  3033  3033 I flutter : #355    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.779  3033  3033 I flutter : #356    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.779  3033  3033 I flutter : #357    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.779  3033  3033 I flutter : #358    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.779  3033  3033 I flutter : #359    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.779  3033  3033 I flutter : #360    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.779  3033  3033 I flutter : #361    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.779  3033  3033 I flutter : #362    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.779  3033  3033 I flutter : #363    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.779  3033  3033 I flutter : #364    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.779  3033  3033 I flutter : #365    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.779  3033  3033 I flutter : #366    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.779  3033  3033 I flutter : #367    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.779  3033  3033 I flutter : #368    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.779  3033  3033 I flutter : #369    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.779  3033  3033 I flutter : #370    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.779  3033  3033 I flutter : #371    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.779  3033  3033 I flutter : #372    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.780  3033  3033 I flutter : #373    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.780  3033  3033 I flutter : #374    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.780  3033  3033 I flutter : #375    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.780  3033  3033 I flutter : #376    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.780  3033  3033 I flutter : #377    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.780  3033  3033 I flutter : #378    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.780  3033  3033 I flutter : #379    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.780  3033  3033 I flutter : #380    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.780  3033  3033 I flutter : #381    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.780  3033  3033 I flutter : #382    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.780  3033  3033 I flutter : #383    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.780  3033  3033 I flutter : #384    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.780  3033  3033 I flutter : #385    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.780  3033  3033 I flutter : #386    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.780  3033  3033 I flutter : #387    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.780  3033  3033 I flutter : #388    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.780  3033  3033 I flutter : #389    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.780  3033  3033 I flutter : #390    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.780  3033  3033 I flutter : #391    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.780  3033  3033 I flutter : #392    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.780  3033  3033 I flutter : #393    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.780  3033  3033 I flutter : #394    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.780  3033  3033 I flutter : #395    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.780  3033  3033 I flutter : #396    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.780  3033  3033 I flutter : #397    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.780  3033  3033 I flutter : #398    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.780  3033  3033 I flutter : #399    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.780  3033  3033 I flutter : #400    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.780  3033  3033 I flutter : #401    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.780  3033  3033 I flutter : #402    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.780  3033  3033 I flutter : #403    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.781  3033  3033 I flutter : #404    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.781  3033  3033 I flutter : #405    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.781  3033  3033 I flutter : #406    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.781  3033  3033 I flutter : #407    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.781  3033  3033 I flutter : #408    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.781  3033  3033 I flutter : #409    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.781  3033  3033 I flutter : #410    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.781  3033  3033 I flutter : #411    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.781  3033  3033 I flutter : #412    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.781  3033  3033 I flutter : #413    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.781  3033  3033 I flutter : #414    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.781  3033  3033 I flutter : #415    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.781  3033  3033 I flutter : #416    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.781  3033  3033 I flutter : #417    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.781  3033  3033 I flutter : #418    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.781  3033  3033 I flutter : #419    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.781  3033  3033 I flutter : #420    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.781  3033  3033 I flutter : #421    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.781  3033  3033 I flutter : #422    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.781  3033  3033 I flutter : #423    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.781  3033  3033 I flutter : #424    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7264:36)
+09-08 18:33:38.781  3033  3033 I flutter : #425    MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7279:32)
+09-08 18:33:38.781  3033  3033 I flutter : #426    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.781  3033  3033 I flutter : #427    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.781  3033  3033 I flutter : #428    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.781  3033  3033 I flutter : #429    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.781  3033  3033 I flutter : #430    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.781  3033  3033 I flutter : #431    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.781  3033  3033 I flutter : #432    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.781  3033  3033 I flutter : #433    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.781  3033  3033 I flutter : #434    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.782  3033  3033 I flutter : #435    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.782  3033  3033 I flutter : #436    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.782  3033  3033 I flutter : #437    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.782  3033  3033 I flutter : #438    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.782  3033  3033 I flutter : #439    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.782  3033  3033 I flutter : #440    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.782  3033  3033 I flutter : #441    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.782  3033  3033 I flutter : #442    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.782  3033  3033 I flutter : #443    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.782  3033  3033 I flutter : #444    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.782  3033  3033 I flutter : #445    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.782  3033  3033 I flutter : #446    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.782  3033  3033 I flutter : #447    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.782  3033  3033 I flutter : #448    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.782  3033  3033 I flutter : #449    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.782  3033  3033 I flutter : #450    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.782  3033  3033 I flutter : #451    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.782  3033  3033 I flutter : #452    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.782  3033  3033 I flutter : #453    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.782  3033  3033 I flutter : #454    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.782  3033  3033 I flutter : #455    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.782  3033  3033 I flutter : #456    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.782  3033  3033 I flutter : #457    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.782  3033  3033 I flutter : #458    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.782  3033  3033 I flutter : #459    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.782  3033  3033 I flutter : #460    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.782  3033  3033 I flutter : #461    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.782  3033  3033 I flutter : #462    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.782  3033  3033 I flutter : #463    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.782  3033  3033 I flutter : #464    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.783  3033  3033 I flutter : #465    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.783  3033  3033 I flutter : #466    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.783  3033  3033 I flutter : #467    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.783  3033  3033 I flutter : #468    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.783  3033  3033 I flutter : #469    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.783  3033  3033 I flutter : #470    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.783  3033  3033 I flutter : #471    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.783  3033  3033 I flutter : #472    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.783  3033  3033 I flutter : #473    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.783  3033  3033 I flutter : #474    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7264:36)
+09-08 18:33:38.783  3033  3033 I flutter : #475    MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7279:32)
+09-08 18:33:38.783  3033  3033 I flutter : #476    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.783  3033  3033 I flutter : #477    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.783  3033  3033 I flutter : #478    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.783  3033  3033 I flutter : #479    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.783  3033  3033 I flutter : #480    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.783  3033  3033 I flutter : #481    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.783  3033  3033 I flutter : #482    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.783  3033  3033 I flutter : #483    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.783  3033  3033 I flutter : #484    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.783  3033  3033 I flutter : #485    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.783  3033  3033 I flutter : #486    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.783  3033  3033 I flutter : #487    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.783  3033  3033 I flutter : #488    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.783  3033  3033 I flutter : #489    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.783  3033  3033 I flutter : #490    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.783  3033  3033 I flutter : #491    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.783  3033  3033 I flutter : #492    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.783  3033  3033 I flutter : #493    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.783  3033  3033 I flutter : #494    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.784  3033  3033 I flutter : #495    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.784  3033  3033 I flutter : #496    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.784  3033  3033 I flutter : #497    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.784  3033  3033 I flutter : #498    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.784  3033  3033 I flutter : #499    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.784  3033  3033 I flutter : #500    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.784  3033  3033 I flutter : #501    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.784  3033  3033 I flutter : #502    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.784  3033  3033 I flutter : #503    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.784  3033  3033 I flutter : #504    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.784  3033  3033 I flutter : #505    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.784  3033  3033 I flutter : #506    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.784  3033  3033 I flutter : #507    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.784  3033  3033 I flutter : #508    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.784  3033  3033 I flutter : #509    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.784  3033  3033 I flutter : #510    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.784  3033  3033 I flutter : #511    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.784  3033  3033 I flutter : #512    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.784  3033  3033 I flutter : #513    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.784  3033  3033 I flutter : #514    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.784  3033  3033 I flutter : #515    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.784  3033  3033 I flutter : #516    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.784  3033  3033 I flutter : #517    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.784  3033  3033 I flutter : #518    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.784  3033  3033 I flutter : #519    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.784  3033  3033 I flutter : #520    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.784  3033  3033 I flutter : #521    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.784  3033  3033 I flutter : #522    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.784  3033  3033 I flutter : #523    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.784  3033  3033 I flutter : #524    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.784  3033  3033 I flutter : #525    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.784  3033  3033 I flutter : #526    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.784  3033  3033 I flutter : #527    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.785  3033  3033 I flutter : #528    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.785  3033  3033 I flutter : #529    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.785  3033  3033 I flutter : #530    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.785  3033  3033 I flutter : #531    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.785  3033  3033 I flutter : #532    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.785  3033  3033 I flutter : #533    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.785  3033  3033 I flutter : #534    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.785  3033  3033 I flutter : #535    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.785  3033  3033 I flutter : #536    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.785  3033  3033 I flutter : #537    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.785  3033  3033 I flutter : #538    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.785  3033  3033 I flutter : #539    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.785  3033  3033 I flutter : #540    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.785  3033  3033 I flutter : #541    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.785  3033  3033 I flutter : #542    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.785  3033  3033 I flutter : #543    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.785  3033  3033 I flutter : #544    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.785  3033  3033 I flutter : #545    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.785  3033  3033 I flutter : #546    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.785  3033  3033 I flutter : #547    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.785  3033  3033 I flutter : #548    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.785  3033  3033 I flutter : #549    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.785  3033  3033 I flutter : #550    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.785  3033  3033 I flutter : #551    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.785  3033  3033 I flutter : #552    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.785  3033  3033 I flutter : #553    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.785  3033  3033 I flutter : #554    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.785  3033  3033 I flutter : #555    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.785  3033  3033 I flutter : #556    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.785  3033  3033 I flutter : #557    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.785  3033  3033 I flutter : #558    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.785  3033  3033 I flutter : #559    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.785  3033  3033 I flutter : #560    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.785  3033  3033 I flutter : #561    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.786  3033  3033 I flutter : #562    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.786  3033  3033 I flutter : #563    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.786  3033  3033 I flutter : #564    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.786  3033  3033 I flutter : #565    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.786  3033  3033 I flutter : #566    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.786  3033  3033 I flutter : #567    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.786  3033  3033 I flutter : #568    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.786  3033  3033 I flutter : #569    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.786  3033  3033 I flutter : #570    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.786  3033  3033 I flutter : #571    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.786  3033  3033 I flutter : #572    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.786  3033  3033 I flutter : #573    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.786  3033  3033 I flutter : #574    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.786  3033  3033 I flutter : #575    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.786  3033  3033 I flutter : #576    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.786  3033  3033 I flutter : #577    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.786  3033  3033 I flutter : #578    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.786  3033  3033 I flutter : #579    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.786  3033  3033 I flutter : #580    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.786  3033  3033 I flutter : #581    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.786  3033  3033 I flutter : #582    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.786  3033  3033 I flutter : #583    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.786  3033  3033 I flutter : #584    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.786  3033  3033 I flutter : #585    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.786  3033  3033 I flutter : #586    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.786  3033  3033 I flutter : #587    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.786  3033  3033 I flutter : #588    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.786  3033  3033 I flutter : #589    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.786  3033  3033 I flutter : #590    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.786  3033  3033 I flutter : #591    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.786  3033  3033 I flutter : #592    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.787  3033  3033 I flutter : #593    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.787  3033  3033 I flutter : #594    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.787  3033  3033 I flutter : #595    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.787  3033  3033 I flutter : #596    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.787  3033  3033 I flutter : #597    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.787  3033  3033 I flutter : #598    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.787  3033  3033 I flutter : #599    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.787  3033  3033 I flutter : #600    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.787  3033  3033 I flutter : #601    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.787  3033  3033 I flutter : #602    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.787  3033  3033 I flutter : #603    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.787  3033  3033 I flutter : #604    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.787  3033  3033 I flutter : #605    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.787  3033  3033 I flutter : #606    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.787  3033  3033 I flutter : #607    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.787  3033  3033 I flutter : #608    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.787  3033  3033 I flutter : #609    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.787  3033  3033 I flutter : #610    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.787  3033  3033 I flutter : #611    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.787  3033  3033 I flutter : #612    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.787  3033  3033 I flutter : #613    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.787  3033  3033 I flutter : #614    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.787  3033  3033 I flutter : #615    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.787  3033  3033 I flutter : #616    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.787  3033  3033 I flutter : #617    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.787  3033  3033 I flutter : #618    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.787  3033  3033 I flutter : #619    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.787  3033  3033 I flutter : #620    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.787  3033  3033 I flutter : #621    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.787  3033  3033 I flutter : #622    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.787  3033  3033 I flutter : #623    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.788  3033  3033 I flutter : #624    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.788  3033  3033 I flutter : #625    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.788  3033  3033 I flutter : #626    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.788  3033  3033 I flutter : #627    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.788  3033  3033 I flutter : #628    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.788  3033  3033 I flutter : #629    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.788  3033  3033 I flutter : #630    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.788  3033  3033 I flutter : #631    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.788  3033  3033 I flutter : #632    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.788  3033  3033 I flutter : #633    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.788  3033  3033 I flutter : #634    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.788  3033  3033 I flutter : #635    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.788  3033  3033 I flutter : #636    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.788  3033  3033 I flutter : #637    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.788  3033  3033 I flutter : #638    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.788  3033  3033 I flutter : #639    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.788  3033  3033 I flutter : #640    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.788  3033  3033 I flutter : #641    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.788  3033  3033 I flutter : #642    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.788  3033  3033 I flutter : #643    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.788  3033  3033 I flutter : #644    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.788  3033  3033 I flutter : #645    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.788  3033  3033 I flutter : #646    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.788  3033  3033 I flutter : #647    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.788  3033  3033 I flutter : #648    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.788  3033  3033 I flutter : #649    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.788  3033  3033 I flutter : #650    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.788  3033  3033 I flutter : #651    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.788  3033  3033 I flutter : #652    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.788  3033  3033 I flutter : #653    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.788  3033  3033 I flutter : #654    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.788  3033  3033 I flutter : #655    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.788  3033  3033 I flutter : #656    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.788  3033  3033 I flutter : #657    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.788  3033  3033 I flutter : #658    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.788  3033  3033 I flutter : #659    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.788  3033  3033 I flutter : #660    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.788  3033  3033 I flutter : #661    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.788  3033  3033 I flutter : #662    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.789  3033  3033 I flutter : #663    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.789  3033  3033 I flutter : #664    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.789  3033  3033 I flutter : #665    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.789  3033  3033 I flutter : #666    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.789  3033  3033 I flutter : #667    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.789  3033  3033 I flutter : #668    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.789  3033  3033 I flutter : #669    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.789  3033  3033 I flutter : #670    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.789  3033  3033 I flutter : #671    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.789  3033  3033 I flutter : #672    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.789  3033  3033 I flutter : #673    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.789  3033  3033 I flutter : #674    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.789  3033  3033 I flutter : #675    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.789  3033  3033 I flutter : #676    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.789  3033  3033 I flutter : #677    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.789  3033  3033 I flutter : #678    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.789  3033  3033 I flutter : #679    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.789  3033  3033 I flutter : #680    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.789  3033  3033 I flutter : #681    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.789  3033  3033 I flutter : #682    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.789  3033  3033 I flutter : #683    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.789  3033  3033 I flutter : #684    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.789  3033  3033 I flutter : #685    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.789  3033  3033 I flutter : #686    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.789  3033  3033 I flutter : #687    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.789  3033  3033 I flutter : #688    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.789  3033  3033 I flutter : #689    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.789  3033  3033 I flutter : #690    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.789  3033  3033 I flutter : #691    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.790  3033  3033 I flutter : #692    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.790  3033  3033 I flutter : #693    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.790  3033  3033 I flutter : #694    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.790  3033  3033 I flutter : #695    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.790  3033  3033 I flutter : #696    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.790  3033  3033 I flutter : #697    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.790  3033  3033 I flutter : #698    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.790  3033  3033 I flutter : #699    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.790  3033  3033 I flutter : #700    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.790  3033  3033 I flutter : #701    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.790  3033  3033 I flutter : #702    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.790  3033  3033 I flutter : #703    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.790  3033  3033 I flutter : #704    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.790  3033  3033 I flutter : #705    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.790  3033  3033 I flutter : #706    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.790  3033  3033 I flutter : #707    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.790  3033  3033 I flutter : #708    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.790  3033  3033 I flutter : #709    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.790  3033  3033 I flutter : #710    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.790  3033  3033 I flutter : #711    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.790  3033  3033 I flutter : #712    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.790  3033  3033 I flutter : #713    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.790  3033  3033 I flutter : #714    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.790  3033  3033 I flutter : #715    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.790  3033  3033 I flutter : #716    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.790  3033  3033 I flutter : #717    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.790  3033  3033 I flutter : #718    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.790  3033  3033 I flutter : #719    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.790  3033  3033 I flutter : #720    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.790  3033  3033 I flutter : #721    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.791  3033  3033 I flutter : #722    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.791  3033  3033 I flutter : #723    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.791  3033  3033 I flutter : #724    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.791  3033  3033 I flutter : #725    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.791  3033  3033 I flutter : #726    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.791  3033  3033 I flutter : #727    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.791  3033  3033 I flutter : #728    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.791  3033  3033 I flutter : #729    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.791  3033  3033 I flutter : #730    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.791  3033  3033 I flutter : #731    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.791  3033  3033 I flutter : #732    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.791  3033  3033 I flutter : #733    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.791  3033  3033 I flutter : #734    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.791  3033  3033 I flutter : #735    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.791  3033  3033 I flutter : #736    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.791  3033  3033 I flutter : #737    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.791  3033  3033 I flutter : #738    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.791  3033  3033 I flutter : #739    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.791  3033  3033 I flutter : #740    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.791  3033  3033 I flutter : #741    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.791  3033  3033 I flutter : #742    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.791  3033  3033 I flutter : #743    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.791  3033  3033 I flutter : #744    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.791  3033  3033 I flutter : #745    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.791  3033  3033 I flutter : #746    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.791  3033  3033 I flutter : #747    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.791  3033  3033 I flutter : #748    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.791  3033  3033 I flutter : #749    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.791  3033  3033 I flutter : #750    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.792  3033  3033 I flutter : #751    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.792  3033  3033 I flutter : #752    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.792  3033  3033 I flutter : #753    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.792  3033  3033 I flutter : #754    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.792  3033  3033 I flutter : #755    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.792  3033  3033 I flutter : #756    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.792  3033  3033 I flutter : #757    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.792  3033  3033 I flutter : #758    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.792  3033  3033 I flutter : #759    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.792  3033  3033 I flutter : #760    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.792  3033  3033 I flutter : #761    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.792  3033  3033 I flutter : #762    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.792  3033  3033 I flutter : #763    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.792  3033  3033 I flutter : #764    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.792  3033  3033 I flutter : #765    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.792  3033  3033 I flutter : #766    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.792  3033  3033 I flutter : #767    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.792  3033  3033 I flutter : #768    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.792  3033  3033 I flutter : #769    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.792  3033  3033 I flutter : #770    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.792  3033  3033 I flutter : #771    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.792  3033  3033 I flutter : #772    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.792  3033  3033 I flutter : #773    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.792  3033  3033 I flutter : #774    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.792  3033  3033 I flutter : #775    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.792  3033  3033 I flutter : #776    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.792  3033  3033 I flutter : #777    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.792  3033  3033 I flutter : #778    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.792  3033  3033 I flutter : #779    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.792  3033  3033 I flutter : #780    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.793  3033  3033 I flutter : #781    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.793  3033  3033 I flutter : #782    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.793  3033  3033 I flutter : #783    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.793  3033  3033 I flutter : #784    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.793  3033  3033 I flutter : #785    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.793  3033  3033 I flutter : #786    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.793  3033  3033 I flutter : #787    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.793  3033  3033 I flutter : #788    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.793  3033  3033 I flutter : #789    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.793  3033  3033 I flutter : #790    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.793  3033  3033 I flutter : #791    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.793  3033  3033 I flutter : #792    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.793  3033  3033 I flutter : #793    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.793  3033  3033 I flutter : #794    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.793  3033  3033 I flutter : #795    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.793  3033  3033 I flutter : #796    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.793  3033  3033 I flutter : #797    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.793  3033  3033 I flutter : #798    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.793  3033  3033 I flutter : #799    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.793  3033  3033 I flutter : #800    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.793  3033  3033 I flutter : #801    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.793  3033  3033 I flutter : #802    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.793  3033  3033 I flutter : #803    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.793  3033  3033 I flutter : #804    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.793  3033  3033 I flutter : #805    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.793  3033  3033 I flutter : #806    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.793  3033  3033 I flutter : #807    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.793  3033  3033 I flutter : #808    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.793  3033  3033 I flutter : #809    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.793  3033  3033 I flutter : #810    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.793  3033  3033 I flutter : #811    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.794  3033  3033 I flutter : #812    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.794  3033  3033 I flutter : #813    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.794  3033  3033 I flutter : #814    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.794  3033  3033 I flutter : #815    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.794  3033  3033 I flutter : #816    SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115:14)
+09-08 18:33:38.794  3033  3033 I flutter : #817    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.794  3033  3033 I flutter : #818    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.794  3033  3033 I flutter : #819    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.794  3033  3033 I flutter : #820    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.794  3033  3033 I flutter : #821    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.794  3033  3033 I flutter : #822    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.794  3033  3033 I flutter : #823    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.794  3033  3033 I flutter : #824    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.794  3033  3033 I flutter : #825    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.794  3033  3033 I flutter : #826    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.794  3033  3033 I flutter : #827    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.794  3033  3033 I flutter : #828    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.794  3033  3033 I flutter : #829    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.794  3033  3033 I flutter : #830    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.794  3033  3033 I flutter : #831    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.794  3033  3033 I flutter : #832    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.794  3033  3033 I flutter : #833    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.794  3033  3033 I flutter : #834    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.794  3033  3033 I flutter : #835    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.794  3033  3033 I flutter : #836    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.794  3033  3033 I flutter : #837    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.794  3033  3033 I flutter : #838    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.794  3033  3033 I flutter : #839    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.794  3033  3033 I flutter : #840    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.794  3033  3033 I flutter : #841    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.795  3033  3033 I flutter : #842    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.795  3033  3033 I flutter : #843    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.795  3033  3033 I flutter : #844    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.795  3033  3033 I flutter : #845    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.795  3033  3033 I flutter : #846    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.795  3033  3033 I flutter : #847    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.795  3033  3033 I flutter : #848    ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799:5)
+09-08 18:33:38.795  3033  3033 I flutter : #849    StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973:11)
+09-08 18:33:38.795  3033  3033 I flutter : #850    ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793:5)
+09-08 18:33:38.795  3033  3033 I flutter : #851    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587:20)
+09-08 18:33:38.795  3033  3033 I flutter : #852    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7264:36)
+09-08 18:33:38.795  3033  3033 I flutter : #853    Element.updateChild (package:flutter/src/widgets/framework.dart:4059:18)
+09-08 18:33:38.795  3033  3033 I flutter : #854    Element.updateChildren (package:flutter/src/widgets/framework.dart:4255:32)
+09-08 18:33:38.795  3033  3033 I flutter : #855    MultiChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7295:17)
+09-08 18:33:38.795  3033  3033 I flutter : #856    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.795  3033  3033 I flutter : #857    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.795  3033  3033 I flutter : #858    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.795  3033  3033 I flutter : #859    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.795  3033  3033 I flutter : #860    StatefulElement.update (package:flutter/src/widgets/framework.dart:6007:5)
+09-08 18:33:38.795  3033  3033 I flutter : #861    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.795  3033  3033 I flutter : #862    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.795  3033  3033 I flutter : #863    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.795  3033  3033 I flutter : #864    ProxyElement.update (package:flutter/src/widgets/framework.dart:6149:5)
+09-08 18:33:38.795  3033  3033 I flutter : #865    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.795  3033  3033 I flutter : #866    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.795  3033  3033 I flutter : #867    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.795  3033  3033 I flutter : #868    ProxyElement.update (package:flutter/src/widgets/framework.dart:6149:5)
+09-08 18:33:38.795  3033  3033 I flutter : #869    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+09-08 18:33:38.795  3033  3033 I flutter : #870    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.796  3033  3033 I flutter : #871    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.796  3033  3033 I flutter : #872    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.796  3033  3033 I flutter : #873    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.796  3033  3033 I flutter : #874    StatefulElement.update (package:flutter/src/widgets/framework.dart:6007:5)
+09-08 18:33:38.796  3033  3033 I flutter : #875    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.796  3033  3033 I flutter : #876    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.796  3033  3033 I flutter : #877    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.796  3033  3033 I flutter : #878    ProxyElement.update (package:flutter/src/widgets/framework.dart:6149:5)
+09-08 18:33:38.796  3033  3033 I flutter : #879    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+09-08 18:33:38.796  3033  3033 I flutter : #880    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.796  3033  3033 I flutter : #881    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.796  3033  3033 I flutter : #882    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.796  3033  3033 I flutter : #883    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.796  3033  3033 I flutter : #884    StatefulElement.update (package:flutter/src/widgets/framework.dart:6007:5)
+09-08 18:33:38.796  3033  3033 I flutter : #885    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.796  3033  3033 I flutter : #886    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.796  3033  3033 I flutter : #887    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.796  3033  3033 I flutter : #888    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.796  3033  3033 I flutter : #889    StatefulElement.update (package:flutter/src/widgets/framework.dart:6007:5)
+09-08 18:33:38.796  3033  3033 I flutter : #890    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.796  3033  3033 I flutter : #891    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7122:14)
+09-08 18:33:38.796  3033  3033 I flutter : #892    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.796  3033  3033 I flutter : #893    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7122:14)
+09-08 18:33:38.796  3033  3033 I flutter : #894    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.796  3033  3033 I flutter : #895    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.796  3033  3033 I flutter : #896    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.796  3033  3033 I flutter : #897    ProxyElement.update (package:flutter/src/widgets/framework.dart:6149:5)
+09-08 18:33:38.796  3033  3033 I flutter : #898    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.796  3033  3033 I flutter : #899    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.796  3033  3033 I flutter : #900    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.797  3033  3033 I flutter : #901    ProxyElement.update (package:flutter/src/widgets/framework.dart:6149:5)
+09-08 18:33:38.797  3033  3033 I flutter : #902    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.797  3033  3033 I flutter : #903    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.797  3033  3033 I flutter : #904    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.797  3033  3033 I flutter : #905    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.797  3033  3033 I flutter : #906    StatefulElement.update (package:flutter/src/widgets/framework.dart:6007:5)
+09-08 18:33:38.797  3033  3033 I flutter : #907    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.797  3033  3033 I flutter : #908    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.797  3033  3033 I flutter : #909    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.797  3033  3033 I flutter : #910    ProxyElement.update (package:flutter/src/widgets/framework.dart:6149:5)
+09-08 18:33:38.797  3033  3033 I flutter : #911    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.797  3033  3033 I flutter : #912    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.797  3033  3033 I flutter : #913    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.797  3033  3033 I flutter : #914    ProxyElement.update (package:flutter/src/widgets/framework.dart:6149:5)
+09-08 18:33:38.797  3033  3033 I flutter : #915    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+09-08 18:33:38.797  3033  3033 I flutter : #916    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.797  3033  3033 I flutter : #917    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.797  3033  3033 I flutter : #918    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.797  3033  3033 I flutter : #919    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.797  3033  3033 I flutter : #920    StatefulElement.update (package:flutter/src/widgets/framework.dart:6007:5)
+09-08 18:33:38.797  3033  3033 I flutter : #921    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.797  3033  3033 I flutter : #922    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.797  3033  3033 I flutter : #923    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.797  3033  3033 I flutter : #924    ProxyElement.update (package:flutter/src/widgets/framework.dart:6149:5)
+09-08 18:33:38.797  3033  3033 I flutter : #925    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.797  3033  3033 I flutter : #926    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.797  3033  3033 I flutter : #927    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.797  3033  3033 I flutter : #928    StatelessElement.update (package:flutter/src/widgets/framework.dart:5895:5)
+09-08 18:33:38.797  3033  3033 I flutter : #929    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.797  3033  3033 I flutter : #930    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.798  3033  3033 I flutter : #931    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.798  3033  3033 I flutter : #932    ProxyElement.update (package:flutter/src/widgets/framework.dart:6149:5)
+09-08 18:33:38.798  3033  3033 I flutter : #933    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.798  3033  3033 I flutter : #934    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.798  3033  3033 I flutter : #935    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.798  3033  3033 I flutter : #936    ProxyElement.update (package:flutter/src/widgets/framework.dart:6149:5)
+09-08 18:33:38.798  3033  3033 I flutter : #937    Element.updateChild (package:flutter/src/widgets/framework.dart:4037:15)
+09-08 18:33:38.798  3033  3033 I flutter : #938    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841:16)
+09-08 18:33:38.798  3033  3033 I flutter : #939    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982:11)
+09-08 18:33:38.798  3033  3033 I flutter : #940    Element.rebuild (package:flutter/src/widgets/framework.dart:5529:7)
+09-08 18:33:38.798  3033  3033 I flutter : #941    BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2750:15)
+09-08 18:33:38.798  3033  3033 I flutter : #942    BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2807:11)
+09-08 18:33:38.798  3033  3033 I flutter : #943    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3111:18)
+09-08 18:33:38.798  3033  3033 I flutter : #944    WidgetsBinding.drawFrame (package:flutter/src/widgets/binding.dart:1571:21)
+09-08 18:33:38.798  3033  3033 I flutter : #945    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:509:5)
+09-08 18:33:38.798  3033  3033 I flutter : #946    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+09-08 18:33:38.798  3033  3033 I flutter : #947    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+09-08 18:33:38.798  3033  3033 I flutter : #948    SchedulerBinding._handleDrawFrame (package:flutter/src/scheduler/binding.dart:1198:5)
+09-08 18:33:38.798  3033  3033 I flutter : #949    _rootRun (dart:async/zone_root.dart:35:13)
+09-08 18:33:38.798  3033  3033 I flutter : #950    _CustomZone.run (dart:async/zone.dart:726:19)
+09-08 18:33:38.798  3033  3033 I flutter : #951    _CustomZone.runGuarded (dart:async/zone.dart:625:7)
+09-08 18:33:38.798  3033  3033 I flutter : #952    _invoke (dart:ui/hooks.dart:425:10)
+09-08 18:33:38.798  3033  3033 I flutter : #953    PlatformDispatcher._drawFrame (dart:ui/platform_dispatcher.dart:447:5)
+09-08 18:33:38.798  3033  3033 I flutter : #954    _drawFrame (dart:ui/hooks.dart:395:31)
+09-08 18:33:38.798  3033  3033 I flutter : This warning will only appear on debug builds.
+09-08 18:33:40.405  3033  3088 E BLASTBufferQueue: [ViewRootImpl[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#0](f:0,a:3) isEGL=1, mPendingRelease.size()=2, mMaxAcquiredBuffers=4, currentMaxAcquiredBufferCount=2
+09-08 18:33:41.011  3033  4043 D ProfileInstaller: Installing profile for com.appylab.synctasks
+09-08 18:33:54.564  3033  3033 I Quality : Skipped: false 4 cost 71.28197 refreshRate 0 processName com.appylab.synctasks
+09-08 18:33:55.309  3033  3033 D InputMethodManager: showSoftInput() view=io.flutter.embedding.android.FlutterView{29cd41b VFE...... .F....ID 0,0-1080,2268 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+09-08 18:33:55.354  3033  3033 D InputMethodManager: showSoftInput() view=io.flutter.embedding.android.FlutterView{29cd41b VFE...... .F....ID 0,0-1080,2268 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+09-08 18:33:55.366  3033  3033 I Quality : Skipped: false 3 cost 52.303997 refreshRate 0 processName com.appylab.synctasks
+09-08 18:33:55.370  3033  3033 I AssistStructure: Flattened final assist data: 456 bytes, containing 1 windows, 3 views
+09-08 18:33:55.462  3033  3033 D InputConnectionAdaptor: The input method toggled cursor monitoring on
+09-08 18:33:55.660  3033  3033 D InsetsController: show(ime(), fromIme=true)
+09-08 18:33:55.684  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:55.689  3033  3033 D InsetsController: show(ime(), fromIme=true)
+09-08 18:33:55.706  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:55.714  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:55.727  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:55.746  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:55.764  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:55.778  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:55.797  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:55.814  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:55.831  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:55.848  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:55.865  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:55.882  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:55.899  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:56.000  3033  3033 I Quality : Skipped: true 5 cost 88.75103 refreshRate 0 processName com.appylab.synctasks
+09-08 18:33:56.004  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:56.005  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:56.016  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:56.071  3033  3033 I Quality : Skipped: false 3 cost 57.408897 refreshRate 0 processName com.appylab.synctasks
+09-08 18:33:57.363  3033  3033 I Quality : Skipped: false 1 cost 17.468609 refreshRate 0 processName com.appylab.synctasks
+09-08 18:33:57.416  3033  3033 I flutter : Analytics event: task_created keys=has_schedule,has_time,has_reminder,has_repeat
+09-08 18:33:57.711  3033  3033 D InputConnectionAdaptor: The input method toggled cursor monitoring off
+09-08 18:33:57.767  3033  3033 I Quality : Skipped: false 2 cost 45.625656 refreshRate 0 processName com.appylab.synctasks
+09-08 18:33:57.771  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:57.774  3033  3033 E Parcel  : Reading a NULL string not supported here.
+09-08 18:33:57.782  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:57.801  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:57.812  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:57.843  3033  3033 I Quality : Skipped: true 1 cost 19.19925 refreshRate 0 processName com.appylab.synctasks
+09-08 18:33:57.844  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:57.863  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:57.917  3033  3033 I Quality : Skipped: true 2 cost 42.900436 refreshRate 0 processName com.appylab.synctasks
+09-08 18:33:57.919  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:57.928  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:57.945  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:57.963  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:57.979  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:57.997  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:58.014  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:58.031  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:58.048  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:58.068  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:33:58.069  3033  3033 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:34:06.248  3033  3226 I TRuntime.CctTransportBackend: Making request to: https://firebaselogging-pa.googleapis.com/v1/firelog/legacy/batchlog
+09-08 18:34:06.325  3033  3226 W FeatureFlagsImplExport: java.lang.NoClassDefFoundError: Class not found using the boot class loader; no stack trace available
+09-08 18:34:09.926  3033  3226 I TRuntime.CctTransportBackend: Status Code: 200

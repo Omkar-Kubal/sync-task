@@ -4,30 +4,46 @@ class AppSettings {
   const AppSettings({
     this.themeMode = ThemeMode.system,
     this.notificationsEnabled = true,
-    this.focusSound = true,
-    this.focusVibration = true,
+    this.notificationSound = true,
+    this.notificationVibration = true,
+    this.mildHaptics = true,
     this.defaultFolderId,
+    this.hasCompletedOnboarding = false,
   });
 
   final ThemeMode themeMode;
   final bool notificationsEnabled;
-  final bool focusSound;
-  final bool focusVibration;
+  final bool notificationSound;
+  final bool notificationVibration;
+  final bool mildHaptics;
   final int? defaultFolderId;
+  final bool hasCompletedOnboarding;
+
+  static const Object _unset = Object();
 
   AppSettings copyWith({
     ThemeMode? themeMode,
     bool? notificationsEnabled,
-    bool? focusSound,
-    bool? focusVibration,
-    int? defaultFolderId,
+    bool? notificationSound,
+    bool? notificationVibration,
+    bool? mildHaptics,
+    Object? defaultFolderId = _unset,
+    bool? hasCompletedOnboarding,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
       notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
-      focusSound: focusSound ?? this.focusSound,
-      focusVibration: focusVibration ?? this.focusVibration,
-      defaultFolderId: defaultFolderId ?? this.defaultFolderId,
+      notificationSound: notificationSound ?? this.notificationSound,
+      notificationVibration:
+          notificationVibration ?? this.notificationVibration,
+      mildHaptics: mildHaptics ?? this.mildHaptics,
+      defaultFolderId: identical(defaultFolderId, _unset)
+          ? this.defaultFolderId
+          : defaultFolderId as int?,
+      hasCompletedOnboarding:
+          hasCompletedOnboarding ?? this.hasCompletedOnboarding,
     );
   }
 }
+
+

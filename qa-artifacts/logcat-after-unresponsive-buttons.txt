@@ -1,0 +1,523 @@
+--------- beginning of system
+09-08 18:26:36.450 32181 32181 I Quality : ActivityThread: createClassLoader delay 340 /data/app/~~5SKrlrMa-ilToIG_Ix0JQw==/com.appylab.synctasks-WnppUWFBGLr5JzTfeAXrTQ==/base.apk 32181
+09-08 18:26:36.453 32181 32181 I Quality : ActivityThread: createOrUpdateClassLoaderLocked delay 355 com.appylab.synctasks 32181
+09-08 18:26:36.683 32181 32181 I Quality : ActivityThread: bindApplication delay 614 com.appylab.synctasks 32181
+--------- beginning of main
+09-08 18:26:38.012 32181 32233 D StrictMode: StrictMode policy violation: android.os.strictmode.NetworkViolation
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at android.os.StrictMode$AndroidBlockGuardPolicy.onNetwork(StrictMode.java:1673)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:115)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at java.net.SocketOutputStream.write(SocketOutputStream.java:156)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLOutputStream.writeToSocket(ConscryptEngineSocket.java:790)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLOutputStream.writeInternal(ConscryptEngineSocket.java:764)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLOutputStream.write(ConscryptEngineSocket.java:726)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.okhttp.okio.Okio$1.write(Okio.java:78)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.okhttp.okio.AsyncTimeout$1.write(AsyncTimeout.java:157)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSink.flush(RealBufferedSink.java:222)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.Http1xStream.finishRequest(Http1xStream.java:163)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.HttpEngine.readNetworkResponse(HttpEngine.java:748)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.HttpEngine.readResponse(HttpEngine.java:622)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:475)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponseCode(HttpURLConnectionImpl.java:542)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.DelegatingHttpsURLConnection.getResponseCode(DelegatingHttpsURLConnection.java:106)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:30)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invokeSuspend(RemoteSettingsFetcher.kt:60)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invoke(RemoteSettingsFetcher.kt:8)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invoke(RemoteSettingsFetcher.kt:4)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndspatched(Undispatched.kt:66)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:43)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at kotlinx.coroutines.BuildersKt__Builders_commonKt.withContext(Builders.common.kt:165)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at kotlinx.coroutines.BuildersKt.withContext(dex-id-e787995baaf934480b6e94f64e12ade1d1df0a76:1)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher.doConfigFetch(RemoteSettingsFetcher.kt:53)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettings.updateSettings(RemoteSettings.kt:101)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettings$updateSettings$1.invokeSuspend(RemoteSettings.kt:14)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.google.firebase.concurrent.CustomThreadFactory.lambda$newThread$0$com-google-firebase-concurrent-CustomThreadFactory(CustomThreadFactory.java:47)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at com.google.firebase.concurrent.CustomThreadFactory$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+09-08 18:26:38.012 32181 32233 D StrictMode: 	at java.lang.Thread.run(Thread.java:1572)
+09-08 18:26:38.017 32181 32233 D StrictMode: StrictMode policy violation: android.os.strictmode.NetworkViolation
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at android.os.StrictMode$AndroidBlockGuardPolicy.onNetwork(StrictMode.java:1673)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.org.conscrypt.Platform.blockGuardOnNetwork(Platform.java:499)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.processDataFromSocket(ConscryptEngineSocket.java:906)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.readUntilDataAvailable(ConscryptEngineSocket.java:894)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.read(ConscryptEngineSocket.java:867)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.okio.Okio$2.read(Okio.java:138)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:213)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:307)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:301)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.readUtf8LineStrict(RealBufferedSource.java:197)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.Http1xStream.readResponse(Http1xStream.java:188)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.Http1xStream.readResponseHeaders(Http1xStream.java:129)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.HttpEngine.readNetworkResponse(HttpEngine.java:750)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.HttpEngine.readResponse(HttpEngine.java:622)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:475)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponseCode(HttpURLConnectionImpl.java:542)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.DelegatingHttpsURLConnection.getResponseCode(DelegatingHttpsURLConnection.java:106)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:30)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invokeSuspend(RemoteSettingsFetcher.kt:60)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invoke(RemoteSettingsFetcher.kt:8)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invoke(RemoteSettingsFetcher.kt:4)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndspatched(Undispatched.kt:66)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:43)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at kotlinx.coroutines.BuildersKt__Builders_commonKt.withContext(Builders.common.kt:165)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at kotlinx.coroutines.BuildersKt.withContext(dex-id-e787995baaf934480b6e94f64e12ade1d1df0a76:1)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher.doConfigFetch(RemoteSettingsFetcher.kt:53)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettings.updateSettings(RemoteSettings.kt:101)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettings$updateSettings$1.invokeSuspend(RemoteSettings.kt:14)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.google.firebase.concurrent.CustomThreadFactory.lambda$newThread$0$com-google-firebase-concurrent-CustomThreadFactory(CustomThreadFactory.java:47)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at com.google.firebase.concurrent.CustomThreadFactory$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+09-08 18:26:38.017 32181 32233 D StrictMode: 	at java.lang.Thread.run(Thread.java:1572)
+09-08 18:26:38.025 32181 32233 D StrictMode: StrictMode policy violation: android.os.strictmode.NetworkViolation
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at android.os.StrictMode$AndroidBlockGuardPolicy.onNetwork(StrictMode.java:1673)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at java.net.SocketInputStream.read(SocketInputStream.java:172)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at java.net.SocketInputStream.read(SocketInputStream.java:143)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.readFromSocket(ConscryptEngineSocket.java:1015)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.processDataFromSocket(ConscryptEngineSocket.java:979)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.readUntilDataAvailable(ConscryptEngineSocket.java:894)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.read(ConscryptEngineSocket.java:867)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.okio.Okio$2.read(Okio.java:138)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:213)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:307)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.indexOf(RealBufferedSource.java:301)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.readUtf8LineStrict(RealBufferedSource.java:197)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.Http1xStream.readResponse(Http1xStream.java:188)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.Http1xStream.readResponseHeaders(Http1xStream.java:129)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.HttpEngine.readNetworkResponse(HttpEngine.java:750)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.HttpEngine.readResponse(HttpEngine.java:622)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:475)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponseCode(HttpURLConnectionImpl.java:542)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.DelegatingHttpsURLConnection.getResponseCode(DelegatingHttpsURLConnection.java:106)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.android.okhttp.internal.huc.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:30)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invokeSuspend(RemoteSettingsFetcher.kt:60)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invoke(RemoteSettingsFetcher.kt:8)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invoke(RemoteSettingsFetcher.kt:4)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndspatched(Undispatched.kt:66)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:43)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at kotlinx.coroutines.BuildersKt__Builders_commonKt.withContext(Builders.common.kt:165)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at kotlinx.coroutines.BuildersKt.withContext(dex-id-e787995baaf934480b6e94f64e12ade1d1df0a76:1)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher.doConfigFetch(RemoteSettingsFetcher.kt:53)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettings.updateSettings(RemoteSettings.kt:101)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettings$updateSettings$1.invokeSuspend(RemoteSettings.kt:14)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.google.firebase.concurrent.CustomThreadFactory.lambda$newThread$0$com-google-firebase-concurrent-CustomThreadFactory(CustomThreadFactory.java:47)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at com.google.firebase.concurrent.CustomThreadFactory$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+09-08 18:26:38.025 32181 32233 D StrictMode: 	at java.lang.Thread.run(Thread.java:1572)
+09-08 18:26:38.062 32181 32284 I flutter : The Dart VM service is listening on http://127.0.0.1:44977/vkYllATnZ-I=/
+09-08 18:26:38.374 32181 32181 D nativeloader: Load /data/app/~~5SKrlrMa-ilToIG_Ix0JQw==/com.appylab.synctasks-WnppUWFBGLr5JzTfeAXrTQ==/base.apk!/lib/arm64-v8a/libdartjni.so using class loader ns clns-5 (caller=/data/app/~~5SKrlrMa-ilToIG_Ix0JQw==/com.appylab.synctasks-WnppUWFBGLr5JzTfeAXrTQ==/base.apk!classes8.dex): ok
+09-08 18:26:38.386 32181 32181 I oplus.android.OplusFrameworkFactoryImpl: Unknow feature:IOplusTextViewRTLUtilForUG
+09-08 18:26:38.393 32181 32181 I SurfaceFactory: [static] sSurfaceFactory = com.mediatek.view.impl.SurfaceFactoryImpl@92ac8a4
+09-08 18:26:38.407 32181 32181 D OplusInputMethodUtil: init DEBUG to false, update DEBUG_IME to false
+09-08 18:26:38.407 32181 32181 D OplusInputMethodUtil: init DEBUG to false, update DEBUG_IME to false
+09-08 18:26:38.428 32181 32181 I pylab.synctask: hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported,test-api) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+09-08 18:26:38.428 32181 32181 I pylab.synctask: hiddenapi: Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+09-08 18:26:38.429 32181 32181 I pylab.synctask: hiddenapi: Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+09-08 18:26:38.429 32181 32181 I pylab.synctask: hiddenapi: Accessing hidden method Landroid/util/LongArray;->get(I)J (runtime_flags=0, domain=platform, api=unsupported) from Lio/flutter/view/AccessibilityViewEmbedder$ReflectionAccessors; (domain=app, TargetSdkVersion=36) using reflection: allowed
+09-08 18:26:38.446 32181 32181 D FlutterRenderer: Width is zero. 0,0
+09-08 18:26:38.468 32181 32181 I Quality : ActivityThread: activityStart delay 1786 com.appylab.synctasks 32181
+09-08 18:26:38.478 32181 32181 I MsyncFactory: [static] sMsyncFactory = com.mediatek.view.impl.MsyncFactoryImpl@47079c5
+09-08 18:26:38.479 32181 32359 D OpenMsyncAppList: loadTunerAppList + 
+09-08 18:26:38.482 32181 32359 D OpenMsyncAppList: loadTunerAppList - 
+09-08 18:26:38.483 32181 32181 I OplusSlideAnimOptHelper: checkListMode: is blacklist mode = true
+09-08 18:26:38.484 32181 32181 D OplusSlideAnimOptHelper: com.appylab.synctasks scrollEffectOpt enable = true
+09-08 18:26:38.494 32181 32181 D WindowManager: Add to mViews: DecorView@923a2d4[MainActivity],pkg= com.appylab.synctasks
+09-08 18:26:38.497 32181 32248 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+09-08 18:26:38.502 32181 32248 D ExtensionsLoader: Opened libhwuiextimpl.so
+09-08 18:26:38.502 32181 32181 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+09-08 18:26:38.505 32181 32181 D ExtensionsLoader: Opened libSchedAssistExtImpl.so
+09-08 18:26:38.505 32181 32181 E pylab.synctask: ofbOpen failed with error=No such file or directory
+09-08 18:26:38.505 32181 32181 E pylab.synctask: sysOpen failed with error=No such file or directory
+09-08 18:26:38.510 32181 32181 D ViewRootImpl[MainActivity]: hardware acceleration = true, sRendererEnabled = true, forceHwAccelerated = false
+09-08 18:26:38.519 32181 32181 D libMEOW : meow new tls: 0xb400007af4dd5240
+09-08 18:26:38.519 32181 32181 D libMEOW : applied 1 plugins for [com.appylab.synctasks]:
+09-08 18:26:38.519 32181 32181 D libMEOW :   plugin 1: [libMEOW_gift.so]: 0xb400007ae7eca440
+09-08 18:26:38.519 32181 32181 D libMEOW : rebuild call chain: 0xb400007af4d91d00
+09-08 18:26:38.521 32181 32181 E ANR_LOG : >>> msg's executing time is too long
+09-08 18:26:38.521 32181 32181 E ANR_LOG : Blocked msg = { when=-2s517ms what=159 target=android.app.ActivityThread$H obj=android.app.servertransaction.ClientTransaction@8cf28a39 } , cost  = 1838 ms
+09-08 18:26:38.521 32181 32181 E ANR_LOG : >>>Current msg List is:
+09-08 18:26:38.521 32181 32181 E ANR_LOG : Current msg <1> = { when=-2s517ms what=159 target=android.app.ActivityThread$H obj=android.app.servertransaction.ClientTransaction@132bdcfe }
+09-08 18:26:38.521 32181 32181 E ANR_LOG : Current msg <2> = { when=-2s293ms what=0 target=android.app.ActivityThread$H callback=com.android.internal.util.function.pooled.PooledLambdaImpl }
+09-08 18:26:38.521 32181 32181 E ANR_LOG : Current msg <3> = { when=-2s161ms what=149 target=android.app.ActivityThread$H obj=android.os.BinderProxy@97d423c }
+09-08 18:26:38.521 32181 32181 E ANR_LOG : Current msg <4> = { when=-2s45ms what=164 target=android.app.ActivityThread$H obj=com.appylab.synctasks }
+09-08 18:26:38.521 32181 32181 E ANR_LOG : Current msg <5> = { when=-1s578ms what=0 target=m7.il callback=m7.yg }
+09-08 18:26:38.521 32181 32181 E ANR_LOG : Current msg <6> = { when=-1s575ms what=0 target=m7.il callback=m7.yg }
+09-08 18:26:38.521 32181 32181 E ANR_LOG : Current msg <7> = { when=-1s551ms what=0 target=m7.il callback=m7.yg }
+09-08 18:26:38.522 32181 32181 E ANR_LOG : Current msg <8> = { when=-1s503ms what=0 target=android.app.ActivityThread$H callback=android.app.LoadedApk$ServiceDispatcher$RunConnection }
+09-08 18:26:38.522 32181 32181 E ANR_LOG : Current msg <9> = { when=-1s493ms what=0 target=android.app.ActivityThread$H callback=android.app.ActivityThread$$ExternalSyntheticLambda1 }
+09-08 18:26:38.522 32181 32181 E ANR_LOG : Current msg <10> = { when=-649ms what=131 target=android.app.ActivityThread$H obj=android.app.ActivityThread$ProviderRefCount@4480379 }
+09-08 18:26:38.522 32181 32181 E ANR_LOG : >>>CURRENT MSG DUMP OVER<<<
+09-08 18:26:38.522 32181 32181 I Quality : ActivityThread: activityLifecycle delay 1839 com.appylab.synctasks 32181
+09-08 18:26:38.523 32181 32199 I Quality : Blocked msg = Package name: com.appylab.synctasks [ schedGroup: 5 schedPolicy: 0 ] process the message: { when=-2s518ms what=159 target=android.app.ActivityThread$H obj=android.app.servertransaction.ClientTransaction@8cf28a39 } took 1839 ms
+09-08 18:26:38.531 32181 32181 D nativeloader: Load libpowerhalwrap_jni.so using system ns (caller=/system/framework/mediatek-framework.jar): ok
+09-08 18:26:38.532 32181 32181 I PowerHalWrapper: PowerHalWrapper.getInstance 
+09-08 18:26:38.651 32181 32233 D StrictMode: StrictMode policy violation: android.os.strictmode.NetworkViolation
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at android.os.StrictMode$AndroidBlockGuardPolicy.onNetwork(StrictMode.java:1673)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.org.conscrypt.Platform.blockGuardOnNetwork(Platform.java:499)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.processDataFromSocket(ConscryptEngineSocket.java:906)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.readUntilDataAvailable(ConscryptEngineSocket.java:894)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.read(ConscryptEngineSocket.java:867)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.okhttp.okio.Okio$2.read(Okio.java:138)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:213)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.request(RealBufferedSource.java:72)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.require(RealBufferedSource.java:65)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.readHexadecimalUnsignedLong(RealBufferedSource.java:271)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.Http1xStream$ChunkedSource.readChunkSize(Http1xStream.java:456)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.Http1xStream$ChunkedSource.read(Http1xStream.java:437)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.read(RealBufferedSource.java:51)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.exhausted(RealBufferedSource.java:61)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.okhttp.okio.InflaterSource.refill(InflaterSource.java:103)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.okhttp.okio.InflaterSource.read(InflaterSource.java:64)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.okhttp.okio.GzipSource.read(GzipSource.java:82)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource$1.read(RealBufferedSource.java:372)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:309)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:373)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:183)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at java.io.InputStreamReader.read(InputStreamReader.java:177)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at java.io.BufferedReader.fill(BufferedReader.java:172)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at java.io.BufferedReader.readLine(BufferedReader.java:337)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at java.io.BufferedReader.readLine(BufferedReader.java:403)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invokeSuspend(RemoteSettingsFetcher.kt:66)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invoke(RemoteSettingsFetcher.kt:8)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invoke(RemoteSettingsFetcher.kt:4)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndspatched(Undispatched.kt:66)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:43)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at kotlinx.coroutines.BuildersKt__Builders_commonKt.withContext(Builders.common.kt:165)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at kotlinx.coroutines.BuildersKt.withContext(dex-id-e787995baaf934480b6e94f64e12ade1d1df0a76:1)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher.doConfigFetch(RemoteSettingsFetcher.kt:53)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettings.updateSettings(RemoteSettings.kt:101)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettings$updateSettings$1.invokeSuspend(RemoteSettings.kt:14)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.google.firebase.concurrent.CustomThreadFactory.lambda$newThread$0$com-google-firebase-concurrent-CustomThreadFactory(CustomThreadFactory.java:47)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at com.google.firebase.concurrent.CustomThreadFactory$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+09-08 18:26:38.651 32181 32233 D StrictMode: 	at java.lang.Thread.run(Thread.java:1572)
+09-08 18:26:38.655 32181 32233 D StrictMode: StrictMode policy violation: android.os.strictmode.NetworkViolation
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at android.os.StrictMode$AndroidBlockGuardPolicy.onNetwork(StrictMode.java:1673)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.org.conscrypt.Platform.blockGuardOnNetwork(Platform.java:499)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.processDataFromSocket(ConscryptEngineSocket.java:906)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.readUntilDataAvailable(ConscryptEngineSocket.java:894)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.read(ConscryptEngineSocket.java:867)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.okhttp.okio.Okio$2.read(Okio.java:138)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.okhttp.okio.AsyncTimeout$2.read(AsyncTimeout.java:213)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.request(RealBufferedSource.java:72)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.require(RealBufferedSource.java:65)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.readHexadecimalUnsignedLong(RealBufferedSource.java:271)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.Http1xStream$ChunkedSource.readChunkSize(Http1xStream.java:456)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.okhttp.internal.http.Http1xStream$ChunkedSource.read(Http1xStream.java:437)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.read(RealBufferedSource.java:51)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource.exhausted(RealBufferedSource.java:61)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.okhttp.okio.GzipSource.read(GzipSource.java:101)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.android.okhttp.okio.RealBufferedSource$1.read(RealBufferedSource.java:372)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:309)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:373)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:183)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at java.io.InputStreamReader.read(InputStreamReader.java:177)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at java.io.BufferedReader.fill(BufferedReader.java:172)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at java.io.BufferedReader.readLine(BufferedReader.java:337)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at java.io.BufferedReader.readLine(BufferedReader.java:403)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invokeSuspend(RemoteSettingsFetcher.kt:66)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invoke(RemoteSettingsFetcher.kt:8)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher$doConfigFetch$2.invoke(RemoteSettingsFetcher.kt:4)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndspatched(Undispatched.kt:66)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:43)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at kotlinx.coroutines.BuildersKt__Builders_commonKt.withContext(Builders.common.kt:165)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at kotlinx.coroutines.BuildersKt.withContext(dex-id-e787995baaf934480b6e94f64e12ade1d1df0a76:1)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettingsFetcher.doConfigFetch(RemoteSettingsFetcher.kt:53)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettings.updateSettings(RemoteSettings.kt:101)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.google.firebase.sessions.settings.RemoteSettings$updateSettings$1.invokeSuspend(RemoteSettings.kt:14)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:34)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:100)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.google.firebase.concurrent.CustomThreadFactory.lambda$newThread$0$com-google-firebase-concurrent-CustomThreadFactory(CustomThreadFactory.java:47)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at com.google.firebase.concurrent.CustomThreadFactory$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+09-08 18:26:38.655 32181 32233 D StrictMode: 	at java.lang.Thread.run(Thread.java:1572)
+09-08 18:26:38.658 32181 32233 D SessionConfigFetcher: Fetched settings: {"settings_version":3,"cache_duration":190807,"features":{"collect_logged_exceptions":true,"collect_reports":true,"collect_analytics":false,"prompt_enabled":false,"push_enabled":false,"firebase_crashlytics_enabled":false,"collect_anrs":true,"collect_metric_kit":false,"collect_build_ids":true},"app":{"status":"activated","update_required":false,"report_upload_variant":2,"native_report_upload_variant":2},"fabric":{"org_id":"6a9f068b460e2f70985755a8","bundle_id":"com.appylab.synctask"},"on_demand_upload_rate_per_minute":10,"on_demand_backoff_base":1.2,"on_demand_backoff_step_duration_seconds":60,"app_quality":{"sessions_enabled":true,"sampling_rate":1,"session_timeout_seconds":1800},"on_demand_thread_recording_suspension_enabled":true}
+09-08 18:26:38.737 32181 32235 D LifecycleServiceBinder: Binding service to application.
+09-08 18:26:38.745 32181 32224 D SessionLifecycleClient: Queued message 1. Queue size 1
+09-08 18:26:38.765 32181 32181 I Choreographer: Skipped 93 frames!  The application may be doing too much work on its main thread.
+09-08 18:26:38.765 32181 32181 I Quality : Skipped: false 93 cost 2069.4165 refreshRate 0 processName com.appylab.synctasks
+09-08 18:26:38.769 32181 32181 D nativeloader: Load libSchedAssistJni.so using system ns (caller=/system/framework/oplus-framework.jar): ok
+09-08 18:26:38.769 32181 32181 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+09-08 18:26:38.769 32181 32181 D ExtensionsLoader: Opened libSchedAssistExtImpl.so
+09-08 18:26:38.812 32181 32181 D FlutterRenderer: Width is zero. 0,0
+09-08 18:26:38.827 32181 32181 I BufferQueueConsumer: [](id:7db500000000,api:0,p:-1,c:32181) connect: controlledByApp=false
+09-08 18:26:38.831 32181 32181 I BLASTBufferQueue: [ViewRootImpl[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#0] constructor()
+09-08 18:26:38.833 32181 32181 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+09-08 18:26:38.833 32181 32181 D ExtensionsLoader: Opened libSchedAssistExtImpl.so
+09-08 18:26:38.835 32181 32181 V ZoomWindowDecorView: setLastReportedMergedConfiguration mZoomDisplayHeight: 2400 getDecorView.153330388
+09-08 18:26:38.837 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:26:38.837 32181 32248 D libMEOW : meow new tls: 0xb400007af2d321c0
+09-08 18:26:38.837 32181 32248 D libMEOW : applied 1 plugins for [com.appylab.synctasks]:
+09-08 18:26:38.837 32181 32248 D libMEOW :   plugin 1: [libMEOW_gift.so]: 0xb400007ae7eca440
+09-08 18:26:38.837 32181 32248 D libMEOW : rebuild call chain: 0xb400007af2d4bbc0
+09-08 18:26:38.846 32181 32248 I GED     : [GT]_get_procNameprocess pid(32181)
+09-08 18:26:38.846 32181 32248 I GED     : [GT]_getprocess name(com.appylab.synctasks)
+09-08 18:26:38.846 32181 32248 I pylab.synctask: [GT] ret(1) gt_status(00000000) aniso_debug_level(0) gt_aniso_max_level(16) ani so mask(00000001) tri mask(00000002)
+09-08 18:26:38.853 32181 32181 I BufferQueueConsumer: [](id:7db500000001,api:0,p:-1,c:32181) connect: controlledByApp=false
+09-08 18:26:38.854 32181 32181 I BLASTBufferQueue: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1] constructor()
+09-08 18:26:38.856 32181 32269 I BufferQueueProducer: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1(BLAST Consumer)1](id:7db500000001,api:1,p:32181,c:32181) connect: api=1 producerControlledByApp=true
+09-08 18:26:38.858 32181 32248 I BufferQueueProducer: [ViewRootImpl[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#0(BLAST Consumer)0](id:7db500000000,api:1,p:32181,c:32181) connect: api=1 producerControlledByApp=true
+09-08 18:26:38.865 32181 32269 I BufferQueueProducer: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1(BLAST Consumer)1](id:7db500000001,api:1,p:32181,c:32181) disconnect: api 1
+09-08 18:26:38.865 32181 32269 E BLASTBufferQueue: BLASTBufferItemConsumer::onDisconnect()
+09-08 18:26:38.865 32181 32269 I BufferQueueProducer: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1(BLAST Consumer)1](id:7db500000001,api:1,p:32181,c:32181) connect: api=1 producerControlledByApp=true
+09-08 18:26:38.872 32181 32269 E ion     : ioctl c0044901 failed with code -1: Invalid argument
+09-08 18:26:38.872 32181 32269 D hw-ProcessState: Binder ioctl to enable oneway spam detection failed: Invalid argument
+09-08 18:26:39.044 32181 32181 D SessionLifecycleService: Service created on process 32181
+09-08 18:26:39.045 32181 32181 D SessionLifecycleService: Service bound to new client on process 32181
+09-08 18:26:39.053 32181 32492 D SessionLifecycleService: App has not yet foregrounded. Using previously stored session.
+09-08 18:26:39.053 32181 32492 D SessionLifecycleService: Client android.os.Messenger@da10a2b bound at 268357850. Clients: 1
+09-08 18:26:39.055 32181 32181 I Quality : Skipped: false 10 cost 237.27611 refreshRate 0 processName com.appylab.synctasks
+09-08 18:26:39.081 32181 32181 D SessionLifecycleClient: Connected to SessionLifecycleService. Queue size 1
+09-08 18:26:39.084 32181 32233 D SessionLifecycleClient: Sending lifecycle 1 to service
+09-08 18:26:39.085 32181 32492 D SessionLifecycleService: Activity foregrounding at 268357888.
+09-08 18:26:39.085 32181 32492 D SessionLifecycleService: Cold start detected.
+09-08 18:26:39.087 32181 32492 D SessionLifecycleService: Generated new session.
+09-08 18:26:39.087 32181 32492 D SessionLifecycleService: Broadcasting new session
+09-08 18:26:39.092 32181 32233 D SessionFirelogPublisher: Data Collection is enabled for at least one Subscriber
+09-08 18:26:39.124 32181 32181 E Parcel  : Reading a NULL string not supported here.
+09-08 18:26:39.125 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:26:39.126 32181 32181 I Quality : Skipped: false 1 cost 37.63889 refreshRate 0 processName com.appylab.synctasks
+09-08 18:26:39.128 32181 32181 D SessionLifecycleClient: Session update received.
+09-08 18:26:39.130 32181 32224 D SessionLifecycleClient: Notified CRASHLYTICS of new session d0ec89f64add48c2a2ece9b819380dd1
+09-08 18:26:39.151 32181 32226 D EventGDTLogger: Session Event Type: SESSION_START
+09-08 18:26:39.152 32181 32226 D SessionFirelogPublisher: Successfully logged Session Start event.
+09-08 18:26:40.866 32181 32181 I flutter : Analytics screen_view: splash
+09-08 18:26:41.580 32181 32462 D SurfaceComposerClient: VRR [FRTC] client handle [bufferId:18446744073709551615 framenumber:0] [ffffffff, ffffffff]
+09-08 18:26:41.613 32181 32181 I Choreographer: Skipped 110 frames!  The application may be doing too much work on its main thread.
+09-08 18:26:41.613 32181 32181 I Quality : Skipped: false 110 cost 2456.4622 refreshRate 0 processName com.appylab.synctasks
+09-08 18:26:41.770 32181 32462 E BLASTBufferQueue: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1](f:0,a:2) isEGL=1, mPendingRelease.size()=1, mMaxAcquiredBuffers=4, currentMaxAcquiredBufferCount=2
+09-08 18:26:41.786 32181 32181 I Quality : Skipped: false 7 cost 170.20312 refreshRate 0 processName com.appylab.synctasks
+09-08 18:26:41.796 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:26:41.840 32181 32248 E OpenGLRenderer: fbcNotifyFrameComplete error: undefined symbol: fbcNotifyFrameComplete
+09-08 18:26:41.841 32181 32248 E OpenGLRenderer: fbcNotifyNoRender error: undefined symbol: fbcNotifyNoRender
+09-08 18:26:41.862 32181 32462 D SurfaceComposerClient: VRR [FRTC] client handle [bufferId:18446744073709551615 framenumber:0] [ffffffff, ffffffff]
+09-08 18:26:41.886 32181 32181 I flutter : Analytics screen_view: onboarding
+09-08 18:26:42.575 32181 32196 E BLASTBufferQueue: [SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1](f:0,a:3) isEGL=1, mPendingRelease.size()=2, mMaxAcquiredBuffers=4, currentMaxAcquiredBufferCount=2
+09-08 18:26:42.900 32181 32181 I Quality : Skipped: false 12 cost 287.19897 refreshRate 0 processName com.appylab.synctasks
+09-08 18:26:42.912 32181 32462 E BLASTBufferQueue: [ViewRootImpl[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#0](f:0,a:2) isEGL=1, mPendingRelease.size()=1, mMaxAcquiredBuffers=4, currentMaxAcquiredBufferCount=2
+09-08 18:26:44.014 32181 32462 E BLASTBufferQueue: [ViewRootImpl[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#0](f:0,a:3) isEGL=1, mPendingRelease.size()=2, mMaxAcquiredBuffers=4, currentMaxAcquiredBufferCount=2
+09-08 18:26:44.478 32181 32715 D ProfileInstaller: Installing profile for com.appylab.synctasks
+09-08 18:27:02.950 32181 32181 I Quality : Skipped: false 3 cost 53.75684 refreshRate 0 processName com.appylab.synctasks
+09-08 18:27:06.629 32181 32181 I flutter : Analytics screen_view: today
+09-08 18:27:07.168 32181 32181 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:13.590 32181 32232 I TRuntime.CctTransportBackend: Making request to: https://firebaselogging-pa.googleapis.com/v1/firelog/legacy/batchlog
+09-08 18:27:16.045 32181 32232 I TRuntime.CctTransportBackend: Status Code: 200
+09-08 18:27:25.799 32181 32181 I Choreographer: Skipped 31 frames!  The application may be doing too much work on its main thread.
+09-08 18:27:25.800 32181 32181 I Quality : Skipped: false 31 cost 521.0765 refreshRate 0 processName com.appylab.synctasks
+09-08 18:27:26.130 32181 32181 D InputMethodManager: showSoftInput() view=io.flutter.embedding.android.FlutterView{11b958e VFE...... .F....ID 0,0-1080,2268 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+09-08 18:27:26.179 32181 32181 D InputMethodManager: showSoftInput() view=io.flutter.embedding.android.FlutterView{11b958e VFE...... .F....ID 0,0-1080,2268 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+09-08 18:27:26.186 32181 32181 I Quality : Skipped: false 4 cost 68.50335 refreshRate 0 processName com.appylab.synctasks
+09-08 18:27:26.192 32181 32181 I AssistStructure: Flattened final assist data: 456 bytes, containing 1 windows, 3 views
+09-08 18:27:26.308 32181 32181 D InputConnectionAdaptor: The input method toggled cursor monitoring on
+09-08 18:27:26.751 32181 32181 D InsetsController: show(ime(), fromIme=true)
+09-08 18:27:26.785 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:27:26.805 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:27:26.816 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:27:26.828 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:27:26.847 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:27:26.965 32181 32181 I Quality : Skipped: true 6 cost 106.84913 refreshRate 0 processName com.appylab.synctasks
+09-08 18:27:26.967 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:27:26.983 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:27:27.044 32181 32181 I Quality : Skipped: true 2 cost 49.382694 refreshRate 0 processName com.appylab.synctasks
+09-08 18:27:27.046 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:27:27.090 32181 32181 I Quality : Skipped: true 2 cost 44.036903 refreshRate 0 processName com.appylab.synctasks
+09-08 18:27:27.093 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:27:27.094 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:27:27.146 32181 32181 I Quality : Skipped: false 2 cost 48.974537 refreshRate 0 processName com.appylab.synctasks
+09-08 18:27:42.356 32181 32181 I Quality : Skipped: false 1 cost 21.986916 refreshRate 0 processName com.appylab.synctasks
+09-08 18:27:42.369 32181 32181 I flutter : Analytics event: task_created keys=has_schedule,has_time,has_reminder,has_repeat
+09-08 18:27:42.373 32181 32181 I flutter : CrashReporter fatal: 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:27:42.375 32181 32181 I flutter : ----------------FIREBASE CRASHLYTICS----------------
+09-08 18:27:42.375 32181 32181 I flutter : 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:27:42.376 32181 32181 I flutter : #0      _AssertionError._doThrowNew (dart:core-patch/errors_patch.dart:67:4)
+09-08 18:27:42.376 32181 32181 I flutter : #1      _AssertionError._throwNew (dart:core-patch/errors_patch.dart:49:5)
+09-08 18:27:42.376 32181 32181 I flutter : #2      _assertParameterTypesAreCorrect.<anonymous closure> (package:firebase_analytics/src/firebase_analytics.dart:1392:9)
+09-08 18:27:42.376 32181 32181 I flutter : #3      _LinkedHashMapMixin.forEach (dart:_compact_hash:772:13)
+09-08 18:27:42.376 32181 32181 I flutter : #4      _assertParameterTypesAreCorrect (package:firebase_analytics/src/firebase_analytics.dart:1390:17)
+09-08 18:27:42.376 32181 32181 I flutter : #5      FirebaseAnalytics.logEvent (package:firebase_analytics/src/firebase_analytics.dart:107:5)
+09-08 18:27:42.376 32181 32181 I flutter : #6      _logFirebaseEvent (package:synctasks/core/analytics/analytics_service.dart:65:36)
+09-08 18:27:42.376 32181 32181 I flutter : #7      FirebaseAnalyticsSink.log (package:synctasks/core/analytics/analytics_service.dart:41:20)
+09-08 18:27:42.376 32181 32181 I flutter : #8      AnalyticsService.logEvent (package:synctasks/core/analytics/analytics_service.dart:109:18)
+09-08 18:27:42.376 32181 32181 I flutter : #9      TaskController.create (package:synctasks/features/tasks/providers/task_controller.dart:51:30)
+09-08 18:27:42.376 32181 32181 I flutter : <asynchronous suspension>
+09-08 18:27:42.376 32181 32181 I flutter : #10     _TodayScreenState._createTask (package:synctasks/feature
+09-08 18:27:42.376 32181 32181 I flutter : ----------------------------------------------------
+09-08 18:27:42.441 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.442 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.442 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.442 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.442 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.443 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.443 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.443 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.443 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.443 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.443 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.444 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.444 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.444 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.444 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.445 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.445 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.445 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.446 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.446 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.446 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.446 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.447 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.447 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.448 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.448 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.448 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.449 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.450 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.450 32181 32224 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:42.729 32181 32181 E Parcel  : Reading a NULL string not supported here.
+09-08 18:27:43.900 32181 32232 I TRuntime.CctTransportBackend: Making request to: https://crashlyticsreports-pa.googleapis.com/v1/firelog/legacy/batchlog
+09-08 18:27:45.902 32181 32232 I TRuntime.CctTransportBackend: Status Code: 200
+09-08 18:28:16.330 32181 32181 I flutter : Analytics event: task_created keys=has_schedule,has_time,has_reminder,has_repeat
+09-08 18:28:16.331 32181 32181 I flutter : CrashReporter fatal: 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:28:16.331 32181 32181 I flutter : ----------------FIREBASE CRASHLYTICS----------------
+09-08 18:28:16.331 32181 32181 I flutter : 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:28:16.331 32181 32181 I flutter : #0      _AssertionError._doThrowNew (dart:core-patch/errors_patch.dart:67:4)
+09-08 18:28:16.331 32181 32181 I flutter : #1      _AssertionError._throwNew (dart:core-patch/errors_patch.dart:49:5)
+09-08 18:28:16.331 32181 32181 I flutter : #2      _assertParameterTypesAreCorrect.<anonymous closure> (package:firebase_analytics/src/firebase_analytics.dart:1392:9)
+09-08 18:28:16.331 32181 32181 I flutter : #3      _LinkedHashMapMixin.forEach (dart:_compact_hash:772:13)
+09-08 18:28:16.331 32181 32181 I flutter : #4      _assertParameterTypesAreCorrect (package:firebase_analytics/src/firebase_analytics.dart:1390:17)
+09-08 18:28:16.331 32181 32181 I flutter : #5      FirebaseAnalytics.logEvent (package:firebase_analytics/src/firebase_analytics.dart:107:5)
+09-08 18:28:16.331 32181 32181 I flutter : #6      _logFirebaseEvent (package:synctasks/core/analytics/analytics_service.dart:65:36)
+09-08 18:28:16.331 32181 32181 I flutter : #7      FirebaseAnalyticsSink.log (package:synctasks/core/analytics/analytics_service.dart:41:20)
+09-08 18:28:16.331 32181 32181 I flutter : #8      AnalyticsService.logEvent (package:synctasks/core/analytics/analytics_service.dart:109:18)
+09-08 18:28:16.331 32181 32181 I flutter : #9      TaskController.create (package:synctasks/features/tasks/providers/task_controller.dart:51:30)
+09-08 18:28:16.331 32181 32181 I flutter : <asynchronous suspension>
+09-08 18:28:16.331 32181 32181 I flutter : #10     _TodayScreenState._createTask (package:synctasks/feature
+09-08 18:28:16.331 32181 32181 I flutter : ----------------------------------------------------
+09-08 18:28:16.525 32181 32181 E Parcel  : Reading a NULL string not supported here.
+09-08 18:28:17.717 32181 32232 I TRuntime.CctTransportBackend: Making request to: https://crashlyticsreports-pa.googleapis.com/v1/firelog/legacy/batchlog
+09-08 18:28:19.710 32181 32232 I TRuntime.CctTransportBackend: Status Code: 200
+09-08 18:28:40.881 32181 32181 I flutter : Analytics event: task_created keys=has_schedule,has_time,has_reminder,has_repeat
+09-08 18:28:40.882 32181 32181 I flutter : CrashReporter fatal: 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:28:40.882 32181 32181 I flutter : ----------------FIREBASE CRASHLYTICS----------------
+09-08 18:28:40.882 32181 32181 I flutter : 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:28:40.882 32181 32181 I flutter : #0      _AssertionError._doThrowNew (dart:core-patch/errors_patch.dart:67:4)
+09-08 18:28:40.882 32181 32181 I flutter : #1      _AssertionError._throwNew (dart:core-patch/errors_patch.dart:49:5)
+09-08 18:28:40.882 32181 32181 I flutter : #2      _assertParameterTypesAreCorrect.<anonymous closure> (package:firebase_analytics/src/firebase_analytics.dart:1392:9)
+09-08 18:28:40.882 32181 32181 I flutter : #3      _LinkedHashMapMixin.forEach (dart:_compact_hash:772:13)
+09-08 18:28:40.882 32181 32181 I flutter : #4      _assertParameterTypesAreCorrect (package:firebase_analytics/src/firebase_analytics.dart:1390:17)
+09-08 18:28:40.882 32181 32181 I flutter : #5      FirebaseAnalytics.logEvent (package:firebase_analytics/src/firebase_analytics.dart:107:5)
+09-08 18:28:40.882 32181 32181 I flutter : #6      _logFirebaseEvent (package:synctasks/core/analytics/analytics_service.dart:65:36)
+09-08 18:28:40.882 32181 32181 I flutter : #7      FirebaseAnalyticsSink.log (package:synctasks/core/analytics/analytics_service.dart:41:20)
+09-08 18:28:40.882 32181 32181 I flutter : #8      AnalyticsService.logEvent (package:synctasks/core/analytics/analytics_service.dart:109:18)
+09-08 18:28:40.882 32181 32181 I flutter : #9      TaskController.create (package:synctasks/features/tasks/providers/task_controller.dart:51:30)
+09-08 18:28:40.882 32181 32181 I flutter : <asynchronous suspension>
+09-08 18:28:40.882 32181 32181 I flutter : #10     _TodayScreenState._createTask (package:synctasks/feature
+09-08 18:28:40.882 32181 32181 I flutter : ----------------------------------------------------
+09-08 18:28:41.106 32181 32181 E Parcel  : Reading a NULL string not supported here.
+09-08 18:28:41.791 32181 32181 I flutter : Analytics event: task_created keys=has_schedule,has_time,has_reminder,has_repeat
+09-08 18:28:41.792 32181 32181 I flutter : CrashReporter fatal: 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:28:41.792 32181 32181 I flutter : ----------------FIREBASE CRASHLYTICS----------------
+09-08 18:28:41.792 32181 32181 I flutter : 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:28:41.792 32181 32181 I flutter : #0      _AssertionError._doThrowNew (dart:core-patch/errors_patch.dart:67:4)
+09-08 18:28:41.792 32181 32181 I flutter : #1      _AssertionError._throwNew (dart:core-patch/errors_patch.dart:49:5)
+09-08 18:28:41.792 32181 32181 I flutter : #2      _assertParameterTypesAreCorrect.<anonymous closure> (package:firebase_analytics/src/firebase_analytics.dart:1392:9)
+09-08 18:28:41.792 32181 32181 I flutter : #3      _LinkedHashMapMixin.forEach (dart:_compact_hash:772:13)
+09-08 18:28:41.792 32181 32181 I flutter : #4      _assertParameterTypesAreCorrect (package:firebase_analytics/src/firebase_analytics.dart:1390:17)
+09-08 18:28:41.792 32181 32181 I flutter : #5      FirebaseAnalytics.logEvent (package:firebase_analytics/src/firebase_analytics.dart:107:5)
+09-08 18:28:41.792 32181 32181 I flutter : #6      _logFirebaseEvent (package:synctasks/core/analytics/analytics_service.dart:65:36)
+09-08 18:28:41.792 32181 32181 I flutter : #7      FirebaseAnalyticsSink.log (package:synctasks/core/analytics/analytics_service.dart:41:20)
+09-08 18:28:41.792 32181 32181 I flutter : #8      AnalyticsService.logEvent (package:synctasks/core/analytics/analytics_service.dart:109:18)
+09-08 18:28:41.792 32181 32181 I flutter : #9      TaskController.create (package:synctasks/features/tasks/providers/task_controller.dart:51:30)
+09-08 18:28:41.792 32181 32181 I flutter : <asynchronous suspension>
+09-08 18:28:41.792 32181 32181 I flutter : #10     _TodayScreenState._createTask (package:synctasks/feature
+09-08 18:28:41.792 32181 32181 I flutter : ----------------------------------------------------
+09-08 18:28:42.719 32181 32181 I flutter : Analytics event: task_created keys=has_schedule,has_time,has_reminder,has_repeat
+09-08 18:28:42.720 32181 32181 I flutter : CrashReporter fatal: 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:28:42.720 32181 32181 I flutter : ----------------FIREBASE CRASHLYTICS----------------
+09-08 18:28:42.720 32181 32181 I flutter : 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:28:42.720 32181 32181 I flutter : #0      _AssertionError._doThrowNew (dart:core-patch/errors_patch.dart:67:4)
+09-08 18:28:42.720 32181 32181 I flutter : #1      _AssertionError._throwNew (dart:core-patch/errors_patch.dart:49:5)
+09-08 18:28:42.720 32181 32181 I flutter : #2      _assertParameterTypesAreCorrect.<anonymous closure> (package:firebase_analytics/src/firebase_analytics.dart:1392:9)
+09-08 18:28:42.720 32181 32181 I flutter : #3      _LinkedHashMapMixin.forEach (dart:_compact_hash:772:13)
+09-08 18:28:42.720 32181 32181 I flutter : #4      _assertParameterTypesAreCorrect (package:firebase_analytics/src/firebase_analytics.dart:1390:17)
+09-08 18:28:42.720 32181 32181 I flutter : #5      FirebaseAnalytics.logEvent (package:firebase_analytics/src/firebase_analytics.dart:107:5)
+09-08 18:28:42.720 32181 32181 I flutter : #6      _logFirebaseEvent (package:synctasks/core/analytics/analytics_service.dart:65:36)
+09-08 18:28:42.720 32181 32181 I flutter : #7      FirebaseAnalyticsSink.log (package:synctasks/core/analytics/analytics_service.dart:41:20)
+09-08 18:28:42.720 32181 32181 I flutter : #8      AnalyticsService.logEvent (package:synctasks/core/analytics/analytics_service.dart:109:18)
+09-08 18:28:42.720 32181 32181 I flutter : #9      TaskController.create (package:synctasks/features/tasks/providers/task_controller.dart:51:30)
+09-08 18:28:42.720 32181 32181 I flutter : <asynchronous suspension>
+09-08 18:28:42.720 32181 32181 I flutter : #10     _TodayScreenState._createTask (package:synctasks/feature
+09-08 18:28:42.720 32181 32181 I flutter : ----------------------------------------------------
+09-08 18:28:43.636 32181 32181 I flutter : Analytics event: task_created keys=has_schedule,has_time,has_reminder,has_repeat
+09-08 18:28:43.637 32181 32181 I flutter : CrashReporter fatal: 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:28:43.637 32181 32181 I flutter : ----------------FIREBASE CRASHLYTICS----------------
+09-08 18:28:43.637 32181 32181 I flutter : 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:28:43.637 32181 32181 I flutter : #0      _AssertionError._doThrowNew (dart:core-patch/errors_patch.dart:67:4)
+09-08 18:28:43.637 32181 32181 I flutter : #1      _AssertionError._throwNew (dart:core-patch/errors_patch.dart:49:5)
+09-08 18:28:43.637 32181 32181 I flutter : #2      _assertParameterTypesAreCorrect.<anonymous closure> (package:firebase_analytics/src/firebase_analytics.dart:1392:9)
+09-08 18:28:43.637 32181 32181 I flutter : #3      _LinkedHashMapMixin.forEach (dart:_compact_hash:772:13)
+09-08 18:28:43.637 32181 32181 I flutter : #4      _assertParameterTypesAreCorrect (package:firebase_analytics/src/firebase_analytics.dart:1390:17)
+09-08 18:28:43.637 32181 32181 I flutter : #5      FirebaseAnalytics.logEvent (package:firebase_analytics/src/firebase_analytics.dart:107:5)
+09-08 18:28:43.637 32181 32181 I flutter : #6      _logFirebaseEvent (package:synctasks/core/analytics/analytics_service.dart:65:36)
+09-08 18:28:43.637 32181 32181 I flutter : #7      FirebaseAnalyticsSink.log (package:synctasks/core/analytics/analytics_service.dart:41:20)
+09-08 18:28:43.637 32181 32181 I flutter : #8      AnalyticsService.logEvent (package:synctasks/core/analytics/analytics_service.dart:109:18)
+09-08 18:28:43.637 32181 32181 I flutter : #9      TaskController.create (package:synctasks/features/tasks/providers/task_controller.dart:51:30)
+09-08 18:28:43.637 32181 32181 I flutter : <asynchronous suspension>
+09-08 18:28:43.637 32181 32181 I flutter : #10     _TodayScreenState._createTask (package:synctasks/feature
+09-08 18:28:43.637 32181 32181 I flutter : ----------------------------------------------------
+09-08 18:28:49.789 32181 32232 I TRuntime.CctTransportBackend: Making request to: https://crashlyticsreports-pa.googleapis.com/v1/firelog/legacy/batchlog
+09-08 18:28:51.616 32181 32232 I TRuntime.CctTransportBackend: Status Code: 200
+09-08 18:29:04.841 32181 32181 D InputConnectionAdaptor: The input method toggled cursor monitoring off
+09-08 18:29:05.255 32181 32181 I Quality : Skipped: false 23 cost 396.21106 refreshRate 0 processName com.appylab.synctasks
+09-08 18:29:05.263 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:29:05.436 32181 32181 I Quality : Skipped: true 9 cost 163.4633 refreshRate 0 processName com.appylab.synctasks
+09-08 18:29:05.442 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:29:05.454 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:29:05.534 32181 32181 I Quality : Skipped: true 3 cost 61.74679 refreshRate 0 processName com.appylab.synctasks
+09-08 18:29:05.536 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:29:05.541 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:29:05.608 32181 32181 I Quality : Skipped: true 3 cost 52.715816 refreshRate 0 processName com.appylab.synctasks
+09-08 18:29:05.610 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:29:05.614 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:29:05.666 32181 32181 I Quality : Skipped: true 2 cost 39.528423 refreshRate 0 processName com.appylab.synctasks
+09-08 18:29:05.668 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:29:05.685 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:29:05.703 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:29:05.722 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:29:05.724 32181 32181 D FlutterJNI: Sending viewport metrics to the engine.
+09-08 18:29:21.721 32181 32232 I TRuntime.CctTransportBackend: Making request to: https://crashlyticsreports-pa.googleapis.com/v1/firelog/legacy/batchlog
+09-08 18:29:23.552 32181 32232 I TRuntime.CctTransportBackend: Status Code: 200
+09-08 18:29:29.223 32181 32181 I flutter : Analytics event: task_created keys=has_schedule,has_time,has_reminder,has_repeat
+09-08 18:29:29.224 32181 32181 I flutter : CrashReporter fatal: 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:29:29.224 32181 32181 I flutter : ----------------FIREBASE CRASHLYTICS----------------
+09-08 18:29:29.224 32181 32181 I flutter : 'package:firebase_analytics/src/firebase_analytics.dart': Failed assertion: line 1392 pos 9: 'value is String || value is num': 'string' OR 'number' must be set as the value of the parameter: has_schedule. true found instead
+09-08 18:29:29.224 32181 32181 I flutter : #0      _AssertionError._doThrowNew (dart:core-patch/errors_patch.dart:67:4)
+09-08 18:29:29.224 32181 32181 I flutter : #1      _AssertionError._throwNew (dart:core-patch/errors_patch.dart:49:5)
+09-08 18:29:29.224 32181 32181 I flutter : #2      _assertParameterTypesAreCorrect.<anonymous closure> (package:firebase_analytics/src/firebase_analytics.dart:1392:9)
+09-08 18:29:29.224 32181 32181 I flutter : #3      _LinkedHashMapMixin.forEach (dart:_compact_hash:772:13)
+09-08 18:29:29.224 32181 32181 I flutter : #4      _assertParameterTypesAreCorrect (package:firebase_analytics/src/firebase_analytics.dart:1390:17)
+09-08 18:29:29.224 32181 32181 I flutter : #5      FirebaseAnalytics.logEvent (package:firebase_analytics/src/firebase_analytics.dart:107:5)
+09-08 18:29:29.224 32181 32181 I flutter : #6      _logFirebaseEvent (package:synctasks/core/analytics/analytics_service.dart:65:36)
+09-08 18:29:29.224 32181 32181 I flutter : #7      FirebaseAnalyticsSink.log (package:synctasks/core/analytics/analytics_service.dart:41:20)
+09-08 18:29:29.224 32181 32181 I flutter : #8      AnalyticsService.logEvent (package:synctasks/core/analytics/analytics_service.dart:109:18)
+09-08 18:29:29.224 32181 32181 I flutter : #9      TaskController.create (package:synctasks/features/tasks/providers/task_controller.dart:51:30)
+09-08 18:29:29.224 32181 32181 I flutter : <asynchronous suspension>
+09-08 18:29:29.224 32181 32181 I flutter : #10     _TodayScreenState._createTaskFromUpdate (package:synctas
+09-08 18:29:29.224 32181 32181 I flutter : ----------------------------------------------------
+09-08 18:29:29.367 32181 32192 I pylab.synctask: Background concurrent copying GC freed 2568KB AllocSpace bytes, 75(3388KB) LOS objects, 49% free, 5138KB/10MB, paused 51us,221us total 102.326ms
+09-08 18:29:29.443 32181 32181 E Parcel  : Reading a NULL string not supported here.
+09-08 18:29:53.650 32181 32232 I TRuntime.CctTransportBackend: Making request to: https://crashlyticsreports-pa.googleapis.com/v1/firelog/legacy/batchlog
+09-08 18:29:55.501 32181 32232 I TRuntime.CctTransportBackend: Status Code: 200

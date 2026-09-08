@@ -1,13 +1,22 @@
 import 'package:drift/drift.dart';
 
+import '../../../core/analytics/analytics_service.dart';
 import '../../../core/database/app_database.dart';
 
 class FolderRepository {
-  FolderRepository(this._db, {DateTime Function()? now})
-    : _now = now ?? DateTime.now;
+  factory FolderRepository(
+    AppDatabase db, {
+    DateTime Function()? now,
+    AnalyticsService? analyticsService,
+  }) {
+    return FolderRepository._(db, now ?? DateTime.now, analyticsService);
+  }
+
+  FolderRepository._(this._db, this._now, this._analyticsService);
 
   final AppDatabase _db;
   final DateTime Function() _now;
+  final AnalyticsService? _analyticsService;
 
   Future<Folder> inbox() async {
     return (_db.select(
@@ -17,7 +26,7 @@ class FolderRepository {
 
   Future<Folder> createFolder(String name) async {
     final maxOrder = await _maxSortOrder();
-    return _db
+    final folder = await _db
         .into(_db.folders)
         .insertReturning(
           FoldersCompanion.insert(
@@ -26,6 +35,11 @@ class FolderRepository {
             createdAt: _now(),
           ),
         );
+    await _analyticsService?.logEvent(
+      'folder_created',
+      parameters: {'is_inbox': folder.name == 'Inbox'},
+    );
+    return folder;
   }
 
   Future<void> deleteFolder(int folderId) async {
@@ -54,3 +68,5 @@ class FolderRepository {
         .reduce((a, b) => a > b ? a : b);
   }
 }
+
+

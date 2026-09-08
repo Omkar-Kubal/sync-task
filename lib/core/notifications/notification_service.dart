@@ -1,3 +1,9 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:timezone/data/latest_all.dart' as tz_data;
+import 'package:timezone/timezone.dart' as tz;
+
 class ScheduledNotification {
   const ScheduledNotification({
     required this.id,
@@ -20,6 +26,38 @@ abstract interface class NotificationScheduler {
   Future<void> cancel(int id);
 }
 
+abstract interface class LocalNotificationsPlugin {
+  Future<void> initialize(InitializationSettings settings);
+
+  Future<void> requestAndroidNotificationPermission();
+
+  Future<void> zonedSchedule({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime scheduledAt,
+    required NotificationDetails details,
+  });
+
+  Future<void> cancel(int id);
+}
+
+class PluginScheduledNotification {
+  const PluginScheduledNotification({
+    required this.id,
+    required this.title,
+    required this.body,
+    required this.scheduledAt,
+    required this.details,
+  });
+
+  final int id;
+  final String title;
+  final String body;
+  final DateTime scheduledAt;
+  final NotificationDetails details;
+}
+
 class RecordingNotificationScheduler implements NotificationScheduler {
   final scheduled = <ScheduledNotification>[];
   final cancelled = <int>[];
@@ -36,13 +74,127 @@ class RecordingNotificationScheduler implements NotificationScheduler {
 }
 
 class NotificationService implements NotificationScheduler {
+  NotificationService({LocalNotificationsPlugin? plugin})
+    : _plugin = plugin ?? FlutterLocalNotificationsAdapter();
+
+  final LocalNotificationsPlugin _plugin;
+  var _initialized = false;
+
+  Future<void> initialize() async {
+    if (_initialized) {
+      return;
+    }
+
+    tz_data.initializeTimeZones();
+    await _setLocalTimezone();
+    await _plugin.initialize(
+      const InitializationSettings(
+        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+      ),
+    );
+    await _plugin.requestAndroidNotificationPermission();
+    _initialized = true;
+  }
+
   @override
   Future<void> schedule(ScheduledNotification notification) async {
-    // Android plugin integration is added behind this interface.
+    await initialize();
+    await _plugin.zonedSchedule(
+      id: notification.id,
+      title: notification.title,
+      body: notification.body,
+      scheduledAt: notification.scheduledAt,
+      details: NotificationDetails(
+        android: AndroidNotificationDetails(
+          notification.channelId,
+          _channelName(notification.channelId),
+          channelDescription: _channelDescription(notification.channelId),
+          importance: Importance.high,
+          priority: Priority.high,
+        ),
+      ),
+    );
   }
 
   @override
   Future<void> cancel(int id) async {
-    // Android plugin integration is added behind this interface.
+    await initialize();
+    await _plugin.cancel(id);
+  }
+
+  Future<void> _setLocalTimezone() async {
+    if (kIsWeb) {
+      return;
+    }
+
+    try {
+      final timezoneName = await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(timezoneName));
+    } on Object {
+      tz.setLocalLocation(tz.UTC);
+    }
+  }
+
+  String _channelName(String channelId) {
+    return switch (channelId) {
+      'task_reminders' => 'Task reminders',
+      _ => 'SyncTasks notifications',
+    };
+  }
+
+  String _channelDescription(String channelId) {
+    return switch (channelId) {
+      'task_reminders' => 'Scheduled task reminder alerts.',
+      _ => 'SyncTasks scheduled alerts.',
+    };
   }
 }
+
+class FlutterLocalNotificationsAdapter implements LocalNotificationsPlugin {
+  FlutterLocalNotificationsAdapter({FlutterLocalNotificationsPlugin? plugin})
+    : _plugin = plugin ?? FlutterLocalNotificationsPlugin();
+
+  final FlutterLocalNotificationsPlugin _plugin;
+
+  @override
+  Future<void> initialize(InitializationSettings settings) async {
+    await _plugin.initialize(settings);
+  }
+
+  @override
+  Future<void> requestAndroidNotificationPermission() async {
+    await _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >()
+        ?.requestNotificationsPermission();
+  }
+
+  @override
+  Future<void> zonedSchedule({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime scheduledAt,
+    required NotificationDetails details,
+  }) async {
+    await _plugin.zonedSchedule(
+      id,
+      title,
+      body,
+      tz.TZDateTime.from(scheduledAt, tz.local),
+      details,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+    );
+  }
+
+  @override
+  Future<void> cancel(int id) {
+    return _plugin.cancel(id);
+  }
+}
+
+
+

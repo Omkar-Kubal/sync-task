@@ -1,0 +1,4 @@
+-keepattributes Signature
+-keep class com.dexterous.flutterlocalnotifications.** { *; }
+-keep class com.google.firebase.** { *; }
+-keep class com.google.android.gms.** { *; }

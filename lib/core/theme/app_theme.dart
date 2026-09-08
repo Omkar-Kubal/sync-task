@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'synctask_color_scheme.dart';
+import 'synctasks_color_scheme.dart';
 
-ThemeData buildSyncTaskTheme(Brightness brightness) {
+ThemeData buildSyncTasksTheme(Brightness brightness) {
   final tokens = brightness == Brightness.dark
-      ? SyncTaskColorScheme.dark
-      : SyncTaskColorScheme.light;
+      ? SyncTasksColorScheme.dark
+      : SyncTasksColorScheme.light;
   final colorScheme = ColorScheme(
     brightness: brightness,
     primary: tokens.controlPrimary,
@@ -25,8 +25,8 @@ ThemeData buildSyncTaskTheme(Brightness brightness) {
     fontFamily: 'Geist',
     fontFamilyFallback: const ['Poppins', 'Segoe UI', 'Helvetica', 'Arial'],
     extensions: const <ThemeExtension<dynamic>>[
-      SyncTaskColorScheme.light,
-      SyncTaskColorScheme.dark,
+      SyncTasksColorScheme.light,
+      SyncTasksColorScheme.dark,
     ],
   );
 
@@ -70,32 +70,30 @@ ThemeData buildSyncTaskTheme(Brightness brightness) {
         letterSpacing: 0,
       ),
       headlineLarge: textTheme.headlineLarge?.copyWith(
-        fontFamily: 'Poppins',
         fontSize: 26,
         fontWeight: FontWeight.w700,
         height: 1.23,
         letterSpacing: 0,
       ),
       headlineMedium: textTheme.headlineMedium?.copyWith(
-        fontFamily: 'Poppins',
         fontSize: 22,
         fontWeight: FontWeight.w700,
         height: 1.27,
         letterSpacing: 0,
       ),
       headlineSmall: textTheme.headlineSmall?.copyWith(
-        fontFamily: 'Poppins',
         fontWeight: FontWeight.w700,
         letterSpacing: 0,
       ),
       titleLarge: textTheme.titleLarge?.copyWith(
         fontFamily: 'Poppins',
-        fontSize: 40,
+        fontSize: 29,
         fontWeight: FontWeight.w700,
-        height: 1.1,
+        height: 1.18,
         letterSpacing: 0,
       ),
       titleMedium: textTheme.titleMedium?.copyWith(
+        fontFamily: 'Geist',
         fontSize: 20,
         fontWeight: FontWeight.w600,
         height: 1.4,
@@ -120,6 +118,7 @@ ThemeData buildSyncTaskTheme(Brightness brightness) {
         letterSpacing: 0,
       ),
       labelLarge: textTheme.labelLarge?.copyWith(
+        fontFamily: 'Geist',
         fontSize: 12,
         fontWeight: FontWeight.w600,
         letterSpacing: 0,
@@ -209,16 +208,20 @@ ThemeData buildSyncTaskTheme(Brightness brightness) {
       iconColor: tokens.textPrimary,
       textColor: tokens.textPrimary,
       minLeadingWidth: 36,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
       titleTextStyle: textTheme.bodyLarge?.copyWith(
         color: tokens.textPrimary,
+        fontSize: 15,
         fontWeight: FontWeight.w500,
         letterSpacing: 0,
       ),
       subtitleTextStyle: textTheme.bodyMedium?.copyWith(
         color: tokens.textSecondary,
+        fontSize: 13,
         letterSpacing: 0,
       ),
     ),
   );
 }
+
+

@@ -353,6 +353,29 @@ class $TaskSeriesTable extends TaskSeries
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _recurrenceIntervalMeta =
+      const VerificationMeta('recurrenceInterval');
+  @override
+  late final GeneratedColumn<int> recurrenceInterval = GeneratedColumn<int>(
+    'recurrence_interval',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _customRepeatLabelMeta = const VerificationMeta(
+    'customRepeatLabel',
+  );
+  @override
+  late final GeneratedColumn<String> customRepeatLabel =
+      GeneratedColumn<String>(
+        'custom_repeat_label',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
   static const VerificationMeta _anchorDateMeta = const VerificationMeta(
     'anchorDate',
   );
@@ -426,6 +449,8 @@ class $TaskSeriesTable extends TaskSeries
     title,
     folderId,
     repeatType,
+    recurrenceInterval,
+    customRepeatLabel,
     anchorDate,
     time,
     reminderTime,
@@ -471,6 +496,24 @@ class $TaskSeriesTable extends TaskSeries
       );
     } else if (isInserting) {
       context.missing(_repeatTypeMeta);
+    }
+    if (data.containsKey('recurrence_interval')) {
+      context.handle(
+        _recurrenceIntervalMeta,
+        recurrenceInterval.isAcceptableOrUnknown(
+          data['recurrence_interval']!,
+          _recurrenceIntervalMeta,
+        ),
+      );
+    }
+    if (data.containsKey('custom_repeat_label')) {
+      context.handle(
+        _customRepeatLabelMeta,
+        customRepeatLabel.isAcceptableOrUnknown(
+          data['custom_repeat_label']!,
+          _customRepeatLabelMeta,
+        ),
+      );
     }
     if (data.containsKey('anchor_date')) {
       context.handle(
@@ -543,6 +586,14 @@ class $TaskSeriesTable extends TaskSeries
         DriftSqlType.string,
         data['${effectivePrefix}repeat_type'],
       )!,
+      recurrenceInterval: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}recurrence_interval'],
+      )!,
+      customRepeatLabel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}custom_repeat_label'],
+      ),
       anchorDate: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}anchor_date'],
@@ -581,6 +632,8 @@ class TaskSery extends DataClass implements Insertable<TaskSery> {
   final String title;
   final int folderId;
   final String repeatType;
+  final int recurrenceInterval;
+  final String? customRepeatLabel;
   final DateTime anchorDate;
   final DateTime? time;
   final DateTime? reminderTime;
@@ -592,6 +645,8 @@ class TaskSery extends DataClass implements Insertable<TaskSery> {
     required this.title,
     required this.folderId,
     required this.repeatType,
+    required this.recurrenceInterval,
+    this.customRepeatLabel,
     required this.anchorDate,
     this.time,
     this.reminderTime,
@@ -606,6 +661,10 @@ class TaskSery extends DataClass implements Insertable<TaskSery> {
     map['title'] = Variable<String>(title);
     map['folder_id'] = Variable<int>(folderId);
     map['repeat_type'] = Variable<String>(repeatType);
+    map['recurrence_interval'] = Variable<int>(recurrenceInterval);
+    if (!nullToAbsent || customRepeatLabel != null) {
+      map['custom_repeat_label'] = Variable<String>(customRepeatLabel);
+    }
     map['anchor_date'] = Variable<DateTime>(anchorDate);
     if (!nullToAbsent || time != null) {
       map['time'] = Variable<DateTime>(time);
@@ -627,6 +686,10 @@ class TaskSery extends DataClass implements Insertable<TaskSery> {
       title: Value(title),
       folderId: Value(folderId),
       repeatType: Value(repeatType),
+      recurrenceInterval: Value(recurrenceInterval),
+      customRepeatLabel: customRepeatLabel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(customRepeatLabel),
       anchorDate: Value(anchorDate),
       time: time == null && nullToAbsent ? const Value.absent() : Value(time),
       reminderTime: reminderTime == null && nullToAbsent
@@ -650,6 +713,10 @@ class TaskSery extends DataClass implements Insertable<TaskSery> {
       title: serializer.fromJson<String>(json['title']),
       folderId: serializer.fromJson<int>(json['folderId']),
       repeatType: serializer.fromJson<String>(json['repeatType']),
+      recurrenceInterval: serializer.fromJson<int>(json['recurrenceInterval']),
+      customRepeatLabel: serializer.fromJson<String?>(
+        json['customRepeatLabel'],
+      ),
       anchorDate: serializer.fromJson<DateTime>(json['anchorDate']),
       time: serializer.fromJson<DateTime?>(json['time']),
       reminderTime: serializer.fromJson<DateTime?>(json['reminderTime']),
@@ -668,6 +735,8 @@ class TaskSery extends DataClass implements Insertable<TaskSery> {
       'title': serializer.toJson<String>(title),
       'folderId': serializer.toJson<int>(folderId),
       'repeatType': serializer.toJson<String>(repeatType),
+      'recurrenceInterval': serializer.toJson<int>(recurrenceInterval),
+      'customRepeatLabel': serializer.toJson<String?>(customRepeatLabel),
       'anchorDate': serializer.toJson<DateTime>(anchorDate),
       'time': serializer.toJson<DateTime?>(time),
       'reminderTime': serializer.toJson<DateTime?>(reminderTime),
@@ -682,6 +751,8 @@ class TaskSery extends DataClass implements Insertable<TaskSery> {
     String? title,
     int? folderId,
     String? repeatType,
+    int? recurrenceInterval,
+    Value<String?> customRepeatLabel = const Value.absent(),
     DateTime? anchorDate,
     Value<DateTime?> time = const Value.absent(),
     Value<DateTime?> reminderTime = const Value.absent(),
@@ -693,6 +764,10 @@ class TaskSery extends DataClass implements Insertable<TaskSery> {
     title: title ?? this.title,
     folderId: folderId ?? this.folderId,
     repeatType: repeatType ?? this.repeatType,
+    recurrenceInterval: recurrenceInterval ?? this.recurrenceInterval,
+    customRepeatLabel: customRepeatLabel.present
+        ? customRepeatLabel.value
+        : this.customRepeatLabel,
     anchorDate: anchorDate ?? this.anchorDate,
     time: time.present ? time.value : this.time,
     reminderTime: reminderTime.present ? reminderTime.value : this.reminderTime,
@@ -710,6 +785,12 @@ class TaskSery extends DataClass implements Insertable<TaskSery> {
       repeatType: data.repeatType.present
           ? data.repeatType.value
           : this.repeatType,
+      recurrenceInterval: data.recurrenceInterval.present
+          ? data.recurrenceInterval.value
+          : this.recurrenceInterval,
+      customRepeatLabel: data.customRepeatLabel.present
+          ? data.customRepeatLabel.value
+          : this.customRepeatLabel,
       anchorDate: data.anchorDate.present
           ? data.anchorDate.value
           : this.anchorDate,
@@ -732,6 +813,8 @@ class TaskSery extends DataClass implements Insertable<TaskSery> {
           ..write('title: $title, ')
           ..write('folderId: $folderId, ')
           ..write('repeatType: $repeatType, ')
+          ..write('recurrenceInterval: $recurrenceInterval, ')
+          ..write('customRepeatLabel: $customRepeatLabel, ')
           ..write('anchorDate: $anchorDate, ')
           ..write('time: $time, ')
           ..write('reminderTime: $reminderTime, ')
@@ -748,6 +831,8 @@ class TaskSery extends DataClass implements Insertable<TaskSery> {
     title,
     folderId,
     repeatType,
+    recurrenceInterval,
+    customRepeatLabel,
     anchorDate,
     time,
     reminderTime,
@@ -763,6 +848,8 @@ class TaskSery extends DataClass implements Insertable<TaskSery> {
           other.title == this.title &&
           other.folderId == this.folderId &&
           other.repeatType == this.repeatType &&
+          other.recurrenceInterval == this.recurrenceInterval &&
+          other.customRepeatLabel == this.customRepeatLabel &&
           other.anchorDate == this.anchorDate &&
           other.time == this.time &&
           other.reminderTime == this.reminderTime &&
@@ -776,6 +863,8 @@ class TaskSeriesCompanion extends UpdateCompanion<TaskSery> {
   final Value<String> title;
   final Value<int> folderId;
   final Value<String> repeatType;
+  final Value<int> recurrenceInterval;
+  final Value<String?> customRepeatLabel;
   final Value<DateTime> anchorDate;
   final Value<DateTime?> time;
   final Value<DateTime?> reminderTime;
@@ -787,6 +876,8 @@ class TaskSeriesCompanion extends UpdateCompanion<TaskSery> {
     this.title = const Value.absent(),
     this.folderId = const Value.absent(),
     this.repeatType = const Value.absent(),
+    this.recurrenceInterval = const Value.absent(),
+    this.customRepeatLabel = const Value.absent(),
     this.anchorDate = const Value.absent(),
     this.time = const Value.absent(),
     this.reminderTime = const Value.absent(),
@@ -799,6 +890,8 @@ class TaskSeriesCompanion extends UpdateCompanion<TaskSery> {
     required String title,
     required int folderId,
     required String repeatType,
+    this.recurrenceInterval = const Value.absent(),
+    this.customRepeatLabel = const Value.absent(),
     required DateTime anchorDate,
     this.time = const Value.absent(),
     this.reminderTime = const Value.absent(),
@@ -815,6 +908,8 @@ class TaskSeriesCompanion extends UpdateCompanion<TaskSery> {
     Expression<String>? title,
     Expression<int>? folderId,
     Expression<String>? repeatType,
+    Expression<int>? recurrenceInterval,
+    Expression<String>? customRepeatLabel,
     Expression<DateTime>? anchorDate,
     Expression<DateTime>? time,
     Expression<DateTime>? reminderTime,
@@ -827,6 +922,8 @@ class TaskSeriesCompanion extends UpdateCompanion<TaskSery> {
       if (title != null) 'title': title,
       if (folderId != null) 'folder_id': folderId,
       if (repeatType != null) 'repeat_type': repeatType,
+      if (recurrenceInterval != null) 'recurrence_interval': recurrenceInterval,
+      if (customRepeatLabel != null) 'custom_repeat_label': customRepeatLabel,
       if (anchorDate != null) 'anchor_date': anchorDate,
       if (time != null) 'time': time,
       if (reminderTime != null) 'reminder_time': reminderTime,
@@ -842,6 +939,8 @@ class TaskSeriesCompanion extends UpdateCompanion<TaskSery> {
     Value<String>? title,
     Value<int>? folderId,
     Value<String>? repeatType,
+    Value<int>? recurrenceInterval,
+    Value<String?>? customRepeatLabel,
     Value<DateTime>? anchorDate,
     Value<DateTime?>? time,
     Value<DateTime?>? reminderTime,
@@ -854,6 +953,8 @@ class TaskSeriesCompanion extends UpdateCompanion<TaskSery> {
       title: title ?? this.title,
       folderId: folderId ?? this.folderId,
       repeatType: repeatType ?? this.repeatType,
+      recurrenceInterval: recurrenceInterval ?? this.recurrenceInterval,
+      customRepeatLabel: customRepeatLabel ?? this.customRepeatLabel,
       anchorDate: anchorDate ?? this.anchorDate,
       time: time ?? this.time,
       reminderTime: reminderTime ?? this.reminderTime,
@@ -877,6 +978,12 @@ class TaskSeriesCompanion extends UpdateCompanion<TaskSery> {
     }
     if (repeatType.present) {
       map['repeat_type'] = Variable<String>(repeatType.value);
+    }
+    if (recurrenceInterval.present) {
+      map['recurrence_interval'] = Variable<int>(recurrenceInterval.value);
+    }
+    if (customRepeatLabel.present) {
+      map['custom_repeat_label'] = Variable<String>(customRepeatLabel.value);
     }
     if (anchorDate.present) {
       map['anchor_date'] = Variable<DateTime>(anchorDate.value);
@@ -906,6 +1013,8 @@ class TaskSeriesCompanion extends UpdateCompanion<TaskSery> {
           ..write('title: $title, ')
           ..write('folderId: $folderId, ')
           ..write('repeatType: $repeatType, ')
+          ..write('recurrenceInterval: $recurrenceInterval, ')
+          ..write('customRepeatLabel: $customRepeatLabel, ')
           ..write('anchorDate: $anchorDate, ')
           ..write('time: $time, ')
           ..write('reminderTime: $reminderTime, ')
@@ -2585,6 +2694,8 @@ typedef $$TaskSeriesTableCreateCompanionBuilder =
       required String title,
       required int folderId,
       required String repeatType,
+      Value<int> recurrenceInterval,
+      Value<String?> customRepeatLabel,
       required DateTime anchorDate,
       Value<DateTime?> time,
       Value<DateTime?> reminderTime,
@@ -2598,6 +2709,8 @@ typedef $$TaskSeriesTableUpdateCompanionBuilder =
       Value<String> title,
       Value<int> folderId,
       Value<String> repeatType,
+      Value<int> recurrenceInterval,
+      Value<String?> customRepeatLabel,
       Value<DateTime> anchorDate,
       Value<DateTime?> time,
       Value<DateTime?> reminderTime,
@@ -2668,6 +2781,16 @@ class $$TaskSeriesTableFilterComposer
 
   ColumnFilters<String> get repeatType => $composableBuilder(
     column: $table.repeatType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get recurrenceInterval => $composableBuilder(
+    column: $table.recurrenceInterval,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get customRepeatLabel => $composableBuilder(
+    column: $table.customRepeatLabel,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2774,6 +2897,16 @@ class $$TaskSeriesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get recurrenceInterval => $composableBuilder(
+    column: $table.recurrenceInterval,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get customRepeatLabel => $composableBuilder(
+    column: $table.customRepeatLabel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get anchorDate => $composableBuilder(
     column: $table.anchorDate,
     builder: (column) => ColumnOrderings(column),
@@ -2845,6 +2978,16 @@ class $$TaskSeriesTableAnnotationComposer
 
   GeneratedColumn<String> get repeatType => $composableBuilder(
     column: $table.repeatType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get recurrenceInterval => $composableBuilder(
+    column: $table.recurrenceInterval,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get customRepeatLabel => $composableBuilder(
+    column: $table.customRepeatLabel,
     builder: (column) => column,
   );
 
@@ -2953,6 +3096,8 @@ class $$TaskSeriesTableTableManager
                 Value<String> title = const Value.absent(),
                 Value<int> folderId = const Value.absent(),
                 Value<String> repeatType = const Value.absent(),
+                Value<int> recurrenceInterval = const Value.absent(),
+                Value<String?> customRepeatLabel = const Value.absent(),
                 Value<DateTime> anchorDate = const Value.absent(),
                 Value<DateTime?> time = const Value.absent(),
                 Value<DateTime?> reminderTime = const Value.absent(),
@@ -2964,6 +3109,8 @@ class $$TaskSeriesTableTableManager
                 title: title,
                 folderId: folderId,
                 repeatType: repeatType,
+                recurrenceInterval: recurrenceInterval,
+                customRepeatLabel: customRepeatLabel,
                 anchorDate: anchorDate,
                 time: time,
                 reminderTime: reminderTime,
@@ -2977,6 +3124,8 @@ class $$TaskSeriesTableTableManager
                 required String title,
                 required int folderId,
                 required String repeatType,
+                Value<int> recurrenceInterval = const Value.absent(),
+                Value<String?> customRepeatLabel = const Value.absent(),
                 required DateTime anchorDate,
                 Value<DateTime?> time = const Value.absent(),
                 Value<DateTime?> reminderTime = const Value.absent(),
@@ -2988,6 +3137,8 @@ class $$TaskSeriesTableTableManager
                 title: title,
                 folderId: folderId,
                 repeatType: repeatType,
+                recurrenceInterval: recurrenceInterval,
+                customRepeatLabel: customRepeatLabel,
                 anchorDate: anchorDate,
                 time: time,
                 reminderTime: reminderTime,
@@ -4107,3 +4258,5 @@ class $AppDatabaseManager {
   $$FocusHistoryTableTableManager get focusHistory =>
       $$FocusHistoryTableTableManager(_db, _db.focusHistory);
 }
+
+

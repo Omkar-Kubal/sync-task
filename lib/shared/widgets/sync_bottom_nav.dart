@@ -1,6 +1,8 @@
+import '../icons/list_filter_icon.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/theme/synctask_color_scheme.dart';
+import '../../core/theme/synctasks_color_scheme.dart';
+import '../services/sync_haptics.dart';
 
 class SyncBottomNav extends StatelessWidget {
   const SyncBottomNav({
@@ -12,29 +14,24 @@ class SyncBottomNav extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
 
-  static const _items = [
-    _SyncNavItem('Today'),
-    _SyncNavItem('Upcoming'),
-    _SyncNavItem('Focus'),
-    _SyncNavItem('Lists'),
-  ];
+  static const _items = [_SyncNavItem('Today'), _SyncNavItem('Lists')];
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
+    final colors = SyncTasksColorScheme.of(context);
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 6, 16, 8),
+        padding: const EdgeInsets.fromLTRB(12, 4, 12, 6),
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 360),
+            constraints: const BoxConstraints.tightFor(width: 184),
             child: Container(
               key: const Key('sync-bottom-nav-pill'),
-              height: 52,
+              height: 44,
               decoration: BoxDecoration(
                 color: colors.surface.withAlpha(0xD9),
-                borderRadius: BorderRadius.circular(28),
+                borderRadius: BorderRadius.circular(24),
               ),
               child: Row(
                 children: [
@@ -72,7 +69,7 @@ class _SyncBottomNavButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
+    final colors = SyncTasksColorScheme.of(context);
     final iconColor = colors.textPrimary;
     return Semantics(
       selected: selected,
@@ -81,8 +78,11 @@ class _SyncBottomNavButton extends StatelessWidget {
       child: Tooltip(
         message: item.label,
         child: InkResponse(
-          onTap: onTap,
-          radius: 32,
+          onTap: () {
+            SyncHaptics.selection();
+            onTap();
+          },
+          radius: 26,
           containedInkWell: true,
           customBorder: const CircleBorder(),
           child: SizedBox.expand(
@@ -123,15 +123,7 @@ class _SyncNavIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return switch (index) {
       0 => _TodayIcon(color: color, selected: selected),
-      1 => Icon(Icons.calendar_month_outlined, color: color, size: 28),
-      2 => Image.asset(
-        'assets/images/logo.png',
-        key: const Key('sync-bottom-nav-focus-logo'),
-        width: 32,
-        height: 32,
-        fit: BoxFit.contain,
-      ),
-      _ => Icon(Icons.format_list_bulleted_outlined, color: color, size: 32),
+      _ => ListFilterIcon(color: color, size: 22, strokeWidth: 1.45),
     };
   }
 }
@@ -147,23 +139,23 @@ class _TodayIcon extends StatelessWidget {
     final today = DateTime.now().day.toString();
     final fillColor = selected ? color : Colors.transparent;
     final foreground = selected
-        ? SyncTaskColorScheme.of(context).controlForeground
+        ? SyncTasksColorScheme.of(context).controlForeground
         : color;
     return Container(
       key: const Key('sync-bottom-nav-today-tile'),
-      width: 32,
-      height: 32,
+      width: 28,
+      height: 28,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: fillColor,
-        border: Border.all(color: color, width: 2.5),
+        border: Border.all(color: color, width: 2.1),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
         today,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
           color: foreground,
-          fontSize: 16,
+          fontSize: 14,
           fontWeight: FontWeight.w600,
           letterSpacing: 0,
           height: 1,
@@ -172,3 +164,5 @@ class _TodayIcon extends StatelessWidget {
     );
   }
 }
+
+

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/widget_background"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="14dp"
+    android:paddingBottom="10dp">
+
+    <!-- Top row: logo + app title on left, "+" button on right -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/synctasks_widget_logo"
+            android:contentDescription="SyncTasks" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="SyncTasks"
+            android:textColor="@color/widget_text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- Spacer -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/widget_add_btn"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/widget_add_bg"
+            android:text="+"
+            android:textColor="@color/widget_text_primary"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:contentDescription="Add task" />
+
+    </LinearLayout>
+
+    <!-- Header title -->
+    <TextView
+        android:id="@+id/widget_header_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:text="Today, 0 tasks left"
+        android:textColor="@color/widget_text_primary"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end" />
+
+    <!-- Top divider line -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/widget_divider"
+        android:text="" />
+
+    <!-- Task list container -->
+    <LinearLayout
+        android:id="@+id/widget_task_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Task Row 1 -->
+        <LinearLayout
+            android:id="@+id/widget_task1_row"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_circle_outline"
+                android:contentDescription="" />
+
+            <TextView
+                android:id="@+id/widget_task1_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="6dp"
+                android:text="Task title"
+                android:textColor="@color/widget_text_primary"
+                android:textSize="13sp"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/widget_task1_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/widget_time_bg"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:text="9:00"
+                android:textColor="@color/widget_text_secondary"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <!-- Divider 1 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1E1E20"
+            android:text="" />
+
+        <!-- Task Row 2 -->
+        <LinearLayout
+            android:id="@+id/widget_task2_row"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_circle_outline"
+                android:contentDescription="" />
+
+            <TextView
+                android:id="@+id/widget_task2_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="6dp"
+                android:text="Task title"
+                android:textColor="@color/widget_text_primary"
+                android:textSize="13sp"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/widget_task2_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/widget_time_bg"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:text="9:00"
+                android:textColor="@color/widget_text_secondary"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <!-- Overflow summary -->
+        <LinearLayout
+            android:id="@+id/widget_more_row"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/widget_more_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/widget_text_secondary"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Empty state view -->
+    <LinearLayout
+        android:id="@+id/widget_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All caught up for today!"
+            android:textColor="@color/widget_text_secondary"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

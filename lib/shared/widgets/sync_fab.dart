@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme/synctask_color_scheme.dart';
+import '../../core/theme/synctasks_color_scheme.dart';
+import '../icons/sync_icons.dart';
+import '../services/sync_haptics.dart';
 
 class SyncFab extends StatelessWidget {
   const SyncFab({
@@ -14,22 +16,27 @@ class SyncFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTaskColorScheme.of(context);
+    final colors = SyncTasksColorScheme.of(context);
     return Semantics(
       button: true,
       label: semanticLabel,
       child: SizedBox.square(
-        dimension: 48,
+        dimension: 56,
         child: FloatingActionButton(
-          onPressed: onPressed,
+          onPressed: () {
+            SyncHaptics.action();
+            onPressed();
+          },
           tooltip: semanticLabel,
           elevation: 0,
           backgroundColor: colors.controlPrimary,
           foregroundColor: colors.controlForeground,
           shape: const CircleBorder(),
-          child: const Icon(Icons.add, size: 30),
+          child: const Icon(SyncIcons.create, size: 34),
         ),
       ),
     );
   }
 }
+
+
