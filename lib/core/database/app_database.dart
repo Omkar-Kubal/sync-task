@@ -29,8 +29,10 @@ class AppDatabase extends _$AppDatabase {
 
   AppDatabase.memory() : super(NativeDatabase.memory());
 
+  AppDatabase.connect(super.executor);
+
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration {
@@ -51,8 +53,20 @@ class AppDatabase extends _$AppDatabase {
           await _createReceiptIndexes();
         }
         if (from < 4) {
-          await m.addColumn(receipts, receipts.artworkType);
-          await m.addColumn(receipts, receipts.drawingStrokesJson);
+          await _addReceiptColumnIfMissing(
+            columnName: 'artwork_type',
+            addColumn: () => m.addColumn(receipts, receipts.artworkType),
+          );
+          await _addReceiptColumnIfMissing(
+            columnName: 'drawing_strokes_json',
+            addColumn: () => m.addColumn(receipts, receipts.drawingStrokesJson),
+          );
+        }
+        if (from < 5) {
+          await _addReceiptColumnIfMissing(
+            columnName: 'photo_path',
+            addColumn: () => m.addColumn(receipts, receipts.photoPath),
+          );
         }
       },
       beforeOpen: (details) async {
@@ -77,6 +91,17 @@ class AppDatabase extends _$AppDatabase {
     );
   }
 
+  Future<void> _addReceiptColumnIfMissing({
+    required String columnName,
+    required Future<void> Function() addColumn,
+  }) async {
+    final columns = await customSelect('PRAGMA table_info(receipts)').get();
+    final exists = columns.any((row) => row.data['name'] == columnName);
+    if (!exists) {
+      await addColumn();
+    }
+  }
+
   Future<void> _ensureInboxFolder() async {
     final existing = await (select(
       folders,
@@ -99,6 +124,11 @@ LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final directory = await getApplicationDocumentsDirectory();
     final file = File(p.join(directory.path, 'synctasks.sqlite'));
-    return NativeDatabase.createInBackground(file);
+    return NativeDatabase.createInBackground(file, setup: _configureSqlite);
   });
+}
+
+void _configureSqlite(dynamic database) {
+  database.execute('PRAGMA busy_timeout = 5000');
+  database.execute('PRAGMA journal_mode = WAL');
 }

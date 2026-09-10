@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:synctasks/core/database/app_database.dart';
 
@@ -13,8 +16,15 @@ void main() {
     await db.close();
   });
 
-  test('database starts at explicit schema version four', () {
-    expect(db.schemaVersion, 4);
+  test('database starts at explicit schema version five', () {
+    expect(db.schemaVersion, 5);
+  });
+
+  test('receipts table includes photo artwork path', () async {
+    final columns = await db.customSelect('PRAGMA table_info(receipts)').get();
+    final columnNames = {for (final row in columns) row.read<String>('name')};
+
+    expect(columnNames, contains('photo_path'));
   });
 
   test('database starts with permanent Inbox folder', () async {
@@ -57,6 +67,39 @@ void main() {
 
       expect(await db.select(db.tasks).get(), hasLength(1));
       expect(await db.select(db.focusHistory).get(), hasLength(1));
+    },
+  );
+
+  test(
+    'schema four migration tolerates receipt artwork columns already present',
+    () async {
+      final directory = await Directory.systemTemp.createTemp(
+        'synctasks_migration_',
+      );
+      addTearDown(() => directory.delete(recursive: true));
+      final file = File('${directory.path}/synctasks.sqlite');
+
+      final seeded = AppDatabase.connect(NativeDatabase(file));
+      await seeded.select(seeded.folders).get();
+      await seeded.customStatement('PRAGMA user_version = 3');
+      await seeded.close();
+
+      final migrated = AppDatabase.connect(NativeDatabase(file));
+      addTearDown(migrated.close);
+
+      final folder = (await migrated.select(migrated.folders).get()).single;
+      final taskId = await migrated
+          .into(migrated.tasks)
+          .insert(
+            TasksCompanion.insert(
+              folderId: folder.id,
+              title: 'Create after migration',
+              globalSortOrder: 1,
+              createdAt: DateTime(2026, 9, 10, 17),
+            ),
+          );
+
+      expect(taskId, greaterThan(0));
     },
   );
 }

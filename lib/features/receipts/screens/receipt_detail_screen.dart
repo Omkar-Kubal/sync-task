@@ -10,6 +10,7 @@ import '../data/receipt_repository.dart';
 import '../providers/receipt_feature_provider.dart';
 import '../providers/receipt_repository_provider.dart';
 import '../widgets/receipt_paper.dart';
+import '../widgets/receipt_screen_chrome.dart';
 
 class ReceiptDetailScreen extends ConsumerWidget {
   const ReceiptDetailScreen({required this.receiptId, super.key});
@@ -78,81 +79,72 @@ class _ReceiptDetailBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 14, 12, 8),
-          child: Row(
-            children: [
-              IconButton(
-                tooltip: 'Back to Receipts',
-                onPressed: () => ReceiptDetailScreen._returnToReceipts(context),
-                icon: const Icon(Icons.arrow_back_rounded),
-              ),
-              Expanded(
-                child: Text(
-                  'Your receipt',
-                  textAlign: TextAlign.center,
-                  style: textTheme.titleLarge?.copyWith(
-                    color: colors.textPrimary,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
-              IconButton(
-                tooltip: 'Receipt options',
-                onPressed: null,
-                icon: const Icon(Icons.more_horiz_rounded),
-              ),
-            ],
+        ReceiptScreenHeader(
+          title: 'Your receipt',
+          backTooltip: 'Back to Receipts',
+          onBack: () => ReceiptDetailScreen._returnToReceipts(context),
+          trailing: IconButton(
+            tooltip: 'Receipt options',
+            onPressed: null,
+            icon: const Icon(Icons.more_horiz_rounded),
           ),
         ),
         Expanded(
           child: ListView(
-            padding: const EdgeInsets.fromLTRB(20, 22, 20, 20),
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
             children: [
-              ReceiptPaperPreview(
-                title: receipt.title,
-                items: receipt.items,
-                includeFolderLabels: receipt.includeFolderLabels,
-                createdAt: receipt.createdAt,
-                displayNumber: receipt.displayNumber,
-                drawingStrokesJson: receipt.drawingStrokesJson,
+              SizedBox(
+                height: MediaQuery.sizeOf(context).height * 0.56,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.topCenter,
+                  child: ReceiptPaperPreview(
+                    title: receipt.title,
+                    items: receipt.items,
+                    includeFolderLabels: receipt.includeFolderLabels,
+                    createdAt: receipt.createdAt,
+                    displayNumber: receipt.displayNumber,
+                    drawingStrokesJson: receipt.drawingStrokesJson,
+                    photoPath: receipt.photoPath,
+                    paperScale: ReceiptPaperScale.detail,
+                  ),
+                ),
               ),
               const SizedBox(height: 18),
               Text(
-                'Replay coming soon',
+                'Drag to play',
                 textAlign: TextAlign.center,
-                style: textTheme.bodySmall?.copyWith(
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: colors.textSecondary,
-                  fontSize: 12,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
           ),
         ),
-        SafeArea(
-          top: false,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                FilledButton(
-                  onPressed: null,
-                  child: const Text('Share receipt'),
-                ),
-                const SizedBox(height: 8),
-                TextButton(
-                  onPressed: () =>
-                      ReceiptDetailScreen._returnToReceipts(context),
-                  child: const Text('Done'),
-                ),
-              ],
-            ),
+        ReceiptBottomActionBar(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FilledButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Sharing comes next.')),
+                  );
+                },
+                child: const Text('Share receipt'),
+              ),
+              const SizedBox(height: 8),
+              TextButton(
+                onPressed: () => ReceiptDetailScreen._returnToReceipts(context),
+                child: const Text('Done'),
+              ),
+            ],
           ),
         ),
       ],

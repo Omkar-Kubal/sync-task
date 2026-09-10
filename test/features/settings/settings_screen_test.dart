@@ -29,6 +29,7 @@ void main() {
       expect(find.text('Theme'), findsOneWidget);
       expect(find.text('System'), findsOneWidget);
       expect(find.text('Default Folder'), findsOneWidget);
+      expect(find.text('Sound Effects'), findsOneWidget);
       expect(find.text('Notifications'), findsOneWidget);
       expect(find.text('SyncTasks Pro'), findsOneWidget);
       expect(find.text("What's New"), findsOneWidget);
@@ -184,6 +185,31 @@ void main() {
     await tester.pumpAndSettle();
 
     expect((await repository.load()).notificationSound, isFalse);
+    expect((await repository.load()).soundEffects, isTrue);
+  });
+
+  testWidgets('sound effects row persists app sound preference separately', (
+    tester,
+  ) async {
+    final repository = SettingsRepository.memory();
+
+    await tester.pumpWidget(_settingsApp(repository: repository));
+
+    expect(find.widgetWithText(ListTile, 'Sound Effects'), findsOneWidget);
+    expect(find.text('On'), findsWidgets);
+
+    await tester.tap(find.widgetWithText(ListTile, 'Sound Effects'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Sound Effects'), findsWidgets);
+    expect(find.text('Preview'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(SwitchListTile, 'Sound Effects'));
+    await tester.pumpAndSettle();
+
+    final settings = await repository.load();
+    expect(settings.soundEffects, isFalse);
+    expect(settings.notificationSound, isTrue);
   });
 
   testWidgets('default folder row persists the selected quick-add folder', (
@@ -226,6 +252,7 @@ void main() {
       _settingsApp(repository: SettingsRepository.memory()),
     );
 
+    await tester.scrollUntilVisible(find.text("What's New"), 160);
     await tester.tap(find.widgetWithText(ListTile, "What's New"));
     await tester.pumpAndSettle();
 

@@ -15,6 +15,7 @@ class SettingsRepository {
   static const _notificationsEnabledKey = 'settings.notificationsEnabled';
   static const _notificationSoundKey = 'settings.notificationSound';
   static const _notificationVibrationKey = 'settings.notificationVibration';
+  static const _soundEffectsKey = 'settings.soundEffects';
   static const _mildHapticsKey = 'settings.mildHaptics';
   static const _defaultFolderIdKey = 'settings.defaultFolderId';
   static const _hasCompletedOnboardingKey = 'settings.hasCompletedOnboarding';
@@ -33,6 +34,7 @@ class SettingsRepository {
       notificationSound: preferences.getBool(_notificationSoundKey) ?? true,
       notificationVibration:
           preferences.getBool(_notificationVibrationKey) ?? true,
+      soundEffects: preferences.getBool(_soundEffectsKey) ?? true,
       mildHaptics: preferences.getBool(_mildHapticsKey) ?? true,
       defaultFolderId: preferences.getInt(_defaultFolderIdKey),
       hasCompletedOnboarding:
@@ -59,6 +61,7 @@ class SettingsRepository {
       _notificationVibrationKey,
       settings.notificationVibration,
     );
+    await preferences.setBool(_soundEffectsKey, settings.soundEffects);
     await preferences.setBool(_mildHapticsKey, settings.mildHaptics);
     final defaultFolderId = settings.defaultFolderId;
     if (defaultFolderId == null) {
@@ -72,5 +75,3 @@ class SettingsRepository {
     );
   }
 }
-
-

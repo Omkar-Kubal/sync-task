@@ -6,6 +6,7 @@ class AppSettings {
     this.notificationsEnabled = true,
     this.notificationSound = true,
     this.notificationVibration = true,
+    this.soundEffects = true,
     this.mildHaptics = true,
     this.defaultFolderId,
     this.hasCompletedOnboarding = false,
@@ -15,6 +16,7 @@ class AppSettings {
   final bool notificationsEnabled;
   final bool notificationSound;
   final bool notificationVibration;
+  final bool soundEffects;
   final bool mildHaptics;
   final int? defaultFolderId;
   final bool hasCompletedOnboarding;
@@ -26,6 +28,7 @@ class AppSettings {
     bool? notificationsEnabled,
     bool? notificationSound,
     bool? notificationVibration,
+    bool? soundEffects,
     bool? mildHaptics,
     Object? defaultFolderId = _unset,
     bool? hasCompletedOnboarding,
@@ -36,6 +39,7 @@ class AppSettings {
       notificationSound: notificationSound ?? this.notificationSound,
       notificationVibration:
           notificationVibration ?? this.notificationVibration,
+      soundEffects: soundEffects ?? this.soundEffects,
       mildHaptics: mildHaptics ?? this.mildHaptics,
       defaultFolderId: identical(defaultFolderId, _unset)
           ? this.defaultFolderId
@@ -45,5 +49,3 @@ class AppSettings {
     );
   }
 }
-
-

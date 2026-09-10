@@ -1,10 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/theme/synctasks_color_scheme.dart';
-import '../../../shared/icons/sync_icons.dart';
 import '../data/receipt_repository.dart';
 
 class ReceiptPaperPreview extends StatelessWidget {
@@ -15,6 +15,11 @@ class ReceiptPaperPreview extends StatelessWidget {
     this.createdAt,
     this.displayNumber,
     this.drawingStrokesJson,
+    this.photoPath,
+    this.showArtworkPlaceholder = false,
+    this.showReceiptMetadata = true,
+    this.paperScale = ReceiptPaperScale.composer,
+    this.onAddArtwork,
     super.key,
   });
 
@@ -24,6 +29,11 @@ class ReceiptPaperPreview extends StatelessWidget {
   final DateTime? createdAt;
   final int? displayNumber;
   final String? drawingStrokesJson;
+  final String? photoPath;
+  final bool showArtworkPlaceholder;
+  final bool showReceiptMetadata;
+  final ReceiptPaperScale paperScale;
+  final VoidCallback? onAddArtwork;
 
   @override
   Widget build(BuildContext context) {
@@ -34,47 +44,69 @@ class ReceiptPaperPreview extends StatelessWidget {
     final dateLabel = _dateLabel(items);
     return Center(
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 300),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.10),
-                blurRadius: 20,
-                offset: const Offset(0, 10),
-              ),
-            ],
-          ),
+        constraints: BoxConstraints(maxWidth: _maxWidth),
+        child: PhysicalShape(
+          clipper: const _ReceiptPaperClipper(),
+          color: Colors.white,
+          elevation: _elevation,
+          shadowColor: Colors.black.withValues(alpha: 0.18),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 22, 24, 22),
+            padding: EdgeInsets.fromLTRB(24, _verticalPadding, 24, 24),
             child: DefaultTextStyle(
-              style: textTheme.bodyMedium!.copyWith(color: ink, fontSize: 13),
+              style: textTheme.bodyMedium!.copyWith(
+                color: ink,
+                fontSize: _bodyFontSize,
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Icon(SyncIcons.receipt, size: 28, color: ink),
+                  Image.asset(
+                    'assets/images/logo.png',
+                    key: const ValueKey('receipt-paper-logo'),
+                    height: _logoSize,
+                    fit: BoxFit.contain,
+                  ),
                   const SizedBox(height: 7),
                   Text(
                     'SYNCTASKS',
                     textAlign: TextAlign.center,
                     style: textTheme.labelSmall?.copyWith(
                       color: ink,
-                      fontSize: 11,
+                      fontSize: 10,
                       fontWeight: FontWeight.w800,
-                      letterSpacing: 2,
+                      letterSpacing: 2.4,
                     ),
                   ),
                   const SizedBox(height: 14),
                   const _DottedDivider(),
-                  const SizedBox(height: 14),
+                  if (showReceiptMetadata &&
+                      (displayNumber != null || createdAt != null)) ...[
+                    const SizedBox(height: 10),
+                    if (displayNumber != null)
+                      _ReceiptMetaLine(
+                        label: 'RECEIPT',
+                        value: '#${displayNumber.toString().padLeft(3, '0')}',
+                      ),
+                    if (createdAt != null) ...[
+                      const SizedBox(height: 3),
+                      _ReceiptMetaLine(
+                        label: 'DATE',
+                        value: DateFormat(
+                          'd MMM yyyy  h:mm a',
+                        ).format(createdAt!).toUpperCase(),
+                      ),
+                    ],
+                    const SizedBox(height: 10),
+                    const _DottedDivider(),
+                  ],
+                  const SizedBox(height: 13),
                   Text(
                     title.trim().isEmpty ? 'Completed tasks' : title.trim(),
                     textAlign: TextAlign.center,
                     style: textTheme.titleMedium?.copyWith(
                       color: ink,
-                      fontSize: 17,
+                      fontSize: _titleFontSize,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 0,
                     ),
@@ -87,17 +119,25 @@ class ReceiptPaperPreview extends StatelessWidget {
                       style: textTheme.labelSmall?.copyWith(
                         color: secondaryInk,
                         fontSize: 10,
-                        letterSpacing: 1,
+                        letterSpacing: 1.8,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],
-                  if (_hasDrawingArtwork) ...[
-                    const SizedBox(height: 18),
+                  if (_hasPhotoArtwork) ...[
+                    const SizedBox(height: 17),
+                    _ReceiptPhotoPreview(photoPath: photoPath!),
+                    const SizedBox(height: 15),
+                  ] else if (_hasDrawingArtwork) ...[
+                    const SizedBox(height: 17),
                     _ReceiptArtworkPreview(strokesJson: drawingStrokesJson!),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 15),
+                  ] else if (showArtworkPlaceholder) ...[
+                    const SizedBox(height: 17),
+                    _ReceiptArtworkPlaceholder(onTap: onAddArtwork),
+                    const SizedBox(height: 15),
                   ] else
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 17),
                   if (items.isEmpty)
                     Text(
                       'Choose completed tasks before generating a receipt.',
@@ -108,77 +148,38 @@ class ReceiptPaperPreview extends StatelessWidget {
                         height: 1.35,
                       ),
                     )
-                  else
-                    for (final item in items)
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 9),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(Icons.check_box_rounded, color: ink, size: 16),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item.title,
-                                    style: textTheme.bodyMedium?.copyWith(
-                                      color: ink,
-                                      fontSize: 13,
-                                      height: 1.22,
-                                    ),
-                                  ),
-                                  if (includeFolderLabels &&
-                                      item.folderName != null) ...[
-                                    const SizedBox(height: 2),
-                                    Text(
-                                      item.folderName!,
-                                      style: textTheme.bodySmall?.copyWith(
-                                        color: secondaryInk,
-                                        fontSize: 11,
-                                        height: 1.2,
-                                      ),
-                                    ),
-                                  ],
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                  const SizedBox(height: 10),
-                  const _DottedDivider(),
-                  const SizedBox(height: 15),
-                  Text(
-                    _completedLabel(items.length),
-                    textAlign: TextAlign.center,
-                    style: textTheme.titleMedium?.copyWith(
-                      color: ink,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 0,
-                    ),
-                  ),
-                  if (displayNumber != null) ...[
-                    const SizedBox(height: 10),
-                    Text(
-                      'Receipt #${displayNumber.toString().padLeft(3, '0')}',
-                      textAlign: TextAlign.center,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: secondaryInk,
-                        fontSize: 10,
-                      ),
+                  else ...[
+                    _ReceiptItemsTable(
+                      items: items,
+                      includeFolderLabels: includeFolderLabels,
+                      bodyFontSize: _bodyFontSize,
                     ),
                   ],
-                  if (createdAt != null) ...[
+                  const SizedBox(height: 7),
+                  const _DottedDivider(),
+                  const SizedBox(height: 11),
+                  _ReceiptTotalRow(count: items.length),
+                  const SizedBox(height: 8),
+                  Text(
+                    'THANK YOU FOR SHOWING UP',
+                    textAlign: TextAlign.center,
+                    style: textTheme.labelSmall?.copyWith(
+                      color: secondaryInk,
+                      fontSize: 9,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.1,
+                    ),
+                  ),
+                  if (!showReceiptMetadata && dateLabel != null) ...[
                     const SizedBox(height: 4),
                     Text(
-                      'Generated ${DateFormat('d MMM yyyy, h:mm a').format(createdAt!)}',
+                      dateLabel.toUpperCase(),
                       textAlign: TextAlign.center,
-                      style: textTheme.bodySmall?.copyWith(
+                      style: textTheme.labelSmall?.copyWith(
                         color: secondaryInk,
-                        fontSize: 10,
+                        fontSize: 9,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],
@@ -193,6 +194,8 @@ class ReceiptPaperPreview extends StatelessWidget {
 
   bool get _hasDrawingArtwork =>
       drawingStrokesJson != null && drawingStrokesJson!.isNotEmpty;
+
+  bool get _hasPhotoArtwork => photoPath != null && photoPath!.isNotEmpty;
 
   String? _dateLabel(List<SavedReceiptItem> items) {
     if (items.isEmpty) {
@@ -212,8 +215,283 @@ class ReceiptPaperPreview extends StatelessWidget {
     return '${formatter.format(first)} - ${formatter.format(last)}';
   }
 
-  String _completedLabel(int count) {
-    return count == 1 ? '1 task completed' : '$count tasks completed';
+  double get _maxWidth => switch (paperScale) {
+    ReceiptPaperScale.composer => 246,
+    ReceiptPaperScale.printing => 260,
+    ReceiptPaperScale.detail => 258,
+  };
+
+  double get _elevation => switch (paperScale) {
+    ReceiptPaperScale.composer => 12,
+    ReceiptPaperScale.printing => 20,
+    ReceiptPaperScale.detail => 18,
+  };
+
+  double get _verticalPadding => switch (paperScale) {
+    ReceiptPaperScale.composer => 22,
+    ReceiptPaperScale.printing => 24,
+    ReceiptPaperScale.detail => 22,
+  };
+
+  double get _logoSize => switch (paperScale) {
+    ReceiptPaperScale.composer => 28,
+    ReceiptPaperScale.printing => 30,
+    ReceiptPaperScale.detail => 30,
+  };
+
+  double get _titleFontSize => switch (paperScale) {
+    ReceiptPaperScale.composer => 16,
+    ReceiptPaperScale.printing => 17,
+    ReceiptPaperScale.detail => 17,
+  };
+
+  double get _bodyFontSize => switch (paperScale) {
+    ReceiptPaperScale.composer => 12.5,
+    ReceiptPaperScale.printing => 12,
+    ReceiptPaperScale.detail => 12,
+  };
+}
+
+enum ReceiptPaperScale { composer, printing, detail }
+
+class _ReceiptMetaLine extends StatelessWidget {
+  const _ReceiptMetaLine({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    final textTheme = Theme.of(context).textTheme;
+    final style = textTheme.labelSmall?.copyWith(
+      color: colors.textPrimary,
+      fontSize: 9.5,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0.8,
+    );
+    return Row(
+      children: [
+        Text(label, style: style),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(value, textAlign: TextAlign.right, style: style),
+        ),
+      ],
+    );
+  }
+}
+
+class _ReceiptItemsTable extends StatelessWidget {
+  const _ReceiptItemsTable({
+    required this.items,
+    required this.includeFolderLabels,
+    required this.bodyFontSize,
+  });
+
+  final List<SavedReceiptItem> items;
+  final bool includeFolderLabels;
+  final double bodyFontSize;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    final textTheme = Theme.of(context).textTheme;
+    final headerStyle = textTheme.labelSmall?.copyWith(
+      color: colors.textSecondary,
+      fontSize: 9.5,
+      fontWeight: FontWeight.w800,
+      letterSpacing: 0.9,
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            SizedBox(width: 26, child: Text('NO', style: headerStyle)),
+            Expanded(child: Text('ITEM', style: headerStyle)),
+            Text('DONE', style: headerStyle),
+          ],
+        ),
+        const SizedBox(height: 7),
+        for (var i = 0; i < items.length; i++)
+          _ReceiptItemRow(
+            index: i + 1,
+            item: items[i],
+            includeFolderLabels: includeFolderLabels,
+            bodyFontSize: bodyFontSize,
+          ),
+      ],
+    );
+  }
+}
+
+class _ReceiptItemRow extends StatelessWidget {
+  const _ReceiptItemRow({
+    required this.index,
+    required this.item,
+    required this.includeFolderLabels,
+    required this.bodyFontSize,
+  });
+
+  final int index;
+  final SavedReceiptItem item;
+  final bool includeFolderLabels;
+  final double bodyFontSize;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    final textTheme = Theme.of(context).textTheme;
+    final taskStyle = textTheme.bodyMedium?.copyWith(
+      color: colors.textPrimary,
+      fontSize: bodyFontSize,
+      height: 1.18,
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
+    final sideStyle = textTheme.bodySmall?.copyWith(
+      color: colors.textPrimary,
+      fontSize: 10,
+      height: 1.2,
+      fontWeight: FontWeight.w700,
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 7),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 26,
+            child: Text(index.toString().padLeft(2, '0'), style: sideStyle),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(item.title, style: taskStyle),
+                if (includeFolderLabels && item.folderName != null) ...[
+                  const SizedBox(height: 1),
+                  Text(
+                    item.folderName!.toUpperCase(),
+                    style: textTheme.labelSmall?.copyWith(
+                      color: colors.textSecondary,
+                      fontSize: 9,
+                      letterSpacing: 0.7,
+                      height: 1.2,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text('DONE', style: sideStyle),
+        ],
+      ),
+    );
+  }
+}
+
+class _ReceiptTotalRow extends StatelessWidget {
+  const _ReceiptTotalRow({required this.count});
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    final textTheme = Theme.of(context).textTheme;
+    final style = textTheme.titleMedium?.copyWith(
+      color: colors.textPrimary,
+      fontSize: 15,
+      fontWeight: FontWeight.w800,
+      letterSpacing: 0,
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
+    return Row(
+      children: [
+        Text('TOTAL', style: style),
+        const Spacer(),
+        Text('$count DONE', style: style),
+      ],
+    );
+  }
+}
+
+class _ReceiptPaperClipper extends CustomClipper<Path> {
+  const _ReceiptPaperClipper();
+
+  @override
+  Path getClip(Size size) {
+    const scallop = 6.0;
+    final path = Path()..moveTo(0, scallop);
+    var x = 0.0;
+    while (x < size.width) {
+      path.quadraticBezierTo(x + scallop / 2, 0, x + scallop, scallop);
+      x += scallop;
+    }
+    path.lineTo(size.width, size.height - scallop);
+    x = size.width;
+    while (x > 0) {
+      path.quadraticBezierTo(
+        x - scallop / 2,
+        size.height,
+        x - scallop,
+        size.height - scallop,
+      );
+      x -= scallop;
+    }
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant _ReceiptPaperClipper oldClipper) => false;
+}
+
+class _ReceiptArtworkPlaceholder extends StatelessWidget {
+  const _ReceiptArtworkPlaceholder({this.onTap});
+
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    final textTheme = Theme.of(context).textTheme;
+    return GestureDetector(
+      key: const ValueKey('receipt-paper-artwork-placeholder'),
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: CustomPaint(
+        painter: _DashedRoundedRectPainter(color: colors.divider),
+        child: SizedBox(
+          height: 96,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.image_outlined, color: colors.textSecondary, size: 24),
+              const SizedBox(height: 8),
+              Text(
+                'Add photo or drawing',
+                style: textTheme.bodySmall?.copyWith(
+                  color: colors.textPrimary,
+                  fontSize: 12,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                'Optional',
+                style: textTheme.bodySmall?.copyWith(
+                  color: colors.textSecondary,
+                  fontSize: 10,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -236,7 +514,7 @@ class _ReceiptArtworkPreview extends StatelessWidget {
       child: CustomPaint(
         painter: _ReceiptDrawingPainter(
           strokes: _decodeStrokes(strokesJson),
-          color: colors.textPrimary,
+          color: Colors.black,
         ),
       ),
     );
@@ -263,6 +541,41 @@ class _ReceiptArtworkPreview extends StatelessWidget {
     } catch (_) {
       return const [];
     }
+  }
+}
+
+class _ReceiptPhotoPreview extends StatelessWidget {
+  const _ReceiptPhotoPreview({required this.photoPath});
+
+  final String photoPath;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    return Container(
+      key: const ValueKey('receipt-paper-photo'),
+      height: 132,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: colors.divider),
+      ),
+      child: Image.file(
+        File(photoPath),
+        fit: BoxFit.cover,
+        filterQuality: FilterQuality.none,
+        errorBuilder: (context, error, stackTrace) {
+          return Center(
+            child: Icon(
+              Icons.image_not_supported_outlined,
+              color: colors.textSecondary,
+              size: 24,
+            ),
+          );
+        },
+      ),
+    );
   }
 }
 
@@ -333,6 +646,38 @@ class _DottedDividerPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _DottedDividerPainter oldDelegate) {
+    return oldDelegate.color != color;
+  }
+}
+
+class _DashedRoundedRectPainter extends CustomPainter {
+  const _DashedRoundedRectPainter({required this.color});
+
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 1
+      ..style = PaintingStyle.stroke;
+    final rect = RRect.fromRectAndRadius(
+      Offset.zero & size,
+      const Radius.circular(8),
+    );
+    final path = Path()..addRRect(rect);
+    for (final metric in path.computeMetrics()) {
+      var distance = 0.0;
+      while (distance < metric.length) {
+        final segment = metric.extractPath(distance, distance + 5);
+        canvas.drawPath(segment, paint);
+        distance += 10;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _DashedRoundedRectPainter oldDelegate) {
     return oldDelegate.color != color;
   }
 }

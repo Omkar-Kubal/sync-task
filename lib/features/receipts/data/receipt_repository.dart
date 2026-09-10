@@ -19,6 +19,7 @@ class ReceiptCreateRequest {
     this.includeFolderLabels = false,
     this.artworkType,
     this.drawingStrokesJson,
+    this.photoPath,
   });
 
   final String operationId;
@@ -31,6 +32,7 @@ class ReceiptCreateRequest {
   final bool includeFolderLabels;
   final String? artworkType;
   final String? drawingStrokesJson;
+  final String? photoPath;
 }
 
 class SavedReceipt {
@@ -48,6 +50,7 @@ class SavedReceipt {
     this.periodEndExclusive,
     this.artworkType,
     this.drawingStrokesJson,
+    this.photoPath,
   });
 
   final String id;
@@ -63,11 +66,15 @@ class SavedReceipt {
   final List<SavedReceiptItem> items;
   final String? artworkType;
   final String? drawingStrokesJson;
+  final String? photoPath;
 
   bool get hasDrawingArtwork =>
       artworkType == 'drawing' &&
       drawingStrokesJson != null &&
       drawingStrokesJson!.isNotEmpty;
+
+  bool get hasPhotoArtwork =>
+      artworkType == 'photo' && photoPath != null && photoPath!.isNotEmpty;
 }
 
 class SavedReceiptItem {
@@ -207,9 +214,6 @@ class ReceiptRepository {
 
       final now = _now();
       final quota = await quotaStatus();
-      if (quota.isExhausted) {
-        throw ReceiptQuotaExceededException(quota);
-      }
 
       final snapshots = await _completedSnapshots(selectedIds);
       if (snapshots.length != selectedIds.length) {
@@ -234,6 +238,7 @@ class ReceiptRepository {
               includeFolderLabels: Value(request.includeFolderLabels),
               artworkType: Value(request.artworkType),
               drawingStrokesJson: Value(request.drawingStrokesJson),
+              photoPath: Value(request.photoPath),
             ),
           );
 
@@ -299,6 +304,7 @@ class ReceiptRepository {
       periodEndExclusive: receipt.selectedEndExclusive,
       artworkType: receipt.artworkType,
       drawingStrokesJson: receipt.drawingStrokesJson,
+      photoPath: receipt.photoPath,
       items: [
         for (final item in items)
           SavedReceiptItem(

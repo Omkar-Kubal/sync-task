@@ -16,8 +16,8 @@ void main() {
     await db.close();
   });
 
-  test('database starts at schema version four with receipt indexes', () async {
-    expect(db.schemaVersion, 4);
+  test('database starts at schema version five with receipt indexes', () async {
+    expect(db.schemaVersion, 5);
     expect(db.receipts.actualTableName, 'receipts');
     expect(db.receiptItems.actualTableName, 'receipt_items');
     expect(db.receiptUsageEvents.actualTableName, 'receipt_usage_events');
@@ -27,9 +27,7 @@ void main() {
           "AND name LIKE 'idx_receipt%'",
         )
         .get();
-    final indexNames = {
-      for (final row in indexRows) row.read<String>('name'),
-    };
+    final indexNames = {for (final row in indexRows) row.read<String>('name')};
     expect(
       indexNames,
       containsAll({
@@ -116,6 +114,38 @@ void main() {
     },
   );
 
+  test('generation persists photo artwork path', () async {
+    final tasks = TaskRepository(db);
+    final taskId = await tasks.createTask(
+      const domain.TaskDraft(title: 'Photo proof'),
+    );
+    await TaskRepository(
+      db,
+      now: () => DateTime(2026, 9, 9, 12),
+    ).completeTask(taskId);
+
+    final receipts = ReceiptRepository(db, now: () => DateTime(2026, 9, 10, 9));
+    final receipt = await receipts.generateReceipt(
+      ReceiptCreateRequest(
+        operationId: 'op-photo',
+        source: ReceiptEntrySource.completedSelection,
+        defaultTitle: 'Completed tasks',
+        title: 'Photo wins',
+        selectedTaskIds: [taskId],
+        artworkType: 'photo',
+        photoPath: 'D:\\temp\\receipt-photo.jpg',
+      ),
+    );
+
+    expect(receipt.hasPhotoArtwork, isTrue);
+    expect(receipt.photoPath, 'D:\\temp\\receipt-photo.jpg');
+    expect(receipt.hasDrawingArtwork, isFalse);
+
+    final saved = await receipts.getReceipt(receipt.id);
+    expect(saved!.hasPhotoArtwork, isTrue);
+    expect(saved.photoPath, 'D:\\temp\\receipt-photo.jpg');
+  });
+
   test(
     'duplicate operation id returns existing receipt without double charge',
     () async {
@@ -149,7 +179,7 @@ void main() {
   );
 
   test(
-    'fourth free receipt in one week is rejected without consuming quota',
+    'more than three receipts in one week are allowed for testing',
     () async {
       final tasks = TaskRepository(db);
       final taskIds = <int>[];
@@ -178,19 +208,19 @@ void main() {
         );
       }
 
-      expect(
-        () => receipts.generateReceipt(
-          ReceiptCreateRequest(
-            operationId: 'op-four',
-            source: ReceiptEntrySource.completedSelection,
-            defaultTitle: 'Completed tasks',
-            title: 'Completed tasks',
-            selectedTaskIds: [taskIds.last],
-          ),
+      final fourth = await receipts.generateReceipt(
+        ReceiptCreateRequest(
+          operationId: 'op-four',
+          source: ReceiptEntrySource.completedSelection,
+          defaultTitle: 'Completed tasks',
+          title: 'Fourth receipt',
+          selectedTaskIds: [taskIds.last],
         ),
-        throwsA(isA<ReceiptQuotaExceededException>()),
       );
-      expect((await receipts.quotaStatus()).usedThisWeek, 3);
+
+      expect(fourth.title, 'Fourth receipt');
+      expect(fourth.displayNumber, 4);
+      expect((await receipts.quotaStatus()).usedThisWeek, 4);
     },
   );
 }

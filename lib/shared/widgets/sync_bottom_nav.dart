@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/synctasks_color_scheme.dart';
 import '../services/sync_haptics.dart';
+import '../services/sync_sounds.dart';
 
 class SyncBottomNav extends StatelessWidget {
   const SyncBottomNav({
@@ -80,6 +81,7 @@ class _SyncBottomNavButton extends StatelessWidget {
         child: InkResponse(
           onTap: () {
             SyncHaptics.selection();
+            SyncSounds.play(SyncSoundEffect.select);
             onTap();
           },
           radius: 26,
@@ -164,5 +166,3 @@ class _TodayIcon extends StatelessWidget {
     );
   }
 }
-
-

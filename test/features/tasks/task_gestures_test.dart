@@ -3,8 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:synctasks/core/theme/app_theme.dart';
 import 'package:synctasks/features/tasks/widgets/task_row.dart';
+import 'package:synctasks/shared/services/sync_sounds.dart';
 
 void main() {
+  tearDown(SyncSounds.resetForTesting);
+
   testWidgets('task row exposes complete and delete semantic actions', (
     tester,
   ) async {
@@ -40,6 +43,8 @@ void main() {
     tester,
   ) async {
     final haptics = _captureHaptics(tester);
+    final sounds = _FakeSyncSoundAssetPlayer();
+    SyncSounds.configureForTesting(player: sounds);
     var completed = false;
     var opened = false;
 
@@ -63,8 +68,38 @@ void main() {
     expect(completed, isTrue);
     expect(opened, isFalse);
     expect(haptics, contains('HapticFeedbackType.selectionClick'));
+    expect(sounds.plays, ['sounds/complete.wav']);
     expect(haptics, isNot(contains('HapticFeedbackType.lightImpact')));
     expect(haptics, isNot(contains('HapticFeedbackType.mediumImpact')));
+  });
+
+  testWidgets('task row checkbox restores completed tasks with restore sound', (
+    tester,
+  ) async {
+    final sounds = _FakeSyncSoundAssetPlayer();
+    SyncSounds.configureForTesting(player: sounds);
+    var restored = false;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildSyncTasksTheme(Brightness.light),
+        home: Scaffold(
+          body: TaskRow(
+            title: 'Write report',
+            metadata: 'Inbox',
+            isCompleted: true,
+            onTap: () {},
+            onComplete: () => restored = true,
+            onDelete: () {},
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.byKey(const Key('task-row-checkbox-button')));
+
+    expect(restored, isTrue);
+    expect(sounds.plays, ['sounds/restore.wav']);
   });
 
   testWidgets('task row completion control animates when completed', (
@@ -148,6 +183,8 @@ void main() {
 
   testWidgets('task row delete gesture emits mild haptics', (tester) async {
     final haptics = _captureHaptics(tester);
+    final sounds = _FakeSyncSoundAssetPlayer();
+    SyncSounds.configureForTesting(player: sounds);
     var deleted = false;
 
     await tester.pumpWidget(
@@ -170,6 +207,7 @@ void main() {
 
     expect(deleted, isTrue);
     expect(haptics, contains('HapticFeedbackType.selectionClick'));
+    expect(sounds.plays, ['sounds/delete.wav']);
     expect(haptics, isNot(contains('HapticFeedbackType.lightImpact')));
     expect(haptics, isNot(contains('HapticFeedbackType.heavyImpact')));
   });
@@ -338,4 +376,26 @@ List<Object?> _captureHaptics(WidgetTester tester) {
     ),
   );
   return calls;
+}
+
+class _FakeSyncSoundAssetPlayer implements SyncSoundAssetPlayer {
+  final plays = <String>[];
+
+  @override
+  Future<void> playAsset(String assetPath, {required double volume}) async {
+    plays.add(assetPath);
+  }
+
+  @override
+  SyncSoundLoopHandle startLoopAsset(
+    String assetPath, {
+    required double volume,
+  }) {
+    return _FakeSyncSoundLoopHandle();
+  }
+}
+
+class _FakeSyncSoundLoopHandle implements SyncSoundLoopHandle {
+  @override
+  void stop() {}
 }

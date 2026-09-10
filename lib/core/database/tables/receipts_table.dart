@@ -16,6 +16,7 @@ class Receipts extends Table {
       boolean().withDefault(const Constant(false))();
   TextColumn get artworkType => text().nullable()();
   TextColumn get drawingStrokesJson => text().nullable()();
+  TextColumn get photoPath => text().nullable()();
   IntColumn get templateVersion => integer().withDefault(const Constant(1))();
 
   @override

@@ -2450,6 +2450,17 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
         type: DriftSqlType.string,
         requiredDuringInsert: false,
       );
+  static const VerificationMeta _photoPathMeta = const VerificationMeta(
+    'photoPath',
+  );
+  @override
+  late final GeneratedColumn<String> photoPath = GeneratedColumn<String>(
+    'photo_path',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _templateVersionMeta = const VerificationMeta(
     'templateVersion',
   );
@@ -2476,6 +2487,7 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
     includeFolderLabels,
     artworkType,
     drawingStrokesJson,
+    photoPath,
     templateVersion,
   ];
   @override
@@ -2594,6 +2606,12 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
         ),
       );
     }
+    if (data.containsKey('photo_path')) {
+      context.handle(
+        _photoPathMeta,
+        photoPath.isAcceptableOrUnknown(data['photo_path']!, _photoPathMeta),
+      );
+    }
     if (data.containsKey('template_version')) {
       context.handle(
         _templateVersionMeta,
@@ -2660,6 +2678,10 @@ class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
         DriftSqlType.string,
         data['${effectivePrefix}drawing_strokes_json'],
       ),
+      photoPath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}photo_path'],
+      ),
       templateVersion: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}template_version'],
@@ -2686,6 +2708,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
   final bool includeFolderLabels;
   final String? artworkType;
   final String? drawingStrokesJson;
+  final String? photoPath;
   final int templateVersion;
   const Receipt({
     required this.id,
@@ -2700,6 +2723,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     required this.includeFolderLabels,
     this.artworkType,
     this.drawingStrokesJson,
+    this.photoPath,
     required this.templateVersion,
   });
   @override
@@ -2724,6 +2748,9 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     }
     if (!nullToAbsent || drawingStrokesJson != null) {
       map['drawing_strokes_json'] = Variable<String>(drawingStrokesJson);
+    }
+    if (!nullToAbsent || photoPath != null) {
+      map['photo_path'] = Variable<String>(photoPath);
     }
     map['template_version'] = Variable<int>(templateVersion);
     return map;
@@ -2751,6 +2778,9 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       drawingStrokesJson: drawingStrokesJson == null && nullToAbsent
           ? const Value.absent()
           : Value(drawingStrokesJson),
+      photoPath: photoPath == null && nullToAbsent
+          ? const Value.absent()
+          : Value(photoPath),
       templateVersion: Value(templateVersion),
     );
   }
@@ -2779,6 +2809,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       drawingStrokesJson: serializer.fromJson<String?>(
         json['drawingStrokesJson'],
       ),
+      photoPath: serializer.fromJson<String?>(json['photoPath']),
       templateVersion: serializer.fromJson<int>(json['templateVersion']),
     );
   }
@@ -2800,6 +2831,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       'includeFolderLabels': serializer.toJson<bool>(includeFolderLabels),
       'artworkType': serializer.toJson<String?>(artworkType),
       'drawingStrokesJson': serializer.toJson<String?>(drawingStrokesJson),
+      'photoPath': serializer.toJson<String?>(photoPath),
       'templateVersion': serializer.toJson<int>(templateVersion),
     };
   }
@@ -2817,6 +2849,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     bool? includeFolderLabels,
     Value<String?> artworkType = const Value.absent(),
     Value<String?> drawingStrokesJson = const Value.absent(),
+    Value<String?> photoPath = const Value.absent(),
     int? templateVersion,
   }) => Receipt(
     id: id ?? this.id,
@@ -2837,6 +2870,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     drawingStrokesJson: drawingStrokesJson.present
         ? drawingStrokesJson.value
         : this.drawingStrokesJson,
+    photoPath: photoPath.present ? photoPath.value : this.photoPath,
     templateVersion: templateVersion ?? this.templateVersion,
   );
   Receipt copyWithCompanion(ReceiptsCompanion data) {
@@ -2867,6 +2901,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
       drawingStrokesJson: data.drawingStrokesJson.present
           ? data.drawingStrokesJson.value
           : this.drawingStrokesJson,
+      photoPath: data.photoPath.present ? data.photoPath.value : this.photoPath,
       templateVersion: data.templateVersion.present
           ? data.templateVersion.value
           : this.templateVersion,
@@ -2888,6 +2923,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
           ..write('includeFolderLabels: $includeFolderLabels, ')
           ..write('artworkType: $artworkType, ')
           ..write('drawingStrokesJson: $drawingStrokesJson, ')
+          ..write('photoPath: $photoPath, ')
           ..write('templateVersion: $templateVersion')
           ..write(')'))
         .toString();
@@ -2907,6 +2943,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
     includeFolderLabels,
     artworkType,
     drawingStrokesJson,
+    photoPath,
     templateVersion,
   );
   @override
@@ -2925,6 +2962,7 @@ class Receipt extends DataClass implements Insertable<Receipt> {
           other.includeFolderLabels == this.includeFolderLabels &&
           other.artworkType == this.artworkType &&
           other.drawingStrokesJson == this.drawingStrokesJson &&
+          other.photoPath == this.photoPath &&
           other.templateVersion == this.templateVersion);
 }
 
@@ -2941,6 +2979,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
   final Value<bool> includeFolderLabels;
   final Value<String?> artworkType;
   final Value<String?> drawingStrokesJson;
+  final Value<String?> photoPath;
   final Value<int> templateVersion;
   final Value<int> rowid;
   const ReceiptsCompanion({
@@ -2956,6 +2995,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     this.includeFolderLabels = const Value.absent(),
     this.artworkType = const Value.absent(),
     this.drawingStrokesJson = const Value.absent(),
+    this.photoPath = const Value.absent(),
     this.templateVersion = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -2972,6 +3012,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     this.includeFolderLabels = const Value.absent(),
     this.artworkType = const Value.absent(),
     this.drawingStrokesJson = const Value.absent(),
+    this.photoPath = const Value.absent(),
     this.templateVersion = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
@@ -2994,6 +3035,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     Expression<bool>? includeFolderLabels,
     Expression<String>? artworkType,
     Expression<String>? drawingStrokesJson,
+    Expression<String>? photoPath,
     Expression<int>? templateVersion,
     Expression<int>? rowid,
   }) {
@@ -3013,6 +3055,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
       if (artworkType != null) 'artwork_type': artworkType,
       if (drawingStrokesJson != null)
         'drawing_strokes_json': drawingStrokesJson,
+      if (photoPath != null) 'photo_path': photoPath,
       if (templateVersion != null) 'template_version': templateVersion,
       if (rowid != null) 'rowid': rowid,
     });
@@ -3031,6 +3074,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     Value<bool>? includeFolderLabels,
     Value<String?>? artworkType,
     Value<String?>? drawingStrokesJson,
+    Value<String?>? photoPath,
     Value<int>? templateVersion,
     Value<int>? rowid,
   }) {
@@ -3047,6 +3091,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
       includeFolderLabels: includeFolderLabels ?? this.includeFolderLabels,
       artworkType: artworkType ?? this.artworkType,
       drawingStrokesJson: drawingStrokesJson ?? this.drawingStrokesJson,
+      photoPath: photoPath ?? this.photoPath,
       templateVersion: templateVersion ?? this.templateVersion,
       rowid: rowid ?? this.rowid,
     );
@@ -3093,6 +3138,9 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
     if (drawingStrokesJson.present) {
       map['drawing_strokes_json'] = Variable<String>(drawingStrokesJson.value);
     }
+    if (photoPath.present) {
+      map['photo_path'] = Variable<String>(photoPath.value);
+    }
     if (templateVersion.present) {
       map['template_version'] = Variable<int>(templateVersion.value);
     }
@@ -3117,6 +3165,7 @@ class ReceiptsCompanion extends UpdateCompanion<Receipt> {
           ..write('includeFolderLabels: $includeFolderLabels, ')
           ..write('artworkType: $artworkType, ')
           ..write('drawingStrokesJson: $drawingStrokesJson, ')
+          ..write('photoPath: $photoPath, ')
           ..write('templateVersion: $templateVersion, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -6058,6 +6107,7 @@ typedef $$ReceiptsTableCreateCompanionBuilder =
       Value<bool> includeFolderLabels,
       Value<String?> artworkType,
       Value<String?> drawingStrokesJson,
+      Value<String?> photoPath,
       Value<int> templateVersion,
       Value<int> rowid,
     });
@@ -6075,6 +6125,7 @@ typedef $$ReceiptsTableUpdateCompanionBuilder =
       Value<bool> includeFolderLabels,
       Value<String?> artworkType,
       Value<String?> drawingStrokesJson,
+      Value<String?> photoPath,
       Value<int> templateVersion,
       Value<int> rowid,
     });
@@ -6192,6 +6243,11 @@ class $$ReceiptsTableFilterComposer
 
   ColumnFilters<String> get drawingStrokesJson => $composableBuilder(
     column: $table.drawingStrokesJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get photoPath => $composableBuilder(
+    column: $table.photoPath,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -6320,6 +6376,11 @@ class $$ReceiptsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get photoPath => $composableBuilder(
+    column: $table.photoPath,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get templateVersion => $composableBuilder(
     column: $table.templateVersion,
     builder: (column) => ColumnOrderings(column),
@@ -6384,6 +6445,9 @@ class $$ReceiptsTableAnnotationComposer
     column: $table.drawingStrokesJson,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get photoPath =>
+      $composableBuilder(column: $table.photoPath, builder: (column) => column);
 
   GeneratedColumn<int> get templateVersion => $composableBuilder(
     column: $table.templateVersion,
@@ -6485,6 +6549,7 @@ class $$ReceiptsTableTableManager
                 Value<bool> includeFolderLabels = const Value.absent(),
                 Value<String?> artworkType = const Value.absent(),
                 Value<String?> drawingStrokesJson = const Value.absent(),
+                Value<String?> photoPath = const Value.absent(),
                 Value<int> templateVersion = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ReceiptsCompanion(
@@ -6500,6 +6565,7 @@ class $$ReceiptsTableTableManager
                 includeFolderLabels: includeFolderLabels,
                 artworkType: artworkType,
                 drawingStrokesJson: drawingStrokesJson,
+                photoPath: photoPath,
                 templateVersion: templateVersion,
                 rowid: rowid,
               ),
@@ -6517,6 +6583,7 @@ class $$ReceiptsTableTableManager
                 Value<bool> includeFolderLabels = const Value.absent(),
                 Value<String?> artworkType = const Value.absent(),
                 Value<String?> drawingStrokesJson = const Value.absent(),
+                Value<String?> photoPath = const Value.absent(),
                 Value<int> templateVersion = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ReceiptsCompanion.insert(
@@ -6532,6 +6599,7 @@ class $$ReceiptsTableTableManager
                 includeFolderLabels: includeFolderLabels,
                 artworkType: artworkType,
                 drawingStrokesJson: drawingStrokesJson,
+                photoPath: photoPath,
                 templateVersion: templateVersion,
                 rowid: rowid,
               ),

@@ -11,6 +11,7 @@ import '../../receipts/providers/receipt_feature_provider.dart';
 import '../../../shared/sheets/app_bottom_sheet.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
+import '../../../shared/services/sync_sounds.dart';
 import '../../../shared/widgets/sync_grouped_section.dart';
 import '../domain/app_settings.dart';
 import '../providers/settings_controller.dart';
@@ -86,6 +87,13 @@ class SettingsScreen extends ConsumerWidget {
                       settings,
                       controller,
                     ),
+                  ),
+                  _SettingsRow(
+                    icon: SyncIcons.sound,
+                    title: 'Sound Effects',
+                    value: settings.soundEffects ? 'On' : 'Off',
+                    onTap: () =>
+                        _showSoundEffectsSheet(context, settings, controller),
                   ),
                   _SettingsRow(
                     iconWidget: HugeIcon(
@@ -297,6 +305,54 @@ class SettingsScreen extends ConsumerWidget {
                     setSheetState(() => vibration = value);
                     await controller.setNotificationVibration(value);
                   },
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  void _showSoundEffectsSheet(
+    BuildContext context,
+    AppSettings settings,
+    SettingsController controller,
+  ) {
+    var soundEffects = settings.soundEffects;
+
+    _showSettingsSheet(
+      context,
+      StatefulBuilder(
+        builder: (context, setSheetState) {
+          return _SettingsActionSheet(
+            title: 'Sound Effects',
+            children: [
+              Material(
+                color: Colors.transparent,
+                child: SwitchListTile(
+                  value: soundEffects,
+                  title: const Text('Sound Effects'),
+                  contentPadding: EdgeInsets.zero,
+                  onChanged: (value) async {
+                    setSheetState(() => soundEffects = value);
+                    SyncSounds.enabled = value;
+                    await controller.setSoundEffects(value);
+                  },
+                ),
+              ),
+              Material(
+                color: Colors.transparent,
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(SyncIcons.sound),
+                  title: const Text('Preview'),
+                  onTap: soundEffects
+                      ? () {
+                          SyncHaptics.selection();
+                          SyncSounds.play(SyncSoundEffect.complete);
+                        }
+                      : null,
                 ),
               ),
             ],

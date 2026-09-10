@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../core/theme/synctasks_color_scheme.dart';
 import '../icons/sync_icons.dart';
 import '../services/sync_haptics.dart';
+import '../services/sync_sounds.dart';
 
 class SyncFab extends StatelessWidget {
   const SyncFab({
@@ -25,6 +26,7 @@ class SyncFab extends StatelessWidget {
         child: FloatingActionButton(
           onPressed: () {
             SyncHaptics.action();
+            SyncSounds.play(SyncSoundEffect.action);
             onPressed();
           },
           tooltip: semanticLabel,
@@ -38,5 +40,3 @@ class SyncFab extends StatelessWidget {
     );
   }
 }
-
-

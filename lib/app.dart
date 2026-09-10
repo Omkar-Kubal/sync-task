@@ -12,6 +12,7 @@ import 'core/theme/app_theme.dart';
 import 'features/settings/providers/settings_controller.dart';
 import 'features/tasks/widgets/task_list_lifecycle_refresh.dart';
 import 'shared/motion/sync_motion.dart';
+import 'shared/services/sync_sounds.dart';
 
 class SyncTasksApp extends StatefulWidget {
   const SyncTasksApp({this.sharedPreferences, this.routeTracker, super.key});
@@ -62,10 +63,28 @@ class _SyncTasksAppState extends State<SyncTasksApp> {
         theme: buildSyncTasksTheme(Brightness.light),
         darkTheme: buildSyncTasksTheme(Brightness.dark),
         routerConfig: _router,
-        builder: (context, child) =>
-            TaskListLifecycleRefresh(child: _ThemeModeBoundary(child: child)),
+        builder: (context, child) => TaskListLifecycleRefresh(
+          child: _SoundEffectsBoundary(child: _ThemeModeBoundary(child: child)),
+        ),
       ),
     );
+  }
+}
+
+class _SoundEffectsBoundary extends ConsumerWidget {
+  const _SoundEffectsBoundary({required this.child});
+
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    SyncSounds.enabled = ref
+        .watch(settingsProvider)
+        .maybeWhen(
+          data: (settings) => settings.soundEffects,
+          orElse: () => true,
+        );
+    return child ?? const SizedBox.shrink();
   }
 }
 
@@ -95,5 +114,3 @@ class _ThemeModeBoundary extends ConsumerWidget {
     );
   }
 }
-
-

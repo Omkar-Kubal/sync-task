@@ -11,6 +11,7 @@ import '../data/receipt_repository.dart';
 import '../domain/receipt_composer_seed.dart';
 import '../providers/receipt_feature_provider.dart';
 import '../providers/receipt_repository_provider.dart';
+import '../widgets/receipt_screen_chrome.dart';
 
 class ReceiptHistoryScreen extends ConsumerWidget {
   const ReceiptHistoryScreen({super.key});
@@ -26,7 +27,11 @@ class ReceiptHistoryScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _ReceiptHistoryHeader(onBack: () => _returnToLists(context)),
+            ReceiptScreenHeader(
+              title: 'Receipts',
+              backTooltip: 'Back to Lists',
+              onBack: () => _returnToLists(context),
+            ),
             Expanded(
               child: !enabled
                   ? const SyncEmptyState(
@@ -48,7 +53,27 @@ class ReceiptHistoryScreen extends ConsumerWidget {
                             ),
                           );
                         }
-                        return _ReceiptHistoryList(receipts: receipts);
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              child: _ReceiptHistoryList(receipts: receipts),
+                            ),
+                            ReceiptBottomActionBar(
+                              child: FilledButton.icon(
+                                onPressed: () {
+                                  SyncHaptics.action();
+                                  context.go(
+                                    '/receipts/new',
+                                    extra: const ReceiptComposerSeed.empty(),
+                                  );
+                                },
+                                icon: const Icon(SyncIcons.receipt),
+                                label: const Text('Create receipt'),
+                              ),
+                            ),
+                          ],
+                        );
                       },
                       loading: () =>
                           const Center(child: CircularProgressIndicator()),
@@ -86,37 +111,6 @@ class ReceiptHistoryScreen extends ConsumerWidget {
   }
 }
 
-class _ReceiptHistoryHeader extends StatelessWidget {
-  const _ReceiptHistoryHeader({required this.onBack});
-
-  final VoidCallback onBack;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 14, 20, 14),
-      child: Row(
-        children: [
-          IconButton(
-            tooltip: 'Back to Lists',
-            onPressed: onBack,
-            icon: const Icon(Icons.arrow_back_rounded),
-          ),
-          const SizedBox(width: 4),
-          Expanded(
-            child: Text(
-              'Receipts',
-              style: textTheme.titleLarge?.copyWith(color: colors.textPrimary),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _ReceiptHistoryList extends StatelessWidget {
   const _ReceiptHistoryList({required this.receipts});
 
@@ -125,26 +119,10 @@ class _ReceiptHistoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 112),
-      itemCount: receipts.length + 1,
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+      itemCount: receipts.length,
       separatorBuilder: (_, _) => const SizedBox(height: 10),
       itemBuilder: (context, index) {
-        if (index == receipts.length) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: FilledButton.icon(
-              onPressed: () {
-                SyncHaptics.action();
-                context.go(
-                  '/receipts/new',
-                  extra: const ReceiptComposerSeed.empty(),
-                );
-              },
-              icon: const Icon(SyncIcons.receipt),
-              label: const Text('Create receipt'),
-            ),
-          );
-        }
         return _ReceiptHistoryRow(receipt: receipts[index]);
       },
     );
@@ -163,7 +141,10 @@ class _ReceiptHistoryRow extends StatelessWidget {
     final date = DateFormat('d MMM yyyy').format(receipt.createdAt);
     return Material(
       color: colors.surface,
-      borderRadius: BorderRadius.circular(18),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
+        side: BorderSide(color: colors.divider),
+      ),
       child: InkWell(
         borderRadius: BorderRadius.circular(18),
         onTap: () {
@@ -171,7 +152,7 @@ class _ReceiptHistoryRow extends StatelessWidget {
           context.go('/receipts/${receipt.id}');
         },
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
           child: Row(
             children: [
               Container(

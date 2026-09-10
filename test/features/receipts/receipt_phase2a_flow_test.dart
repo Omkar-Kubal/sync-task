@@ -10,6 +10,9 @@ import 'package:synctasks/core/theme/app_theme.dart';
 import 'package:synctasks/features/receipts/data/receipt_repository.dart';
 import 'package:synctasks/features/receipts/domain/receipt_composer_seed.dart';
 import 'package:synctasks/features/receipts/providers/receipt_feature_provider.dart';
+import 'package:synctasks/features/receipts/services/receipt_photo_capture_service.dart';
+import 'package:synctasks/features/receipts/services/receipt_photo_processor.dart';
+import 'package:synctasks/features/receipts/services/receipt_printing_feedback.dart';
 import 'package:synctasks/features/tasks/data/folder_repository.dart';
 import 'package:synctasks/features/tasks/data/task_repository.dart';
 import 'package:synctasks/features/tasks/domain/task.dart' as domain;
@@ -29,7 +32,12 @@ void main() {
     await db.close();
   });
 
-  Future<void> pumpApp(WidgetTester tester) async {
+  Future<void> pumpApp(
+    WidgetTester tester, {
+    ReceiptPhotoCaptureService? photoCaptureService,
+    ReceiptPhotoProcessor? photoProcessor,
+    ReceiptPrintingFeedback? printingFeedback,
+  }) async {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
@@ -38,6 +46,14 @@ void main() {
             RecordingNotificationScheduler(),
           ),
           receiptFeatureEnabledProvider.overrideWithValue(true),
+          if (photoCaptureService != null)
+            receiptPhotoCaptureServiceProvider.overrideWithValue(
+              photoCaptureService,
+            ),
+          if (photoProcessor != null)
+            receiptPhotoProcessorProvider.overrideWithValue(photoProcessor),
+          if (printingFeedback != null)
+            receiptPrintingFeedbackProvider.overrideWithValue(printingFeedback),
         ],
         child: MaterialApp.router(
           theme: buildSyncTasksTheme(Brightness.light),
@@ -66,7 +82,8 @@ void main() {
       'Write the migration',
       folderId: workFolder.id,
     );
-    await pumpApp(tester);
+    final printingFeedback = _FakeReceiptPrintingFeedback();
+    await pumpApp(tester, printingFeedback: printingFeedback);
 
     router.go(
       '/receipts/new',
@@ -78,8 +95,17 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('3 of 3 free receipts left this week'), findsOneWidget);
+    expect(
+      tester.widget<Text>(find.text('Create receipt')).style?.fontSize,
+      29,
+    );
+    expect(find.text('0 receipts created this week'), findsOneWidget);
+    expect(find.text('Title'), findsOneWidget);
     expect(find.text('Write the migration'), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('receipt-paper-artwork-placeholder')),
+      findsOneWidget,
+    );
     await tester.enterText(find.byType(TextField), 'Migration wins');
     expect(find.text('Work'), findsNothing);
     await tester.scrollUntilVisible(
@@ -87,26 +113,39 @@ void main() {
       240,
       scrollable: find.byType(Scrollable).first,
     );
-    await tester.tap(find.byType(SwitchListTile));
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, -220));
     await tester.pumpAndSettle();
-    expect(find.text('Work'), findsOneWidget);
+    await tester.tap(find.text('Show folder labels'));
+    await tester.pumpAndSettle();
+    expect(find.text('WORK'), findsOneWidget);
     await tester.tap(find.widgetWithText(FilledButton, 'Generate receipt'));
     await tester.pump();
 
     expect(find.text('Printing your wins...'), findsOneWidget);
+    expect(find.byKey(const ValueKey('receipt-printer-slot')), findsOneWidget);
     expect(
-      tester.widget<AnimatedSlide>(find.byType(AnimatedSlide)).offset.dy,
-      lessThan(0),
+      find.byKey(const ValueKey('receipt-printing-paper')),
+      findsOneWidget,
     );
-    await tester.pumpAndSettle(const Duration(seconds: 2));
+    expect(
+      tester.widget<AnimatedSlide>(find.byType(AnimatedSlide)).duration,
+      greaterThanOrEqualTo(const Duration(milliseconds: 2400)),
+    );
+    expect(printingFeedback.starts, 1);
+    await tester.pumpAndSettle(const Duration(seconds: 4));
 
     expect(
       router.routeInformationProvider.value.uri.path,
       startsWith('/receipts/'),
     );
+    expect(printingFeedback.stops, 1);
     expect(find.text('Your receipt'), findsOneWidget);
+    expect(tester.widget<Text>(find.text('Your receipt')).style?.fontSize, 29);
     expect(find.text('Migration wins'), findsOneWidget);
     expect(find.text('Write the migration'), findsOneWidget);
+    expect(find.text('ITEM'), findsOneWidget);
+    expect(find.text('DONE'), findsWidgets);
+    expect(find.text('TOTAL'), findsOneWidget);
     expect(find.text('Share receipt'), findsOneWidget);
     expect(find.text('Done'), findsOneWidget);
   });
@@ -132,26 +171,33 @@ void main() {
       240,
       scrollable: find.byType(Scrollable).first,
     );
-    await tester.tap(
-      find.widgetWithText(OutlinedButton, 'Add photo or drawing'),
-    );
+    await tester.tap(find.text('Add photo or drawing').first);
     await tester.pumpAndSettle();
 
     expect(find.text('Personalise'), findsOneWidget);
+    expect(tester.widget<Text>(find.text('Personalise')).style?.fontSize, 29);
     expect(find.text('Hand drawn'), findsOneWidget);
     expect(find.text('Photo'), findsOneWidget);
 
     final canvas = find.byKey(const ValueKey('receipt-drawing-canvas'));
-    await tester.drag(canvas, const Offset(80, 40));
+    expect(tester.getSize(canvas).height, greaterThanOrEqualTo(300));
+    final painterBeforeDrawing = tester.widget<CustomPaint>(canvas).painter!;
+    await tester.dragFrom(
+      tester.getTopLeft(canvas) + const Offset(24, 24),
+      const Offset(80, 40),
+    );
+    await tester.dragFrom(
+      tester.getCenter(canvas) - const Offset(70, 20),
+      const Offset(140, 60),
+    );
     await tester.pump();
-    await tester.tap(find.widgetWithText(FilledButton, 'Use drawing'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Drawing added'), findsOneWidget);
-    expect(find.byKey(const ValueKey('receipt-paper-artwork')), findsOneWidget);
-
-    await tester.tap(find.widgetWithText(FilledButton, 'Generate receipt'));
+    final painterAfterDrawing = tester.widget<CustomPaint>(canvas).painter!;
+    expect(painterAfterDrawing.shouldRepaint(painterBeforeDrawing), isTrue);
+    await tester.tap(
+      find.byKey(const ValueKey('receipt-personalise-generate')),
+    );
     await tester.pump();
+
     expect(find.text('Printing your wins...'), findsOneWidget);
     expect(find.byKey(const ValueKey('receipt-paper-artwork')), findsOneWidget);
 
@@ -160,6 +206,94 @@ void main() {
     expect(find.text('Your receipt'), findsOneWidget);
     expect(find.text('Sketch the win'), findsOneWidget);
     expect(find.byKey(const ValueKey('receipt-paper-artwork')), findsOneWidget);
+    expect(find.byKey(const ValueKey('receipt-paper-logo')), findsOneWidget);
+    expect(find.text('Drag to play'), findsOneWidget);
+  });
+
+  testWidgets('personalise photo tab shows camera capture action', (
+    tester,
+  ) async {
+    final taskId = await completedTask('Photograph the win');
+    await pumpApp(tester);
+
+    router.go(
+      '/receipts/new',
+      extra: ReceiptComposerSeed(
+        source: ReceiptEntrySource.completedSelection,
+        defaultTitle: 'Completed tasks',
+        selectedTaskIds: [taskId],
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('Add photo or drawing'),
+      240,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.text('Add photo or drawing').first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Photo'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Take photo'), findsOneWidget);
+    expect(find.text('Open camera'), findsOneWidget);
+    expect(find.text('Photo personalisation comes next.'), findsNothing);
+  });
+
+  testWidgets('photo capture generates receipt without returning to composer', (
+    tester,
+  ) async {
+    final taskId = await completedTask('Photograph the win');
+    await pumpApp(
+      tester,
+      photoCaptureService: const _FakeReceiptPhotoCaptureService(
+        'D:\\temp\\receipt-photo.jpg',
+      ),
+      photoProcessor: _FakeReceiptPhotoProcessor(
+        'D:\\temp\\receipt-photo_pixelite.png',
+      ),
+    );
+
+    router.go(
+      '/receipts/new',
+      extra: ReceiptComposerSeed(
+        source: ReceiptEntrySource.completedSelection,
+        defaultTitle: 'Completed tasks',
+        selectedTaskIds: [taskId],
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('Add photo or drawing'),
+      240,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.text('Add photo or drawing').first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Photo'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Open camera').first);
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.byKey(const ValueKey('receipt-personalise-generate')),
+    );
+    await tester.pump();
+
+    expect(find.text('Printing your wins...'), findsOneWidget);
+    expect(find.byKey(const ValueKey('receipt-paper-photo')), findsOneWidget);
+
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+
+    expect(find.text('Your receipt'), findsOneWidget);
+    expect(find.text('Photograph the win'), findsOneWidget);
+    expect(find.byKey(const ValueKey('receipt-paper-photo')), findsOneWidget);
+    final savedReceiptId = (await ReceiptRepository(
+      db,
+    ).listReceipts()).single.id;
+    final savedReceipt = await ReceiptRepository(db).getReceipt(savedReceiptId);
+    expect(savedReceipt?.photoPath, 'D:\\temp\\receipt-photo_pixelite.png');
   });
 
   testWidgets('history lists generated receipts and reopens detail', (
@@ -265,7 +399,7 @@ void main() {
     expect(await ReceiptRepository(db).listReceipts(), isEmpty);
   });
 
-  testWidgets('composer blocks the fourth free receipt and keeps draft', (
+  testWidgets('composer allows more than three receipts in one week', (
     tester,
   ) async {
     final ids = <int>[];
@@ -299,14 +433,69 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('3 of 3 free receipts used'), findsOneWidget);
+    expect(find.text('3 receipts created this week'), findsOneWidget);
     await tester.enterText(find.byType(TextField), 'Still mine');
     await tester.tap(find.widgetWithText(FilledButton, 'Generate receipt'));
-    await tester.pumpAndSettle();
+    await tester.pump();
 
-    expect(find.text('Weekly receipt limit reached'), findsOneWidget);
-    expect(find.textContaining('More free receipts reset'), findsOneWidget);
+    expect(find.text('Printing your wins...'), findsOneWidget);
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+
+    expect(
+      router.routeInformationProvider.value.uri.path,
+      startsWith('/receipts/'),
+    );
     expect(find.text('Still mine'), findsWidgets);
-    expect(router.routeInformationProvider.value.uri.path, '/receipts/new');
+    expect(find.text('Quota task 3'), findsOneWidget);
   });
+}
+
+class _FakeReceiptPhotoCaptureService implements ReceiptPhotoCaptureService {
+  const _FakeReceiptPhotoCaptureService(this.path);
+
+  final String? path;
+
+  @override
+  Future<String?> capturePhoto() async => path;
+}
+
+class _FakeReceiptPhotoProcessor implements ReceiptPhotoProcessor {
+  _FakeReceiptPhotoProcessor(this.path);
+
+  final String path;
+  final sourcePaths = <String>[];
+
+  @override
+  Future<String> processPhoto(String sourcePath) async {
+    sourcePaths.add(sourcePath);
+    return path;
+  }
+}
+
+class _FakeReceiptPrintingFeedback implements ReceiptPrintingFeedback {
+  var starts = 0;
+  var stops = 0;
+
+  @override
+  ReceiptPrintingFeedbackHandle start() {
+    starts++;
+    return _FakeReceiptPrintingFeedbackHandle(() => stops++);
+  }
+}
+
+class _FakeReceiptPrintingFeedbackHandle
+    implements ReceiptPrintingFeedbackHandle {
+  _FakeReceiptPrintingFeedbackHandle(this.onStop);
+
+  final VoidCallback onStop;
+  var stopped = false;
+
+  @override
+  void stop() {
+    if (stopped) {
+      return;
+    }
+    stopped = true;
+    onStop();
+  }
 }
