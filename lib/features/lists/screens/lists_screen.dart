@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../receipts/providers/receipt_feature_provider.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/widgets/sync_fab.dart';
@@ -31,6 +32,7 @@ class ListsScreen extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     final summaryValue = ref.watch(listSummaryProvider);
     final foldersValue = ref.watch(foldersProvider);
+    final receiptFeatureEnabled = ref.watch(receiptFeatureEnabledProvider);
 
     final summary = summaryValue.value;
     final folders = foldersValue.value;
@@ -133,6 +135,17 @@ class ListsScreen extends ConsumerWidget {
                               ),
                         ),
                       ),
+                      if (receiptFeatureEnabled)
+                        _ListRow(
+                          label: 'Receipts',
+                          semanticLabel: 'Open Receipts',
+                          icon: Icon(
+                            SyncIcons.receipt,
+                            size: 20,
+                            color: colors.textPrimary,
+                          ),
+                          onTap: () => context.go('/receipts'),
+                        ),
                       _ListRow(
                         label: 'Insights',
                         semanticLabel: 'Open Insights',
@@ -719,5 +732,3 @@ class _SectionLabel extends StatelessWidget {
     );
   }
 }
-
-

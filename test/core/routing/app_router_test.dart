@@ -537,7 +537,14 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Close list'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.bySemanticsLabel('Open Reminders list'));
+    await tester.scrollUntilVisible(
+      find.bySemanticsLabel('Open Reminders list'),
+      180,
+    );
+    final remindersRow = tester.getRect(
+      find.bySemanticsLabel('Open Reminders list'),
+    );
+    await tester.tapAt(Offset(remindersRow.center.dx, remindersRow.top + 12));
     await tester.pumpAndSettle();
 
     expect(router.routeInformationProvider.value.uri.path, '/lists');

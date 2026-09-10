@@ -13,8 +13,8 @@ void main() {
     await db.close();
   });
 
-  test('database starts at explicit schema version two', () {
-    expect(db.schemaVersion, 2);
+  test('database starts at explicit schema version four', () {
+    expect(db.schemaVersion, 4);
   });
 
   test('database starts with permanent Inbox folder', () async {
@@ -60,5 +60,3 @@ void main() {
     },
   );
 }
-
-

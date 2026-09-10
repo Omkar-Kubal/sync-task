@@ -12,6 +12,7 @@ class SyncIcons {
   static const IconData create = Icons.add_rounded;
   static const IconData submit = Icons.arrow_upward_rounded;
   static const IconData completed = Icons.task_alt_rounded;
+  static const IconData receipt = Icons.receipt_long_outlined;
   static const IconData folder = Icons.folder_rounded;
   static const IconData reminder = Icons.notifications_none_rounded;
   static const IconData appearance = Icons.format_paint_rounded;
@@ -41,5 +42,3 @@ class SyncIcons {
   static const IconData chevron = Icons.chevron_right_rounded;
   static const IconData dropdown = Icons.unfold_more_rounded;
 }
-
-

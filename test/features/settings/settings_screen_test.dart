@@ -21,14 +21,16 @@ void main() {
 
       expect(find.text('Settings'), findsOneWidget);
       expect(find.text('General'), findsOneWidget);
+      expect(find.text('Pro'), findsOneWidget);
       expect(find.text('Support'), findsOneWidget);
       expect(find.text('About'), findsOneWidget);
-      expect(find.byType(SyncGroupedSection), findsNWidgets(3));
+      expect(find.byType(SyncGroupedSection), findsNWidgets(4));
 
       expect(find.text('Theme'), findsOneWidget);
       expect(find.text('System'), findsOneWidget);
       expect(find.text('Default Folder'), findsOneWidget);
       expect(find.text('Notifications'), findsOneWidget);
+      expect(find.text('SyncTasks Pro'), findsOneWidget);
       expect(find.text("What's New"), findsOneWidget);
       expect(find.text('Help & Feedback'), findsOneWidget);
       expect(find.text('SyncTasks'), findsOneWidget);
@@ -246,6 +248,7 @@ void main() {
       _settingsApp(repository: SettingsRepository.memory()),
     );
 
+    await tester.scrollUntilVisible(find.text('Help & Feedback'), 160);
     await tester.tap(find.widgetWithText(ListTile, 'Help & Feedback'));
     await tester.pumpAndSettle();
 

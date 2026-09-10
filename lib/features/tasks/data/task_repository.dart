@@ -254,6 +254,30 @@ class TaskRepository {
         .get();
   }
 
+  Future<List<Task>> listCompletedTasksForLocalDay(DateTime day) {
+    final start = _dateOnly(day);
+    final end = start.add(const Duration(days: 1));
+    return listCompletedTasksInRange(start, end);
+  }
+
+  Future<List<Task>> listCompletedTasksInRange(
+    DateTime startInclusive,
+    DateTime endExclusive,
+  ) {
+    return (_db.select(_db.tasks)
+          ..where(
+            (task) =>
+                task.isCompleted.equals(true) &
+                task.completedAt.isBiggerOrEqualValue(startInclusive) &
+                task.completedAt.isSmallerThanValue(endExclusive),
+          )
+          ..orderBy([
+            (task) => OrderingTerm.asc(task.completedAt),
+            (task) => OrderingTerm.asc(task.id),
+          ]))
+        .get();
+  }
+
   Future<List<Task>> listReminderTasks() async {
     return (_activeTaskQuery()
           ..where((task) => task.reminderTime.isNotNull())

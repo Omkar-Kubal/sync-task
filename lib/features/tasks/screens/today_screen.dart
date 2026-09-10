@@ -12,6 +12,9 @@ import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/widgets/sync_empty_state.dart';
 import '../../../shared/widgets/sync_fab.dart';
+import '../../receipts/domain/receipt_composer_seed.dart';
+import '../../receipts/providers/receipt_feature_provider.dart';
+import '../../receipts/providers/today_completed_tasks_provider.dart';
 import '../../lists/providers/list_tasks_provider.dart';
 import '../../settings/screens/settings_screen.dart';
 import '../domain/task.dart' as domain;
@@ -41,6 +44,10 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
     final colors = SyncTasksColorScheme.of(context);
     final textTheme = Theme.of(context).textTheme;
     final tasksValue = ref.watch(todayTasksProvider);
+    final receiptFeatureEnabled = ref.watch(receiptFeatureEnabledProvider);
+    final completedTodayValue = receiptFeatureEnabled
+        ? ref.watch(todayCompletedTasksProvider)
+        : const AsyncData<List<Task>>(<Task>[]);
     final foldersById = _foldersById(ref.watch(foldersProvider).value);
     return Scaffold(
       body: Padding(
@@ -216,8 +223,10 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
             Expanded(
               child: _TodayBody(
                 tasksValue: tasksValue,
+                completedTodayValue: completedTodayValue,
                 folderNamesById: foldersById,
                 onCreate: () => _showCreateSheet(context, ref),
+                onCreateReceipt: (tasks) => _openTodayReceipt(context, tasks),
                 onTaskTap: (task) => _showEditSheet(context, ref, task: task),
                 selectionMode: _selectedTaskIds.isNotEmpty,
                 selectedTaskIds: _selectedTaskIds,
@@ -484,6 +493,17 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
     );
   }
 
+  void _openTodayReceipt(BuildContext context, List<Task> completedTasks) {
+    context.go(
+      '/receipts/new',
+      extra: ReceiptComposerSeed(
+        source: ReceiptEntrySource.today,
+        defaultTitle: "Today's wins",
+        selectedTaskIds: completedTasks.map((task) => task.id).toList(),
+      ),
+    );
+  }
+
   void _showEditSheet(
     BuildContext context,
     WidgetRef ref, {
@@ -643,8 +663,10 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
 class _TodayBody extends StatelessWidget {
   const _TodayBody({
     required this.tasksValue,
+    required this.completedTodayValue,
     required this.folderNamesById,
     required this.onCreate,
+    required this.onCreateReceipt,
     required this.onTaskTap,
     required this.onComplete,
     required this.onRescheduleToday,
@@ -656,8 +678,10 @@ class _TodayBody extends StatelessWidget {
   });
 
   final AsyncValue<List<Task>> tasksValue;
+  final AsyncValue<List<Task>> completedTodayValue;
   final Map<int, String> folderNamesById;
   final VoidCallback onCreate;
+  final ValueChanged<List<Task>> onCreateReceipt;
   final ValueChanged<Task> onTaskTap;
   final ValueChanged<Task> onComplete;
   final ValueChanged<Task> onRescheduleToday;
@@ -671,13 +695,31 @@ class _TodayBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return tasksValue.when(
       data: (tasks) {
+        final completedToday = completedTodayValue.value ?? const <Task>[];
         if (tasks.isEmpty) {
-          return _EmptyTodayState(onCreate: onCreate);
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(child: _EmptyTodayState(onCreate: onCreate)),
+              if (completedToday.isNotEmpty)
+                _TodayReceiptEntry(
+                  completedCount: completedToday.length,
+                  onTap: () => onCreateReceipt(completedToday),
+                ),
+              const SizedBox(height: 108),
+            ],
+          );
         }
 
         return ListView.separated(
           padding: const EdgeInsets.only(top: 26, bottom: 108),
           itemBuilder: (context, index) {
+            if (index == tasks.length) {
+              return _TodayReceiptEntry(
+                completedCount: completedToday.length,
+                onTap: () => onCreateReceipt(completedToday),
+              );
+            }
             final task = tasks[index];
             final isOverdueIncomplete = _isOverdueIncomplete(task);
             return TaskRow(
@@ -703,7 +745,7 @@ class _TodayBody extends StatelessWidget {
             );
           },
           separatorBuilder: (context, index) => const SizedBox(height: 2),
-          itemCount: tasks.length,
+          itemCount: tasks.length + (completedToday.isNotEmpty ? 1 : 0),
         );
       },
       loading: () => _EmptyTodayState(onCreate: onCreate),
@@ -721,6 +763,57 @@ class _TodayBody extends StatelessWidget {
 
   DateTime _dateOnly(DateTime value) {
     return DateTime(value.year, value.month, value.day);
+  }
+}
+
+class _TodayReceiptEntry extends StatelessWidget {
+  const _TodayReceiptEntry({required this.completedCount, required this.onTap});
+
+  final int completedCount;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    final label =
+        '$completedCount ${completedCount == 1 ? 'completed' : 'completed'} today · Create receipt →';
+    return Semantics(
+      button: true,
+      label: 'Create receipt from completed tasks',
+      child: InkWell(
+        key: const Key('today-receipt-entry'),
+        onTap: () {
+          SyncHaptics.selection();
+          onTap();
+        },
+        borderRadius: BorderRadius.circular(14),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 44),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 44, right: 4),
+            child: Row(
+              children: [
+                Icon(SyncIcons.receipt, size: 18, color: colors.textSecondary),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: colors.textPrimary,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
