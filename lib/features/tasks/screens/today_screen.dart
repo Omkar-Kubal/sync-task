@@ -103,8 +103,15 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                   height: 52,
                   padding: const EdgeInsets.symmetric(horizontal: 3),
                   decoration: BoxDecoration(
-                    color: colors.surface,
+                    color: colors.surface.withAlpha(0xD9),
                     borderRadius: BorderRadius.circular(28),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.16),
+                        blurRadius: 18,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -118,10 +125,12 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                             _showUpcomingSheet(context);
                           },
                           style: IconButton.styleFrom(
+                            backgroundColor: Colors.transparent,
                             fixedSize: const Size(46, 46),
                             minimumSize: const Size(46, 46),
                             foregroundColor: colors.textPrimary,
                             padding: EdgeInsets.zero,
+                            side: BorderSide.none,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             shape: const CircleBorder(),
                           ),
@@ -136,14 +145,6 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: VerticalDivider(
-                          width: 1,
-                          thickness: 1,
-                          color: colors.divider,
-                        ),
-                      ),
                       Semantics(
                         button: true,
                         label: 'Search tasks',
@@ -153,10 +154,12 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                             context.go('/today/search');
                           },
                           style: IconButton.styleFrom(
+                            backgroundColor: Colors.transparent,
                             fixedSize: const Size(46, 46),
                             minimumSize: const Size(46, 46),
                             foregroundColor: colors.textPrimary,
                             padding: EdgeInsets.zero,
+                            side: BorderSide.none,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             shape: const CircleBorder(),
                           ),
@@ -170,14 +173,6 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: VerticalDivider(
-                          width: 1,
-                          thickness: 1,
-                          color: colors.divider,
-                        ),
-                      ),
                       Semantics(
                         button: true,
                         label: 'Settings',
@@ -188,10 +183,12 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                             _showSettingsSheet(context);
                           },
                           style: IconButton.styleFrom(
+                            backgroundColor: Colors.transparent,
                             fixedSize: const Size(46, 46),
                             minimumSize: const Size(46, 46),
                             foregroundColor: colors.textPrimary,
                             padding: EdgeInsets.zero,
+                            side: BorderSide.none,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             shape: const CircleBorder(),
                           ),

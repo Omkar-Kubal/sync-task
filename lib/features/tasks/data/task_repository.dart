@@ -403,14 +403,11 @@ class TaskRepository {
   }
 
   Future<int> _nextSortOrder() async {
-    final rows = await _db.select(_db.tasks).get();
-    if (rows.isEmpty) {
-      return 1;
-    }
-    return rows
-            .map((task) => task.globalSortOrder)
-            .reduce((a, b) => a > b ? a : b) +
-        1;
+    final maxQuery = _db.selectOnly(_db.tasks)
+      ..addColumns([_db.tasks.globalSortOrder.max()]);
+    final row = await maxQuery.getSingleOrNull();
+    final maxVal = row?.read(_db.tasks.globalSortOrder.max());
+    return (maxVal ?? 0) + 1;
   }
 
   DateTime _dateOnly(DateTime value) =>

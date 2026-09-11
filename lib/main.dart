@@ -8,6 +8,7 @@ import 'core/crash/crash_reporter.dart';
 import 'core/database/app_database.dart';
 import 'core/notifications/notification_service.dart';
 import 'core/widget/widget_data_updater.dart';
+import 'core/widget/widget_interactivity_handler.dart';
 import 'features/tasks/data/task_repository.dart';
 
 Future<void> main() => CrashReporter.runAppGuarded(runSyncTasksApp);
@@ -17,33 +18,36 @@ Future<void> runSyncTasksApp({
   Future<SharedPreferences> Function() getSharedPreferences =
       SharedPreferences.getInstance,
   Future<void> Function() initializeNotifications = _initializeNotifications,
-  Future<void> Function() updateWidgetData = _updateWidgetData,
+  Future<void> Function() registerWidgetInteractivity =
+      registerWidgetInteractivityCallback,
+  AppDatabase Function() createDatabase = AppDatabase.new,
+  Future<void> Function(TaskRepository repository) updateWidgetData =
+      _updateWidgetData,
   void Function(Widget widget) appRunner = runApp,
 }) async {
   WidgetsFlutterBinding.ensureInitialized();
   final sharedPreferences = await getSharedPreferences();
+  final database = createDatabase();
 
   CrashReporter.unawaitedCapture(
     initializeNotifications(),
     hint: 'Notification initialization failed',
   );
   CrashReporter.unawaitedCapture(
-    updateWidgetData(),
+    registerWidgetInteractivity(),
+    hint: 'Widget interactivity registration failed',
+  );
+  CrashReporter.unawaitedCapture(
+    updateWidgetData(TaskRepository(database)),
     hint: 'Widget data update failed',
   );
 
-  appRunner(SyncTasksApp(sharedPreferences: sharedPreferences));
+  appRunner(
+    SyncTasksApp(sharedPreferences: sharedPreferences, appDatabase: database),
+  );
 }
 
 Future<void> _initializeNotifications() => NotificationService().initialize();
 
-Future<void> _updateWidgetData() async {
-  final db = AppDatabase();
-  try {
-    await WidgetDataUpdater.update(TaskRepository(db));
-  } finally {
-    await db.close();
-  }
-}
-
-
+Future<void> _updateWidgetData(TaskRepository repository) =>
+    WidgetDataUpdater.update(repository);

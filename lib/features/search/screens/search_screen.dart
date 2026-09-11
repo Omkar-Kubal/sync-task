@@ -213,8 +213,8 @@ class _SearchResultsState extends ConsumerState<_SearchResults> {
             recurrenceType: recurrenceType,
             recurrenceInterval: series?.recurrenceInterval,
             customRepeatLabel: series?.customRepeatLabel,
-            onCancel: () => Navigator.of(context, rootNavigator: true).pop(),
-            onDone: () => Navigator.of(context, rootNavigator: true).pop(),
+            onCancel: () => Navigator.of(sheetContext).pop(),
+            onDone: () => Navigator.of(sheetContext).pop(),
             onSave: (update) => _updateTask(ref, task, update),
           ),
         );

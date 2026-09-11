@@ -179,7 +179,7 @@ void main() {
   );
 
   test(
-    'more than three receipts in one week are allowed for testing',
+    'fourth free receipt in one week is blocked without consuming a slot',
     () async {
       final tasks = TaskRepository(db);
       final taskIds = <int>[];
@@ -208,19 +208,23 @@ void main() {
         );
       }
 
-      final fourth = await receipts.generateReceipt(
-        ReceiptCreateRequest(
-          operationId: 'op-four',
-          source: ReceiptEntrySource.completedSelection,
-          defaultTitle: 'Completed tasks',
-          title: 'Fourth receipt',
-          selectedTaskIds: [taskIds.last],
+      await expectLater(
+        receipts.generateReceipt(
+          ReceiptCreateRequest(
+            operationId: 'op-four',
+            source: ReceiptEntrySource.completedSelection,
+            defaultTitle: 'Completed tasks',
+            title: 'Fourth receipt',
+            selectedTaskIds: [taskIds.last],
+          ),
         ),
+        throwsA(isA<ReceiptQuotaExceededException>()),
       );
 
-      expect(fourth.title, 'Fourth receipt');
-      expect(fourth.displayNumber, 4);
-      expect((await receipts.quotaStatus()).usedThisWeek, 4);
+      expect(await receipts.listReceipts(), hasLength(3));
+      final quota = await receipts.quotaStatus();
+      expect(quota.usedThisWeek, 3);
+      expect(quota.remainingThisWeek, 0);
     },
   );
 }

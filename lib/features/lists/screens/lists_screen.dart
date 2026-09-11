@@ -149,10 +149,11 @@ class ListsScreen extends ConsumerWidget {
                       _ListRow(
                         label: 'Insights',
                         semanticLabel: 'Open Insights',
-                        icon: Icon(
-                          SyncIcons.insights,
+                        icon: HugeIcon(
+                          icon: HugeIcons.strokeRoundedAlignBottom,
                           size: 20,
                           color: colors.textPrimary,
+                          strokeWidth: 1.5,
                         ),
                         onTap: () => context.go('/lists/insights'),
                       ),
@@ -223,7 +224,7 @@ class ListsScreen extends ConsumerWidget {
                         label: 'Reminders',
                         semanticLabel: 'Open Reminders list',
                         icon: HugeIcon(
-                          icon: HugeIcons.strokeRoundedNotification03,
+                          icon: HugeIcons.strokeRoundedBellDot,
                           size: 20,
                           color: colors.textPrimary,
                           strokeWidth: 1.5,

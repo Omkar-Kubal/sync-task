@@ -125,7 +125,7 @@ class _SyncNavIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return switch (index) {
       0 => _TodayIcon(color: color, selected: selected),
-      _ => ListFilterIcon(color: color, size: 22, strokeWidth: 1.45),
+      _ => _ListsNavIcon(color: color, selected: selected),
     };
   }
 }
@@ -163,6 +163,32 @@ class _TodayIcon extends StatelessWidget {
           height: 1,
         ),
       ),
+    );
+  }
+}
+
+
+class _ListsNavIcon extends StatelessWidget {
+  const _ListsNavIcon({required this.color, required this.selected});
+
+  final Color color;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    final fillColor = selected ? color : Colors.transparent;
+    final foreground = selected ? colors.controlForeground : color;
+    return Container(
+      key: const Key('sync-bottom-nav-lists-tile'),
+      width: 28,
+      height: 28,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: fillColor,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: ListFilterIcon(color: foreground, size: 22, strokeWidth: 1.8),
     );
   }
 }

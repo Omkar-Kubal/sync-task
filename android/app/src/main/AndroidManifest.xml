@@ -48,17 +48,43 @@
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- Home screen widget receiver -->
+        <!-- Home screen widget receivers -->
         <receiver
-            android:name=".SyncTasksWidget"
+            android:name=".SyncTasksProgressWidget"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info"/>
+                android:resource="@xml/widget_progress_info"/>
         </receiver>
+
+        <receiver
+            android:name=".SyncTasksInboxWidget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_inbox_info"/>
+        </receiver>
+
+        <receiver
+            android:name=".SyncTasksTodayWidget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_today_info"/>
+        </receiver>
+
+        <receiver
+            android:name="es.antonborri.home_widget.HomeWidgetBackgroundReceiver"
+            android:exported="false" />
 
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

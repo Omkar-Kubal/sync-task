@@ -100,13 +100,22 @@ void main() {
     expect(completedIcon.icon, HugeIcons.strokeRoundedBookCheck);
     expect(completedIcon.size, 20);
     expect(completedIcon.strokeWidth, 1.5);
+    final insightsIcon = tester.widget<HugeIcon>(
+      find.descendant(
+        of: find.bySemanticsLabel('Open Insights'),
+        matching: find.byType(HugeIcon),
+      ),
+    );
+    expect(insightsIcon.icon, HugeIcons.strokeRoundedAlignBottom);
+    expect(insightsIcon.size, 20);
+    expect(insightsIcon.strokeWidth, 1.5);
     final reminderIcon = tester.widget<HugeIcon>(
       find.descendant(
         of: find.bySemanticsLabel('Open Reminders list'),
         matching: find.byType(HugeIcon),
       ),
     );
-    expect(reminderIcon.icon, HugeIcons.strokeRoundedNotification03);
+    expect(reminderIcon.icon, HugeIcons.strokeRoundedBellDot);
     expect(reminderIcon.size, 20);
     expect(reminderIcon.strokeWidth, 1.5);
     expect(find.byIcon(SyncIcons.upcoming), findsNothing);

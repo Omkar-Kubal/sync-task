@@ -159,6 +159,21 @@ void main() {
     expect(navDecoration.borderRadius, BorderRadius.circular(24));
   });
 
+  testWidgets('bottom navigation highlights Lists tile when selected', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(SyncBottomNav(currentIndex: 1, onTap: (_) {})),
+    );
+
+    final listsTile = find.byKey(const Key('sync-bottom-nav-lists-tile'));
+    expect(listsTile, findsOneWidget);
+
+    final tileContainer = tester.widget<Container>(listsTile);
+    final decoration = tileContainer.decoration! as BoxDecoration;
+    expect(decoration.color, const Color(0xFF000000));
+  });
+
   testWidgets('bottom navigation stays responsive when Lists is selected', (
     tester,
   ) async {
@@ -297,6 +312,9 @@ void main() {
 
     expect(decoration.borderRadius, BorderRadius.circular(24));
     expect(decoration.border, isNull);
+    expect(decoration.boxShadow, isNotNull);
+    expect(decoration.boxShadow!.single.blurRadius, greaterThanOrEqualTo(16));
+    expect(find.byType(Divider), findsNothing);
   });
 }
 

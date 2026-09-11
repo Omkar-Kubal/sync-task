@@ -124,7 +124,7 @@ void main() {
     expect(find.text('Version'), findsNothing);
   });
 
-  testWidgets('settings notifications row uses Hugeicons bell', (tester) async {
+  testWidgets('settings rows use requested Hugeicons', (tester) async {
     await tester.pumpWidget(
       _settingsApp(
         repository: SettingsRepository.memory(),
@@ -132,16 +132,27 @@ void main() {
       ),
     );
 
-    final icon = tester.widget<HugeIcon>(
-      find.descendant(
-        of: find.widgetWithText(ListTile, 'Notifications'),
-        matching: find.byType(HugeIcon),
-      ),
-    );
+    final expectedIcons = {
+      'Default Folder': HugeIcons.strokeRoundedFolder02,
+      'Sound Effects': HugeIcons.strokeRoundedVolumeUp,
+      'Notifications': HugeIcons.strokeRoundedBellDot,
+      "What's New": HugeIcons.strokeRoundedBadgeAlert,
+      'Help & Feedback': HugeIcons.strokeRoundedCommentAdd01,
+      'Privacy Policy': HugeIcons.strokeRoundedBiometricAccess,
+    };
 
-    expect(icon.icon, HugeIcons.strokeRoundedNotification03);
-    expect(icon.size, 20);
-    expect(icon.strokeWidth, 1.5);
+    for (final entry in expectedIcons.entries) {
+      final icon = tester.widget<HugeIcon>(
+        find.descendant(
+          of: find.widgetWithText(ListTile, entry.key),
+          matching: find.byType(HugeIcon),
+        ),
+      );
+
+      expect(icon.icon, entry.value, reason: entry.key);
+      expect(icon.size, 20, reason: entry.key);
+      expect(icon.strokeWidth, 1.5, reason: entry.key);
+    }
   });
 
   testWidgets('theme row opens picker and persists selected mode', (
@@ -327,7 +338,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(launched, [
-      Uri.parse('https://sites.google.com/view/synctask/home'),
+      Uri.parse('https://sites.google.com/view/my-todos/privacy-policy'),
     ]);
   });
 }

@@ -214,6 +214,9 @@ class ReceiptRepository {
 
       final now = _now();
       final quota = await quotaStatus();
+      if (quota.isExhausted) {
+        throw ReceiptQuotaExceededException(quota);
+      }
 
       final snapshots = await _completedSnapshots(selectedIds);
       if (snapshots.length != selectedIds.length) {

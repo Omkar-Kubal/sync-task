@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:synctasks/core/database/app_database.dart';
 import 'package:synctasks/features/tasks/providers/folders_provider.dart';
+import 'package:synctasks/features/tasks/providers/task_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,8 +13,14 @@ import 'package:synctasks/shared/sheets/app_bottom_sheet.dart';
 
 void main() {
   Widget wrap(Widget child, {List overrides = const []}) {
+    final db = AppDatabase.memory();
+    addTearDown(db.close);
+
     return ProviderScope(
-      overrides: overrides.cast(),
+      overrides: [
+        appDatabaseProvider.overrideWithValue(db),
+        ...overrides.cast(),
+      ],
       child: MaterialApp(
         theme: buildSyncTasksTheme(Brightness.light),
         home: Scaffold(body: child),
@@ -114,14 +121,12 @@ void main() {
     ];
 
     await tester.pumpWidget(
-      ProviderScope(
-        overrides: [foldersProvider.overrideWith((ref) async => folders)],
-        child: wrap(
-          TaskCreateSheet(
-            onSubmit: (title, folderId) => chosenFolderId = folderId,
-            onTodaySelected: (_, __) {},
-          ),
+      wrap(
+        TaskCreateSheet(
+          onSubmit: (title, folderId) => chosenFolderId = folderId,
+          onTodaySelected: (_, __) {},
         ),
+        overrides: [foldersProvider.overrideWith((ref) async => folders)],
       ),
     );
     await tester.pumpAndSettle();
@@ -539,5 +544,3 @@ List<Object?> _captureHaptics(WidgetTester tester) {
   );
   return calls;
 }
-
-

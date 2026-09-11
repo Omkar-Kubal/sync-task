@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 
+
 import '../../features/insights/screens/insights_screen.dart';
 import '../../features/lists/screens/black_placeholder_screen.dart';
 import '../../features/lists/screens/list_detail_screen.dart';

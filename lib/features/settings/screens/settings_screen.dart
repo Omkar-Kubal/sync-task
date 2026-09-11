@@ -17,7 +17,8 @@ import '../domain/app_settings.dart';
 import '../providers/settings_controller.dart';
 import '../../tasks/providers/folders_provider.dart';
 
-const syncTasksPrivacyPolicyUrl = 'https://sites.google.com/view/synctask/home';
+const syncTasksPrivacyPolicyUrl =
+    'https://sites.google.com/view/my-todos/privacy-policy';
 const syncTasksFeatureRequestsUrl =
     'mailto:support@appylab.org?subject=Feature%20Request';
 const syncTasksSupportEmailUrl = 'mailto:support@appylab.org';
@@ -78,7 +79,9 @@ class SettingsScreen extends ConsumerWidget {
                     onTap: () => _showThemeSheet(context, controller),
                   ),
                   _SettingsRow(
-                    icon: SyncIcons.folder,
+                    iconWidget: const _SettingsHugeIcon(
+                      icon: HugeIcons.strokeRoundedFolder02,
+                    ),
                     title: 'Default Folder',
                     value: defaultFolderLabel,
                     onTap: () => _showDefaultFolderSheet(
@@ -89,18 +92,17 @@ class SettingsScreen extends ConsumerWidget {
                     ),
                   ),
                   _SettingsRow(
-                    icon: SyncIcons.sound,
+                    iconWidget: const _SettingsHugeIcon(
+                      icon: HugeIcons.strokeRoundedVolumeUp,
+                    ),
                     title: 'Sound Effects',
                     value: settings.soundEffects ? 'On' : 'Off',
                     onTap: () =>
                         _showSoundEffectsSheet(context, settings, controller),
                   ),
                   _SettingsRow(
-                    iconWidget: HugeIcon(
-                      icon: HugeIcons.strokeRoundedNotification03,
-                      size: 20,
-                      color: colors.textPrimary,
-                      strokeWidth: 1.5,
+                    iconWidget: const _SettingsHugeIcon(
+                      icon: HugeIcons.strokeRoundedBellDot,
                     ),
                     title: 'Notifications',
                     value: settings.notificationsEnabled ? 'On' : 'Off',
@@ -132,12 +134,16 @@ class SettingsScreen extends ConsumerWidget {
                 dividerIndent: 84,
                 children: [
                   _SettingsRow(
-                    icon: Icons.new_releases_outlined,
+                    iconWidget: const _SettingsHugeIcon(
+                      icon: HugeIcons.strokeRoundedBadgeAlert,
+                    ),
                     title: "What's New",
                     onTap: () => _showWhatsNewSheet(context),
                   ),
                   _SettingsRow(
-                    icon: Icons.chat_bubble_outline_rounded,
+                    iconWidget: const _SettingsHugeIcon(
+                      icon: HugeIcons.strokeRoundedCommentAdd01,
+                    ),
                     title: 'Help & Feedback',
                     onTap: () => _showHelpFeedbackSheet(context),
                   ),
@@ -152,7 +158,9 @@ class SettingsScreen extends ConsumerWidget {
                 dividerIndent: 84,
                 children: [
                   _SettingsRow(
-                    icon: SyncIcons.privacy,
+                    iconWidget: const _SettingsHugeIcon(
+                      icon: HugeIcons.strokeRoundedBiometricAccess,
+                    ),
                     title: 'Privacy Policy',
                     trailingIcon: Icons.open_in_new_rounded,
                     onTap: () => _openPrivacyPolicy(context, ref),
@@ -1063,6 +1071,22 @@ class _IconTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: child ?? Icon(icon, color: colors.textPrimary, size: 20),
+    );
+  }
+}
+
+class _SettingsHugeIcon extends StatelessWidget {
+  const _SettingsHugeIcon({required this.icon});
+
+  final List<List<dynamic>> icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return HugeIcon(
+      icon: icon,
+      size: 20,
+      color: SyncTasksColorScheme.of(context).textPrimary,
+      strokeWidth: 1.5,
     );
   }
 }

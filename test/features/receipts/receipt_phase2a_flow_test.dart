@@ -399,7 +399,7 @@ void main() {
     expect(await ReceiptRepository(db).listReceipts(), isEmpty);
   });
 
-  testWidgets('composer allows more than three receipts in one week', (
+  testWidgets('composer shows paywall when weekly receipt quota is exhausted', (
     tester,
   ) async {
     final ids = <int>[];
@@ -433,20 +433,25 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('3 receipts created this week'), findsOneWidget);
+    expect(find.text('3 of 3 free receipts used'), findsOneWidget);
     await tester.enterText(find.byType(TextField), 'Still mine');
     await tester.tap(find.widgetWithText(FilledButton, 'Generate receipt'));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
-    expect(find.text('Printing your wins...'), findsOneWidget);
-    await tester.pumpAndSettle(const Duration(seconds: 2));
-
+    expect(find.text('Unlimited receipts'), findsWidgets);
+    expect(find.text('Keep a record of your completed work.'), findsOneWidget);
     expect(
-      router.routeInformationProvider.value.uri.path,
-      startsWith('/receipts/'),
+      find.textContaining('Free receipts reset Monday, 14 Sept.'),
+      findsOneWidget,
     );
-    expect(find.text('Still mine'), findsWidgets);
-    expect(find.text('Quota task 3'), findsOneWidget);
+    expect(find.text('Unlock for ₹199'), findsOneWidget);
+    expect(find.text('Restore purchases'), findsOneWidget);
+    expect(
+      find.text('Saved receipts and all task features stay free.'),
+      findsOneWidget,
+    );
+    expect(find.text('Printing your wins...'), findsNothing);
+    expect(await ReceiptRepository(db).listReceipts(), hasLength(3));
   });
 }
 

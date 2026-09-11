@@ -6,21 +6,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:synctasks/core/database/app_database.dart';
 
 void main() {
-  late AppDatabase db;
-
-  setUp(() {
-    db = AppDatabase.memory();
-  });
-
-  tearDown(() async {
-    await db.close();
-  });
-
   test('database starts at explicit schema version five', () {
+    final db = AppDatabase.memory();
+    addTearDown(db.close);
+
     expect(db.schemaVersion, 5);
   });
 
   test('receipts table includes photo artwork path', () async {
+    final db = AppDatabase.memory();
+    addTearDown(db.close);
+
     final columns = await db.customSelect('PRAGMA table_info(receipts)').get();
     final columnNames = {for (final row in columns) row.read<String>('name')};
 
@@ -28,6 +24,9 @@ void main() {
   });
 
   test('database starts with permanent Inbox folder', () async {
+    final db = AppDatabase.memory();
+    addTearDown(db.close);
+
     final folders = await db.select(db.folders).get();
 
     expect(folders, hasLength(1));
@@ -38,6 +37,9 @@ void main() {
   test(
     'database inserts minimal task and completed focus history rows',
     () async {
+      final db = AppDatabase.memory();
+      addTearDown(db.close);
+
       final now = DateTime(2026, 8, 31, 10);
       final folder = (await db.select(db.folders).get()).single;
       final taskId = await db

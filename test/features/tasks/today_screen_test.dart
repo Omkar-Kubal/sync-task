@@ -96,6 +96,26 @@ void main() {
     expect(upcomingSize, const Size(46, 46));
     expect(searchSize, const Size(46, 46));
     expect(settingsSize, const Size(46, 46));
+    expect(find.byType(VerticalDivider), findsNothing);
+
+    final topActions = tester.widget<Container>(
+      find.byKey(const Key('today-top-actions-pill')),
+    );
+    final decoration = topActions.decoration! as BoxDecoration;
+    expect(decoration.border, isNull);
+    expect(decoration.boxShadow, isNotNull);
+    expect(decoration.boxShadow!.single.blurRadius, greaterThanOrEqualTo(16));
+
+    for (final label in ['Open Upcoming', 'Search tasks', 'Settings']) {
+      final button = tester.widget<IconButton>(
+        find.descendant(
+          of: find.bySemanticsLabel(label),
+          matching: find.byType(IconButton),
+        ),
+      );
+      expect(button.style?.backgroundColor?.resolve({}), Colors.transparent);
+      expect(button.style?.side?.resolve({}), BorderSide.none);
+    }
   });
 
   testWidgets('settings top action uses Hugeicons Setting 07', (tester) async {
