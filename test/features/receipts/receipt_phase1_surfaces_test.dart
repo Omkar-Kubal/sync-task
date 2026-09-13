@@ -362,11 +362,28 @@ void main() {
       find.byKey(const ValueKey('receipt-pro-paywall-sheet')),
       findsOneWidget,
     );
+    expect(
+      find.byKey(const ValueKey('receipt-pro-brand-title')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('receipt-pro-badge')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('receipt-pro-lifetime-option-card')),
+      findsOneWidget,
+    );
     expect(find.text('Unlimited receipts'), findsWidgets);
     expect(
       tester.getTopLeft(find.text('3 free receipts weekly')).dy,
-      lessThan(tester.getTopLeft(find.text('SYNCTASKS')).dy),
+      lessThan(
+        tester
+            .getTopLeft(
+              find.byKey(const ValueKey('receipt-pro-lifetime-option-card')),
+            )
+            .dy,
+      ),
     );
+    expect(find.text('Lifetime'), findsOneWidget);
+    expect(find.text('One-time receipt upgrade'), findsOneWidget);
     expect(find.text('Unlock for ₹199'), findsOneWidget);
     expect(find.text('Restore purchases'), findsOneWidget);
     expect(find.text('Purchasing arrives in Phase 2.'), findsNothing);

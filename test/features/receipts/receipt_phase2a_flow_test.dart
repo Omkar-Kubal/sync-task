@@ -464,15 +464,27 @@ void main() {
     );
     expect(find.text('Create receipt'), findsOneWidget);
     expect(find.text('Unlimited receipts'), findsWidgets);
-    expect(find.text('Keep a record of your completed work.'), findsOneWidget);
+    expect(
+      find.text('Unlimited receipts for your completed work.'),
+      findsOneWidget,
+    );
     expect(
       find.textContaining('Free receipts reset Monday, 14 Sept.'),
       findsOneWidget,
     );
     expect(
       tester.getTopLeft(find.text('3 of 3 free receipts used').last).dy,
-      lessThan(tester.getTopLeft(find.text('SYNCTASKS').last).dy),
+      lessThan(
+        tester
+            .getTopLeft(
+              find.byKey(const ValueKey('receipt-pro-lifetime-option-card')),
+            )
+            .dy,
+      ),
     );
+    expect(find.byKey(const ValueKey('receipt-pro-badge')), findsOneWidget);
+    expect(find.text('Lifetime'), findsOneWidget);
+    expect(find.text('One-time receipt upgrade'), findsOneWidget);
     expect(find.text('Unlock for ₹199'), findsOneWidget);
     expect(find.text('Restore purchases'), findsOneWidget);
     expect(
