@@ -411,4 +411,52 @@ void main() {
     expect(textStyle?.color, isNotNull);
     expect(textStyle!.color!.computeLuminance(), greaterThan(0.45));
   });
+
+  testWidgets('receipt paywall uses compact SyncTasks sizing', (tester) async {
+    final billingService = FakeReceiptProBillingService();
+    addTearDown(billingService.close);
+    await pumpApp(tester, receiptProBillingService: billingService);
+
+    router.go('/settings');
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(ListTile, 'SyncTasks Pro'));
+    await tester.pumpAndSettle();
+
+    expect(
+      tester
+          .getSize(find.byKey(const ValueKey('receipt-pro-paywall-sheet')))
+          .height,
+      lessThanOrEqualTo(630),
+    );
+    expect(
+      tester.getSize(find.byKey(const ValueKey('receipt-pro-logo-mark'))),
+      const Size(56, 56),
+    );
+    expect(
+      tester
+          .getSize(
+            find.byKey(const ValueKey('receipt-pro-lifetime-option-card')),
+          )
+          .height,
+      lessThanOrEqualTo(54),
+    );
+    final unlockButtonSize = tester.getSize(
+      find.widgetWithText(FilledButton, 'Unlock for ₹199'),
+    );
+    expect(unlockButtonSize.height, 36);
+    expect(unlockButtonSize.width, greaterThanOrEqualTo(320));
+    expect(
+      tester
+          .getBottomLeft(find.widgetWithText(TextButton, 'Restore purchases'))
+          .dy,
+      lessThanOrEqualTo(
+        tester
+            .getBottomLeft(
+              find.byKey(const ValueKey('receipt-pro-paywall-sheet')),
+            )
+            .dy,
+      ),
+    );
+  });
 }
