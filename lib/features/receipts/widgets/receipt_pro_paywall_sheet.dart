@@ -110,67 +110,127 @@ class _ReceiptProPaywallSheetState
             borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
             child: ColoredBox(
               color: colors.scaffold,
-              child: Stack(
-                children: [
-                  SizedBox.expand(
-                    key: const ValueKey('receipt-pro-paywall-sheet'),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: SingleChildScrollView(
-                            key: const ValueKey('receipt-pro-paywall-scroll'),
-                            padding: EdgeInsets.fromLTRB(
-                              18 + mediaQuery.padding.left,
-                              18,
-                              18 + mediaQuery.padding.right,
-                              126,
-                            ),
-                            child: _ReceiptProPaywallContent(
-                              status: widget.status,
-                            ),
+              child: SizedBox.expand(
+                key: const ValueKey('receipt-pro-paywall-sheet'),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    18 + mediaQuery.padding.left,
+                    14,
+                    18 + mediaQuery.padding.right,
+                    0,
+                  ),
+                  child: Column(
+                    children: [
+                      _PaywallHeaderLockup(
+                        onClose: () => Navigator.of(context).maybePop(false),
+                      ),
+                      const SizedBox(height: 10),
+                      Flexible(
+                        fit: FlexFit.loose,
+                        child: SingleChildScrollView(
+                          key: const ValueKey('receipt-pro-paywall-scroll'),
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: _ReceiptProPaywallContent(
+                            status: widget.status,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 8),
+                      _ReceiptProCheckout(
+                        entitlement: entitlement,
+                        state: entitlementState,
+                        plan: plan,
+                        busy: busy,
+                        pending: pending,
+                        checkoutEnabled: checkoutEnabled,
+                        onBuy: () {
+                          SyncHaptics.selection();
+                          ref
+                              .read(receiptProEntitlementProvider.notifier)
+                              .buyUnlimitedReceipts();
+                        },
+                        onRestore: () {
+                          SyncHaptics.selection();
+                          ref
+                              .read(receiptProEntitlementProvider.notifier)
+                              .restore();
+                        },
+                      ),
+                    ],
                   ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: _ReceiptProCheckout(
-                      entitlement: entitlement,
-                      state: entitlementState,
-                      plan: plan,
-                      busy: busy,
-                      pending: pending,
-                      checkoutEnabled: checkoutEnabled,
-                      onBuy: () {
-                        SyncHaptics.selection();
-                        ref
-                            .read(receiptProEntitlementProvider.notifier)
-                            .buyUnlimitedReceipts();
-                      },
-                      onRestore: () {
-                        SyncHaptics.selection();
-                        ref
-                            .read(receiptProEntitlementProvider.notifier)
-                            .restore();
-                      },
-                    ),
-                  ),
-                  Positioned(
-                    top: 14,
-                    left: 18 + mediaQuery.padding.left,
-                    child: _PaywallCloseButton(
-                      onClose: () => Navigator.of(context).maybePop(false),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _PaywallHeaderLockup extends StatelessWidget {
+  const _PaywallHeaderLockup({required this.onClose});
+
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    final textTheme = Theme.of(context).textTheme;
+    return Row(
+      children: [
+        _PaywallCloseButton(onClose: onClose),
+        const SizedBox(width: 8),
+        const _PaywallLogoMark(),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      'SyncTasks',
+                      key: const ValueKey('receipt-pro-brand-title'),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: textTheme.titleMedium?.copyWith(
+                        color: colors.textPrimary,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                        height: 1.08,
+                        letterSpacing: 0,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  const _PaywallProBadge(),
+                ],
+              ),
+              const SizedBox(height: 2),
+              SizedBox(
+                width: double.infinity,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Unlimited receipts for your completed work.',
+                    maxLines: 1,
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colors.textSecondary,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      height: 1.2,
+                      letterSpacing: 0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -188,14 +248,11 @@ class _ReceiptProPaywallContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const _PaywallHeroLockup(),
-        const SizedBox(height: 8),
-        if (status == null)
-          const _PaywallQuotaIntroCard()
-        else
-          _PaywallStatusCard(status: status!),
-        const SizedBox(height: 8),
-        _PaywallBenefitList(colors: colors, textTheme: textTheme),
+        _PaywallValuePanel(
+          status: status,
+          colors: colors,
+          textTheme: textTheme,
+        ),
       ],
     );
   }
@@ -243,62 +300,69 @@ class _ReceiptProCheckout extends StatelessWidget {
         ? colors.controlForeground
         : disabledButtonTextColor;
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
-        border: Border.all(color: colors.divider),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 24,
-            offset: const Offset(0, -8),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        top: false,
-        minimum: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _LifetimeOption(plan: plan, colors: colors, textTheme: textTheme),
-            const SizedBox(height: 2),
-            _CheckoutSupportRow(
-              message: _billingMessage(entitlement, state, plan),
-              busy: busy,
-              onRestore: onRestore,
-              colors: colors,
-              textTheme: textTheme,
-            ),
-            const SizedBox(height: 4),
-            SizedBox(
-              height: 34,
-              child: FilledButton(
-                onPressed: checkoutEnabled ? onBuy : null,
-                style: FilledButton.styleFrom(
-                  backgroundColor: colors.controlPrimary,
-                  foregroundColor: colors.controlForeground,
-                  disabledBackgroundColor: colors.controlPrimary.withValues(
-                    alpha: 0.18,
-                  ),
-                  disabledForegroundColor: buttonTextColor,
-                  shape: const StadiumBorder(),
+    final message = _billingMessage(entitlement, state, plan);
+
+    return SafeArea(
+      top: false,
+      minimum: const EdgeInsets.only(bottom: 6),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _LifetimeOption(plan: plan, colors: colors, textTheme: textTheme),
+          if (message != null) ...[
+            const SizedBox(height: 5),
+            _InlineBillingStatus(message: message, colors: colors),
+          ],
+          const SizedBox(height: 5),
+          SizedBox(
+            height: 34,
+            child: FilledButton(
+              onPressed: checkoutEnabled ? onBuy : null,
+              style: FilledButton.styleFrom(
+                backgroundColor: colors.controlPrimary,
+                foregroundColor: colors.controlForeground,
+                disabledBackgroundColor: colors.controlPrimary.withValues(
+                  alpha: 0.18,
                 ),
-                child: Text(
-                  buttonLabel,
-                  style: textTheme.labelLarge?.copyWith(
-                    color: buttonTextColor,
-                    fontSize: 12.5,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0,
-                  ),
+                disabledForegroundColor: buttonTextColor,
+                shape: const StadiumBorder(),
+              ),
+              child: Text(
+                buttonLabel,
+                style: textTheme.labelLarge?.copyWith(
+                  color: buttonTextColor,
+                  fontSize: 12.5,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 4),
+          Align(
+            alignment: Alignment.center,
+            child: TextButton(
+              onPressed: busy ? null : onRestore,
+              style: TextButton.styleFrom(
+                minimumSize: const Size(112, 28),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                visualDensity: VisualDensity.compact,
+              ),
+              child: Text(
+                'Restore purchases',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: textTheme.labelLarge?.copyWith(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -329,59 +393,6 @@ class _ReceiptProCheckout extends StatelessWidget {
   }
 }
 
-class _PaywallHeroLockup extends StatelessWidget {
-  const _PaywallHeroLockup();
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
-    return Column(
-      children: [
-        const _PaywallLogoMark(),
-        const SizedBox(height: 5),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Flexible(
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  'SyncTasks',
-                  key: const ValueKey('receipt-pro-brand-title'),
-                  maxLines: 1,
-                  style: textTheme.displaySmall?.copyWith(
-                    color: colors.textPrimary,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
-                    height: 1,
-                    letterSpacing: 0,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 5),
-            const _PaywallProBadge(),
-          ],
-        ),
-        const SizedBox(height: 4),
-        Text(
-          'Unlimited receipts for your completed work.',
-          textAlign: TextAlign.center,
-          style: textTheme.titleMedium?.copyWith(
-            color: colors.textSecondary,
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
-            height: 1.2,
-            letterSpacing: 0,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _PaywallLogoMark extends StatelessWidget {
   const _PaywallLogoMark();
 
@@ -390,9 +401,9 @@ class _PaywallLogoMark extends StatelessWidget {
     final colors = SyncTasksColorScheme.of(context);
     return Container(
       key: const ValueKey('receipt-pro-logo-mark'),
-      width: 44,
-      height: 44,
-      padding: const EdgeInsets.all(9),
+      width: 38,
+      height: 38,
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: colors.surface,
         shape: BoxShape.circle,
@@ -544,6 +555,7 @@ class _InlineBillingStatus extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 3),
         child: Text(
           message,
+          textAlign: TextAlign.center,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -559,59 +571,6 @@ class _InlineBillingStatus extends StatelessWidget {
   }
 }
 
-class _CheckoutSupportRow extends StatelessWidget {
-  const _CheckoutSupportRow({
-    required this.message,
-    required this.busy,
-    required this.onRestore,
-    required this.colors,
-    required this.textTheme,
-  });
-
-  final String? message;
-  final bool busy;
-  final VoidCallback onRestore;
-  final SyncTasksColorScheme colors;
-  final TextTheme textTheme;
-
-  @override
-  Widget build(BuildContext context) {
-    final restoreButton = TextButton(
-      onPressed: busy ? null : onRestore,
-      style: TextButton.styleFrom(
-        minimumSize: const Size(84, 26),
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        visualDensity: VisualDensity.compact,
-      ),
-      child: Text(
-        'Restore purchases',
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: textTheme.labelLarge?.copyWith(
-          fontSize: 10.5,
-          fontWeight: FontWeight.w800,
-          letterSpacing: 0,
-        ),
-      ),
-    );
-
-    if (message == null) {
-      return Align(alignment: Alignment.centerRight, child: restoreButton);
-    }
-
-    return Row(
-      children: [
-        Expanded(
-          child: _InlineBillingStatus(message: message!, colors: colors),
-        ),
-        const SizedBox(width: 4),
-        restoreButton,
-      ],
-    );
-  }
-}
-
 class _PaywallCloseButton extends StatelessWidget {
   const _PaywallCloseButton({required this.onClose});
 
@@ -621,7 +580,7 @@ class _PaywallCloseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
     return SizedBox.square(
-      dimension: 36,
+      dimension: 34,
       child: IconButton(
         tooltip: 'Close',
         onPressed: () {
@@ -634,145 +593,172 @@ class _PaywallCloseButton extends StatelessWidget {
           side: BorderSide(color: colors.divider),
           shape: const CircleBorder(),
         ),
-        icon: const Icon(Icons.close_rounded, size: 20),
+        icon: const Icon(Icons.close_rounded, size: 19),
       ),
+    );
+  }
+}
+
+class _PaywallValuePanel extends StatelessWidget {
+  const _PaywallValuePanel({
+    required this.status,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  final ReceiptQuotaStatus? status;
+  final SyncTasksColorScheme colors;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      key: const ValueKey('receipt-pro-value-panel'),
+      decoration: BoxDecoration(
+        color: colors.surface,
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+        child: Column(
+          children: [
+            if (status == null)
+              _PaywallQuotaIntroCard(colors: colors, textTheme: textTheme)
+            else
+              _PaywallStatusCard(
+                status: status!,
+                colors: colors,
+                textTheme: textTheme,
+              ),
+            _PaywallPanelDivider(colors: colors),
+            _PaywallBenefitRow(
+              icon: Icons.all_inclusive_rounded,
+              title: 'Unlimited receipts',
+              body: 'Generate as many receipts as you need.',
+              colors: colors,
+              textTheme: textTheme,
+            ),
+            _PaywallPanelDivider(colors: colors),
+            _PaywallBenefitRow(
+              icon: SyncIcons.folder,
+              title: 'Your data stays safe',
+              body: 'Saved receipts and all task features stay free.',
+              colors: colors,
+              textTheme: textTheme,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PaywallPanelDivider extends StatelessWidget {
+  const _PaywallPanelDivider({required this.colors});
+
+  final SyncTasksColorScheme colors;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 45),
+      child: Divider(height: 13, color: colors.divider),
     );
   }
 }
 
 class _PaywallQuotaIntroCard extends StatelessWidget {
-  const _PaywallQuotaIntroCard();
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _PaywallIconTile(icon: SyncIcons.receipt, colors: colors),
-            const SizedBox(width: 9),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '3 free receipts weekly',
-                    style: textTheme.titleMedium?.copyWith(
-                      color: colors.textPrimary,
-                      fontSize: 13.5,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 0,
-                    ),
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    'Pro unlocks unlimited receipt generation whenever you need it.',
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: colors.textSecondary,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
-                      height: 1.22,
-                      letterSpacing: 0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _PaywallStatusCard extends StatelessWidget {
-  const _PaywallStatusCard({required this.status});
-
-  final ReceiptQuotaStatus status;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _PaywallIconTile(icon: SyncIcons.receipt, colors: colors),
-            const SizedBox(width: 9),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${status.freeLimit} of ${status.freeLimit} free receipts used',
-                    style: textTheme.titleMedium?.copyWith(
-                      color: colors.textPrimary,
-                      fontSize: 13.5,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 0,
-                    ),
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    'You’ve used your weekly free quota.\n'
-                    'Free receipts reset ${_resetDateLabel(status.weekEndExclusive)}.',
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: colors.textSecondary,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
-                      height: 1.22,
-                      letterSpacing: 0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _PaywallBenefitList extends StatelessWidget {
-  const _PaywallBenefitList({required this.colors, required this.textTheme});
+  const _PaywallQuotaIntroCard({required this.colors, required this.textTheme});
 
   final SyncTasksColorScheme colors;
   final TextTheme textTheme;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        _PaywallBenefitRow(
-          icon: Icons.all_inclusive_rounded,
-          title: 'Unlimited receipts',
-          body: 'Generate as many receipts as you need.',
-          colors: colors,
-          textTheme: textTheme,
+        _PaywallIconTile(icon: SyncIcons.receipt, colors: colors),
+        const SizedBox(width: 9),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '3 free receipts weekly',
+                style: textTheme.titleMedium?.copyWith(
+                  color: colors.textPrimary,
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0,
+                  height: 1.12,
+                ),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                'Pro unlocks unlimited receipt generation whenever you need it.',
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colors.textSecondary,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                  height: 1.22,
+                  letterSpacing: 0,
+                ),
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 7),
-        _PaywallBenefitRow(
-          icon: SyncIcons.folder,
-          title: 'Your data stays safe',
-          body: 'Saved receipts and all task features stay free.',
-          colors: colors,
-          textTheme: textTheme,
+      ],
+    );
+  }
+}
+
+class _PaywallStatusCard extends StatelessWidget {
+  const _PaywallStatusCard({
+    required this.status,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  final ReceiptQuotaStatus status;
+  final SyncTasksColorScheme colors;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _PaywallIconTile(icon: SyncIcons.receipt, colors: colors),
+        const SizedBox(width: 9),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${status.freeLimit} of ${status.freeLimit} free receipts used',
+                style: textTheme.titleMedium?.copyWith(
+                  color: colors.textPrimary,
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0,
+                  height: 1.12,
+                ),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                'You’ve used your weekly free quota.\n'
+                'Free receipts reset ${_resetDateLabel(status.weekEndExclusive)}.',
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colors.textSecondary,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                  height: 1.22,
+                  letterSpacing: 0,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

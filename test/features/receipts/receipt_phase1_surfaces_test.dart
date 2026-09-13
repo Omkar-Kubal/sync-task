@@ -444,7 +444,7 @@ void main() {
     );
     expect(
       tester.getSize(find.byKey(const ValueKey('receipt-pro-logo-mark'))),
-      const Size(44, 44),
+      const Size(38, 38),
     );
     expect(
       tester
@@ -471,6 +471,57 @@ void main() {
             .dy,
       ),
     );
+  });
+
+  testWidgets('receipt paywall uses one cohesive app-style value panel', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 2.625;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    final billingService = FakeReceiptProBillingService();
+    addTearDown(billingService.close);
+    await pumpApp(tester, receiptProBillingService: billingService);
+
+    router.go('/settings');
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(ListTile, 'SyncTasks Pro'));
+    await tester.pumpAndSettle();
+
+    final valuePanel = find.byKey(const ValueKey('receipt-pro-value-panel'));
+    expect(valuePanel, findsOneWidget);
+    expect(
+      find.descendant(
+        of: valuePanel,
+        matching: find.text('3 free receipts weekly'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: valuePanel,
+        matching: find.text('Unlimited receipts'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: valuePanel,
+        matching: find.text('Your data stays safe'),
+      ),
+      findsOneWidget,
+    );
+
+    final benefitsBottom = tester.getBottomLeft(valuePanel).dy;
+    final planTop = tester
+        .getTopLeft(
+          find.byKey(const ValueKey('receipt-pro-lifetime-option-card')),
+        )
+        .dy;
+    expect(planTop - benefitsBottom, lessThanOrEqualTo(32));
   });
 
   testWidgets('receipt paywall sheet surface has the shared top shadow', (
