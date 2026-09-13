@@ -50,6 +50,15 @@ class ReceiptProPaywallSheet extends ConsumerStatefulWidget {
 class _ReceiptProPaywallSheetState
     extends ConsumerState<ReceiptProPaywallSheet> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      ref.read(receiptProEntitlementProvider.notifier).clearTransientMessage();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     ref.listen<AsyncValue<ReceiptProEntitlementState>>(
       receiptProEntitlementProvider,
@@ -105,58 +114,51 @@ class _ReceiptProPaywallSheetState
               ),
               child: ColoredBox(
                 color: colors.scaffold,
-                child: Stack(
-                  children: [
-                    SizedBox.expand(
-                      key: const ValueKey('receipt-pro-paywall-sheet'),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: SingleChildScrollView(
-                              padding: EdgeInsets.fromLTRB(
-                                20 + mediaQuery.padding.left,
-                                34,
-                                20 + mediaQuery.padding.right,
-                                20,
-                              ),
-                              child: _ReceiptProPaywallContent(
-                                status: widget.status,
-                                tasks: widget.tasks,
-                                title: widget.title,
-                              ),
-                            ),
-                          ),
-                          _ReceiptProCheckout(
-                            entitlement: entitlement,
-                            state: entitlementState,
-                            plan: plan,
-                            busy: busy,
-                            pending: pending,
-                            checkoutEnabled: checkoutEnabled,
-                            onBuy: () {
-                              SyncHaptics.selection();
-                              ref
-                                  .read(receiptProEntitlementProvider.notifier)
-                                  .buyUnlimitedReceipts();
-                            },
-                            onRestore: () {
-                              SyncHaptics.selection();
-                              ref
-                                  .read(receiptProEntitlementProvider.notifier)
-                                  .restore();
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      top: 18,
-                      right: 20 + mediaQuery.padding.right,
-                      child: _PaywallCloseButton(
+                child: SizedBox.expand(
+                  key: const ValueKey('receipt-pro-paywall-sheet'),
+                  child: Column(
+                    children: [
+                      _PaywallSheetHeader(
+                        rightInset: mediaQuery.padding.right,
                         onClose: () => Navigator.of(context).maybePop(false),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        child: SingleChildScrollView(
+                          padding: EdgeInsets.fromLTRB(
+                            20 + mediaQuery.padding.left,
+                            10,
+                            20 + mediaQuery.padding.right,
+                            20,
+                          ),
+                          child: _ReceiptProPaywallContent(
+                            status: widget.status,
+                            tasks: widget.tasks,
+                            title: widget.title,
+                          ),
+                        ),
+                      ),
+                      _ReceiptProCheckout(
+                        entitlement: entitlement,
+                        state: entitlementState,
+                        plan: plan,
+                        busy: busy,
+                        pending: pending,
+                        checkoutEnabled: checkoutEnabled,
+                        onBuy: () {
+                          SyncHaptics.selection();
+                          ref
+                              .read(receiptProEntitlementProvider.notifier)
+                              .buyUnlimitedReceipts();
+                        },
+                        onRestore: () {
+                          SyncHaptics.selection();
+                          ref
+                              .read(receiptProEntitlementProvider.notifier)
+                              .restore();
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -195,7 +197,6 @@ class _ReceiptProPaywallContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: 66),
         Text(
           'Unlimited\nreceipts',
           style: textTheme.displaySmall?.copyWith(
@@ -217,10 +218,17 @@ class _ReceiptProPaywallContent extends StatelessWidget {
             letterSpacing: 0,
           ),
         ),
-        const SizedBox(height: 26),
+        const SizedBox(height: 20),
+        if (status == null)
+          const _PaywallQuotaIntroCard()
+        else
+          _PaywallStatusCard(status: status!),
+        const SizedBox(height: 14),
+        _PaywallBenefitCard(colors: colors, textTheme: textTheme),
+        const SizedBox(height: 18),
         Center(
           child: SizedBox(
-            height: 304,
+            height: 268,
             child: FittedBox(
               fit: BoxFit.contain,
               alignment: Alignment.topCenter,
@@ -234,13 +242,6 @@ class _ReceiptProPaywallContent extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 18),
-        if (status == null)
-          const _PaywallQuotaIntroCard()
-        else
-          _PaywallStatusCard(status: status!),
-        const SizedBox(height: 14),
-        _PaywallBenefitCard(colors: colors, textTheme: textTheme),
       ],
     );
   }
@@ -273,6 +274,20 @@ class _ReceiptProCheckout extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final price = plan?.price ?? '₹199';
     final active = state?.isPro == true;
+    final buttonLabel = active
+        ? 'Unlimited receipts active'
+        : busy
+        ? _busyLabel(state)
+        : pending
+        ? 'Payment pending'
+        : 'Unlock for $price';
+    final disabledButtonTextColor =
+        Theme.of(context).brightness == Brightness.dark
+        ? colors.textPrimary.withValues(alpha: 0.72)
+        : colors.controlForeground.withValues(alpha: 0.72);
+    final buttonTextColor = checkoutEnabled || active
+        ? colors.controlForeground
+        : disabledButtonTextColor;
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -297,13 +312,12 @@ class _ReceiptProCheckout extends StatelessWidget {
             FilledButton(
               onPressed: checkoutEnabled ? onBuy : null,
               child: Text(
-                active
-                    ? 'Unlimited receipts active'
-                    : busy
-                    ? _busyLabel(state)
-                    : pending
-                    ? 'Payment pending'
-                    : 'Unlock for $price',
+                buttonLabel,
+                style: textTheme.labelLarge?.copyWith(
+                  color: buttonTextColor,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0,
+                ),
               ),
             ),
             if (_billingMessage(entitlement, state, plan)
@@ -353,6 +367,44 @@ class _ReceiptProCheckout extends StatelessWidget {
       return state!.message;
     }
     return plan?.unavailableReason;
+  }
+}
+
+class _PaywallSheetHeader extends StatelessWidget {
+  const _PaywallSheetHeader({required this.rightInset, required this.onClose});
+
+  final double rightInset;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    return SizedBox(
+      height: 82,
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: Container(
+                width: 46,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: colors.divider,
+                  borderRadius: BorderRadius.circular(999),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 14,
+            right: 20 + rightInset,
+            child: _PaywallCloseButton(onClose: onClose),
+          ),
+        ],
+      ),
+    );
   }
 }
 

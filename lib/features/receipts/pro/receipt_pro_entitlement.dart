@@ -233,6 +233,16 @@ class ReceiptProEntitlement extends AsyncNotifier<ReceiptProEntitlementState> {
 
   Future<void> restore() => reconcile(source: 'restore', restoring: true);
 
+  void clearTransientMessage() {
+    final current = state.value;
+    if (current == null ||
+        current.message == null ||
+        current.status != ReceiptProEntitlementStatus.free) {
+      return;
+    }
+    state = AsyncData(current.copyWith(clearMessage: true));
+  }
+
   Future<void> reconcile({
     String source = 'manual',
     bool restoring = false,

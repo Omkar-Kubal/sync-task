@@ -134,6 +134,25 @@ void main() {
       expect(state.message, 'No active unlimited receipts purchase found.');
     },
   );
+
+  test('clearTransientMessage clears free restore notice only', () async {
+    final harness = _Harness();
+    addTearDown(harness.dispose);
+    await harness.read();
+
+    final notifier = harness.container.read(
+      receiptProEntitlementProvider.notifier,
+    );
+    await notifier.restore();
+
+    notifier.clearTransientMessage();
+
+    final state = harness.container
+        .read(receiptProEntitlementProvider)
+        .requireValue;
+    expect(state.status, ReceiptProEntitlementStatus.free);
+    expect(state.message, isNull);
+  });
 }
 
 class _Harness {

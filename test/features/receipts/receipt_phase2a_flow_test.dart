@@ -469,6 +469,10 @@ void main() {
       find.textContaining('Free receipts reset Monday, 14 Sept.'),
       findsOneWidget,
     );
+    expect(
+      tester.getTopLeft(find.text('3 of 3 free receipts used').last).dy,
+      lessThan(tester.getTopLeft(find.text('SYNCTASKS').last).dy),
+    );
     expect(find.text('Unlock for ₹199'), findsOneWidget);
     expect(find.text('Restore purchases'), findsOneWidget);
     expect(

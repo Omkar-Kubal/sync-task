@@ -363,8 +363,35 @@ void main() {
       findsOneWidget,
     );
     expect(find.text('Unlimited receipts'), findsWidgets);
+    expect(
+      tester.getTopLeft(find.text('3 free receipts weekly')).dy,
+      lessThan(tester.getTopLeft(find.text('SYNCTASKS')).dy),
+    );
     expect(find.text('Unlock for ₹199'), findsOneWidget);
     expect(find.text('Restore purchases'), findsOneWidget);
     expect(find.text('Purchasing arrives in Phase 2.'), findsNothing);
+  });
+
+  testWidgets('disabled receipt paywall CTA remains readable in dark theme', (
+    tester,
+  ) async {
+    final billingService = FakeReceiptProBillingService(available: false);
+    addTearDown(billingService.close);
+    await pumpApp(tester, receiptProBillingService: billingService);
+
+    router.go('/settings');
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(ListTile, 'Theme'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Dark').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(ListTile, 'SyncTasks Pro'));
+    await tester.pumpAndSettle();
+
+    final textStyle = tester.widget<Text>(find.text('Unlock for ₹199')).style;
+    expect(textStyle?.color, isNotNull);
+    expect(textStyle!.color!.computeLuminance(), greaterThan(0.45));
   });
 }
