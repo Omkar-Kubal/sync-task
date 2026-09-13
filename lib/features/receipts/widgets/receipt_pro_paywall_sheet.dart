@@ -10,7 +10,6 @@ import '../../../shared/services/sync_haptics.dart';
 import '../data/receipt_repository.dart';
 import '../pro/receipt_pro_entitlement.dart';
 import '../pro/receipt_pro_products.dart';
-import 'receipt_paper.dart';
 
 Future<bool?> showReceiptProPaywallSheet({
   required BuildContext context,
@@ -99,87 +98,74 @@ class _ReceiptProPaywallSheetState
         plan?.available == true &&
         plan?.price != null;
 
-    return SafeArea(
-      top: true,
-      bottom: false,
-      child: ColoredBox(
-        color: colors.scaffold,
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: FractionallySizedBox(
-            heightFactor: 0.78,
-            alignment: Alignment.bottomCenter,
-            child: DecoratedBox(
-              key: const ValueKey('receipt-pro-paywall-surface'),
-              decoration: AppSheetShadow.decoration(color: colors.scaffold),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(28),
-                ),
-                child: ColoredBox(
-                  color: colors.scaffold,
-                  child: Stack(
-                    children: [
-                      SizedBox.expand(
-                        key: const ValueKey('receipt-pro-paywall-sheet'),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: SingleChildScrollView(
-                                key: const ValueKey(
-                                  'receipt-pro-paywall-scroll',
-                                ),
-                                padding: EdgeInsets.fromLTRB(
-                                  20 + mediaQuery.padding.left,
-                                  36,
-                                  20 + mediaQuery.padding.right,
-                                  190,
-                                ),
-                                child: _ReceiptProPaywallContent(
-                                  status: widget.status,
-                                  tasks: widget.tasks,
-                                  title: widget.title,
-                                ),
-                              ),
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: FractionallySizedBox(
+        heightFactor: 0.56,
+        alignment: Alignment.bottomCenter,
+        child: DecoratedBox(
+          key: const ValueKey('receipt-pro-paywall-surface'),
+          decoration: AppSheetShadow.decoration(color: colors.scaffold),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+            child: ColoredBox(
+              color: colors.scaffold,
+              child: Stack(
+                children: [
+                  SizedBox.expand(
+                    key: const ValueKey('receipt-pro-paywall-sheet'),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            key: const ValueKey('receipt-pro-paywall-scroll'),
+                            padding: EdgeInsets.fromLTRB(
+                              18 + mediaQuery.padding.left,
+                              18,
+                              18 + mediaQuery.padding.right,
+                              126,
                             ),
-                          ],
+                            child: _ReceiptProPaywallContent(
+                              status: widget.status,
+                            ),
+                          ),
                         ),
-                      ),
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: _ReceiptProCheckout(
-                          entitlement: entitlement,
-                          state: entitlementState,
-                          plan: plan,
-                          busy: busy,
-                          pending: pending,
-                          checkoutEnabled: checkoutEnabled,
-                          onBuy: () {
-                            SyncHaptics.selection();
-                            ref
-                                .read(receiptProEntitlementProvider.notifier)
-                                .buyUnlimitedReceipts();
-                          },
-                          onRestore: () {
-                            SyncHaptics.selection();
-                            ref
-                                .read(receiptProEntitlementProvider.notifier)
-                                .restore();
-                          },
-                        ),
-                      ),
-                      Positioned(
-                        top: 18,
-                        left: 20 + mediaQuery.padding.left,
-                        child: _PaywallCloseButton(
-                          onClose: () => Navigator.of(context).maybePop(false),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: _ReceiptProCheckout(
+                      entitlement: entitlement,
+                      state: entitlementState,
+                      plan: plan,
+                      busy: busy,
+                      pending: pending,
+                      checkoutEnabled: checkoutEnabled,
+                      onBuy: () {
+                        SyncHaptics.selection();
+                        ref
+                            .read(receiptProEntitlementProvider.notifier)
+                            .buyUnlimitedReceipts();
+                      },
+                      onRestore: () {
+                        SyncHaptics.selection();
+                        ref
+                            .read(receiptProEntitlementProvider.notifier)
+                            .restore();
+                      },
+                    ),
+                  ),
+                  Positioned(
+                    top: 14,
+                    left: 18 + mediaQuery.padding.left,
+                    child: _PaywallCloseButton(
+                      onClose: () => Navigator.of(context).maybePop(false),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -190,62 +176,26 @@ class _ReceiptProPaywallSheetState
 }
 
 class _ReceiptProPaywallContent extends StatelessWidget {
-  const _ReceiptProPaywallContent({
-    required this.status,
-    required this.tasks,
-    required this.title,
-  });
+  const _ReceiptProPaywallContent({required this.status});
 
   final ReceiptQuotaStatus? status;
-  final List<Task> tasks;
-  final String title;
 
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
     final textTheme = Theme.of(context).textTheme;
-    final previewItems = [
-      for (var i = 0; i < tasks.length; i++)
-        SavedReceiptItem(
-          taskId: tasks[i].id,
-          position: i,
-          title: tasks[i].title,
-          completedAt: tasks[i].completedAt ?? DateTime.now(),
-        ),
-    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const _PaywallHeroLockup(),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         if (status == null)
           const _PaywallQuotaIntroCard()
         else
           _PaywallStatusCard(status: status!),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         _PaywallBenefitList(colors: colors, textTheme: textTheme),
-        const SizedBox(height: 12),
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: 140),
-          child: Opacity(
-            opacity: 0.84,
-            child: FittedBox(
-              fit: BoxFit.contain,
-              alignment: Alignment.topCenter,
-              child: SizedBox(
-                width: 300,
-                child: ReceiptPaperPreview(
-                  title: title.trim().isEmpty ? "Today's wins" : title,
-                  items: previewItems,
-                  includeFolderLabels: false,
-                  showReceiptMetadata: false,
-                  paperScale: ReceiptPaperScale.printing,
-                ),
-              ),
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -308,13 +258,13 @@ class _ReceiptProCheckout extends StatelessWidget {
       ),
       child: SafeArea(
         top: false,
-        minimum: const EdgeInsets.fromLTRB(18, 8, 18, 4),
+        minimum: const EdgeInsets.fromLTRB(16, 8, 16, 4),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _LifetimeOption(plan: plan, colors: colors, textTheme: textTheme),
-            const SizedBox(height: 4),
+            const SizedBox(height: 2),
             _CheckoutSupportRow(
               message: _billingMessage(entitlement, state, plan),
               busy: busy,
@@ -322,9 +272,9 @@ class _ReceiptProCheckout extends StatelessWidget {
               colors: colors,
               textTheme: textTheme,
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 4),
             SizedBox(
-              height: 36,
+              height: 34,
               child: FilledButton(
                 onPressed: checkoutEnabled ? onBuy : null,
                 style: FilledButton.styleFrom(
@@ -340,7 +290,7 @@ class _ReceiptProCheckout extends StatelessWidget {
                   buttonLabel,
                   style: textTheme.labelLarge?.copyWith(
                     color: buttonTextColor,
-                    fontSize: 13,
+                    fontSize: 12.5,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 0,
                   ),
@@ -389,7 +339,7 @@ class _PaywallHeroLockup extends StatelessWidget {
     return Column(
       children: [
         const _PaywallLogoMark(),
-        const SizedBox(height: 8),
+        const SizedBox(height: 5),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -403,7 +353,7 @@ class _PaywallHeroLockup extends StatelessWidget {
                   maxLines: 1,
                   style: textTheme.displaySmall?.copyWith(
                     color: colors.textPrimary,
-                    fontSize: 26,
+                    fontSize: 22,
                     fontWeight: FontWeight.w800,
                     height: 1,
                     letterSpacing: 0,
@@ -411,17 +361,17 @@ class _PaywallHeroLockup extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 6),
+            const SizedBox(width: 5),
             const _PaywallProBadge(),
           ],
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 4),
         Text(
           'Unlimited receipts for your completed work.',
           textAlign: TextAlign.center,
           style: textTheme.titleMedium?.copyWith(
             color: colors.textSecondary,
-            fontSize: 14,
+            fontSize: 12,
             fontWeight: FontWeight.w700,
             height: 1.2,
             letterSpacing: 0,
@@ -440,9 +390,9 @@ class _PaywallLogoMark extends StatelessWidget {
     final colors = SyncTasksColorScheme.of(context);
     return Container(
       key: const ValueKey('receipt-pro-logo-mark'),
-      width: 56,
-      height: 56,
-      padding: const EdgeInsets.all(12),
+      width: 44,
+      height: 44,
+      padding: const EdgeInsets.all(9),
       decoration: BoxDecoration(
         color: colors.surface,
         shape: BoxShape.circle,
@@ -462,7 +412,7 @@ class _PaywallProBadge extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return Container(
       key: const ValueKey('receipt-pro-badge'),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
         color: colors.textPrimary,
         borderRadius: BorderRadius.circular(999),
@@ -471,7 +421,7 @@ class _PaywallProBadge extends StatelessWidget {
         'PRO',
         style: textTheme.labelLarge?.copyWith(
           color: colors.scaffold,
-          fontSize: 10,
+          fontSize: 9,
           fontWeight: FontWeight.w900,
           letterSpacing: 0,
           height: 1,
@@ -500,30 +450,31 @@ class _LifetimeOption extends StatelessWidget {
       label: 'Lifetime, $price',
       child: Container(
         key: const ValueKey('receipt-pro-lifetime-option-card'),
-        height: 44,
+        height: 40,
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
         decoration: BoxDecoration(
           color: colors.surfaceSecondary,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(14),
           border: Border.all(color: colors.textPrimary, width: 1.5),
         ),
         child: Row(
           children: [
             Container(
-              width: 22,
-              height: 22,
+              width: 20,
+              height: 20,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: colors.textPrimary,
                 shape: BoxShape.circle,
               ),
-              child: Icon(SyncIcons.check, color: colors.scaffold, size: 15),
+              child: Icon(SyncIcons.check, color: colors.scaffold, size: 14),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 7),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'Lifetime',
@@ -531,20 +482,20 @@ class _LifetimeOption extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: textTheme.titleMedium?.copyWith(
                       color: colors.textPrimary,
-                      fontSize: 14,
+                      fontSize: 13,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 0,
                       height: 1.1,
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 1),
                   Text(
                     'One-time receipt upgrade',
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: textTheme.bodyMedium?.copyWith(
                       color: colors.textSecondary,
-                      fontSize: 10.5,
+                      fontSize: 10,
                       fontWeight: FontWeight.w600,
                       letterSpacing: 0,
                       height: 1.18,
@@ -555,7 +506,7 @@ class _LifetimeOption extends StatelessWidget {
             ),
             const SizedBox(width: 6),
             SizedBox(
-              width: 72,
+              width: 68,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.centerRight,
@@ -565,7 +516,7 @@ class _LifetimeOption extends StatelessWidget {
                   textAlign: TextAlign.end,
                   style: textTheme.titleMedium?.copyWith(
                     color: colors.textPrimary,
-                    fontSize: 17,
+                    fontSize: 16,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 0,
                   ),
@@ -587,22 +538,21 @@ class _InlineBillingStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: colors.scaffold.withValues(alpha: 0.58),
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Text(
-        message,
-        textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: colors.textSecondary,
-          fontSize: 10.5,
-          fontWeight: FontWeight.w600,
-          height: 1.18,
-          letterSpacing: 0,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 3),
+        child: Text(
+          message,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: colors.textSecondary,
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+            height: 1.18,
+            letterSpacing: 0,
+          ),
         ),
       ),
     );
@@ -629,8 +579,8 @@ class _CheckoutSupportRow extends StatelessWidget {
     final restoreButton = TextButton(
       onPressed: busy ? null : onRestore,
       style: TextButton.styleFrom(
-        minimumSize: const Size(92, 28),
-        padding: const EdgeInsets.symmetric(horizontal: 6),
+        minimumSize: const Size(84, 26),
+        padding: const EdgeInsets.symmetric(horizontal: 4),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         visualDensity: VisualDensity.compact,
       ),
@@ -639,7 +589,7 @@ class _CheckoutSupportRow extends StatelessWidget {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: textTheme.labelLarge?.copyWith(
-          fontSize: 11,
+          fontSize: 10.5,
           fontWeight: FontWeight.w800,
           letterSpacing: 0,
         ),
@@ -655,7 +605,7 @@ class _CheckoutSupportRow extends StatelessWidget {
         Expanded(
           child: _InlineBillingStatus(message: message!, colors: colors),
         ),
-        const SizedBox(width: 6),
+        const SizedBox(width: 4),
         restoreButton,
       ],
     );
@@ -671,7 +621,7 @@ class _PaywallCloseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
     return SizedBox.square(
-      dimension: 40,
+      dimension: 36,
       child: IconButton(
         tooltip: 'Close',
         onPressed: () {
@@ -684,7 +634,7 @@ class _PaywallCloseButton extends StatelessWidget {
           side: BorderSide(color: colors.divider),
           shape: const CircleBorder(),
         ),
-        icon: const Icon(Icons.close_rounded, size: 22),
+        icon: const Icon(Icons.close_rounded, size: 20),
       ),
     );
   }
@@ -700,15 +650,15 @@ class _PaywallQuotaIntroCard extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: colors.surface,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _PaywallIconTile(icon: SyncIcons.receipt, colors: colors),
-            const SizedBox(width: 10),
+            const SizedBox(width: 9),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -717,17 +667,17 @@ class _PaywallQuotaIntroCard extends StatelessWidget {
                     '3 free receipts weekly',
                     style: textTheme.titleMedium?.copyWith(
                       color: colors.textPrimary,
-                      fontSize: 15,
+                      fontSize: 13.5,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 0,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 3),
                   Text(
                     'Pro unlocks unlimited receipt generation whenever you need it.',
                     style: textTheme.bodyMedium?.copyWith(
                       color: colors.textSecondary,
-                      fontSize: 12,
+                      fontSize: 11,
                       fontWeight: FontWeight.w500,
                       height: 1.22,
                       letterSpacing: 0,
@@ -755,15 +705,15 @@ class _PaywallStatusCard extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: colors.surface,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _PaywallIconTile(icon: SyncIcons.receipt, colors: colors),
-            const SizedBox(width: 10),
+            const SizedBox(width: 9),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -772,18 +722,18 @@ class _PaywallStatusCard extends StatelessWidget {
                     '${status.freeLimit} of ${status.freeLimit} free receipts used',
                     style: textTheme.titleMedium?.copyWith(
                       color: colors.textPrimary,
-                      fontSize: 15,
+                      fontSize: 13.5,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 0,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 3),
                   Text(
                     'You’ve used your weekly free quota.\n'
                     'Free receipts reset ${_resetDateLabel(status.weekEndExclusive)}.',
                     style: textTheme.bodyMedium?.copyWith(
                       color: colors.textSecondary,
-                      fontSize: 12,
+                      fontSize: 11,
                       fontWeight: FontWeight.w500,
                       height: 1.22,
                       letterSpacing: 0,
@@ -816,7 +766,7 @@ class _PaywallBenefitList extends StatelessWidget {
           colors: colors,
           textTheme: textTheme,
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 7),
         _PaywallBenefitRow(
           icon: SyncIcons.folder,
           title: 'Your data stays safe',
@@ -850,7 +800,7 @@ class _PaywallBenefitRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _PaywallIconTile(icon: icon, colors: colors),
-        const SizedBox(width: 10),
+        const SizedBox(width: 9),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -859,18 +809,18 @@ class _PaywallBenefitRow extends StatelessWidget {
                 title,
                 style: textTheme.titleMedium?.copyWith(
                   color: colors.textPrimary,
-                  fontSize: 15,
+                  fontSize: 13.5,
                   fontWeight: FontWeight.w800,
                   letterSpacing: 0,
                   height: 1.14,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 3),
               Text(
                 body,
                 style: textTheme.bodyMedium?.copyWith(
                   color: colors.textSecondary,
-                  fontSize: 12,
+                  fontSize: 11,
                   fontWeight: FontWeight.w600,
                   height: 1.22,
                   letterSpacing: 0,
@@ -893,14 +843,14 @@ class _PaywallIconTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 42,
-      height: 42,
+      width: 36,
+      height: 36,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: colors.surfaceSecondary,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(12),
       ),
-      child: Icon(icon, color: colors.textPrimary, size: 20),
+      child: Icon(icon, color: colors.textPrimary, size: 18),
     );
   }
 }

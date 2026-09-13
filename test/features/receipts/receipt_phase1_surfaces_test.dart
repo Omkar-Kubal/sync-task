@@ -413,6 +413,11 @@ void main() {
   });
 
   testWidgets('receipt paywall uses compact SyncTasks sizing', (tester) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 2.625;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     final billingService = FakeReceiptProBillingService();
     addTearDown(billingService.close);
     await pumpApp(tester, receiptProBillingService: billingService);
@@ -427,11 +432,19 @@ void main() {
       tester
           .getSize(find.byKey(const ValueKey('receipt-pro-paywall-sheet')))
           .height,
-      lessThanOrEqualTo(630),
+      lessThanOrEqualTo(520),
+    );
+    final screenHeight =
+        tester.view.physicalSize.height / tester.view.devicePixelRatio;
+    expect(
+      tester
+          .getTopLeft(find.byKey(const ValueKey('receipt-pro-paywall-sheet')))
+          .dy,
+      greaterThanOrEqualTo(screenHeight * 0.43),
     );
     expect(
       tester.getSize(find.byKey(const ValueKey('receipt-pro-logo-mark'))),
-      const Size(56, 56),
+      const Size(44, 44),
     );
     expect(
       tester
@@ -444,7 +457,7 @@ void main() {
     final unlockButtonSize = tester.getSize(
       find.widgetWithText(FilledButton, 'Unlock for ₹199'),
     );
-    expect(unlockButtonSize.height, 36);
+    expect(unlockButtonSize.height, 34);
     expect(unlockButtonSize.width, greaterThanOrEqualTo(320));
     expect(
       tester
