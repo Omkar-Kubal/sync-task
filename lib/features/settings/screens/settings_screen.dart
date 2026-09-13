@@ -8,6 +8,7 @@ import '../../../core/constants/app_constants.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
 import '../../receipts/providers/receipt_feature_provider.dart';
+import '../../receipts/widgets/receipt_pro_paywall_sheet.dart';
 import '../../../shared/sheets/app_bottom_sheet.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
@@ -121,7 +122,7 @@ class SettingsScreen extends ConsumerWidget {
                     _SettingsRow(
                       icon: SyncIcons.receipt,
                       title: 'SyncTasks Pro',
-                      value: 'Internal',
+                      value: 'Unlimited receipts',
                       onTap: () => _showProSheet(context),
                     ),
                   ],
@@ -437,13 +438,7 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   void _showProSheet(BuildContext context) {
-    _showSettingsSheet(
-      context,
-      const _ProPreviewSheet(),
-      padding: const EdgeInsets.fromLTRB(20, 42, 20, 28),
-      handleGap: 0,
-      showHandle: false,
-    );
+    showReceiptProPaywallSheet(context: context);
   }
 
   Future<void> _openSupportUri(
@@ -811,55 +806,6 @@ class _HelpFeedbackSheet extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _ProPreviewSheet extends StatelessWidget {
-  const _ProPreviewSheet();
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = SyncTasksColorScheme.of(context);
-    return Column(
-      key: const Key('synctasks-pro-preview-sheet'),
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const _CenteredSheetTitle('SyncTasks Pro'),
-        const SizedBox(height: 28),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _IconTile(icon: SyncIcons.receipt),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Unlimited receipts',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: colors.textPrimary,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'Purchasing arrives in Phase 2.',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: colors.textSecondary,
-                      fontSize: 14,
-                      height: 1.34,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

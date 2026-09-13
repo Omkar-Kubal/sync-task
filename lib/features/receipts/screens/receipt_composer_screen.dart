@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
@@ -21,11 +20,11 @@ import '../domain/receipt_composer_seed.dart';
 import '../providers/receipt_feature_provider.dart';
 import '../providers/receipt_repository_provider.dart';
 import '../pro/receipt_pro_entitlement.dart';
-import '../pro/receipt_pro_products.dart';
 import '../services/receipt_photo_capture_service.dart';
 import '../services/receipt_photo_processor.dart';
 import '../services/receipt_printing_feedback.dart';
 import '../widgets/receipt_paper.dart';
+import '../widgets/receipt_pro_paywall_sheet.dart';
 import '../widgets/receipt_screen_chrome.dart';
 
 class ReceiptComposerScreen extends ConsumerStatefulWidget {
@@ -46,7 +45,6 @@ class _ReceiptComposerScreenState extends ConsumerState<ReceiptComposerScreen> {
   String? _drawingStrokesJson;
   String? _photoPath;
   SavedReceipt? _printingReceipt;
-  ReceiptQuotaStatus? _quotaExceededStatus;
 
   @override
   void initState() {
@@ -63,22 +61,6 @@ class _ReceiptComposerScreenState extends ConsumerState<ReceiptComposerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<AsyncValue<ReceiptProEntitlementState>>(
-      receiptProEntitlementProvider,
-      (previous, next) {
-        final previousState = previous?.value;
-        final nextState = next.value;
-        if (nextState == null ||
-            !nextState.isPro ||
-            previousState?.isPro == true ||
-            _quotaExceededStatus == null ||
-            _isGenerating) {
-          return;
-        }
-        setState(() => _quotaExceededStatus = null);
-        unawaited(_generate());
-      },
-    );
     final enabled = ref.watch(receiptFeatureEnabledProvider);
     if (!enabled) {
       return const _ReceiptUnavailableScreen();
@@ -94,14 +76,6 @@ class _ReceiptComposerScreenState extends ConsumerState<ReceiptComposerScreen> {
             if (_printingReceipt != null) {
               return _ReceiptPrintingView(receipt: _printingReceipt!);
             }
-            if (_quotaExceededStatus != null) {
-              return _ReceiptQuotaPaywallView(
-                status: _quotaExceededStatus!,
-                tasks: tasks,
-                title: _titleController.text,
-                onClose: () => setState(() => _quotaExceededStatus = null),
-              );
-            }
             return _ReceiptComposerBody(
               seed: widget.seed,
               tasks: tasks,
@@ -114,6 +88,7 @@ class _ReceiptComposerScreenState extends ConsumerState<ReceiptComposerScreen> {
                 setState(() => _includeFolderLabels = value);
               },
               onPersonalise: _showPersonaliseSheet,
+              onOpenPro: () => _showReceiptProSheet(tasks: tasks),
               onGenerate: tasks.isEmpty ? null : _generate,
               onBack: _goBack,
             );
@@ -205,10 +180,18 @@ class _ReceiptComposerScreenState extends ConsumerState<ReceiptComposerScreen> {
       if (!mounted) {
         return;
       }
-      setState(() {
-        _isGenerating = false;
-        _quotaExceededStatus = error.status;
-      });
+      setState(() => _isGenerating = false);
+      final tasks = await _loadSelectedTasks(widget.seed.selectedTaskIds);
+      if (!mounted) {
+        return;
+      }
+      final unlocked = await _showReceiptProSheet(
+        status: error.status,
+        tasks: tasks,
+      );
+      if (mounted && unlocked == true) {
+        await _generate();
+      }
     } on ReceiptSelectionChangedException {
       if (!mounted) {
         return;
@@ -220,6 +203,23 @@ class _ReceiptComposerScreenState extends ConsumerState<ReceiptComposerScreen> {
         ),
       );
     }
+  }
+
+  Future<bool?> _showReceiptProSheet({
+    ReceiptQuotaStatus? status,
+    List<Task>? tasks,
+  }) async {
+    final selectedTasks =
+        tasks ?? await _loadSelectedTasks(widget.seed.selectedTaskIds);
+    if (!mounted) {
+      return false;
+    }
+    return showReceiptProPaywallSheet(
+      context: context,
+      status: status,
+      tasks: selectedTasks,
+      title: _titleController.text,
+    );
   }
 
   Future<void> _openDetailAfterReveal(String receiptId) async {
@@ -298,6 +298,7 @@ class _ReceiptComposerBody extends ConsumerWidget {
     required this.isGenerating,
     required this.onIncludeFolderLabelsChanged,
     required this.onPersonalise,
+    required this.onOpenPro,
     required this.onGenerate,
     required this.onBack,
   });
@@ -311,6 +312,7 @@ class _ReceiptComposerBody extends ConsumerWidget {
   final bool isGenerating;
   final ValueChanged<bool> onIncludeFolderLabelsChanged;
   final VoidCallback onPersonalise;
+  final VoidCallback onOpenPro;
   final VoidCallback? onGenerate;
   final VoidCallback onBack;
 
@@ -319,6 +321,8 @@ class _ReceiptComposerBody extends ConsumerWidget {
     final colors = SyncTasksColorScheme.of(context);
     final textTheme = Theme.of(context).textTheme;
     final quotaValue = ref.watch(receiptQuotaProvider);
+    final proValue = ref.watch(receiptProEntitlementProvider);
+    final isPro = proValue.value?.isPro == true;
     final folderNamesById = {
       for (final folder in ref.watch(foldersProvider).value ?? const <Folder>[])
         folder.id: folder.name,
@@ -345,7 +349,11 @@ class _ReceiptComposerBody extends ConsumerWidget {
             padding: const EdgeInsets.fromLTRB(20, 6, 20, 104),
             children: [
               quotaValue.when(
-                data: _quotaLabel,
+                data: (status) => _ReceiptQuotaProBanner(
+                  status: status,
+                  isPro: isPro,
+                  onOpenPro: onOpenPro,
+                ),
                 loading: () => Text(
                   'Checking receipts created this week...',
                   style: _supportingStyle(textTheme, colors),
@@ -505,24 +513,6 @@ class _ReceiptComposerBody extends ConsumerWidget {
     );
   }
 
-  Widget _quotaLabel(ReceiptQuotaStatus status) {
-    final count = status.usedThisWeek;
-    return Builder(
-      builder: (context) {
-        final colors = SyncTasksColorScheme.of(context);
-        final textTheme = Theme.of(context).textTheme;
-        return Text(
-          status.isExhausted
-              ? '${status.freeLimit} of ${status.freeLimit} free receipts used'
-              : count == 1
-              ? '1 receipt created this week'
-              : '$count receipts created this week',
-          style: _supportingStyle(textTheme, colors),
-        );
-      },
-    );
-  }
-
   String _taskCountLabel(int count) {
     return count == 1 ? '1 task selected' : '$count tasks selected';
   }
@@ -534,380 +524,103 @@ class _ReceiptComposerBody extends ConsumerWidget {
   }
 }
 
-class _ReceiptQuotaPaywallView extends ConsumerWidget {
-  const _ReceiptQuotaPaywallView({
+class _ReceiptQuotaProBanner extends StatelessWidget {
+  const _ReceiptQuotaProBanner({
     required this.status,
-    required this.tasks,
-    required this.title,
-    required this.onClose,
+    required this.isPro,
+    required this.onOpenPro,
   });
 
   final ReceiptQuotaStatus status;
-  final List<Task> tasks;
-  final String title;
-  final VoidCallback onClose;
+  final bool isPro;
+  final VoidCallback onOpenPro;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
     final textTheme = Theme.of(context).textTheme;
-    final entitlement = ref.watch(receiptProEntitlementProvider);
-    final entitlementState = entitlement.value;
-    final plan = entitlementState?.catalog.unlimitedReceipts;
-    final busy =
-        (entitlement.isLoading && !entitlement.hasValue) ||
-        entitlementState?.status ==
-            ReceiptProEntitlementStatus.catalogLoading ||
-        entitlementState?.status == ReceiptProEntitlementStatus.purchasing ||
-        entitlementState?.status == ReceiptProEntitlementStatus.restoring;
-    final pending =
-        entitlementState?.status == ReceiptProEntitlementStatus.pending;
-    final checkoutEnabled =
-        !busy && !pending && plan?.available == true && plan?.price != null;
-    final price = plan?.price ?? '₹199';
-    final previewItems = [
-      for (var i = 0; i < tasks.length; i++)
-        SavedReceiptItem(
-          taskId: tasks[i].id,
-          position: i,
-          title: tasks[i].title,
-          completedAt: tasks[i].completedAt ?? DateTime.now(),
-        ),
-    ];
+    final title = isPro
+        ? 'Unlimited receipts active'
+        : '${status.usedThisWeek} of ${status.freeLimit} free receipts used';
+    final subtitle = isPro
+        ? 'Every receipt you generate is covered by Pro.'
+        : 'Pro unlocks unlimited receipts';
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    tooltip: 'Close',
-                    onPressed: onClose,
-                    style: IconButton.styleFrom(
-                      fixedSize: const Size(56, 56),
-                      backgroundColor: colors.surface,
-                      shape: const CircleBorder(),
-                    ),
-                    icon: Icon(
-                      Icons.close_rounded,
-                      color: colors.textPrimary,
-                      size: 30,
-                    ),
-                  ),
+    return Material(
+      color: colors.surface,
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        onTap: isPro ? null : onOpenPro,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(14, 12, 12, 12),
+          child: Row(
+            children: [
+              Container(
+                width: 42,
+                height: 42,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: colors.surfaceSecondary,
+                  borderRadius: BorderRadius.circular(14),
                 ),
-                const SizedBox(height: 12),
-                Text(
-                  'Unlimited receipts',
-                  style: textTheme.displaySmall?.copyWith(
-                    color: colors.textPrimary,
-                    fontSize: 38,
-                    fontWeight: FontWeight.w800,
-                    height: 1.05,
-                    letterSpacing: 0,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Keep a record of your completed work.',
-                  style: textTheme.titleMedium?.copyWith(
-                    color: colors.textSecondary,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    height: 1.25,
-                    letterSpacing: 0,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                Center(
-                  child: SizedBox(
-                    height: 292,
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      alignment: Alignment.topCenter,
-                      child: ReceiptPaperPreview(
-                        title: title.trim().isEmpty ? "Today's wins" : title,
-                        items: previewItems,
-                        includeFolderLabels: false,
-                        showReceiptMetadata: false,
-                        paperScale: ReceiptPaperScale.printing,
+                child: Icon(SyncIcons.receipt, color: colors.textPrimary),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: colors.textPrimary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0,
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 18),
-                _PaywallStatusCard(status: status),
-                const SizedBox(height: 14),
-                _PaywallBenefitCard(colors: colors, textTheme: textTheme),
-              ],
-            ),
-          ),
-        ),
-        ReceiptBottomActionBar(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              FilledButton(
-                onPressed: checkoutEnabled
-                    ? () => ref
-                          .read(receiptProEntitlementProvider.notifier)
-                          .buyUnlimitedReceipts()
-                    : null,
-                child: Text(
-                  busy
-                      ? _busyLabel(entitlementState)
-                      : pending
-                      ? 'Payment pending'
-                      : 'Unlock for $price',
+                    const SizedBox(height: 3),
+                    Text(
+                      subtitle,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: colors.textSecondary,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              if (_billingMessage(entitlement, entitlementState, plan)
-                  case final message?) ...[
-                const SizedBox(height: 8),
-                Text(
-                  message,
-                  textAlign: TextAlign.center,
-                  style: textTheme.bodySmall?.copyWith(
-                    color: colors.textSecondary,
-                    fontSize: 12,
-                    height: 1.25,
+              if (!isPro) ...[
+                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 9,
+                    vertical: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    color: colors.textPrimary,
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: Text(
+                    'PRO',
+                    style: textTheme.labelSmall?.copyWith(
+                      color: colors.surface,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 0,
+                    ),
                   ),
                 ),
               ],
-              const SizedBox(height: 8),
-              TextButton(
-                onPressed: busy
-                    ? null
-                    : () => ref
-                          .read(receiptProEntitlementProvider.notifier)
-                          .restore(),
-                child: const Text('Restore purchases'),
-              ),
             ],
           ),
         ),
-      ],
-    );
-  }
-
-  String _busyLabel(ReceiptProEntitlementState? state) {
-    return switch (state?.status) {
-      ReceiptProEntitlementStatus.purchasing => 'Opening Google Play...',
-      ReceiptProEntitlementStatus.restoring => 'Checking purchases...',
-      _ => 'Loading price...',
-    };
-  }
-
-  String? _billingMessage(
-    AsyncValue<ReceiptProEntitlementState> entitlement,
-    ReceiptProEntitlementState? state,
-    ReceiptProPlan? plan,
-  ) {
-    if (entitlement.isLoading && !entitlement.hasValue) {
-      return 'Loading Google Play price...';
-    }
-    if (state?.message != null) {
-      return state!.message;
-    }
-    return plan?.unavailableReason;
-  }
-}
-
-class _PaywallStatusCard extends StatelessWidget {
-  const _PaywallStatusCard({required this.status});
-
-  final ReceiptQuotaStatus status;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _PaywallIconTile(icon: SyncIcons.receipt, colors: colors),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${status.freeLimit} of ${status.freeLimit} free receipts used',
-                    style: textTheme.titleMedium?.copyWith(
-                      color: colors.textPrimary,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 0,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'You’ve used your weekly free quota.\n'
-                    'Free receipts reset ${_resetDateLabel(status.weekEndExclusive)}.',
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: colors.textSecondary,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      height: 1.28,
-                      letterSpacing: 0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
-}
-
-class _PaywallBenefitCard extends StatelessWidget {
-  const _PaywallBenefitCard({required this.colors, required this.textTheme});
-
-  final SyncTasksColorScheme colors;
-  final TextTheme textTheme;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: colors.surface,
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Column(
-        children: [
-          _PaywallBenefitRow(
-            icon: Icons.all_inclusive_rounded,
-            title: 'Unlimited receipts',
-            body: 'Generate as many receipts as you need.',
-            colors: colors,
-            textTheme: textTheme,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 74, right: 18),
-            child: Divider(height: 1, color: colors.divider),
-          ),
-          _PaywallBenefitRow(
-            icon: SyncIcons.folder,
-            title: 'Your data stays safe',
-            body: 'Saved receipts and all task features stay free.',
-            colors: colors,
-            textTheme: textTheme,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PaywallBenefitRow extends StatelessWidget {
-  const _PaywallBenefitRow({
-    required this.icon,
-    required this.title,
-    required this.body,
-    required this.colors,
-    required this.textTheme,
-  });
-
-  final IconData icon;
-  final String title;
-  final String body;
-  final SyncTasksColorScheme colors;
-  final TextTheme textTheme;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _PaywallIconTile(icon: icon, colors: colors),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: textTheme.titleMedium?.copyWith(
-                    color: colors.textPrimary,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  body,
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colors.textSecondary,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    height: 1.25,
-                    letterSpacing: 0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PaywallIconTile extends StatelessWidget {
-  const _PaywallIconTile({required this.icon, required this.colors});
-
-  final IconData icon;
-  final SyncTasksColorScheme colors;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 48,
-      height: 48,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: colors.surfaceSecondary,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Icon(icon, color: colors.textPrimary, size: 24),
-    );
-  }
-}
-
-String _resetDateLabel(DateTime value) {
-  final month = switch (value.month) {
-    1 => 'Jan',
-    2 => 'Feb',
-    3 => 'Mar',
-    4 => 'Apr',
-    5 => 'May',
-    6 => 'Jun',
-    7 => 'Jul',
-    8 => 'Aug',
-    9 => 'Sept',
-    10 => 'Oct',
-    11 => 'Nov',
-    _ => 'Dec',
-  };
-  return '${DateFormat('EEEE').format(value)}, ${value.day} $month';
 }
 
 class _ReceiptPrintingView extends ConsumerStatefulWidget {

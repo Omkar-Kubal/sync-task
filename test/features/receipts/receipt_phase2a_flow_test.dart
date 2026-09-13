@@ -109,7 +109,8 @@ void main() {
       tester.widget<Text>(find.text('Create receipt')).style?.fontSize,
       29,
     );
-    expect(find.text('0 receipts created this week'), findsOneWidget);
+    expect(find.text('0 of 3 free receipts used'), findsOneWidget);
+    expect(find.text('Pro unlocks unlimited receipts'), findsOneWidget);
     expect(find.text('Title'), findsOneWidget);
     expect(find.text('Write the migration'), findsOneWidget);
     expect(
@@ -457,6 +458,11 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Generate receipt'));
     await tester.pumpAndSettle();
 
+    expect(
+      find.byKey(const ValueKey('receipt-pro-paywall-sheet')),
+      findsOneWidget,
+    );
+    expect(find.text('Create receipt'), findsOneWidget);
     expect(find.text('Unlimited receipts'), findsWidgets);
     expect(find.text('Keep a record of your completed work.'), findsOneWidget);
     expect(

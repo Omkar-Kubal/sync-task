@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:synctasks/core/database/app_database.dart';
 import 'package:synctasks/core/notifications/notification_service.dart';
 import 'package:synctasks/core/notifications/task_reminder_service.dart';
@@ -9,15 +10,19 @@ import 'package:synctasks/core/routing/app_router.dart';
 import 'package:synctasks/core/theme/app_theme.dart';
 import 'package:synctasks/features/receipts/domain/receipt_composer_seed.dart';
 import 'package:synctasks/features/receipts/providers/receipt_feature_provider.dart';
+import 'package:synctasks/features/receipts/pro/receipt_pro_entitlement.dart';
 import 'package:synctasks/features/tasks/data/task_repository.dart';
 import 'package:synctasks/features/tasks/domain/task.dart' as domain;
 import 'package:synctasks/features/tasks/providers/task_controller.dart';
+
+import 'fake_receipt_pro_billing_service.dart';
 
 void main() {
   late AppDatabase db;
   late GoRouter router;
 
   setUp(() {
+    SharedPreferences.setMockInitialValues({});
     db = AppDatabase.memory();
     router = appRouter();
   });
@@ -30,6 +35,7 @@ void main() {
   Future<void> pumpApp(
     WidgetTester tester, {
     bool receiptFeatureEnabled = true,
+    FakeReceiptProBillingService? receiptProBillingService,
   }) async {
     await tester.pumpWidget(
       ProviderScope(
@@ -41,6 +47,10 @@ void main() {
           receiptFeatureEnabledProvider.overrideWithValue(
             receiptFeatureEnabled,
           ),
+          if (receiptProBillingService != null)
+            receiptProBillingServiceProvider.overrideWithValue(
+              receiptProBillingService,
+            ),
         ],
         child: MaterialApp.router(
           theme: buildSyncTasksTheme(Brightness.light),
@@ -287,6 +297,7 @@ void main() {
       expect(find.text('Completed tasks'), findsWidgets);
       expect(find.text('1 task selected'), findsOneWidget);
       expect(find.text('Signed off'), findsOneWidget);
+      expect(find.text('Pro unlocks unlimited receipts'), findsOneWidget);
     },
   );
 
@@ -334,10 +345,12 @@ void main() {
     );
   });
 
-  testWidgets('Settings Pro row opens an internal-only information sheet', (
+  testWidgets('Settings Pro row opens the receipt paywall bottom sheet', (
     tester,
   ) async {
-    await pumpApp(tester);
+    final billingService = FakeReceiptProBillingService();
+    addTearDown(billingService.close);
+    await pumpApp(tester, receiptProBillingService: billingService);
 
     router.go('/settings');
     await tester.pumpAndSettle();
@@ -345,10 +358,13 @@ void main() {
     await tester.tap(find.widgetWithText(ListTile, 'SyncTasks Pro'));
     await tester.pumpAndSettle();
 
-    expect(find.text('SyncTasks Pro'), findsWidgets);
-    expect(find.text('Unlimited receipts'), findsOneWidget);
-    expect(find.text('Purchasing arrives in Phase 2.'), findsOneWidget);
-    expect(find.text('Restore purchases'), findsNothing);
-    expect(find.text('Buy'), findsNothing);
+    expect(
+      find.byKey(const ValueKey('receipt-pro-paywall-sheet')),
+      findsOneWidget,
+    );
+    expect(find.text('Unlimited receipts'), findsWidgets);
+    expect(find.text('Unlock for ₹199'), findsOneWidget);
+    expect(find.text('Restore purchases'), findsOneWidget);
+    expect(find.text('Purchasing arrives in Phase 2.'), findsNothing);
   });
 }
