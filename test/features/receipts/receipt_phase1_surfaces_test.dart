@@ -459,4 +459,28 @@ void main() {
       ),
     );
   });
+
+  testWidgets('receipt paywall sheet surface has the shared top shadow', (
+    tester,
+  ) async {
+    final billingService = FakeReceiptProBillingService();
+    addTearDown(billingService.close);
+    await pumpApp(tester, receiptProBillingService: billingService);
+
+    router.go('/settings');
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(ListTile, 'SyncTasks Pro'));
+    await tester.pumpAndSettle();
+
+    final surface = tester.widget<DecoratedBox>(
+      find.byKey(const ValueKey('receipt-pro-paywall-surface')),
+    );
+    final decoration = surface.decoration as BoxDecoration;
+    final shadow = decoration.boxShadow!.single;
+
+    expect(shadow.blurRadius, greaterThanOrEqualTo(28));
+    expect(shadow.offset.dy, lessThanOrEqualTo(-6));
+    expect(shadow.color.a, greaterThanOrEqualTo(0.10));
+  });
 }

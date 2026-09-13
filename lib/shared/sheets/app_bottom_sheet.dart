@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/synctasks_color_scheme.dart';
 import '../motion/sync_motion.dart';
+import 'app_sheet_shadow.dart';
 
 class AppBottomSheet extends StatelessWidget {
   const AppBottomSheet({
@@ -29,16 +30,9 @@ class AppBottomSheet extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: padding,
-      decoration: BoxDecoration(
+      decoration: AppSheetShadow.decoration(
         color: colors.surface,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 14,
-            offset: const Offset(0, -1),
-          ),
-        ],
       ),
       constraints: BoxConstraints(
         minHeight: minHeight ?? 0,

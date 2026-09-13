@@ -72,6 +72,34 @@ void main() {
     );
   });
 
+  testWidgets('app bottom sheets use a visible top-edge shadow', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(TaskCreateSheet(onSubmit: (_, __) {}, onTodaySelected: (_, __) {})),
+    );
+
+    final sheetDecorations = tester
+        .widgetList<Container>(
+          find.descendant(
+            of: find.byType(AppBottomSheet),
+            matching: find.byType(Container),
+          ),
+        )
+        .map((container) => container.decoration)
+        .whereType<BoxDecoration>();
+    final sheetDecoration = sheetDecorations.firstWhere(
+      (decoration) =>
+          decoration.borderRadius ==
+          const BorderRadius.vertical(top: Radius.circular(28)),
+    );
+    final shadow = sheetDecoration.boxShadow!.single;
+
+    expect(shadow.blurRadius, greaterThanOrEqualTo(28));
+    expect(shadow.offset.dy, lessThanOrEqualTo(-6));
+    expect(shadow.color.a, greaterThanOrEqualTo(0.10));
+  });
+
   testWidgets('create sheet notifies when Today is selected', (tester) async {
     final haptics = _captureHaptics(tester);
     var selectedToday = false;

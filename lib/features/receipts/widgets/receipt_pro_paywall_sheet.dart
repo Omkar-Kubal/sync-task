@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
 import '../../../shared/icons/sync_icons.dart';
+import '../../../shared/sheets/app_sheet_shadow.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../data/receipt_repository.dart';
 import '../pro/receipt_pro_entitlement.dart';
@@ -108,70 +109,76 @@ class _ReceiptProPaywallSheetState
           child: FractionallySizedBox(
             heightFactor: 0.78,
             alignment: Alignment.bottomCenter,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(28),
-              ),
-              child: ColoredBox(
-                color: colors.scaffold,
-                child: Stack(
-                  children: [
-                    SizedBox.expand(
-                      key: const ValueKey('receipt-pro-paywall-sheet'),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: SingleChildScrollView(
-                              key: const ValueKey('receipt-pro-paywall-scroll'),
-                              padding: EdgeInsets.fromLTRB(
-                                20 + mediaQuery.padding.left,
-                                36,
-                                20 + mediaQuery.padding.right,
-                                190,
-                              ),
-                              child: _ReceiptProPaywallContent(
-                                status: widget.status,
-                                tasks: widget.tasks,
-                                title: widget.title,
+            child: DecoratedBox(
+              key: const ValueKey('receipt-pro-paywall-surface'),
+              decoration: AppSheetShadow.decoration(color: colors.scaffold),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(28),
+                ),
+                child: ColoredBox(
+                  color: colors.scaffold,
+                  child: Stack(
+                    children: [
+                      SizedBox.expand(
+                        key: const ValueKey('receipt-pro-paywall-sheet'),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: SingleChildScrollView(
+                                key: const ValueKey(
+                                  'receipt-pro-paywall-scroll',
+                                ),
+                                padding: EdgeInsets.fromLTRB(
+                                  20 + mediaQuery.padding.left,
+                                  36,
+                                  20 + mediaQuery.padding.right,
+                                  190,
+                                ),
+                                child: _ReceiptProPaywallContent(
+                                  status: widget.status,
+                                  tasks: widget.tasks,
+                                  title: widget.title,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      child: _ReceiptProCheckout(
-                        entitlement: entitlement,
-                        state: entitlementState,
-                        plan: plan,
-                        busy: busy,
-                        pending: pending,
-                        checkoutEnabled: checkoutEnabled,
-                        onBuy: () {
-                          SyncHaptics.selection();
-                          ref
-                              .read(receiptProEntitlementProvider.notifier)
-                              .buyUnlimitedReceipts();
-                        },
-                        onRestore: () {
-                          SyncHaptics.selection();
-                          ref
-                              .read(receiptProEntitlementProvider.notifier)
-                              .restore();
-                        },
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: _ReceiptProCheckout(
+                          entitlement: entitlement,
+                          state: entitlementState,
+                          plan: plan,
+                          busy: busy,
+                          pending: pending,
+                          checkoutEnabled: checkoutEnabled,
+                          onBuy: () {
+                            SyncHaptics.selection();
+                            ref
+                                .read(receiptProEntitlementProvider.notifier)
+                                .buyUnlimitedReceipts();
+                          },
+                          onRestore: () {
+                            SyncHaptics.selection();
+                            ref
+                                .read(receiptProEntitlementProvider.notifier)
+                                .restore();
+                          },
+                        ),
                       ),
-                    ),
-                    Positioned(
-                      top: 18,
-                      left: 20 + mediaQuery.padding.left,
-                      child: _PaywallCloseButton(
-                        onClose: () => Navigator.of(context).maybePop(false),
+                      Positioned(
+                        top: 18,
+                        left: 20 + mediaQuery.padding.left,
+                        child: _PaywallCloseButton(
+                          onClose: () => Navigator.of(context).maybePop(false),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

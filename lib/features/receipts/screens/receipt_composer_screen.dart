@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
 import '../../../shared/icons/sync_icons.dart';
+import '../../../shared/sheets/app_sheet_shadow.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/services/sync_sounds.dart';
 import '../../../shared/widgets/sync_empty_state.dart';
@@ -234,16 +235,24 @@ class _ReceiptComposerScreenState extends ConsumerState<ReceiptComposerScreen> {
     final artwork = await showModalBottomSheet<_ReceiptArtworkResult>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: SyncTasksColorScheme.of(context).surface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-      ),
+      barrierColor: Theme.of(context).bottomSheetTheme.modalBarrierColor,
+      backgroundColor: Colors.transparent,
       builder: (context) {
-        return SizedBox(
-          height: MediaQuery.sizeOf(context).height,
-          child: ReceiptPersonaliseSheet(
-            initialDrawingJson: _drawingStrokesJson,
-            initialPhotoPath: _photoPath,
+        final colors = SyncTasksColorScheme.of(context);
+        return DecoratedBox(
+          decoration: AppSheetShadow.decoration(color: colors.surface),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(28)),
+            child: ColoredBox(
+              color: colors.surface,
+              child: SizedBox(
+                height: MediaQuery.sizeOf(context).height,
+                child: ReceiptPersonaliseSheet(
+                  initialDrawingJson: _drawingStrokesJson,
+                  initialPhotoPath: _photoPath,
+                ),
+              ),
+            ),
           ),
         );
       },

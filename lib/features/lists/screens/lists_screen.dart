@@ -9,6 +9,7 @@ import 'package:hugeicons/hugeicons.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
 import '../../receipts/providers/receipt_feature_provider.dart';
 import '../../../shared/icons/sync_icons.dart';
+import '../../../shared/sheets/app_sheet_shadow.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/widgets/sync_fab.dart';
 import '../../tasks/domain/task.dart' as domain;
@@ -277,26 +278,29 @@ class ListsScreen extends ConsumerWidget {
           snap: true,
           snapSizes: const [0.52, 0.94],
           builder: (sheetContext, scrollController) {
-            return ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(28),
-              ),
-              child: ColoredBox(
-                color: colors.scaffold,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 8),
-                    Container(
-                      width: 36,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: colors.textSecondary.withValues(alpha: 0.38),
-                        borderRadius: BorderRadius.circular(100),
+            return DecoratedBox(
+              decoration: AppSheetShadow.decoration(color: colors.scaffold),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(28),
+                ),
+                child: ColoredBox(
+                  color: colors.scaffold,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      Container(
+                        width: 36,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: colors.textSecondary.withValues(alpha: 0.38),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 6),
-                    Expanded(child: builder(sheetContext, scrollController)),
-                  ],
+                      const SizedBox(height: 6),
+                      Expanded(child: builder(sheetContext, scrollController)),
+                    ],
+                  ),
                 ),
               ),
             );

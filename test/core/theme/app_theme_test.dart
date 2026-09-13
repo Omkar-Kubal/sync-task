@@ -56,6 +56,8 @@ void main() {
       (sheetShape! as RoundedRectangleBorder).borderRadius,
       const BorderRadius.vertical(top: Radius.circular(28)),
     );
+    expect(theme.bottomSheetTheme.elevation, greaterThanOrEqualTo(16));
+    expect(theme.bottomSheetTheme.shadowColor?.a, greaterThanOrEqualTo(0.10));
   });
 
   test('dark theme reverses primary control contrast', () {
