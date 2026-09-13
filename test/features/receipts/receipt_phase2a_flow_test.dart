@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:synctasks/core/database/app_database.dart';
 import 'package:synctasks/core/notifications/notification_service.dart';
 import 'package:synctasks/core/notifications/task_reminder_service.dart';
@@ -10,6 +11,7 @@ import 'package:synctasks/core/theme/app_theme.dart';
 import 'package:synctasks/features/receipts/data/receipt_repository.dart';
 import 'package:synctasks/features/receipts/domain/receipt_composer_seed.dart';
 import 'package:synctasks/features/receipts/providers/receipt_feature_provider.dart';
+import 'package:synctasks/features/receipts/pro/receipt_pro_entitlement.dart';
 import 'package:synctasks/features/receipts/services/receipt_photo_capture_service.dart';
 import 'package:synctasks/features/receipts/services/receipt_photo_processor.dart';
 import 'package:synctasks/features/receipts/services/receipt_printing_feedback.dart';
@@ -18,11 +20,14 @@ import 'package:synctasks/features/tasks/data/task_repository.dart';
 import 'package:synctasks/features/tasks/domain/task.dart' as domain;
 import 'package:synctasks/features/tasks/providers/task_controller.dart';
 
+import 'fake_receipt_pro_billing_service.dart';
+
 void main() {
   late AppDatabase db;
   late GoRouter router;
 
   setUp(() {
+    SharedPreferences.setMockInitialValues({});
     db = AppDatabase.memory();
     router = appRouter();
   });
@@ -37,6 +42,7 @@ void main() {
     ReceiptPhotoCaptureService? photoCaptureService,
     ReceiptPhotoProcessor? photoProcessor,
     ReceiptPrintingFeedback? printingFeedback,
+    FakeReceiptProBillingService? receiptProBillingService,
   }) async {
     await tester.pumpWidget(
       ProviderScope(
@@ -46,6 +52,10 @@ void main() {
             RecordingNotificationScheduler(),
           ),
           receiptFeatureEnabledProvider.overrideWithValue(true),
+          if (receiptProBillingService != null)
+            receiptProBillingServiceProvider.overrideWithValue(
+              receiptProBillingService,
+            ),
           if (photoCaptureService != null)
             receiptPhotoCaptureServiceProvider.overrideWithValue(
               photoCaptureService,
@@ -421,7 +431,16 @@ void main() {
         ),
       );
     }
-    await pumpApp(tester);
+    final billingService = FakeReceiptProBillingService(
+      autoPurchaseOnBuy: true,
+    );
+    addTearDown(billingService.close);
+    final printingFeedback = _FakeReceiptPrintingFeedback();
+    await pumpApp(
+      tester,
+      receiptProBillingService: billingService,
+      printingFeedback: printingFeedback,
+    );
 
     router.go(
       '/receipts/new',
@@ -452,6 +471,17 @@ void main() {
     );
     expect(find.text('Printing your wins...'), findsNothing);
     expect(await ReceiptRepository(db).listReceipts(), hasLength(3));
+
+    await tester.tap(find.widgetWithText(FilledButton, 'Unlock for ₹199'));
+    await tester.pump();
+    await tester.pump();
+
+    expect(billingService.buyCount, 1);
+    expect(find.text('Printing your wins...'), findsOneWidget);
+    expect(printingFeedback.starts, 1);
+    expect(await ReceiptRepository(db).listReceipts(), hasLength(4));
+    await tester.pumpAndSettle(const Duration(seconds: 4));
+    expect(find.text('Your receipt'), findsOneWidget);
   });
 }
 

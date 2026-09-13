@@ -20,6 +20,8 @@ import '../data/receipt_repository.dart';
 import '../domain/receipt_composer_seed.dart';
 import '../providers/receipt_feature_provider.dart';
 import '../providers/receipt_repository_provider.dart';
+import '../pro/receipt_pro_entitlement.dart';
+import '../pro/receipt_pro_products.dart';
 import '../services/receipt_photo_capture_service.dart';
 import '../services/receipt_photo_processor.dart';
 import '../services/receipt_printing_feedback.dart';
@@ -61,6 +63,22 @@ class _ReceiptComposerScreenState extends ConsumerState<ReceiptComposerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AsyncValue<ReceiptProEntitlementState>>(
+      receiptProEntitlementProvider,
+      (previous, next) {
+        final previousState = previous?.value;
+        final nextState = next.value;
+        if (nextState == null ||
+            !nextState.isPro ||
+            previousState?.isPro == true ||
+            _quotaExceededStatus == null ||
+            _isGenerating) {
+          return;
+        }
+        setState(() => _quotaExceededStatus = null);
+        unawaited(_generate());
+      },
+    );
     final enabled = ref.watch(receiptFeatureEnabledProvider);
     if (!enabled) {
       return const _ReceiptUnavailableScreen();
@@ -151,6 +169,8 @@ class _ReceiptComposerScreenState extends ConsumerState<ReceiptComposerScreen> {
     SyncSounds.play(SyncSoundEffect.action);
     setState(() => _isGenerating = true);
     try {
+      final hasUnlimitedReceipts =
+          ref.read(receiptProEntitlementProvider).value?.isPro ?? false;
       final receipt = await ref
           .read(receiptRepositoryProvider)
           .generateReceipt(
@@ -168,6 +188,7 @@ class _ReceiptComposerScreenState extends ConsumerState<ReceiptComposerScreen> {
                   ? _drawingStrokesJson
                   : null,
               photoPath: _artworkType == 'photo' ? _photoPath : null,
+              hasUnlimitedReceipts: hasUnlimitedReceipts,
             ),
           );
       ref.invalidate(receiptHistoryProvider);
@@ -513,7 +534,7 @@ class _ReceiptComposerBody extends ConsumerWidget {
   }
 }
 
-class _ReceiptQuotaPaywallView extends StatelessWidget {
+class _ReceiptQuotaPaywallView extends ConsumerWidget {
   const _ReceiptQuotaPaywallView({
     required this.status,
     required this.tasks,
@@ -527,9 +548,23 @@ class _ReceiptQuotaPaywallView extends StatelessWidget {
   final VoidCallback onClose;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final colors = SyncTasksColorScheme.of(context);
     final textTheme = Theme.of(context).textTheme;
+    final entitlement = ref.watch(receiptProEntitlementProvider);
+    final entitlementState = entitlement.value;
+    final plan = entitlementState?.catalog.unlimitedReceipts;
+    final busy =
+        (entitlement.isLoading && !entitlement.hasValue) ||
+        entitlementState?.status ==
+            ReceiptProEntitlementStatus.catalogLoading ||
+        entitlementState?.status == ReceiptProEntitlementStatus.purchasing ||
+        entitlementState?.status == ReceiptProEntitlementStatus.restoring;
+    final pending =
+        entitlementState?.status == ReceiptProEntitlementStatus.pending;
+    final checkoutEnabled =
+        !busy && !pending && plan?.available == true && plan?.price != null;
+    final price = plan?.price ?? '₹199';
     final previewItems = [
       for (var i = 0; i < tasks.length; i++)
         SavedReceiptItem(
@@ -619,24 +654,39 @@ class _ReceiptQuotaPaywallView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               FilledButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Purchasing arrives in Phase 2.'),
-                    ),
-                  );
-                },
-                child: const Text('Unlock for ₹199'),
+                onPressed: checkoutEnabled
+                    ? () => ref
+                          .read(receiptProEntitlementProvider.notifier)
+                          .buyUnlimitedReceipts()
+                    : null,
+                child: Text(
+                  busy
+                      ? _busyLabel(entitlementState)
+                      : pending
+                      ? 'Payment pending'
+                      : 'Unlock for $price',
+                ),
               ),
+              if (_billingMessage(entitlement, entitlementState, plan)
+                  case final message?) ...[
+                const SizedBox(height: 8),
+                Text(
+                  message,
+                  textAlign: TextAlign.center,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colors.textSecondary,
+                    fontSize: 12,
+                    height: 1.25,
+                  ),
+                ),
+              ],
               const SizedBox(height: 8),
               TextButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Restore purchases comes next.'),
-                    ),
-                  );
-                },
+                onPressed: busy
+                    ? null
+                    : () => ref
+                          .read(receiptProEntitlementProvider.notifier)
+                          .restore(),
                 child: const Text('Restore purchases'),
               ),
             ],
@@ -644,6 +694,28 @@ class _ReceiptQuotaPaywallView extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String _busyLabel(ReceiptProEntitlementState? state) {
+    return switch (state?.status) {
+      ReceiptProEntitlementStatus.purchasing => 'Opening Google Play...',
+      ReceiptProEntitlementStatus.restoring => 'Checking purchases...',
+      _ => 'Loading price...',
+    };
+  }
+
+  String? _billingMessage(
+    AsyncValue<ReceiptProEntitlementState> entitlement,
+    ReceiptProEntitlementState? state,
+    ReceiptProPlan? plan,
+  ) {
+    if (entitlement.isLoading && !entitlement.hasValue) {
+      return 'Loading Google Play price...';
+    }
+    if (state?.message != null) {
+      return state!.message;
+    }
+    return plan?.unavailableReason;
   }
 }
 

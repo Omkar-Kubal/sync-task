@@ -227,4 +227,55 @@ void main() {
       expect(quota.remainingThisWeek, 0);
     },
   );
+
+  test(
+    'unlimited receipts entitlement bypasses the weekly free quota',
+    () async {
+      final tasks = TaskRepository(db);
+      final taskIds = <int>[];
+      for (var i = 0; i < 4; i++) {
+        final id = await tasks.createTask(
+          domain.TaskDraft(title: 'Unlimited task $i'),
+        );
+        await TaskRepository(
+          db,
+          now: () => DateTime(2026, 9, 9, 8 + i),
+        ).completeTask(id);
+        taskIds.add(id);
+      }
+      final receipts = ReceiptRepository(
+        db,
+        now: () => DateTime(2026, 9, 10, 9),
+      );
+
+      for (var i = 0; i < 3; i++) {
+        await receipts.generateReceipt(
+          ReceiptCreateRequest(
+            operationId: 'free-op-$i',
+            source: ReceiptEntrySource.completedSelection,
+            defaultTitle: 'Completed tasks',
+            title: 'Completed tasks',
+            selectedTaskIds: [taskIds[i]],
+          ),
+        );
+      }
+
+      final receipt = await receipts.generateReceipt(
+        ReceiptCreateRequest(
+          operationId: 'paid-op-four',
+          source: ReceiptEntrySource.completedSelection,
+          defaultTitle: 'Completed tasks',
+          title: 'Fourth receipt',
+          selectedTaskIds: [taskIds.last],
+          hasUnlimitedReceipts: true,
+        ),
+      );
+
+      expect(receipt.title, 'Fourth receipt');
+      expect(await receipts.listReceipts(), hasLength(4));
+      final quota = await receipts.quotaStatus();
+      expect(quota.usedThisWeek, 3);
+      expect(quota.remainingThisWeek, 0);
+    },
+  );
 }

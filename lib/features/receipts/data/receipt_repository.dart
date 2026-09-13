@@ -20,6 +20,7 @@ class ReceiptCreateRequest {
     this.artworkType,
     this.drawingStrokesJson,
     this.photoPath,
+    this.hasUnlimitedReceipts = false,
   });
 
   final String operationId;
@@ -33,6 +34,7 @@ class ReceiptCreateRequest {
   final String? artworkType;
   final String? drawingStrokesJson;
   final String? photoPath;
+  final bool hasUnlimitedReceipts;
 }
 
 class SavedReceipt {
@@ -214,7 +216,7 @@ class ReceiptRepository {
 
       final now = _now();
       final quota = await quotaStatus();
-      if (quota.isExhausted) {
+      if (quota.isExhausted && !request.hasUnlimitedReceipts) {
         throw ReceiptQuotaExceededException(quota);
       }
 
@@ -271,6 +273,7 @@ class ReceiptRepository {
               receiptId: receiptId,
               createdAt: now,
               weekStart: quota.weekStart,
+              grantType: Value(request.hasUnlimitedReceipts ? 'pro' : 'free'),
             ),
           );
 

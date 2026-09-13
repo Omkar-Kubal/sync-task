@@ -12,6 +12,7 @@ import 'core/routing/safe_back_button_dispatcher.dart';
 import 'core/theme/app_theme.dart';
 import 'features/settings/providers/settings_controller.dart';
 import 'core/database/app_database.dart';
+import 'features/receipts/pro/receipt_pro_entitlement_lifecycle.dart';
 import 'features/tasks/providers/task_controller.dart';
 import 'features/tasks/widgets/task_list_lifecycle_refresh.dart';
 import 'shared/motion/sync_motion.dart';
@@ -81,7 +82,11 @@ class _SyncTasksAppState extends State<SyncTasksApp> {
         routeInformationProvider: _router.routeInformationProvider,
         backButtonDispatcher: _backButtonDispatcher,
         builder: (context, child) => TaskListLifecycleRefresh(
-          child: _SoundEffectsBoundary(child: _ThemeModeBoundary(child: child)),
+          child: ReceiptProEntitlementLifecycle(
+            child: _SoundEffectsBoundary(
+              child: _ThemeModeBoundary(child: child),
+            ),
+          ),
         ),
       ),
     );
