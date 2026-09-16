@@ -1,0 +1,8 @@
+Starting: Intent { cmp=com.appylab.synctasks/.MainActivity }
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+Status: ok
+LaunchState: UNKNOWN (0)
+Activity: com.google.android.permissioncontroller/com.android.permissioncontroller.permission.ui.GrantPermissionsActivity
+TotalTime: 0
+WaitTime: 39
+Complete

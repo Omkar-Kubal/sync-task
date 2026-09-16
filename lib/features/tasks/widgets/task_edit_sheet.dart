@@ -167,6 +167,9 @@ class _TaskEditSheetState extends State<TaskEditSheet> {
               TextField(
                 key: const Key('edit-task-title-field'),
                 controller: _titleController,
+                minLines: 1,
+                maxLines: 3,
+                keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.done,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: colors.textPrimary,
@@ -1774,5 +1777,3 @@ class _CustomRepeatSheetState extends State<_CustomRepeatSheet> {
     );
   }
 }
-
-

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:synctasks/core/theme/app_theme.dart';
+import 'package:synctasks/shared/services/sync_sounds.dart';
 import 'package:synctasks/shared/widgets/sync_bottom_nav.dart';
 import 'package:synctasks/shared/widgets/sync_button.dart';
 import 'package:synctasks/shared/widgets/sync_empty_state.dart';
@@ -12,6 +13,8 @@ import 'package:synctasks/shared/widgets/sync_header.dart';
 import 'package:synctasks/shared/widgets/sync_icon_button.dart';
 
 void main() {
+  tearDown(SyncSounds.resetForTesting);
+
   Widget wrap(Widget child) {
     return MaterialApp(
       theme: buildSyncTasksTheme(Brightness.light),
@@ -87,6 +90,8 @@ void main() {
     tester,
   ) async {
     final haptics = _captureHaptics(tester);
+    final sounds = _FakeSyncSoundAssetPlayer();
+    SyncSounds.configureForTesting(player: sounds);
     var selectedIndex = 0;
     await tester.pumpWidget(
       wrap(
@@ -101,6 +106,7 @@ void main() {
 
     expect(selectedIndex, 1);
     expect(haptics, contains('HapticFeedbackType.selectionClick'));
+    expect(sounds.plays, ['sounds/select.wav']);
   });
 
   testWidgets(
@@ -153,6 +159,21 @@ void main() {
     expect(navDecoration.borderRadius, BorderRadius.circular(24));
   });
 
+  testWidgets('bottom navigation highlights Lists tile when selected', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(SyncBottomNav(currentIndex: 1, onTap: (_) {})),
+    );
+
+    final listsTile = find.byKey(const Key('sync-bottom-nav-lists-tile'));
+    expect(listsTile, findsOneWidget);
+
+    final tileContainer = tester.widget<Container>(listsTile);
+    final decoration = tileContainer.decoration! as BoxDecoration;
+    expect(decoration.color, const Color(0xFF000000));
+  });
+
   testWidgets('bottom navigation stays responsive when Lists is selected', (
     tester,
   ) async {
@@ -177,12 +198,18 @@ void main() {
   testWidgets('primary button and compact fab expose accessible labels', (
     tester,
   ) async {
+    final sounds = _FakeSyncSoundAssetPlayer();
+    SyncSounds.configureForTesting(player: sounds);
+    var created = false;
     await tester.pumpWidget(
       wrap(
         Column(
           children: [
             SyncButton.primary(label: 'Save', onPressed: () {}),
-            SyncFab(onPressed: () {}, semanticLabel: 'Create task'),
+            SyncFab(
+              onPressed: () => created = true,
+              semanticLabel: 'Create task',
+            ),
           ],
         ),
       ),
@@ -203,6 +230,11 @@ void main() {
       (buttonShape! as RoundedRectangleBorder).borderRadius,
       BorderRadius.circular(18),
     );
+
+    await tester.tap(find.bySemanticsLabel('Create task'));
+
+    expect(created, isTrue);
+    expect(sounds.plays, ['sounds/action.wav']);
   });
 
   testWidgets('primary button exposes disabled and loading states', (
@@ -280,6 +312,9 @@ void main() {
 
     expect(decoration.borderRadius, BorderRadius.circular(24));
     expect(decoration.border, isNull);
+    expect(decoration.boxShadow, isNotNull);
+    expect(decoration.boxShadow!.single.blurRadius, greaterThanOrEqualTo(16));
+    expect(find.byType(Divider), findsNothing);
   });
 }
 
@@ -303,4 +338,24 @@ List<Object?> _captureHaptics(WidgetTester tester) {
   return calls;
 }
 
+class _FakeSyncSoundAssetPlayer implements SyncSoundAssetPlayer {
+  final plays = <String>[];
 
+  @override
+  Future<void> playAsset(String assetPath, {required double volume}) async {
+    plays.add(assetPath);
+  }
+
+  @override
+  SyncSoundLoopHandle startLoopAsset(
+    String assetPath, {
+    required double volume,
+  }) {
+    return _FakeSyncSoundLoopHandle();
+  }
+}
+
+class _FakeSyncSoundLoopHandle implements SyncSoundLoopHandle {
+  @override
+  void stop() {}
+}

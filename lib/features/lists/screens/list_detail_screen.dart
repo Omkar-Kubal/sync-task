@@ -7,6 +7,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../receipts/domain/receipt_composer_seed.dart';
+import '../../receipts/providers/receipt_feature_provider.dart';
+import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/widgets/sync_fab.dart';
 import '../../tasks/domain/recurrence_type.dart';
@@ -124,23 +127,226 @@ class FolderTasksScreen extends ConsumerWidget {
   }
 }
 
-class CompletedTasksScreen extends ConsumerWidget {
+class CompletedTasksScreen extends ConsumerStatefulWidget {
   const CompletedTasksScreen({this.onClose, this.scrollController, super.key});
 
   final VoidCallback? onClose;
   final ScrollController? scrollController;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ListDetailScreen(
-      title: 'Completed',
-      tasksValue: ref.watch(completedTasksProvider),
-      emptyMessage: 'Completed tasks will show up here.',
-      showCreateButton: false,
-      groupCompletedTasks: true,
-      onClose: onClose,
-      scrollController: scrollController,
+  ConsumerState<CompletedTasksScreen> createState() =>
+      _CompletedTasksScreenState();
+}
+
+class _CompletedTasksScreenState extends ConsumerState<CompletedTasksScreen> {
+  final Set<int> _selectedTaskIds = {};
+
+  @override
+  Widget build(BuildContext context) {
+    final receiptFeatureEnabled = ref.watch(receiptFeatureEnabledProvider);
+    final tasksValue = ref.watch(completedTasksProvider);
+    if (!receiptFeatureEnabled) {
+      return ListDetailScreen(
+        title: 'Completed',
+        tasksValue: tasksValue,
+        emptyMessage: 'Completed tasks will show up here.',
+        showCreateButton: false,
+        groupCompletedTasks: true,
+        onClose: widget.onClose,
+        scrollController: widget.scrollController,
+      );
+    }
+
+    return PopScope<void>(
+      canPop: widget.onClose != null,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          _returnToLists(context);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: SyncTasksColorScheme.of(context).scaffold,
+        body: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _ListDetailHeader(
+                onClose: () => _returnToLists(context),
+                title: 'Completed',
+              ),
+              if (_selectedTaskIds.isNotEmpty) ...[
+                const SizedBox(height: 14),
+                _CompletedReceiptActionBar(
+                  selectedCount: _selectedTaskIds.length,
+                  onCancel: _clearSelection,
+                  onCreateReceipt: () =>
+                      _openReceiptComposer(context, tasksValue.value ?? []),
+                ),
+              ],
+              const SizedBox(height: 14),
+              Expanded(
+                child: tasksValue.when(
+                  data: (tasks) {
+                    if (tasks.isEmpty) {
+                      return _EmptyListState(
+                        message: 'Completed tasks will show up here.',
+                        scrollController: widget.scrollController,
+                      );
+                    }
+                    return _CompletedTaskList(
+                      tasks: tasks,
+                      scrollController: widget.scrollController,
+                      onTaskTap: (task) => _showEditSheet(context, ref, task),
+                      onRestore: (task) => unawaited(_restoreTask(ref, task)),
+                      onDelete: (task) => unawaited(_deleteTask(ref, task)),
+                      selectionMode: _selectedTaskIds.isNotEmpty,
+                      selectedTaskIds: _selectedTaskIds,
+                      onTaskLongPress: _selectTask,
+                      onSelectionToggle: _toggleTaskSelection,
+                    );
+                  },
+                  loading: () => const SizedBox.shrink(),
+                  error: (error, stackTrace) => _EmptyListState(
+                    message: 'Could not load this list.',
+                    scrollController: widget.scrollController,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
+  }
+
+  void _returnToLists(BuildContext context) {
+    final close = widget.onClose;
+    if (close == null) {
+      context.go('/lists');
+    } else {
+      close();
+    }
+  }
+
+  void _selectTask(Task task) {
+    setState(() {
+      _selectedTaskIds.add(task.id);
+    });
+  }
+
+  void _toggleTaskSelection(Task task) {
+    setState(() {
+      if (!_selectedTaskIds.add(task.id)) {
+        _selectedTaskIds.remove(task.id);
+      }
+    });
+  }
+
+  void _clearSelection() {
+    setState(_selectedTaskIds.clear);
+  }
+
+  void _openReceiptComposer(BuildContext context, List<Task> tasks) {
+    final completedIds = tasks
+        .where((task) => task.isCompleted && _selectedTaskIds.contains(task.id))
+        .map((task) => task.id)
+        .toList();
+    if (completedIds.isEmpty) {
+      return;
+    }
+    context.go(
+      '/receipts/new',
+      extra: ReceiptComposerSeed(
+        source: ReceiptEntrySource.completedSelection,
+        defaultTitle: 'Completed tasks',
+        selectedTaskIds: completedIds,
+      ),
+    );
+  }
+
+  void _showEditSheet(BuildContext context, WidgetRef ref, Task task) async {
+    RecurrenceType? recurrenceType;
+    TaskSery? series;
+    if (task.seriesId != null) {
+      series = await ref
+          .read(taskRepositoryProvider)
+          .getSeriesForTask(task.seriesId!);
+      if (series != null) {
+        recurrenceType = RecurrenceType.fromStorage(series.repeatType);
+      }
+    }
+
+    if (!context.mounted) return;
+
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useRootNavigator: true,
+      barrierColor: Theme.of(context).bottomSheetTheme.modalBarrierColor,
+      backgroundColor: Colors.transparent,
+      builder: (sheetContext) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.viewInsetsOf(sheetContext).bottom,
+          ),
+          child: TaskEditSheet(
+            title: task.title,
+            scheduledDate: task.scheduledDate,
+            scheduledTime: task.scheduledTime,
+            reminderTime: task.reminderTime,
+            focusDurationMinutes: task.focusDurationMinutes,
+            recurrenceType: recurrenceType,
+            recurrenceInterval: series?.recurrenceInterval,
+            customRepeatLabel: series?.customRepeatLabel,
+            onCancel: () => Navigator.of(sheetContext).pop(),
+            onDone: () => Navigator.of(sheetContext).pop(),
+            onSave: (update) => _updateTask(ref, task, update),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _updateTask(
+    WidgetRef ref,
+    Task task,
+    TaskEditUpdate update,
+  ) async {
+    await ref
+        .read(taskControllerProvider)
+        .updateTask(task.id, _draftFromUpdate(task, update));
+    final updated = await ref.read(taskRepositoryProvider).getTask(task.id);
+    invalidateTaskListProviders(
+      ref,
+      folderIds: [task.folderId, if (updated != null) updated.folderId],
+    );
+  }
+
+  domain.TaskDraft _draftFromUpdate(Task task, TaskEditUpdate update) {
+    return domain.TaskDraft(
+      title: update.title,
+      folderId: task.folderId,
+      scheduledDate: update.scheduledDate,
+      scheduledTime: update.scheduledTime,
+      reminderTime: update.reminderTime,
+      focusDurationMinutes: update.focusDurationMinutes,
+      recurrenceType: update.recurrenceType,
+      recurrenceInterval: update.recurrenceInterval,
+      customRepeatLabel: update.customRepeatLabel,
+    );
+  }
+
+  Future<void> _restoreTask(WidgetRef ref, Task task) async {
+    await ref
+        .read(taskControllerProvider)
+        .restore(domain.TaskSnapshot(taskId: task.id));
+    invalidateTaskListProviders(ref, folderIds: [task.folderId]);
+  }
+
+  Future<void> _deleteTask(WidgetRef ref, Task task) async {
+    await ref.read(taskControllerProvider).delete(task.id);
+    invalidateTaskListProviders(ref, folderIds: [task.folderId]);
   }
 }
 
@@ -556,6 +762,10 @@ class _CompletedTaskList extends StatelessWidget {
     required this.onTaskTap,
     required this.onRestore,
     required this.onDelete,
+    this.selectionMode = false,
+    this.selectedTaskIds = const <int>{},
+    this.onTaskLongPress,
+    this.onSelectionToggle,
     this.scrollController,
   });
 
@@ -563,6 +773,10 @@ class _CompletedTaskList extends StatelessWidget {
   final ValueChanged<Task> onTaskTap;
   final ValueChanged<Task> onRestore;
   final ValueChanged<Task> onDelete;
+  final bool selectionMode;
+  final Set<int> selectedTaskIds;
+  final ValueChanged<Task>? onTaskLongPress;
+  final ValueChanged<Task>? onSelectionToggle;
   final ScrollController? scrollController;
 
   @override
@@ -589,6 +803,10 @@ class _CompletedTaskList extends StatelessWidget {
                   onComplete: () => onRestore(task),
                   onDelete: () => onDelete(task),
                   isCompleted: true,
+                  selectionMode: selectionMode,
+                  isSelected: selectedTaskIds.contains(task.id),
+                  onLongPress: () => onTaskLongPress?.call(task),
+                  onSelectionToggle: () => onSelectionToggle?.call(task),
                   textState: TaskRowTextState.completed,
                 ),
               ),
@@ -632,6 +850,52 @@ class _CompletedTaskList extends StatelessWidget {
 
   DateTime _dateOnly(DateTime value) =>
       DateTime(value.year, value.month, value.day);
+}
+
+class _CompletedReceiptActionBar extends StatelessWidget {
+  const _CompletedReceiptActionBar({
+    required this.selectedCount,
+    required this.onCancel,
+    required this.onCreateReceipt,
+  });
+
+  final int selectedCount;
+  final VoidCallback onCancel;
+  final VoidCallback onCreateReceipt;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    return Container(
+      padding: const EdgeInsets.fromLTRB(12, 10, 10, 10),
+      decoration: BoxDecoration(
+        color: colors.surface,
+        borderRadius: BorderRadius.circular(22),
+      ),
+      child: Row(
+        children: [
+          Text(
+            '$selectedCount selected',
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+              color: colors.textPrimary,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const Spacer(),
+          TextButton.icon(
+            onPressed: onCreateReceipt,
+            icon: Icon(SyncIcons.receipt, size: 18),
+            label: const Text('Create receipt'),
+          ),
+          IconButton(
+            tooltip: 'Cancel selection',
+            onPressed: onCancel,
+            icon: const Icon(Icons.close_rounded),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _TaskSection {

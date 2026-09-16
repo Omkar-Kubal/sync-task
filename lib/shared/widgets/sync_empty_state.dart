@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/synctasks_color_scheme.dart';
 import '../services/sync_haptics.dart';
+import '../services/sync_sounds.dart';
 
 class SyncEmptyState extends StatelessWidget {
   const SyncEmptyState({
@@ -63,6 +64,7 @@ class SyncEmptyState extends StatelessWidget {
                 FilledButton(
                   onPressed: () {
                     SyncHaptics.action();
+                    SyncSounds.play(SyncSoundEffect.action);
                     onAction!();
                   },
                   style: FilledButton.styleFrom(
@@ -94,5 +96,3 @@ class SyncEmptyState extends StatelessWidget {
     );
   }
 }
-
-

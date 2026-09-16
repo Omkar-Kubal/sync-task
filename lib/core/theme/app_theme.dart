@@ -130,6 +130,8 @@ ThemeData buildSyncTasksTheme(Brightness brightness) {
       backgroundColor: Colors.transparent,
       modalBackgroundColor: Colors.transparent,
       modalBarrierColor: const Color(0xB8000000),
+      elevation: 18,
+      shadowColor: Colors.black.withValues(alpha: 0.14),
       surfaceTintColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
@@ -223,5 +225,3 @@ ThemeData buildSyncTasksTheme(Brightness brightness) {
     ),
   );
 }
-
-

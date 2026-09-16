@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/widget_light_background"
+    android:elevation="6dp"
+    android:forceDarkAllowed="false"
+    android:paddingStart="14dp"
+    android:paddingEnd="14dp"
+    android:paddingTop="14dp"
+    android:paddingBottom="14dp">
+
+    <FrameLayout
+        android:layout_width="72dp"
+        android:layout_height="72dp">
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/ic_widget_progress_dot"
+            android:contentDescription="SyncTasks progress" />
+
+        <TextView
+            android:id="@+id/widget_progress_text"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:gravity="center"
+            android:text="0/0"
+            android:textColor="@color/widget_control_text"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="SyncTasks"
+        android:textColor="@color/widget_light_text_primary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end" />
+
+    <TextView
+        android:id="@+id/widget_progress_subtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0 done today"
+        android:textColor="@color/widget_light_text_secondary"
+        android:textSize="12sp"
+        android:maxLines="1" />
+</LinearLayout>

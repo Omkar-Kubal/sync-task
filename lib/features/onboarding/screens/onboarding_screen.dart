@@ -39,6 +39,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       visual: _OnboardingVisual.schedule,
     ),
     _OnboardingPageData(
+      title: 'Widgets on your Home Screen',
+      body:
+          'Track today\'s progress, quick add new tasks, and view your checklist right from your home screen.',
+      visual: _OnboardingVisual.widgets,
+    ),
+    _OnboardingPageData(
       title: 'Keep projects tidy',
       body:
           'Use Inbox by default, then organize tasks into folders when a list needs its own place.',
@@ -244,6 +250,7 @@ class _OnboardingVisualPanel extends StatelessWidget {
         _OnboardingVisual.welcome => const _WelcomeVisual(),
         _OnboardingVisual.today => const _TodayVisual(),
         _OnboardingVisual.schedule => const _ScheduleVisual(),
+        _OnboardingVisual.widgets => const _WidgetsVisual(),
         _OnboardingVisual.lists => const _ListsVisual(),
         _OnboardingVisual.finish => const _FinishVisual(),
       },
@@ -317,7 +324,7 @@ class _TodayVisual extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       child: Image.asset(
-        'screenshot-after-create-today.png',
+        'assets/images/logo.png',
         key: const Key('onboarding-today-app-image'),
         fit: BoxFit.cover,
         alignment: Alignment.topCenter,
@@ -608,7 +615,7 @@ class _ProgressDots extends StatelessWidget {
   }
 }
 
-enum _OnboardingVisual { welcome, today, schedule, lists, finish }
+enum _OnboardingVisual { welcome, today, schedule, widgets, lists, finish }
 
 class _OnboardingPageData {
   const _OnboardingPageData({
@@ -624,3 +631,189 @@ class _OnboardingPageData {
 
 
 
+
+
+class _WidgetsVisual extends StatelessWidget {
+  const _WidgetsVisual();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    final textTheme = Theme.of(context).textTheme;
+
+    return Container(
+      width: 214,
+      height: 226,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: colors.surface,
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(color: colors.divider),
+        boxShadow: [
+          BoxShadow(
+            color: colors.controlPrimary.withValues(alpha: 0.13),
+            blurRadius: 34,
+            spreadRadius: 5,
+          ),
+          BoxShadow(
+            color: colors.textPrimary.withValues(alpha: 0.12),
+            blurRadius: 20,
+            offset: const Offset(0, 14),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.today_rounded,
+                size: 16,
+                color: colors.textPrimary,
+              ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  'Today Widget',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 13,
+                    color: colors.textPrimary,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: colors.surfaceSecondary,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  '3/5 done',
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colors.textSecondary,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          const _WidgetTaskItem(
+            title: 'Review proposal',
+            time: '10:00 AM',
+            isDone: true,
+          ),
+          const SizedBox(height: 8),
+          const _WidgetTaskItem(
+            title: 'Design widget mockup',
+            time: '2:30 PM',
+            isDone: false,
+          ),
+          const SizedBox(height: 8),
+          const _WidgetTaskItem(
+            title: 'Team sync meeting',
+            time: '4:00 PM',
+            isDone: false,
+          ),
+          const Spacer(),
+          Row(
+            children: [
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: LinearProgressIndicator(
+                    value: 0.6,
+                    minHeight: 5,
+                    backgroundColor: colors.surfaceSecondary,
+                    color: colors.controlPrimary,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Container(
+                width: 28,
+                height: 28,
+                decoration: BoxDecoration(
+                  color: colors.controlPrimary,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.add_rounded,
+                  size: 18,
+                  color: colors.controlForeground,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _WidgetTaskItem extends StatelessWidget {
+  const _WidgetTaskItem({
+    required this.title,
+    required this.time,
+    required this.isDone,
+  });
+
+  final String title;
+  final String time;
+  final bool isDone;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = SyncTasksColorScheme.of(context);
+    return Row(
+      children: [
+        Container(
+          width: 16,
+          height: 16,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: isDone ? colors.controlPrimary : Colors.transparent,
+            border: Border.all(
+              color: isDone ? colors.controlPrimary : colors.divider,
+              width: 1.5,
+            ),
+          ),
+          child: isDone
+              ? Icon(
+                  Icons.check_rounded,
+                  size: 11,
+                  color: colors.controlForeground,
+                )
+              : null,
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: isDone ? colors.textSecondary : colors.textPrimary,
+              decoration: isDone ? TextDecoration.lineThrough : null,
+            ),
+          ),
+        ),
+        Text(
+          time,
+          style: TextStyle(
+            fontSize: 11,
+            color: colors.textSecondary,
+          ),
+        ),
+      ],
+    );
+  }
+}

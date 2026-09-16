@@ -21,9 +21,9 @@ class SyncGroupedSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 8,
-            offset: const Offset(0, 1),
+            color: Colors.black.withValues(alpha: 0.16),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
@@ -32,15 +32,7 @@ class SyncGroupedSection extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            for (var i = 0; i < children.length; i++) ...[
-              children[i],
-              if (i != children.length - 1)
-                Divider(
-                  height: 1,
-                  indent: dividerIndent,
-                  color: colors.divider,
-                ),
-            ],
+            for (final child in children) child,
           ],
         ),
       ),

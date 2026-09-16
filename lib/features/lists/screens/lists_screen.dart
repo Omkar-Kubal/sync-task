@@ -7,7 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../receipts/providers/receipt_feature_provider.dart';
 import '../../../shared/icons/sync_icons.dart';
+import '../../../shared/sheets/app_sheet_shadow.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/widgets/sync_fab.dart';
 import '../../tasks/domain/task.dart' as domain;
@@ -31,6 +33,7 @@ class ListsScreen extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     final summaryValue = ref.watch(listSummaryProvider);
     final foldersValue = ref.watch(foldersProvider);
+    final receiptFeatureEnabled = ref.watch(receiptFeatureEnabledProvider);
 
     final summary = summaryValue.value;
     final folders = foldersValue.value;
@@ -133,13 +136,25 @@ class ListsScreen extends ConsumerWidget {
                               ),
                         ),
                       ),
+                      if (receiptFeatureEnabled)
+                        _ListRow(
+                          label: 'Receipts',
+                          semanticLabel: 'Open Receipts',
+                          icon: Icon(
+                            SyncIcons.receipt,
+                            size: 20,
+                            color: colors.textPrimary,
+                          ),
+                          onTap: () => context.go('/receipts'),
+                        ),
                       _ListRow(
                         label: 'Insights',
                         semanticLabel: 'Open Insights',
-                        icon: Icon(
-                          SyncIcons.insights,
+                        icon: HugeIcon(
+                          icon: HugeIcons.strokeRoundedAlignBottom,
                           size: 20,
                           color: colors.textPrimary,
+                          strokeWidth: 1.5,
                         ),
                         onTap: () => context.go('/lists/insights'),
                       ),
@@ -210,7 +225,7 @@ class ListsScreen extends ConsumerWidget {
                         label: 'Reminders',
                         semanticLabel: 'Open Reminders list',
                         icon: HugeIcon(
-                          icon: HugeIcons.strokeRoundedNotification03,
+                          icon: HugeIcons.strokeRoundedBellDot,
                           size: 20,
                           color: colors.textPrimary,
                           strokeWidth: 1.5,
@@ -263,26 +278,29 @@ class ListsScreen extends ConsumerWidget {
           snap: true,
           snapSizes: const [0.52, 0.94],
           builder: (sheetContext, scrollController) {
-            return ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(28),
-              ),
-              child: ColoredBox(
-                color: colors.scaffold,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 8),
-                    Container(
-                      width: 36,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: colors.textSecondary.withValues(alpha: 0.38),
-                        borderRadius: BorderRadius.circular(100),
+            return DecoratedBox(
+              decoration: AppSheetShadow.decoration(color: colors.scaffold),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(28),
+                ),
+                child: ColoredBox(
+                  color: colors.scaffold,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      Container(
+                        width: 36,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: colors.textSecondary.withValues(alpha: 0.38),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 6),
-                    Expanded(child: builder(sheetContext, scrollController)),
-                  ],
+                      const SizedBox(height: 6),
+                      Expanded(child: builder(sheetContext, scrollController)),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -719,5 +737,3 @@ class _SectionLabel extends StatelessWidget {
     );
   }
 }
-
-

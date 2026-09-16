@@ -1,0 +1,7 @@
+Starting: Intent { cmp=com.appylab.synctasks/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.appylab.synctasks/.MainActivity
+TotalTime: 10280
+WaitTime: 10305
+Complete

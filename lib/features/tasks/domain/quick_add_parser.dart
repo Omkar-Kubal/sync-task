@@ -2,7 +2,11 @@ import 'quick_add_parse_result.dart';
 
 QuickAddParseResult parseQuickAdd(String input, {DateTime? now}) {
   final baseDate = _dateOnly(now ?? DateTime.now());
-  final rawTitle = _collapseWhitespace(input.trim());
+  var rawInput = input.trim();
+  if (rawInput.contains("%20")) {
+    try { rawInput = Uri.decodeComponent(rawInput); } catch (_) {}
+  }
+  final rawTitle = _collapseWhitespace(rawInput);
 
   final noDate = _extract(
     rawTitle,

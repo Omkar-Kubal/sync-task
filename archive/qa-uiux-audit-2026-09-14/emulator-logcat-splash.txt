@@ -1,0 +1,302 @@
+--------- beginning of main
+09-14 14:31:09.836  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::amrb@f4c75b8 for download <53:RUNNING:46%[46%]>
+09-14 14:31:09.837  8675 10892 I Finsky:background: [148] DS: Received onProgress request_id=53
+09-14 14:31:09.837  8675 10892 I Finsky:background: [148] RM: receive resource status onProgress download_request_id=53, group_id=com.google.android.tts.apk reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 8881161/19105026
+09-14 14:31:09.837  8675 10892 I Finsky:background: [148] DSC::L: Updating listener ucj@5d6f2a0 for download <53:RUNNING:46%[46%]>
+09-14 14:31:09.837  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::rzy@9e3fa3 for download <53:RUNNING:46%[46%]>
+09-14 14:31:09.837  8675 10892 I Finsky:background: [148] DS::IDC: updateWith: <53:RUNNING:46%[46%]>
+09-14 14:31:09.838  5935 11491 I PhenotypeResourceReader: unable to find any Phenotype resource metadata for com.google.android.apps.nexuslauncher
+09-14 14:31:09.840  8675  8852 I Finsky:background: [55] RM: getStatus resourceRequestId=c1d0e767-2886-4ed6-954c-b3f08f2038f2 requestId=53 package=com.google.android.tts artifact=com.google.android.tts.apk isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:09.840  8675  8852 I Finsky:background: [55] DSC: reviveDownload(53)
+09-14 14:31:09.841  8675  8852 I Finsky:background: [55] DS: reviveDownload(request_id=53)
+09-14 14:31:09.844  8675 10892 I Finsky:background: [148] DS: DS: onReviveDownload(request_id=53, files_to_download=[com.google.android.tts.apk(size:19105026)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=8881161, total_bytes=19105026, retry[count=0, next_retry=n/a])
+09-14 14:31:09.846  8675  8675 I Finsky:background: [2] RF: onProgress request_id=53 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:09.846  8675  8675 I Finsky:background: [2] RF: resourceStatus for request_id=53 group=com.google.android.tts artifact=com.google.android.tts.apk collectedBytes= 8881161 / 19105026
+09-14 14:31:09.846  8675  8675 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 17972689 / 71687284 for 5 artifacts
+09-14 14:31:09.850  8675  8675 I Finsky:background: [2] Updated time lastBroadcast=2026-09-14T09:01:06.066Z current=2026-09-14T09:01:09.850Z
+09-14 14:31:09.850  8675  8675 I Finsky:background: [2] bytesCompleted/bytesTotal/ratio = 17972689 / 71687284 / 0.250710
+09-14 14:31:09.858  8675 10864 I Finsky:background: [125] IV2: onTaskProgress com.google.android.tts[iid:8] [isid:iQRx5eo8TKqoAUIDitthMQ] status:RESOURCE_FETCH_PROGRESS, size: 17972689/71687284
+09-14 14:31:09.877  8675 10999 I Finsky:background: [179] IQ: Notifying installation update. [Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING, status=DOWNLOADING, status_code=0, reason=auto_update, tsc=PT10M38.855S, attempt=0
+09-14 14:31:09.884  5935 11491 I PhenotypeResourceReader: unable to find any Phenotype resource metadata for com.google.android.feedback
+09-14 14:31:09.910  8675  8675 I Finsky:background: [2] PIM: Ignore install package event for: com.google.android.tts, isid: iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:09.943 10558 10558 I Finsky  : [2] IQ::HLD: if pauseAppUpdates is called now, it must wait for these ongoing installs: [[Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING]
+09-14 14:31:10.034  8675 10892 I Finsky:background: [148] DSC::L: Update all listeners for download <55:RUNNING:19%[19%]> in group com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:10.034  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::amrb@f4c75b8 for download <55:RUNNING:19%[19%]>
+09-14 14:31:10.034  8675 10892 I Finsky:background: [148] DS: Received onProgress request_id=55
+09-14 14:31:10.034  8675 10892 I Finsky:background: [148] RM: receive resource status onProgress download_request_id=55, group_id=config.x86_64 reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 10415888/52294566
+09-14 14:31:10.034  8675 10892 I Finsky:background: [148] DSC::L: Updating listener ucj@5d6f2a0 for download <55:RUNNING:19%[19%]>
+09-14 14:31:10.034  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::rzy@9e3fa3 for download <55:RUNNING:19%[19%]>
+09-14 14:31:10.035  8675 10892 I Finsky:background: [148] DS::IDC: updateWith: <55:RUNNING:19%[19%]>
+09-14 14:31:10.037  8675  8852 I Finsky:background: [55] RM: getStatus resourceRequestId=0073f7ba-0040-4c54-862b-117d94864676 requestId=55 package=com.google.android.tts artifact=config.x86_64 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:10.037  8675  8852 I Finsky:background: [55] DSC: reviveDownload(55)
+09-14 14:31:10.040  8675  8852 I Finsky:background: [55] DS: reviveDownload(request_id=55)
+09-14 14:31:10.041  8675 10892 I Finsky:background: [148] DS: DS: onReviveDownload(request_id=55, files_to_download=[config.x86_64(size:52294566)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=10415888, total_bytes=52294566, retry[count=0, next_retry=n/a])
+09-14 14:31:10.047  8675  8675 I Finsky:background: [2] RF: onProgress request_id=55 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:10.047  8675  8675 I Finsky:background: [2] RF: resourceStatus for request_id=55 group=com.google.android.tts artifact=config.x86_64 collectedBytes= 10415888 / 52294566
+09-14 14:31:10.047  8675  8675 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 19584741 / 71687284 for 5 artifacts
+09-14 14:31:10.048  8675  8675 I Finsky:background: [2] RF: Preventing total bytes update to listeners
+09-14 14:31:10.520  5935 11491 I PhenotypeResourceReader: unable to find any Phenotype resource metadata for com.android.settings
+09-14 14:31:10.625  5935 11491 I PhenotypeResourceReader: unable to find any Phenotype resource metadata for com.google.android.apps.wallpaper
+09-14 14:31:10.638  5935 11491 I PhenotypeResourceReader: unable to find any Phenotype resource metadata for com.android.systemui
+09-14 14:31:11.027   705   912 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+--------- beginning of system
+09-14 14:31:11.524   705   855 D ActivityManager: freezing 11649 com.google.android.apps.restore
+09-14 14:31:11.534   705   918 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+09-14 14:31:11.535   705   918 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+09-14 14:31:11.535   705   918 D InetDiagMessage: Destroyed live tcp sockets for uids={10148} in 2ms
+09-14 14:31:11.826  8675 10892 I Finsky:background: [148] DSC::L: Update all listeners for download <53:RUNNING:53%[53%]> in group com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:11.826  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::amrb@f4c75b8 for download <53:RUNNING:53%[53%]>
+09-14 14:31:11.827  8675 10892 I Finsky:background: [148] DS: Received onProgress request_id=53
+09-14 14:31:11.827  8675 10892 I Finsky:background: [148] RM: receive resource status onProgress download_request_id=53, group_id=com.google.android.tts.apk reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 10278841/19105026
+09-14 14:31:11.827  8675 10892 I Finsky:background: [148] DSC::L: Updating listener ucj@5d6f2a0 for download <53:RUNNING:53%[53%]>
+09-14 14:31:11.827  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::rzy@9e3fa3 for download <53:RUNNING:53%[53%]>
+09-14 14:31:11.827  8675 10892 I Finsky:background: [148] DS::IDC: updateWith: <53:RUNNING:53%[53%]>
+09-14 14:31:11.831  8675  8834 I Finsky:background: [51] RM: getStatus resourceRequestId=c1d0e767-2886-4ed6-954c-b3f08f2038f2 requestId=53 package=com.google.android.tts artifact=com.google.android.tts.apk isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:11.831  8675  8834 I Finsky:background: [51] DSC: reviveDownload(53)
+09-14 14:31:11.834  8675  8834 I Finsky:background: [51] DS: reviveDownload(request_id=53)
+09-14 14:31:11.842  8675 10892 I Finsky:background: [148] DS: DS: onReviveDownload(request_id=53, files_to_download=[com.google.android.tts.apk(size:19105026)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=10278841, total_bytes=19105026, retry[count=0, next_retry=n/a])
+09-14 14:31:11.847  8675  8675 I Finsky:background: [2] RF: onProgress request_id=53 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:11.847  8675  8675 I Finsky:background: [2] RF: resourceStatus for request_id=53 group=com.google.android.tts artifact=com.google.android.tts.apk collectedBytes= 10278841 / 19105026
+09-14 14:31:11.848  8675  8675 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 20982421 / 71687284 for 5 artifacts
+09-14 14:31:11.848  8675  8675 I Finsky:background: [2] RF: Preventing total bytes update to listeners
+09-14 14:31:12.258  8675 10892 I Finsky:background: [148] DSC::L: Update all listeners for download <55:RUNNING:23%[23%]> in group com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:12.259  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::amrb@f4c75b8 for download <55:RUNNING:23%[23%]>
+09-14 14:31:12.259  8675 10892 I Finsky:background: [148] DS: Received onProgress request_id=55
+09-14 14:31:12.259  8675 10892 I Finsky:background: [148] RM: receive resource status onProgress download_request_id=55, group_id=config.x86_64 reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 12220260/52294566
+09-14 14:31:12.259  8675 10892 I Finsky:background: [148] DSC::L: Updating listener ucj@5d6f2a0 for download <55:RUNNING:23%[23%]>
+09-14 14:31:12.259  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::rzy@9e3fa3 for download <55:RUNNING:23%[23%]>
+09-14 14:31:12.259  8675 10892 I Finsky:background: [148] DS::IDC: updateWith: <55:RUNNING:23%[23%]>
+09-14 14:31:12.259  8675  8834 I Finsky:background: [51] RM: getStatus resourceRequestId=0073f7ba-0040-4c54-862b-117d94864676 requestId=55 package=com.google.android.tts artifact=config.x86_64 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:12.259  8675  8834 I Finsky:background: [51] DSC: reviveDownload(55)
+09-14 14:31:12.261  8675  8834 I Finsky:background: [51] DS: reviveDownload(request_id=55)
+09-14 14:31:12.262  8675 10892 I Finsky:background: [148] DS: DS: onReviveDownload(request_id=55, files_to_download=[config.x86_64(size:52294566)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=12220260, total_bytes=52294566, retry[count=0, next_retry=n/a])
+09-14 14:31:12.266  8675  8675 I Finsky:background: [2] RF: onProgress request_id=55 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:12.266  8675  8675 I Finsky:background: [2] RF: resourceStatus for request_id=55 group=com.google.android.tts artifact=config.x86_64 collectedBytes= 12220260 / 52294566
+09-14 14:31:12.266  8675  8675 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 22786793 / 71687284 for 5 artifacts
+09-14 14:31:12.268  8675  8675 I Finsky:background: [2] Updated time lastBroadcast=2026-09-14T09:01:09.850Z current=2026-09-14T09:01:12.268Z
+09-14 14:31:12.269  8675  8675 I Finsky:background: [2] bytesCompleted/bytesTotal/ratio = 22786793 / 71687284 / 0.317864
+09-14 14:31:12.278  8675 10864 I Finsky:background: [125] IV2: onTaskProgress com.google.android.tts[iid:8] [isid:iQRx5eo8TKqoAUIDitthMQ] status:RESOURCE_FETCH_PROGRESS, size: 22786793/71687284
+09-14 14:31:12.299  8675 10999 I Finsky:background: [179] IQ: Notifying installation update. [Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING, status=DOWNLOADING, status_code=0, reason=auto_update, tsc=PT10M41.277S, attempt=0
+09-14 14:31:12.319  8675  8675 I Finsky:background: [2] PIM: Ignore install package event for: com.google.android.tts, isid: iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:12.358  5935 11491 I .gms.persistent: IncrementDisableThreadFlip blocked for 83.533ms
+09-14 14:31:12.365 10558 10558 I Finsky  : [2] IQ::HLD: if pauseAppUpdates is called now, it must wait for these ongoing installs: [[Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING]
+09-14 14:31:12.785  5935 11491 I HeterodyneSyncer: (REDACTED) Removed %d invalid users
+09-14 14:31:13.067  5935 11491 I HeterodyneSyncer: (REDACTED) Syncing with Heterodyne. Reason: %s
+09-14 14:31:13.245   705   918 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+09-14 14:31:13.246   705   918 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+09-14 14:31:13.246   705   918 D InetDiagMessage: Destroyed live tcp sockets for uids={10159} in 2ms
+09-14 14:31:13.247   705   918 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+09-14 14:31:13.248   705   918 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+09-14 14:31:13.248   705   918 D InetDiagMessage: Destroyed live tcp sockets for uids={20159} in 2ms
+09-14 14:31:13.828  8675 10892 I Finsky:background: [148] DSC::L: Update all listeners for download <53:RUNNING:60%[60%]> in group com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:13.828  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::amrb@f4c75b8 for download <53:RUNNING:60%[60%]>
+09-14 14:31:13.828  8675 10892 I Finsky:background: [148] DS: Received onProgress request_id=53
+09-14 14:31:13.828  8675 10892 I Finsky:background: [148] RM: receive resource status onProgress download_request_id=53, group_id=com.google.android.tts.apk reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 11478088/19105026
+09-14 14:31:13.829  8675 10892 I Finsky:background: [148] DSC::L: Updating listener ucj@5d6f2a0 for download <53:RUNNING:60%[60%]>
+09-14 14:31:13.829  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::rzy@9e3fa3 for download <53:RUNNING:60%[60%]>
+09-14 14:31:13.829  8675 10892 I Finsky:background: [148] DS::IDC: updateWith: <53:RUNNING:60%[60%]>
+09-14 14:31:13.831  8675  8834 I Finsky:background: [51] RM: getStatus resourceRequestId=c1d0e767-2886-4ed6-954c-b3f08f2038f2 requestId=53 package=com.google.android.tts artifact=com.google.android.tts.apk isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:13.831  8675  8834 I Finsky:background: [51] DSC: reviveDownload(53)
+09-14 14:31:13.834  8675  8834 I Finsky:background: [51] DS: reviveDownload(request_id=53)
+09-14 14:31:13.835  8675 10892 I Finsky:background: [148] DS: DS: onReviveDownload(request_id=53, files_to_download=[com.google.android.tts.apk(size:19105026)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=11478088, total_bytes=19105026, retry[count=0, next_retry=n/a])
+09-14 14:31:13.837  8675  8675 I Finsky:background: [2] RF: onProgress request_id=53 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:13.838  8675  8675 I Finsky:background: [2] RF: resourceStatus for request_id=53 group=com.google.android.tts artifact=com.google.android.tts.apk collectedBytes= 11478088 / 19105026
+09-14 14:31:13.838  8675  8675 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 23986040 / 71687284 for 5 artifacts
+09-14 14:31:13.842  8675  8675 I Finsky:background: [2] RF: Preventing total bytes update to listeners
+09-14 14:31:14.034   705   912 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+09-14 14:31:14.232  8675 10892 I Finsky:background: [148] DSC::L: Update all listeners for download <55:RUNNING:26%[26%]> in group com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:14.232  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::amrb@f4c75b8 for download <55:RUNNING:26%[26%]>
+09-14 14:31:14.232  8675 10892 I Finsky:background: [148] DS: Received onProgress request_id=55
+09-14 14:31:14.232  8675 10892 I Finsky:background: [148] RM: receive resource status onProgress download_request_id=55, group_id=config.x86_64 reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 13785778/52294566
+09-14 14:31:14.232  8675 10892 I Finsky:background: [148] DSC::L: Updating listener ucj@5d6f2a0 for download <55:RUNNING:26%[26%]>
+09-14 14:31:14.232  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::rzy@9e3fa3 for download <55:RUNNING:26%[26%]>
+09-14 14:31:14.232  8675 10892 I Finsky:background: [148] DS::IDC: updateWith: <55:RUNNING:26%[26%]>
+09-14 14:31:14.233  8675  8852 I Finsky:background: [55] RM: getStatus resourceRequestId=0073f7ba-0040-4c54-862b-117d94864676 requestId=55 package=com.google.android.tts artifact=config.x86_64 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:14.233  8675  8852 I Finsky:background: [55] DSC: reviveDownload(55)
+09-14 14:31:14.234  8675  8852 I Finsky:background: [55] DS: reviveDownload(request_id=55)
+09-14 14:31:14.235  8675 10892 I Finsky:background: [148] DS: DS: onReviveDownload(request_id=55, files_to_download=[config.x86_64(size:52294566)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=13785778, total_bytes=52294566, retry[count=0, next_retry=n/a])
+09-14 14:31:14.240  8675  8675 I Finsky:background: [2] RF: onProgress request_id=55 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:14.241  8675  8675 I Finsky:background: [2] RF: resourceStatus for request_id=55 group=com.google.android.tts artifact=config.x86_64 collectedBytes= 13785778 / 52294566
+09-14 14:31:14.242  8675  8675 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 25551558 / 71687284 for 5 artifacts
+09-14 14:31:14.244  8675  8675 I Finsky:background: [2] RF: Preventing total bytes update to listeners
+09-14 14:31:14.727  1007  1007 I wpa_supplicant: wlan0: CTRL-EVENT-BEACON-LOSS 
+09-14 14:31:15.185  5186  5362 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+09-14 14:31:15.185  5186  5362 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+09-14 14:31:15.188  5186  5362 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+09-14 14:31:15.188  5186  5362 V SatelliteController: satelliteConfigParser is not ready
+09-14 14:31:15.188  5186  5362 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+09-14 14:31:15.207  5186  5362 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+09-14 14:31:15.207  5186  5362 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+09-14 14:31:15.207  5186  5362 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+09-14 14:31:15.207  5186  5362 V SatelliteController: satelliteConfigParser is not ready
+09-14 14:31:15.207  5186  5362 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+09-14 14:31:15.208  5186  5362 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+09-14 14:31:15.208  5186  5362 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+09-14 14:31:15.208  5186  5362 V SatelliteController: satelliteConfigParser is not ready
+09-14 14:31:15.208  5186  5362 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+09-14 14:31:15.209  5186  5362 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+09-14 14:31:15.210  5186  5362 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+09-14 14:31:15.210  5186  5362 V SatelliteController: satelliteConfigParser is not ready
+09-14 14:31:15.210  5186  5362 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+09-14 14:31:15.210  5186  5362 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+09-14 14:31:15.210  5186  5362 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+09-14 14:31:15.210  5186  5362 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+09-14 14:31:15.210  5186  5362 V SatelliteController: satelliteConfigParser is not ready
+09-14 14:31:15.210  5186  5362 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+09-14 14:31:15.211  5186  5362 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+09-14 14:31:15.211  5186  5362 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+09-14 14:31:15.211  5186  5362 V SatelliteController: satelliteConfigParser is not ready
+09-14 14:31:15.211  5186  5362 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+09-14 14:31:15.837  8675 10892 I Finsky:background: [148] DSC::L: Update all listeners for download <53:RUNNING:66%[66%]> in group com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:15.837  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::amrb@f4c75b8 for download <53:RUNNING:66%[66%]>
+09-14 14:31:15.837  8675 10892 I Finsky:background: [148] DS: Received onProgress request_id=53
+09-14 14:31:15.837  8675 10892 I Finsky:background: [148] RM: receive resource status onProgress download_request_id=53, group_id=com.google.android.tts.apk reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 12783883/19105026
+09-14 14:31:15.837  8675 10892 I Finsky:background: [148] DSC::L: Updating listener ucj@5d6f2a0 for download <53:RUNNING:66%[66%]>
+09-14 14:31:15.837  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::rzy@9e3fa3 for download <53:RUNNING:66%[66%]>
+09-14 14:31:15.838  8675 10892 I Finsky:background: [148] DS::IDC: updateWith: <53:RUNNING:66%[66%]>
+09-14 14:31:15.838  8675  8834 I Finsky:background: [51] RM: getStatus resourceRequestId=c1d0e767-2886-4ed6-954c-b3f08f2038f2 requestId=53 package=com.google.android.tts artifact=com.google.android.tts.apk isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:15.838  8675  8834 I Finsky:background: [51] DSC: reviveDownload(53)
+09-14 14:31:15.841  8675  8852 I Finsky:background: [55] DS: reviveDownload(request_id=53)
+09-14 14:31:15.842  8675 10892 I Finsky:background: [148] DS: DS: onReviveDownload(request_id=53, files_to_download=[com.google.android.tts.apk(size:19105026)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=12783883, total_bytes=19105026, retry[count=0, next_retry=n/a])
+09-14 14:31:15.843  8675  8675 I Finsky:background: [2] RF: onProgress request_id=53 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:15.844  8675  8675 I Finsky:background: [2] RF: resourceStatus for request_id=53 group=com.google.android.tts artifact=com.google.android.tts.apk collectedBytes= 12783883 / 19105026
+09-14 14:31:15.844  8675  8675 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 26857353 / 71687284 for 5 artifacts
+09-14 14:31:15.845  8675  8675 I Finsky:background: [2] Updated time lastBroadcast=2026-09-14T09:01:12.268Z current=2026-09-14T09:01:15.845Z
+09-14 14:31:15.847  8675  8675 I Finsky:background: [2] bytesCompleted/bytesTotal/ratio = 26857353 / 71687284 / 0.374646
+09-14 14:31:15.853  8675 10864 I Finsky:background: [125] IV2: onTaskProgress com.google.android.tts[iid:8] [isid:iQRx5eo8TKqoAUIDitthMQ] status:RESOURCE_FETCH_PROGRESS, size: 26857353/71687284
+09-14 14:31:15.859  8675 10999 I Finsky:background: [179] IQ: Notifying installation update. [Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING, status=DOWNLOADING, status_code=0, reason=auto_update, tsc=PT10M44.837S, attempt=0
+09-14 14:31:15.891  8675  8675 I Finsky:background: [2] PIM: Ignore install package event for: com.google.android.tts, isid: iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:15.908 10558 10558 I Finsky  : [2] IQ::HLD: if pauseAppUpdates is called now, it must wait for these ongoing installs: [[Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING]
+09-14 14:31:16.061  5935 11491 I HeterodyneSyncer: (REDACTED) Sync completed. fetchReason: %s, fetchPackageName: %s, syncErrorType: %s, individual sync errors: %s.
+09-14 14:31:16.159  5935 11491 E libbinder.IPCThreadState: Binder transaction failure. id: 532572, cmd: BR_DEAD_REPLY (29189), error: -22 (Invalid argument)
+09-14 14:31:16.175   705   839 W ActivityManager: pid 5935 com.google.android.gms.persistent sent binder code 2 with flags 1 and got error -32
+09-14 14:31:16.186  5935 11491 W FlagUpdateListenerRegis: Unable to invoke IFlagUpdateListener.onFlagUpdate. App: com.google.android.apps.restore. Process: com.google.android.apps.restore|154604041. Error: android.os.DeadObjectException. [CONTEXT service_id=51 ]
+09-14 14:31:16.249   537   537 I adbd    : adbd service requested 'exec:screencap '-p''
+09-14 14:31:16.268   705   743 D ActivityManager: sync unfroze 11649 com.google.android.apps.restore for 3
+09-14 14:31:16.279  8675 10892 I Finsky:background: [148] DSC::L: Update all listeners for download <55:RUNNING:29%[29%]> in group com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:16.280  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::amrb@f4c75b8 for download <55:RUNNING:29%[29%]>
+09-14 14:31:16.280  8675 10892 I Finsky:background: [148] DS: Received onProgress request_id=55
+09-14 14:31:16.280  8675 10892 I Finsky:background: [148] RM: receive resource status onProgress download_request_id=55, group_id=config.x86_64 reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 15484792/52294566
+09-14 14:31:16.283  8675 10892 I Finsky:background: [148] DSC::L: Updating listener ucj@5d6f2a0 for download <55:RUNNING:29%[29%]>
+09-14 14:31:16.283  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::rzy@9e3fa3 for download <55:RUNNING:29%[29%]>
+09-14 14:31:16.285  8675 10892 I Finsky:background: [148] DS::IDC: updateWith: <55:RUNNING:29%[29%]>
+09-14 14:31:16.287  8675  8852 I Finsky:background: [55] RM: getStatus resourceRequestId=0073f7ba-0040-4c54-862b-117d94864676 requestId=55 package=com.google.android.tts artifact=config.x86_64 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:16.288  8675  8852 I Finsky:background: [55] DSC: reviveDownload(55)
+09-14 14:31:16.289  8675  8852 I Finsky:background: [55] DS: reviveDownload(request_id=55)
+09-14 14:31:16.306  8675 10892 I Finsky:background: [148] DS: DS: onReviveDownload(request_id=55, files_to_download=[config.x86_64(size:52294566)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=15484792, total_bytes=52294566, retry[count=0, next_retry=n/a])
+09-14 14:31:16.330  8675  8675 I Finsky:background: [2] RF: onProgress request_id=55 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:16.330  8675  8675 I Finsky:background: [2] RF: resourceStatus for request_id=55 group=com.google.android.tts artifact=config.x86_64 collectedBytes= 15484792 / 52294566
+09-14 14:31:16.330  8675  8675 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 28556367 / 71687284 for 5 artifacts
+09-14 14:31:16.331  8675  8675 I Finsky:background: [2] RF: Preventing total bytes update to listeners
+09-14 14:31:16.340 11649 11649 I PhenotypeBackgroundRecv: Skipping com.google.android.apps.pixelmigrate which doesn't use ProcessStable flags.
+09-14 14:31:16.371  5935 11491 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+09-14 14:31:16.564  5953  5953 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.checkin.START xflg=0x4 pkg=com.google.android.gms }
+09-14 14:31:16.565 11649 11649 I PhenotypeBackgroundRecv: Skipping com.google.android.euicc#com.google.android.apps.restore which doesn't use ProcessStable flags.
+09-14 14:31:16.660  5953 11713 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] onCreate
+09-14 14:31:16.689  5953 11717 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [Ts.43-IntentOperation] Action : %s
+09-14 14:31:16.690  5953 11717 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] Action : %s
+09-14 14:31:16.701  5953 11716 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [Ts.43-IntentOperation] Action : %s
+09-14 14:31:16.701  5953 11716 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] Action : %s
+09-14 14:31:16.702  5953 11716 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] onDestroy
+09-14 14:31:16.729  5953 11717 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] onCreate
+09-14 14:31:16.733  5953 11722 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [Ts.43-IntentOperation] Action : %s
+09-14 14:31:16.739  5953 11722 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] Action : %s
+09-14 14:31:16.743  5953 11722 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] onDestroy
+09-14 14:31:16.790  5953 11722 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] onCreate
+09-14 14:31:16.792  5953 11715 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [Ts.43-IntentOperation] Action : %s
+09-14 14:31:16.792  5953 11715 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] Action : %s
+09-14 14:31:16.792  5953 11715 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] onDestroy
+09-14 14:31:16.798  5953 11717 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] onCreate
+09-14 14:31:16.805  5953 11716 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [Ts.43-IntentOperation] Action : %s
+09-14 14:31:16.805  5953 11716 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] Action : %s
+09-14 14:31:16.806  5953 11716 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] onDestroy
+09-14 14:31:16.829  5953 11723 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] onCreate
+09-14 14:31:16.833  5953 11713 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [Ts.43-IntentOperation] Action : %s
+09-14 14:31:16.833  5953 11713 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] Action : %s
+09-14 14:31:16.833  5953 11713 I serviceentitlement: (REDACTED) [ServiceEntitlementIntentOperation] [%s] onDestroy
+09-14 14:31:16.853  5935 11491 I HeterodyneSyncer: (REDACTED) Finished notifying packages after sync. syncLatency: %d
+09-14 14:31:16.860  5935 11491 I HeterodyneSyncScheduler: (REDACTED) Scheduling adaptive one off task with window [%d, %d] in seconds
+09-14 14:31:16.897 11649 11673 V ClearcutMetricXmitter: Transmission is done.
+09-14 14:31:16.898 11649 11706 V ClearcutMetricXmitter: Transmission is done.
+09-14 14:31:16.898 11649 11658 V ClearcutMetricXmitter: Transmission is done.
+09-14 14:31:16.898 11649 11708 V ClearcutMetricXmitter: Transmission is done.
+09-14 14:31:16.967  5935 11670 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+09-14 14:31:17.098   705   912 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+09-14 14:31:17.123   705   943 I AdbWifiNetworkMonitor: Wi-Fi network available
+09-14 14:31:17.137   705   943 I AdbWifiNetworkMonitor: Received the same Wi-Fi SSID. Ignoring.
+09-14 14:31:17.169   705   918 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+09-14 14:31:17.171   705   918 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+09-14 14:31:17.175   705   918 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+09-14 14:31:17.177   705   918 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+09-14 14:31:17.177   705   918 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+09-14 14:31:17.177   705   918 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+09-14 14:31:17.292  8675  8675 W JobService: onNetworkChanged() not implemented in com.google.android.finsky.scheduler.process.backgroundimpl.PhoneskyJobServiceBackground. Must override in a subclass.
+09-14 14:31:17.292  8675  8675 W JobService: onNetworkChanged() not implemented in com.google.android.finsky.scheduler.process.backgroundimpl.PhoneskyJobServiceBackground. Must override in a subclass.
+09-14 14:31:17.299  8675  8675 W JobService: onNetworkChanged() not implemented in com.google.android.finsky.scheduler.process.backgroundimpl.PhoneskyJobServiceBackground. Must override in a subclass.
+09-14 14:31:17.301  5953 11713 I NearbyFastPair: (REDACTED) TaskSchedulerUtils cancelTask %s success.
+09-14 14:31:17.341  5935 11719 I NearbyMediums: ModuleInitializer handles incoming intent com.google.android.gms.phenotype.com.google.android.gms.nearby.COMMITTED
+09-14 14:31:17.341  5953 11717 W SystemServiceRegistry: No service published for: persistent_data_block
+09-14 14:31:17.351  5935 11712 I NearbyConnections: Runtime state initialization complete. Nearby connections setting is disabled
+09-14 14:31:17.378  5953 11717 I FRP     : (REDACTED) [FrpUpdateIntentOperation] Intent received: %s
+09-14 14:31:17.387  5953 11717 W FRP     : [FrpUpdateIntentOperation] FRP is not supported for this device / user [CONTEXT service_id=341 ]
+09-14 14:31:17.460  5953 11722 I NearbySharing: onBindSlice failed since shareTargets is empty
+09-14 14:31:17.547  5953 11722 I NearbySharing: Granted slice and uri permissions to android
+09-14 14:31:17.559  5953 11722 I NearbySharing: Granted slice and uri permissions to com.google.android.apps.nbu.files
+09-14 14:31:17.565  5953 11722 I NearbySharing: com.google.android.gms.nearby.sharing.receive.SamsungQrCodeActivity enable=false
+09-14 14:31:17.575  5953 11716 W ChimeraUtils: Module com.google.android.gms.backup_g1 missing resource null(0)
+09-14 14:31:17.588  5935  5935 I NearbySharing: ReceiveSurfaceService started
+09-14 14:31:17.609  5935  5935 I NearbySharing: SendSurfaceService started
+09-14 14:31:17.609  5953  5953 I NearbySharing: SharingTileService created.
+09-14 14:31:17.615  5953 11722 I NearbySharing: Runtime state initialization complete. Sharing is enabled.
+09-14 14:31:17.662  5953 11716 W ChimeraUtils: Module com.google.android.gms.backup_g1 missing resource null(0)
+09-14 14:31:17.669  5953 11716 W ChimeraUtils: Module com.google.android.gms.backup_g1 missing resource null(0)
+09-14 14:31:17.715  5935  6168 I NearbySharing: A new client has bound to the NearbySharingService ClientBridge for calling package com.google.android.gms and PID 5953
+09-14 14:31:17.730  5935  6146 I NearbySharing: There is no account metadata, return default instance.
+09-14 14:31:17.806  5935  5935 I NearbyFastPair: DynamicSupportModule: doReceive update intent [CONTEXT service_id=265 ]
+09-14 14:31:17.811  5935  6146 I NearbyFastPair: DynamicSupportModule: onSupportStateUpdate start [CONTEXT service_id=265 ]
+09-14 14:31:17.850  8675 10892 I Finsky:background: [148] DSC::L: Update all listeners for download <53:RUNNING:72%[72%]> in group com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:17.851  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::amrb@f4c75b8 for download <53:RUNNING:72%[72%]>
+09-14 14:31:17.852  8675 10892 I Finsky:background: [148] DS: Received onProgress request_id=53
+09-14 14:31:17.853  8675 10892 I Finsky:background: [148] RM: receive resource status onProgress download_request_id=53, group_id=com.google.android.tts.apk reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 13795679/19105026
+09-14 14:31:17.855  8675 10892 I Finsky:background: [148] DSC::L: Updating listener ucj@5d6f2a0 for download <53:RUNNING:72%[72%]>
+09-14 14:31:17.856  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::rzy@9e3fa3 for download <53:RUNNING:72%[72%]>
+09-14 14:31:17.856  8675 10892 I Finsky:background: [148] DS::IDC: updateWith: <53:RUNNING:72%[72%]>
+09-14 14:31:17.874  8675  8852 I Finsky:background: [55] RM: getStatus resourceRequestId=c1d0e767-2886-4ed6-954c-b3f08f2038f2 requestId=53 package=com.google.android.tts artifact=com.google.android.tts.apk isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:17.875  8675  8852 I Finsky:background: [55] DSC: reviveDownload(53)
+09-14 14:31:17.879  8675  8852 I Finsky:background: [55] DS: reviveDownload(request_id=53)
+09-14 14:31:17.880  8675 10892 I Finsky:background: [148] DS: DS: onReviveDownload(request_id=53, files_to_download=[com.google.android.tts.apk(size:19105026)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=13795679, total_bytes=19105026, retry[count=0, next_retry=n/a])
+09-14 14:31:17.889  8675  8675 I Finsky:background: [2] RF: onProgress request_id=53 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:17.890  8675  8675 I Finsky:background: [2] RF: resourceStatus for request_id=53 group=com.google.android.tts artifact=com.google.android.tts.apk collectedBytes= 13795679 / 19105026
+09-14 14:31:17.890  8675  8675 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 29568163 / 71687284 for 5 artifacts
+09-14 14:31:17.896  8675  8675 I Finsky:background: [2] Updated time lastBroadcast=2026-09-14T09:01:15.845Z current=2026-09-14T09:01:17.896Z
+09-14 14:31:17.896  8675  8675 I Finsky:background: [2] bytesCompleted/bytesTotal/ratio = 29568163 / 71687284 / 0.412460
+09-14 14:31:17.909  8675 10864 I Finsky:background: [125] IV2: onTaskProgress com.google.android.tts[iid:8] [isid:iQRx5eo8TKqoAUIDitthMQ] status:RESOURCE_FETCH_PROGRESS, size: 29568163/71687284
+09-14 14:31:17.914 11711 11711 W libbinder.BackendUnifiedServiceManager: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+09-14 14:31:17.917  5935  6146 I NearbyFastPair: DynamicSupportModule: onSupportStateUpdate end [CONTEXT service_id=265 ]
+09-14 14:31:17.921 11711 11711 W libbinder.BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+09-14 14:31:17.922  8675 10999 I Finsky:background: [179] IQ: Notifying installation update. [Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING, status=DOWNLOADING, status_code=0, reason=auto_update, tsc=PT10M46.9S, attempt=0
+09-14 14:31:17.930 11711 11711 W libbinder.ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+09-14 14:31:17.948  8675  8675 I Finsky:background: [2] PIM: Ignore install package event for: com.google.android.tts, isid: iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:17.965 10558 10558 I Finsky  : [2] IQ::HLD: if pauseAppUpdates is called now, it must wait for these ongoing installs: [[Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING]
+09-14 14:31:18.091   528   555 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+09-14 14:31:18.104   528   555 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+09-14 14:31:18.104   528   555 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+09-14 14:31:18.104   528   555 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+09-14 14:31:18.105   528   555 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+09-14 14:31:18.270 11711 11725 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+09-14 14:31:18.312  8675 10892 I Finsky:background: [148] DSC::L: Update all listeners for download <55:RUNNING:31%[31%]> in group com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:18.312  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::amrb@f4c75b8 for download <55:RUNNING:31%[31%]>
+09-14 14:31:18.313  8675 10892 I Finsky:background: [148] DS: Received onProgress request_id=55
+09-14 14:31:18.316  8675 10892 I Finsky:background: [148] RM: receive resource status onProgress download_request_id=55, group_id=config.x86_64 reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 16320199/52294566
+09-14 14:31:18.317  8675 10892 I Finsky:background: [148] DSC::L: Updating listener ucj@5d6f2a0 for download <55:RUNNING:31%[31%]>
+09-14 14:31:18.317  8675 10892 I Finsky:background: [148] DSC::L: Updating listener DownloadServiceManagerListener::rzy@9e3fa3 for download <55:RUNNING:31%[31%]>
+09-14 14:31:18.317  8675 10892 I Finsky:background: [148] DS::IDC: updateWith: <55:RUNNING:31%[31%]>
+09-14 14:31:18.326  8675  8852 I Finsky:background: [55] RM: getStatus resourceRequestId=0073f7ba-0040-4c54-862b-117d94864676 requestId=55 package=com.google.android.tts artifact=config.x86_64 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:18.326  8675  8852 I Finsky:background: [55] DSC: reviveDownload(55)
+09-14 14:31:18.327  8675  8852 I Finsky:background: [55] DS: reviveDownload(request_id=55)
+09-14 14:31:18.328  8675 10892 I Finsky:background: [148] DS: DS: onReviveDownload(request_id=55, files_to_download=[config.x86_64(size:52294566)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=16320199, total_bytes=52294566, retry[count=0, next_retry=n/a])
+09-14 14:31:18.329  8675  8675 I Finsky:background: [2] RF: onProgress request_id=55 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 14:31:18.330  8675  8675 I Finsky:background: [2] RF: resourceStatus for request_id=55 group=com.google.android.tts artifact=config.x86_64 collectedBytes= 16320199 / 52294566
+09-14 14:31:18.330  8675  8675 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 30403570 / 71687284 for 5 artifacts
+09-14 14:31:18.330  8675  8675 I Finsky:background: [2] RF: Preventing total bytes update to listeners
+09-14 14:31:18.724   537   537 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-t' '300''

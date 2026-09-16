@@ -1,23 +1,32 @@
+import 'dart:io';
+
 import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:synctasks/core/database/app_database.dart';
 
 void main() {
-  late AppDatabase db;
+  test('database starts at explicit schema version five', () {
+    final db = AppDatabase.memory();
+    addTearDown(db.close);
 
-  setUp(() {
-    db = AppDatabase.memory();
+    expect(db.schemaVersion, 5);
   });
 
-  tearDown(() async {
-    await db.close();
-  });
+  test('receipts table includes photo artwork path', () async {
+    final db = AppDatabase.memory();
+    addTearDown(db.close);
 
-  test('database starts at explicit schema version two', () {
-    expect(db.schemaVersion, 2);
+    final columns = await db.customSelect('PRAGMA table_info(receipts)').get();
+    final columnNames = {for (final row in columns) row.read<String>('name')};
+
+    expect(columnNames, contains('photo_path'));
   });
 
   test('database starts with permanent Inbox folder', () async {
+    final db = AppDatabase.memory();
+    addTearDown(db.close);
+
     final folders = await db.select(db.folders).get();
 
     expect(folders, hasLength(1));
@@ -28,6 +37,9 @@ void main() {
   test(
     'database inserts minimal task and completed focus history rows',
     () async {
+      final db = AppDatabase.memory();
+      addTearDown(db.close);
+
       final now = DateTime(2026, 8, 31, 10);
       final folder = (await db.select(db.folders).get()).single;
       final taskId = await db
@@ -59,6 +71,37 @@ void main() {
       expect(await db.select(db.focusHistory).get(), hasLength(1));
     },
   );
+
+  test(
+    'schema four migration tolerates receipt artwork columns already present',
+    () async {
+      final directory = await Directory.systemTemp.createTemp(
+        'synctasks_migration_',
+      );
+      addTearDown(() => directory.delete(recursive: true));
+      final file = File('${directory.path}/synctasks.sqlite');
+
+      final seeded = AppDatabase.connect(NativeDatabase(file));
+      await seeded.select(seeded.folders).get();
+      await seeded.customStatement('PRAGMA user_version = 3');
+      await seeded.close();
+
+      final migrated = AppDatabase.connect(NativeDatabase(file));
+      addTearDown(migrated.close);
+
+      final folder = (await migrated.select(migrated.folders).get()).single;
+      final taskId = await migrated
+          .into(migrated.tasks)
+          .insert(
+            TasksCompanion.insert(
+              folderId: folder.id,
+              title: 'Create after migration',
+              globalSortOrder: 1,
+              createdAt: DateTime(2026, 9, 10, 17),
+            ),
+          );
+
+      expect(taskId, greaterThan(0));
+    },
+  );
 }
-
-

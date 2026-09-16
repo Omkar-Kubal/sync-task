@@ -2314,6 +2314,1750 @@ class FocusHistoryCompanion extends UpdateCompanion<FocusHistoryData> {
   }
 }
 
+class $ReceiptsTable extends Receipts with TableInfo<$ReceiptsTable, Receipt> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ReceiptsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _operationIdMeta = const VerificationMeta(
+    'operationId',
+  );
+  @override
+  late final GeneratedColumn<String> operationId = GeneratedColumn<String>(
+    'operation_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  static const VerificationMeta _displayNumberMeta = const VerificationMeta(
+    'displayNumber',
+  );
+  @override
+  late final GeneratedColumn<int> displayNumber = GeneratedColumn<int>(
+    'display_number',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sourceMeta = const VerificationMeta('source');
+  @override
+  late final GeneratedColumn<String> source = GeneratedColumn<String>(
+    'source',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _selectedStartMeta = const VerificationMeta(
+    'selectedStart',
+  );
+  @override
+  late final GeneratedColumn<DateTime> selectedStart =
+      GeneratedColumn<DateTime>(
+        'selected_start',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _selectedEndExclusiveMeta =
+      const VerificationMeta('selectedEndExclusive');
+  @override
+  late final GeneratedColumn<DateTime> selectedEndExclusive =
+      GeneratedColumn<DateTime>(
+        'selected_end_exclusive',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _includeFolderLabelsMeta =
+      const VerificationMeta('includeFolderLabels');
+  @override
+  late final GeneratedColumn<bool> includeFolderLabels = GeneratedColumn<bool>(
+    'include_folder_labels',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("include_folder_labels" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _artworkTypeMeta = const VerificationMeta(
+    'artworkType',
+  );
+  @override
+  late final GeneratedColumn<String> artworkType = GeneratedColumn<String>(
+    'artwork_type',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _drawingStrokesJsonMeta =
+      const VerificationMeta('drawingStrokesJson');
+  @override
+  late final GeneratedColumn<String> drawingStrokesJson =
+      GeneratedColumn<String>(
+        'drawing_strokes_json',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _photoPathMeta = const VerificationMeta(
+    'photoPath',
+  );
+  @override
+  late final GeneratedColumn<String> photoPath = GeneratedColumn<String>(
+    'photo_path',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _templateVersionMeta = const VerificationMeta(
+    'templateVersion',
+  );
+  @override
+  late final GeneratedColumn<int> templateVersion = GeneratedColumn<int>(
+    'template_version',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    operationId,
+    displayNumber,
+    title,
+    source,
+    createdAt,
+    updatedAt,
+    selectedStart,
+    selectedEndExclusive,
+    includeFolderLabels,
+    artworkType,
+    drawingStrokesJson,
+    photoPath,
+    templateVersion,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'receipts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Receipt> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('operation_id')) {
+      context.handle(
+        _operationIdMeta,
+        operationId.isAcceptableOrUnknown(
+          data['operation_id']!,
+          _operationIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_operationIdMeta);
+    }
+    if (data.containsKey('display_number')) {
+      context.handle(
+        _displayNumberMeta,
+        displayNumber.isAcceptableOrUnknown(
+          data['display_number']!,
+          _displayNumberMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_displayNumberMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('source')) {
+      context.handle(
+        _sourceMeta,
+        source.isAcceptableOrUnknown(data['source']!, _sourceMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sourceMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('selected_start')) {
+      context.handle(
+        _selectedStartMeta,
+        selectedStart.isAcceptableOrUnknown(
+          data['selected_start']!,
+          _selectedStartMeta,
+        ),
+      );
+    }
+    if (data.containsKey('selected_end_exclusive')) {
+      context.handle(
+        _selectedEndExclusiveMeta,
+        selectedEndExclusive.isAcceptableOrUnknown(
+          data['selected_end_exclusive']!,
+          _selectedEndExclusiveMeta,
+        ),
+      );
+    }
+    if (data.containsKey('include_folder_labels')) {
+      context.handle(
+        _includeFolderLabelsMeta,
+        includeFolderLabels.isAcceptableOrUnknown(
+          data['include_folder_labels']!,
+          _includeFolderLabelsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('artwork_type')) {
+      context.handle(
+        _artworkTypeMeta,
+        artworkType.isAcceptableOrUnknown(
+          data['artwork_type']!,
+          _artworkTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('drawing_strokes_json')) {
+      context.handle(
+        _drawingStrokesJsonMeta,
+        drawingStrokesJson.isAcceptableOrUnknown(
+          data['drawing_strokes_json']!,
+          _drawingStrokesJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('photo_path')) {
+      context.handle(
+        _photoPathMeta,
+        photoPath.isAcceptableOrUnknown(data['photo_path']!, _photoPathMeta),
+      );
+    }
+    if (data.containsKey('template_version')) {
+      context.handle(
+        _templateVersionMeta,
+        templateVersion.isAcceptableOrUnknown(
+          data['template_version']!,
+          _templateVersionMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Receipt map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Receipt(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      operationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}operation_id'],
+      )!,
+      displayNumber: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}display_number'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      source: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      selectedStart: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}selected_start'],
+      ),
+      selectedEndExclusive: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}selected_end_exclusive'],
+      ),
+      includeFolderLabels: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}include_folder_labels'],
+      )!,
+      artworkType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}artwork_type'],
+      ),
+      drawingStrokesJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}drawing_strokes_json'],
+      ),
+      photoPath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}photo_path'],
+      ),
+      templateVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}template_version'],
+      )!,
+    );
+  }
+
+  @override
+  $ReceiptsTable createAlias(String alias) {
+    return $ReceiptsTable(attachedDatabase, alias);
+  }
+}
+
+class Receipt extends DataClass implements Insertable<Receipt> {
+  final String id;
+  final String operationId;
+  final int displayNumber;
+  final String title;
+  final String source;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? selectedStart;
+  final DateTime? selectedEndExclusive;
+  final bool includeFolderLabels;
+  final String? artworkType;
+  final String? drawingStrokesJson;
+  final String? photoPath;
+  final int templateVersion;
+  const Receipt({
+    required this.id,
+    required this.operationId,
+    required this.displayNumber,
+    required this.title,
+    required this.source,
+    required this.createdAt,
+    required this.updatedAt,
+    this.selectedStart,
+    this.selectedEndExclusive,
+    required this.includeFolderLabels,
+    this.artworkType,
+    this.drawingStrokesJson,
+    this.photoPath,
+    required this.templateVersion,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['operation_id'] = Variable<String>(operationId);
+    map['display_number'] = Variable<int>(displayNumber);
+    map['title'] = Variable<String>(title);
+    map['source'] = Variable<String>(source);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || selectedStart != null) {
+      map['selected_start'] = Variable<DateTime>(selectedStart);
+    }
+    if (!nullToAbsent || selectedEndExclusive != null) {
+      map['selected_end_exclusive'] = Variable<DateTime>(selectedEndExclusive);
+    }
+    map['include_folder_labels'] = Variable<bool>(includeFolderLabels);
+    if (!nullToAbsent || artworkType != null) {
+      map['artwork_type'] = Variable<String>(artworkType);
+    }
+    if (!nullToAbsent || drawingStrokesJson != null) {
+      map['drawing_strokes_json'] = Variable<String>(drawingStrokesJson);
+    }
+    if (!nullToAbsent || photoPath != null) {
+      map['photo_path'] = Variable<String>(photoPath);
+    }
+    map['template_version'] = Variable<int>(templateVersion);
+    return map;
+  }
+
+  ReceiptsCompanion toCompanion(bool nullToAbsent) {
+    return ReceiptsCompanion(
+      id: Value(id),
+      operationId: Value(operationId),
+      displayNumber: Value(displayNumber),
+      title: Value(title),
+      source: Value(source),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      selectedStart: selectedStart == null && nullToAbsent
+          ? const Value.absent()
+          : Value(selectedStart),
+      selectedEndExclusive: selectedEndExclusive == null && nullToAbsent
+          ? const Value.absent()
+          : Value(selectedEndExclusive),
+      includeFolderLabels: Value(includeFolderLabels),
+      artworkType: artworkType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(artworkType),
+      drawingStrokesJson: drawingStrokesJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(drawingStrokesJson),
+      photoPath: photoPath == null && nullToAbsent
+          ? const Value.absent()
+          : Value(photoPath),
+      templateVersion: Value(templateVersion),
+    );
+  }
+
+  factory Receipt.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Receipt(
+      id: serializer.fromJson<String>(json['id']),
+      operationId: serializer.fromJson<String>(json['operationId']),
+      displayNumber: serializer.fromJson<int>(json['displayNumber']),
+      title: serializer.fromJson<String>(json['title']),
+      source: serializer.fromJson<String>(json['source']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      selectedStart: serializer.fromJson<DateTime?>(json['selectedStart']),
+      selectedEndExclusive: serializer.fromJson<DateTime?>(
+        json['selectedEndExclusive'],
+      ),
+      includeFolderLabels: serializer.fromJson<bool>(
+        json['includeFolderLabels'],
+      ),
+      artworkType: serializer.fromJson<String?>(json['artworkType']),
+      drawingStrokesJson: serializer.fromJson<String?>(
+        json['drawingStrokesJson'],
+      ),
+      photoPath: serializer.fromJson<String?>(json['photoPath']),
+      templateVersion: serializer.fromJson<int>(json['templateVersion']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'operationId': serializer.toJson<String>(operationId),
+      'displayNumber': serializer.toJson<int>(displayNumber),
+      'title': serializer.toJson<String>(title),
+      'source': serializer.toJson<String>(source),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'selectedStart': serializer.toJson<DateTime?>(selectedStart),
+      'selectedEndExclusive': serializer.toJson<DateTime?>(
+        selectedEndExclusive,
+      ),
+      'includeFolderLabels': serializer.toJson<bool>(includeFolderLabels),
+      'artworkType': serializer.toJson<String?>(artworkType),
+      'drawingStrokesJson': serializer.toJson<String?>(drawingStrokesJson),
+      'photoPath': serializer.toJson<String?>(photoPath),
+      'templateVersion': serializer.toJson<int>(templateVersion),
+    };
+  }
+
+  Receipt copyWith({
+    String? id,
+    String? operationId,
+    int? displayNumber,
+    String? title,
+    String? source,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> selectedStart = const Value.absent(),
+    Value<DateTime?> selectedEndExclusive = const Value.absent(),
+    bool? includeFolderLabels,
+    Value<String?> artworkType = const Value.absent(),
+    Value<String?> drawingStrokesJson = const Value.absent(),
+    Value<String?> photoPath = const Value.absent(),
+    int? templateVersion,
+  }) => Receipt(
+    id: id ?? this.id,
+    operationId: operationId ?? this.operationId,
+    displayNumber: displayNumber ?? this.displayNumber,
+    title: title ?? this.title,
+    source: source ?? this.source,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    selectedStart: selectedStart.present
+        ? selectedStart.value
+        : this.selectedStart,
+    selectedEndExclusive: selectedEndExclusive.present
+        ? selectedEndExclusive.value
+        : this.selectedEndExclusive,
+    includeFolderLabels: includeFolderLabels ?? this.includeFolderLabels,
+    artworkType: artworkType.present ? artworkType.value : this.artworkType,
+    drawingStrokesJson: drawingStrokesJson.present
+        ? drawingStrokesJson.value
+        : this.drawingStrokesJson,
+    photoPath: photoPath.present ? photoPath.value : this.photoPath,
+    templateVersion: templateVersion ?? this.templateVersion,
+  );
+  Receipt copyWithCompanion(ReceiptsCompanion data) {
+    return Receipt(
+      id: data.id.present ? data.id.value : this.id,
+      operationId: data.operationId.present
+          ? data.operationId.value
+          : this.operationId,
+      displayNumber: data.displayNumber.present
+          ? data.displayNumber.value
+          : this.displayNumber,
+      title: data.title.present ? data.title.value : this.title,
+      source: data.source.present ? data.source.value : this.source,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      selectedStart: data.selectedStart.present
+          ? data.selectedStart.value
+          : this.selectedStart,
+      selectedEndExclusive: data.selectedEndExclusive.present
+          ? data.selectedEndExclusive.value
+          : this.selectedEndExclusive,
+      includeFolderLabels: data.includeFolderLabels.present
+          ? data.includeFolderLabels.value
+          : this.includeFolderLabels,
+      artworkType: data.artworkType.present
+          ? data.artworkType.value
+          : this.artworkType,
+      drawingStrokesJson: data.drawingStrokesJson.present
+          ? data.drawingStrokesJson.value
+          : this.drawingStrokesJson,
+      photoPath: data.photoPath.present ? data.photoPath.value : this.photoPath,
+      templateVersion: data.templateVersion.present
+          ? data.templateVersion.value
+          : this.templateVersion,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Receipt(')
+          ..write('id: $id, ')
+          ..write('operationId: $operationId, ')
+          ..write('displayNumber: $displayNumber, ')
+          ..write('title: $title, ')
+          ..write('source: $source, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('selectedStart: $selectedStart, ')
+          ..write('selectedEndExclusive: $selectedEndExclusive, ')
+          ..write('includeFolderLabels: $includeFolderLabels, ')
+          ..write('artworkType: $artworkType, ')
+          ..write('drawingStrokesJson: $drawingStrokesJson, ')
+          ..write('photoPath: $photoPath, ')
+          ..write('templateVersion: $templateVersion')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    operationId,
+    displayNumber,
+    title,
+    source,
+    createdAt,
+    updatedAt,
+    selectedStart,
+    selectedEndExclusive,
+    includeFolderLabels,
+    artworkType,
+    drawingStrokesJson,
+    photoPath,
+    templateVersion,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Receipt &&
+          other.id == this.id &&
+          other.operationId == this.operationId &&
+          other.displayNumber == this.displayNumber &&
+          other.title == this.title &&
+          other.source == this.source &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.selectedStart == this.selectedStart &&
+          other.selectedEndExclusive == this.selectedEndExclusive &&
+          other.includeFolderLabels == this.includeFolderLabels &&
+          other.artworkType == this.artworkType &&
+          other.drawingStrokesJson == this.drawingStrokesJson &&
+          other.photoPath == this.photoPath &&
+          other.templateVersion == this.templateVersion);
+}
+
+class ReceiptsCompanion extends UpdateCompanion<Receipt> {
+  final Value<String> id;
+  final Value<String> operationId;
+  final Value<int> displayNumber;
+  final Value<String> title;
+  final Value<String> source;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> selectedStart;
+  final Value<DateTime?> selectedEndExclusive;
+  final Value<bool> includeFolderLabels;
+  final Value<String?> artworkType;
+  final Value<String?> drawingStrokesJson;
+  final Value<String?> photoPath;
+  final Value<int> templateVersion;
+  final Value<int> rowid;
+  const ReceiptsCompanion({
+    this.id = const Value.absent(),
+    this.operationId = const Value.absent(),
+    this.displayNumber = const Value.absent(),
+    this.title = const Value.absent(),
+    this.source = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.selectedStart = const Value.absent(),
+    this.selectedEndExclusive = const Value.absent(),
+    this.includeFolderLabels = const Value.absent(),
+    this.artworkType = const Value.absent(),
+    this.drawingStrokesJson = const Value.absent(),
+    this.photoPath = const Value.absent(),
+    this.templateVersion = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ReceiptsCompanion.insert({
+    required String id,
+    required String operationId,
+    required int displayNumber,
+    required String title,
+    required String source,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.selectedStart = const Value.absent(),
+    this.selectedEndExclusive = const Value.absent(),
+    this.includeFolderLabels = const Value.absent(),
+    this.artworkType = const Value.absent(),
+    this.drawingStrokesJson = const Value.absent(),
+    this.photoPath = const Value.absent(),
+    this.templateVersion = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       operationId = Value(operationId),
+       displayNumber = Value(displayNumber),
+       title = Value(title),
+       source = Value(source),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<Receipt> custom({
+    Expression<String>? id,
+    Expression<String>? operationId,
+    Expression<int>? displayNumber,
+    Expression<String>? title,
+    Expression<String>? source,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? selectedStart,
+    Expression<DateTime>? selectedEndExclusive,
+    Expression<bool>? includeFolderLabels,
+    Expression<String>? artworkType,
+    Expression<String>? drawingStrokesJson,
+    Expression<String>? photoPath,
+    Expression<int>? templateVersion,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (operationId != null) 'operation_id': operationId,
+      if (displayNumber != null) 'display_number': displayNumber,
+      if (title != null) 'title': title,
+      if (source != null) 'source': source,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (selectedStart != null) 'selected_start': selectedStart,
+      if (selectedEndExclusive != null)
+        'selected_end_exclusive': selectedEndExclusive,
+      if (includeFolderLabels != null)
+        'include_folder_labels': includeFolderLabels,
+      if (artworkType != null) 'artwork_type': artworkType,
+      if (drawingStrokesJson != null)
+        'drawing_strokes_json': drawingStrokesJson,
+      if (photoPath != null) 'photo_path': photoPath,
+      if (templateVersion != null) 'template_version': templateVersion,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ReceiptsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? operationId,
+    Value<int>? displayNumber,
+    Value<String>? title,
+    Value<String>? source,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? selectedStart,
+    Value<DateTime?>? selectedEndExclusive,
+    Value<bool>? includeFolderLabels,
+    Value<String?>? artworkType,
+    Value<String?>? drawingStrokesJson,
+    Value<String?>? photoPath,
+    Value<int>? templateVersion,
+    Value<int>? rowid,
+  }) {
+    return ReceiptsCompanion(
+      id: id ?? this.id,
+      operationId: operationId ?? this.operationId,
+      displayNumber: displayNumber ?? this.displayNumber,
+      title: title ?? this.title,
+      source: source ?? this.source,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      selectedStart: selectedStart ?? this.selectedStart,
+      selectedEndExclusive: selectedEndExclusive ?? this.selectedEndExclusive,
+      includeFolderLabels: includeFolderLabels ?? this.includeFolderLabels,
+      artworkType: artworkType ?? this.artworkType,
+      drawingStrokesJson: drawingStrokesJson ?? this.drawingStrokesJson,
+      photoPath: photoPath ?? this.photoPath,
+      templateVersion: templateVersion ?? this.templateVersion,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (operationId.present) {
+      map['operation_id'] = Variable<String>(operationId.value);
+    }
+    if (displayNumber.present) {
+      map['display_number'] = Variable<int>(displayNumber.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (source.present) {
+      map['source'] = Variable<String>(source.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (selectedStart.present) {
+      map['selected_start'] = Variable<DateTime>(selectedStart.value);
+    }
+    if (selectedEndExclusive.present) {
+      map['selected_end_exclusive'] = Variable<DateTime>(
+        selectedEndExclusive.value,
+      );
+    }
+    if (includeFolderLabels.present) {
+      map['include_folder_labels'] = Variable<bool>(includeFolderLabels.value);
+    }
+    if (artworkType.present) {
+      map['artwork_type'] = Variable<String>(artworkType.value);
+    }
+    if (drawingStrokesJson.present) {
+      map['drawing_strokes_json'] = Variable<String>(drawingStrokesJson.value);
+    }
+    if (photoPath.present) {
+      map['photo_path'] = Variable<String>(photoPath.value);
+    }
+    if (templateVersion.present) {
+      map['template_version'] = Variable<int>(templateVersion.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReceiptsCompanion(')
+          ..write('id: $id, ')
+          ..write('operationId: $operationId, ')
+          ..write('displayNumber: $displayNumber, ')
+          ..write('title: $title, ')
+          ..write('source: $source, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('selectedStart: $selectedStart, ')
+          ..write('selectedEndExclusive: $selectedEndExclusive, ')
+          ..write('includeFolderLabels: $includeFolderLabels, ')
+          ..write('artworkType: $artworkType, ')
+          ..write('drawingStrokesJson: $drawingStrokesJson, ')
+          ..write('photoPath: $photoPath, ')
+          ..write('templateVersion: $templateVersion, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ReceiptItemsTable extends ReceiptItems
+    with TableInfo<$ReceiptItemsTable, ReceiptItem> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ReceiptItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _receiptIdMeta = const VerificationMeta(
+    'receiptId',
+  );
+  @override
+  late final GeneratedColumn<String> receiptId = GeneratedColumn<String>(
+    'receipt_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES receipts (id)',
+    ),
+  );
+  static const VerificationMeta _taskIdMeta = const VerificationMeta('taskId');
+  @override
+  late final GeneratedColumn<int> taskId = GeneratedColumn<int>(
+    'task_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES tasks (id)',
+    ),
+  );
+  static const VerificationMeta _positionMeta = const VerificationMeta(
+    'position',
+  );
+  @override
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+    'position',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleSnapshotMeta = const VerificationMeta(
+    'titleSnapshot',
+  );
+  @override
+  late final GeneratedColumn<String> titleSnapshot = GeneratedColumn<String>(
+    'title_snapshot',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _folderSnapshotMeta = const VerificationMeta(
+    'folderSnapshot',
+  );
+  @override
+  late final GeneratedColumn<String> folderSnapshot = GeneratedColumn<String>(
+    'folder_snapshot',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _completedAtMeta = const VerificationMeta(
+    'completedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> completedAt = GeneratedColumn<DateTime>(
+    'completed_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    receiptId,
+    taskId,
+    position,
+    titleSnapshot,
+    folderSnapshot,
+    completedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'receipt_items';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ReceiptItem> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('receipt_id')) {
+      context.handle(
+        _receiptIdMeta,
+        receiptId.isAcceptableOrUnknown(data['receipt_id']!, _receiptIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_receiptIdMeta);
+    }
+    if (data.containsKey('task_id')) {
+      context.handle(
+        _taskIdMeta,
+        taskId.isAcceptableOrUnknown(data['task_id']!, _taskIdMeta),
+      );
+    }
+    if (data.containsKey('position')) {
+      context.handle(
+        _positionMeta,
+        position.isAcceptableOrUnknown(data['position']!, _positionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_positionMeta);
+    }
+    if (data.containsKey('title_snapshot')) {
+      context.handle(
+        _titleSnapshotMeta,
+        titleSnapshot.isAcceptableOrUnknown(
+          data['title_snapshot']!,
+          _titleSnapshotMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_titleSnapshotMeta);
+    }
+    if (data.containsKey('folder_snapshot')) {
+      context.handle(
+        _folderSnapshotMeta,
+        folderSnapshot.isAcceptableOrUnknown(
+          data['folder_snapshot']!,
+          _folderSnapshotMeta,
+        ),
+      );
+    }
+    if (data.containsKey('completed_at')) {
+      context.handle(
+        _completedAtMeta,
+        completedAt.isAcceptableOrUnknown(
+          data['completed_at']!,
+          _completedAtMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_completedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ReceiptItem map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReceiptItem(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      receiptId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}receipt_id'],
+      )!,
+      taskId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}task_id'],
+      ),
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+      titleSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title_snapshot'],
+      )!,
+      folderSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}folder_snapshot'],
+      ),
+      completedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}completed_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ReceiptItemsTable createAlias(String alias) {
+    return $ReceiptItemsTable(attachedDatabase, alias);
+  }
+}
+
+class ReceiptItem extends DataClass implements Insertable<ReceiptItem> {
+  final int id;
+  final String receiptId;
+  final int? taskId;
+  final int position;
+  final String titleSnapshot;
+  final String? folderSnapshot;
+  final DateTime completedAt;
+  const ReceiptItem({
+    required this.id,
+    required this.receiptId,
+    this.taskId,
+    required this.position,
+    required this.titleSnapshot,
+    this.folderSnapshot,
+    required this.completedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['receipt_id'] = Variable<String>(receiptId);
+    if (!nullToAbsent || taskId != null) {
+      map['task_id'] = Variable<int>(taskId);
+    }
+    map['position'] = Variable<int>(position);
+    map['title_snapshot'] = Variable<String>(titleSnapshot);
+    if (!nullToAbsent || folderSnapshot != null) {
+      map['folder_snapshot'] = Variable<String>(folderSnapshot);
+    }
+    map['completed_at'] = Variable<DateTime>(completedAt);
+    return map;
+  }
+
+  ReceiptItemsCompanion toCompanion(bool nullToAbsent) {
+    return ReceiptItemsCompanion(
+      id: Value(id),
+      receiptId: Value(receiptId),
+      taskId: taskId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(taskId),
+      position: Value(position),
+      titleSnapshot: Value(titleSnapshot),
+      folderSnapshot: folderSnapshot == null && nullToAbsent
+          ? const Value.absent()
+          : Value(folderSnapshot),
+      completedAt: Value(completedAt),
+    );
+  }
+
+  factory ReceiptItem.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReceiptItem(
+      id: serializer.fromJson<int>(json['id']),
+      receiptId: serializer.fromJson<String>(json['receiptId']),
+      taskId: serializer.fromJson<int?>(json['taskId']),
+      position: serializer.fromJson<int>(json['position']),
+      titleSnapshot: serializer.fromJson<String>(json['titleSnapshot']),
+      folderSnapshot: serializer.fromJson<String?>(json['folderSnapshot']),
+      completedAt: serializer.fromJson<DateTime>(json['completedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'receiptId': serializer.toJson<String>(receiptId),
+      'taskId': serializer.toJson<int?>(taskId),
+      'position': serializer.toJson<int>(position),
+      'titleSnapshot': serializer.toJson<String>(titleSnapshot),
+      'folderSnapshot': serializer.toJson<String?>(folderSnapshot),
+      'completedAt': serializer.toJson<DateTime>(completedAt),
+    };
+  }
+
+  ReceiptItem copyWith({
+    int? id,
+    String? receiptId,
+    Value<int?> taskId = const Value.absent(),
+    int? position,
+    String? titleSnapshot,
+    Value<String?> folderSnapshot = const Value.absent(),
+    DateTime? completedAt,
+  }) => ReceiptItem(
+    id: id ?? this.id,
+    receiptId: receiptId ?? this.receiptId,
+    taskId: taskId.present ? taskId.value : this.taskId,
+    position: position ?? this.position,
+    titleSnapshot: titleSnapshot ?? this.titleSnapshot,
+    folderSnapshot: folderSnapshot.present
+        ? folderSnapshot.value
+        : this.folderSnapshot,
+    completedAt: completedAt ?? this.completedAt,
+  );
+  ReceiptItem copyWithCompanion(ReceiptItemsCompanion data) {
+    return ReceiptItem(
+      id: data.id.present ? data.id.value : this.id,
+      receiptId: data.receiptId.present ? data.receiptId.value : this.receiptId,
+      taskId: data.taskId.present ? data.taskId.value : this.taskId,
+      position: data.position.present ? data.position.value : this.position,
+      titleSnapshot: data.titleSnapshot.present
+          ? data.titleSnapshot.value
+          : this.titleSnapshot,
+      folderSnapshot: data.folderSnapshot.present
+          ? data.folderSnapshot.value
+          : this.folderSnapshot,
+      completedAt: data.completedAt.present
+          ? data.completedAt.value
+          : this.completedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReceiptItem(')
+          ..write('id: $id, ')
+          ..write('receiptId: $receiptId, ')
+          ..write('taskId: $taskId, ')
+          ..write('position: $position, ')
+          ..write('titleSnapshot: $titleSnapshot, ')
+          ..write('folderSnapshot: $folderSnapshot, ')
+          ..write('completedAt: $completedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    receiptId,
+    taskId,
+    position,
+    titleSnapshot,
+    folderSnapshot,
+    completedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReceiptItem &&
+          other.id == this.id &&
+          other.receiptId == this.receiptId &&
+          other.taskId == this.taskId &&
+          other.position == this.position &&
+          other.titleSnapshot == this.titleSnapshot &&
+          other.folderSnapshot == this.folderSnapshot &&
+          other.completedAt == this.completedAt);
+}
+
+class ReceiptItemsCompanion extends UpdateCompanion<ReceiptItem> {
+  final Value<int> id;
+  final Value<String> receiptId;
+  final Value<int?> taskId;
+  final Value<int> position;
+  final Value<String> titleSnapshot;
+  final Value<String?> folderSnapshot;
+  final Value<DateTime> completedAt;
+  const ReceiptItemsCompanion({
+    this.id = const Value.absent(),
+    this.receiptId = const Value.absent(),
+    this.taskId = const Value.absent(),
+    this.position = const Value.absent(),
+    this.titleSnapshot = const Value.absent(),
+    this.folderSnapshot = const Value.absent(),
+    this.completedAt = const Value.absent(),
+  });
+  ReceiptItemsCompanion.insert({
+    this.id = const Value.absent(),
+    required String receiptId,
+    this.taskId = const Value.absent(),
+    required int position,
+    required String titleSnapshot,
+    this.folderSnapshot = const Value.absent(),
+    required DateTime completedAt,
+  }) : receiptId = Value(receiptId),
+       position = Value(position),
+       titleSnapshot = Value(titleSnapshot),
+       completedAt = Value(completedAt);
+  static Insertable<ReceiptItem> custom({
+    Expression<int>? id,
+    Expression<String>? receiptId,
+    Expression<int>? taskId,
+    Expression<int>? position,
+    Expression<String>? titleSnapshot,
+    Expression<String>? folderSnapshot,
+    Expression<DateTime>? completedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (receiptId != null) 'receipt_id': receiptId,
+      if (taskId != null) 'task_id': taskId,
+      if (position != null) 'position': position,
+      if (titleSnapshot != null) 'title_snapshot': titleSnapshot,
+      if (folderSnapshot != null) 'folder_snapshot': folderSnapshot,
+      if (completedAt != null) 'completed_at': completedAt,
+    });
+  }
+
+  ReceiptItemsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? receiptId,
+    Value<int?>? taskId,
+    Value<int>? position,
+    Value<String>? titleSnapshot,
+    Value<String?>? folderSnapshot,
+    Value<DateTime>? completedAt,
+  }) {
+    return ReceiptItemsCompanion(
+      id: id ?? this.id,
+      receiptId: receiptId ?? this.receiptId,
+      taskId: taskId ?? this.taskId,
+      position: position ?? this.position,
+      titleSnapshot: titleSnapshot ?? this.titleSnapshot,
+      folderSnapshot: folderSnapshot ?? this.folderSnapshot,
+      completedAt: completedAt ?? this.completedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (receiptId.present) {
+      map['receipt_id'] = Variable<String>(receiptId.value);
+    }
+    if (taskId.present) {
+      map['task_id'] = Variable<int>(taskId.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (titleSnapshot.present) {
+      map['title_snapshot'] = Variable<String>(titleSnapshot.value);
+    }
+    if (folderSnapshot.present) {
+      map['folder_snapshot'] = Variable<String>(folderSnapshot.value);
+    }
+    if (completedAt.present) {
+      map['completed_at'] = Variable<DateTime>(completedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReceiptItemsCompanion(')
+          ..write('id: $id, ')
+          ..write('receiptId: $receiptId, ')
+          ..write('taskId: $taskId, ')
+          ..write('position: $position, ')
+          ..write('titleSnapshot: $titleSnapshot, ')
+          ..write('folderSnapshot: $folderSnapshot, ')
+          ..write('completedAt: $completedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ReceiptUsageEventsTable extends ReceiptUsageEvents
+    with TableInfo<$ReceiptUsageEventsTable, ReceiptUsageEvent> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ReceiptUsageEventsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _operationIdMeta = const VerificationMeta(
+    'operationId',
+  );
+  @override
+  late final GeneratedColumn<String> operationId = GeneratedColumn<String>(
+    'operation_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  static const VerificationMeta _receiptIdMeta = const VerificationMeta(
+    'receiptId',
+  );
+  @override
+  late final GeneratedColumn<String> receiptId = GeneratedColumn<String>(
+    'receipt_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES receipts (id)',
+    ),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _weekStartMeta = const VerificationMeta(
+    'weekStart',
+  );
+  @override
+  late final GeneratedColumn<DateTime> weekStart = GeneratedColumn<DateTime>(
+    'week_start',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _grantTypeMeta = const VerificationMeta(
+    'grantType',
+  );
+  @override
+  late final GeneratedColumn<String> grantType = GeneratedColumn<String>(
+    'grant_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('free'),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    operationId,
+    receiptId,
+    createdAt,
+    weekStart,
+    grantType,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'receipt_usage_events';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ReceiptUsageEvent> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('operation_id')) {
+      context.handle(
+        _operationIdMeta,
+        operationId.isAcceptableOrUnknown(
+          data['operation_id']!,
+          _operationIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_operationIdMeta);
+    }
+    if (data.containsKey('receipt_id')) {
+      context.handle(
+        _receiptIdMeta,
+        receiptId.isAcceptableOrUnknown(data['receipt_id']!, _receiptIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_receiptIdMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('week_start')) {
+      context.handle(
+        _weekStartMeta,
+        weekStart.isAcceptableOrUnknown(data['week_start']!, _weekStartMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_weekStartMeta);
+    }
+    if (data.containsKey('grant_type')) {
+      context.handle(
+        _grantTypeMeta,
+        grantType.isAcceptableOrUnknown(data['grant_type']!, _grantTypeMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ReceiptUsageEvent map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ReceiptUsageEvent(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      operationId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}operation_id'],
+      )!,
+      receiptId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}receipt_id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      weekStart: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}week_start'],
+      )!,
+      grantType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}grant_type'],
+      )!,
+    );
+  }
+
+  @override
+  $ReceiptUsageEventsTable createAlias(String alias) {
+    return $ReceiptUsageEventsTable(attachedDatabase, alias);
+  }
+}
+
+class ReceiptUsageEvent extends DataClass
+    implements Insertable<ReceiptUsageEvent> {
+  final int id;
+  final String operationId;
+  final String receiptId;
+  final DateTime createdAt;
+  final DateTime weekStart;
+  final String grantType;
+  const ReceiptUsageEvent({
+    required this.id,
+    required this.operationId,
+    required this.receiptId,
+    required this.createdAt,
+    required this.weekStart,
+    required this.grantType,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['operation_id'] = Variable<String>(operationId);
+    map['receipt_id'] = Variable<String>(receiptId);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['week_start'] = Variable<DateTime>(weekStart);
+    map['grant_type'] = Variable<String>(grantType);
+    return map;
+  }
+
+  ReceiptUsageEventsCompanion toCompanion(bool nullToAbsent) {
+    return ReceiptUsageEventsCompanion(
+      id: Value(id),
+      operationId: Value(operationId),
+      receiptId: Value(receiptId),
+      createdAt: Value(createdAt),
+      weekStart: Value(weekStart),
+      grantType: Value(grantType),
+    );
+  }
+
+  factory ReceiptUsageEvent.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ReceiptUsageEvent(
+      id: serializer.fromJson<int>(json['id']),
+      operationId: serializer.fromJson<String>(json['operationId']),
+      receiptId: serializer.fromJson<String>(json['receiptId']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      weekStart: serializer.fromJson<DateTime>(json['weekStart']),
+      grantType: serializer.fromJson<String>(json['grantType']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'operationId': serializer.toJson<String>(operationId),
+      'receiptId': serializer.toJson<String>(receiptId),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'weekStart': serializer.toJson<DateTime>(weekStart),
+      'grantType': serializer.toJson<String>(grantType),
+    };
+  }
+
+  ReceiptUsageEvent copyWith({
+    int? id,
+    String? operationId,
+    String? receiptId,
+    DateTime? createdAt,
+    DateTime? weekStart,
+    String? grantType,
+  }) => ReceiptUsageEvent(
+    id: id ?? this.id,
+    operationId: operationId ?? this.operationId,
+    receiptId: receiptId ?? this.receiptId,
+    createdAt: createdAt ?? this.createdAt,
+    weekStart: weekStart ?? this.weekStart,
+    grantType: grantType ?? this.grantType,
+  );
+  ReceiptUsageEvent copyWithCompanion(ReceiptUsageEventsCompanion data) {
+    return ReceiptUsageEvent(
+      id: data.id.present ? data.id.value : this.id,
+      operationId: data.operationId.present
+          ? data.operationId.value
+          : this.operationId,
+      receiptId: data.receiptId.present ? data.receiptId.value : this.receiptId,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      weekStart: data.weekStart.present ? data.weekStart.value : this.weekStart,
+      grantType: data.grantType.present ? data.grantType.value : this.grantType,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReceiptUsageEvent(')
+          ..write('id: $id, ')
+          ..write('operationId: $operationId, ')
+          ..write('receiptId: $receiptId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('weekStart: $weekStart, ')
+          ..write('grantType: $grantType')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, operationId, receiptId, createdAt, weekStart, grantType);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ReceiptUsageEvent &&
+          other.id == this.id &&
+          other.operationId == this.operationId &&
+          other.receiptId == this.receiptId &&
+          other.createdAt == this.createdAt &&
+          other.weekStart == this.weekStart &&
+          other.grantType == this.grantType);
+}
+
+class ReceiptUsageEventsCompanion extends UpdateCompanion<ReceiptUsageEvent> {
+  final Value<int> id;
+  final Value<String> operationId;
+  final Value<String> receiptId;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> weekStart;
+  final Value<String> grantType;
+  const ReceiptUsageEventsCompanion({
+    this.id = const Value.absent(),
+    this.operationId = const Value.absent(),
+    this.receiptId = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.weekStart = const Value.absent(),
+    this.grantType = const Value.absent(),
+  });
+  ReceiptUsageEventsCompanion.insert({
+    this.id = const Value.absent(),
+    required String operationId,
+    required String receiptId,
+    required DateTime createdAt,
+    required DateTime weekStart,
+    this.grantType = const Value.absent(),
+  }) : operationId = Value(operationId),
+       receiptId = Value(receiptId),
+       createdAt = Value(createdAt),
+       weekStart = Value(weekStart);
+  static Insertable<ReceiptUsageEvent> custom({
+    Expression<int>? id,
+    Expression<String>? operationId,
+    Expression<String>? receiptId,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? weekStart,
+    Expression<String>? grantType,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (operationId != null) 'operation_id': operationId,
+      if (receiptId != null) 'receipt_id': receiptId,
+      if (createdAt != null) 'created_at': createdAt,
+      if (weekStart != null) 'week_start': weekStart,
+      if (grantType != null) 'grant_type': grantType,
+    });
+  }
+
+  ReceiptUsageEventsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? operationId,
+    Value<String>? receiptId,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? weekStart,
+    Value<String>? grantType,
+  }) {
+    return ReceiptUsageEventsCompanion(
+      id: id ?? this.id,
+      operationId: operationId ?? this.operationId,
+      receiptId: receiptId ?? this.receiptId,
+      createdAt: createdAt ?? this.createdAt,
+      weekStart: weekStart ?? this.weekStart,
+      grantType: grantType ?? this.grantType,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (operationId.present) {
+      map['operation_id'] = Variable<String>(operationId.value);
+    }
+    if (receiptId.present) {
+      map['receipt_id'] = Variable<String>(receiptId.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (weekStart.present) {
+      map['week_start'] = Variable<DateTime>(weekStart.value);
+    }
+    if (grantType.present) {
+      map['grant_type'] = Variable<String>(grantType.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ReceiptUsageEventsCompanion(')
+          ..write('id: $id, ')
+          ..write('operationId: $operationId, ')
+          ..write('receiptId: $receiptId, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('weekStart: $weekStart, ')
+          ..write('grantType: $grantType')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2321,6 +4065,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $TaskSeriesTable taskSeries = $TaskSeriesTable(this);
   late final $TasksTable tasks = $TasksTable(this);
   late final $FocusHistoryTable focusHistory = $FocusHistoryTable(this);
+  late final $ReceiptsTable receipts = $ReceiptsTable(this);
+  late final $ReceiptItemsTable receiptItems = $ReceiptItemsTable(this);
+  late final $ReceiptUsageEventsTable receiptUsageEvents =
+      $ReceiptUsageEventsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2330,6 +4078,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     taskSeries,
     tasks,
     focusHistory,
+    receipts,
+    receiptItems,
+    receiptUsageEvents,
   ];
 }
 
@@ -3311,6 +5062,24 @@ final class $$TasksTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$ReceiptItemsTable, List<ReceiptItem>>
+  _receiptItemsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.receiptItems,
+    aliasName: $_aliasNameGenerator(db.tasks.id, db.receiptItems.taskId),
+  );
+
+  $$ReceiptItemsTableProcessedTableManager get receiptItemsRefs {
+    final manager = $$ReceiptItemsTableTableManager(
+      $_db,
+      $_db.receiptItems,
+    ).filter((f) => f.taskId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_receiptItemsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$TasksTableFilterComposer extends Composer<_$AppDatabase, $TasksTable> {
@@ -3433,6 +5202,31 @@ class $$TasksTableFilterComposer extends Composer<_$AppDatabase, $TasksTable> {
           }) => $$FocusHistoryTableFilterComposer(
             $db: $db,
             $table: $db.focusHistory,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> receiptItemsRefs(
+    Expression<bool> Function($$ReceiptItemsTableFilterComposer f) f,
+  ) {
+    final $$ReceiptItemsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.receiptItems,
+      getReferencedColumn: (t) => t.taskId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReceiptItemsTableFilterComposer(
+            $db: $db,
+            $table: $db.receiptItems,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -3672,6 +5466,31 @@ class $$TasksTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> receiptItemsRefs<T extends Object>(
+    Expression<T> Function($$ReceiptItemsTableAnnotationComposer a) f,
+  ) {
+    final $$ReceiptItemsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.receiptItems,
+      getReferencedColumn: (t) => t.taskId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReceiptItemsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.receiptItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$TasksTableTableManager
@@ -3691,6 +5510,7 @@ class $$TasksTableTableManager
             bool seriesId,
             bool folderId,
             bool focusHistoryRefs,
+            bool receiptItemsRefs,
           })
         > {
   $$TasksTableTableManager(_$AppDatabase db, $TasksTable table)
@@ -3767,11 +5587,17 @@ class $$TasksTableTableManager
               )
               .toList(),
           prefetchHooksCallback:
-              ({seriesId = false, folderId = false, focusHistoryRefs = false}) {
+              ({
+                seriesId = false,
+                folderId = false,
+                focusHistoryRefs = false,
+                receiptItemsRefs = false,
+              }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (focusHistoryRefs) db.focusHistory,
+                    if (receiptItemsRefs) db.receiptItems,
                   ],
                   addJoins:
                       <
@@ -3841,6 +5667,27 @@ class $$TasksTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (receiptItemsRefs)
+                        await $_getPrefetchedData<
+                          Task,
+                          $TasksTable,
+                          ReceiptItem
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TasksTableReferences
+                              ._receiptItemsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TasksTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).receiptItemsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.taskId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -3865,6 +5712,7 @@ typedef $$TasksTableProcessedTableManager =
         bool seriesId,
         bool folderId,
         bool focusHistoryRefs,
+        bool receiptItemsRefs,
       })
     >;
 typedef $$FocusHistoryTableCreateCompanionBuilder =
@@ -4245,6 +6093,1396 @@ typedef $$FocusHistoryTableProcessedTableManager =
       FocusHistoryData,
       PrefetchHooks Function({bool taskId})
     >;
+typedef $$ReceiptsTableCreateCompanionBuilder =
+    ReceiptsCompanion Function({
+      required String id,
+      required String operationId,
+      required int displayNumber,
+      required String title,
+      required String source,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<DateTime?> selectedStart,
+      Value<DateTime?> selectedEndExclusive,
+      Value<bool> includeFolderLabels,
+      Value<String?> artworkType,
+      Value<String?> drawingStrokesJson,
+      Value<String?> photoPath,
+      Value<int> templateVersion,
+      Value<int> rowid,
+    });
+typedef $$ReceiptsTableUpdateCompanionBuilder =
+    ReceiptsCompanion Function({
+      Value<String> id,
+      Value<String> operationId,
+      Value<int> displayNumber,
+      Value<String> title,
+      Value<String> source,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> selectedStart,
+      Value<DateTime?> selectedEndExclusive,
+      Value<bool> includeFolderLabels,
+      Value<String?> artworkType,
+      Value<String?> drawingStrokesJson,
+      Value<String?> photoPath,
+      Value<int> templateVersion,
+      Value<int> rowid,
+    });
+
+final class $$ReceiptsTableReferences
+    extends BaseReferences<_$AppDatabase, $ReceiptsTable, Receipt> {
+  $$ReceiptsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$ReceiptItemsTable, List<ReceiptItem>>
+  _receiptItemsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.receiptItems,
+    aliasName: $_aliasNameGenerator(db.receipts.id, db.receiptItems.receiptId),
+  );
+
+  $$ReceiptItemsTableProcessedTableManager get receiptItemsRefs {
+    final manager = $$ReceiptItemsTableTableManager(
+      $_db,
+      $_db.receiptItems,
+    ).filter((f) => f.receiptId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_receiptItemsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$ReceiptUsageEventsTable, List<ReceiptUsageEvent>>
+  _receiptUsageEventsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.receiptUsageEvents,
+        aliasName: $_aliasNameGenerator(
+          db.receipts.id,
+          db.receiptUsageEvents.receiptId,
+        ),
+      );
+
+  $$ReceiptUsageEventsTableProcessedTableManager get receiptUsageEventsRefs {
+    final manager = $$ReceiptUsageEventsTableTableManager(
+      $_db,
+      $_db.receiptUsageEvents,
+    ).filter((f) => f.receiptId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _receiptUsageEventsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ReceiptsTableFilterComposer
+    extends Composer<_$AppDatabase, $ReceiptsTable> {
+  $$ReceiptsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get operationId => $composableBuilder(
+    column: $table.operationId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get displayNumber => $composableBuilder(
+    column: $table.displayNumber,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get selectedStart => $composableBuilder(
+    column: $table.selectedStart,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get selectedEndExclusive => $composableBuilder(
+    column: $table.selectedEndExclusive,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get includeFolderLabels => $composableBuilder(
+    column: $table.includeFolderLabels,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get artworkType => $composableBuilder(
+    column: $table.artworkType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get drawingStrokesJson => $composableBuilder(
+    column: $table.drawingStrokesJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get photoPath => $composableBuilder(
+    column: $table.photoPath,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get templateVersion => $composableBuilder(
+    column: $table.templateVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> receiptItemsRefs(
+    Expression<bool> Function($$ReceiptItemsTableFilterComposer f) f,
+  ) {
+    final $$ReceiptItemsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.receiptItems,
+      getReferencedColumn: (t) => t.receiptId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReceiptItemsTableFilterComposer(
+            $db: $db,
+            $table: $db.receiptItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> receiptUsageEventsRefs(
+    Expression<bool> Function($$ReceiptUsageEventsTableFilterComposer f) f,
+  ) {
+    final $$ReceiptUsageEventsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.receiptUsageEvents,
+      getReferencedColumn: (t) => t.receiptId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReceiptUsageEventsTableFilterComposer(
+            $db: $db,
+            $table: $db.receiptUsageEvents,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ReceiptsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ReceiptsTable> {
+  $$ReceiptsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get operationId => $composableBuilder(
+    column: $table.operationId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get displayNumber => $composableBuilder(
+    column: $table.displayNumber,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get source => $composableBuilder(
+    column: $table.source,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get selectedStart => $composableBuilder(
+    column: $table.selectedStart,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get selectedEndExclusive => $composableBuilder(
+    column: $table.selectedEndExclusive,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get includeFolderLabels => $composableBuilder(
+    column: $table.includeFolderLabels,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get artworkType => $composableBuilder(
+    column: $table.artworkType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get drawingStrokesJson => $composableBuilder(
+    column: $table.drawingStrokesJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get photoPath => $composableBuilder(
+    column: $table.photoPath,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get templateVersion => $composableBuilder(
+    column: $table.templateVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ReceiptsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ReceiptsTable> {
+  $$ReceiptsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get operationId => $composableBuilder(
+    column: $table.operationId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get displayNumber => $composableBuilder(
+    column: $table.displayNumber,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get source =>
+      $composableBuilder(column: $table.source, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get selectedStart => $composableBuilder(
+    column: $table.selectedStart,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get selectedEndExclusive => $composableBuilder(
+    column: $table.selectedEndExclusive,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get includeFolderLabels => $composableBuilder(
+    column: $table.includeFolderLabels,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get artworkType => $composableBuilder(
+    column: $table.artworkType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get drawingStrokesJson => $composableBuilder(
+    column: $table.drawingStrokesJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get photoPath =>
+      $composableBuilder(column: $table.photoPath, builder: (column) => column);
+
+  GeneratedColumn<int> get templateVersion => $composableBuilder(
+    column: $table.templateVersion,
+    builder: (column) => column,
+  );
+
+  Expression<T> receiptItemsRefs<T extends Object>(
+    Expression<T> Function($$ReceiptItemsTableAnnotationComposer a) f,
+  ) {
+    final $$ReceiptItemsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.receiptItems,
+      getReferencedColumn: (t) => t.receiptId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReceiptItemsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.receiptItems,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> receiptUsageEventsRefs<T extends Object>(
+    Expression<T> Function($$ReceiptUsageEventsTableAnnotationComposer a) f,
+  ) {
+    final $$ReceiptUsageEventsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.receiptUsageEvents,
+          getReferencedColumn: (t) => t.receiptId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ReceiptUsageEventsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.receiptUsageEvents,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$ReceiptsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ReceiptsTable,
+          Receipt,
+          $$ReceiptsTableFilterComposer,
+          $$ReceiptsTableOrderingComposer,
+          $$ReceiptsTableAnnotationComposer,
+          $$ReceiptsTableCreateCompanionBuilder,
+          $$ReceiptsTableUpdateCompanionBuilder,
+          (Receipt, $$ReceiptsTableReferences),
+          Receipt,
+          PrefetchHooks Function({
+            bool receiptItemsRefs,
+            bool receiptUsageEventsRefs,
+          })
+        > {
+  $$ReceiptsTableTableManager(_$AppDatabase db, $ReceiptsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ReceiptsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ReceiptsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ReceiptsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> operationId = const Value.absent(),
+                Value<int> displayNumber = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> source = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> selectedStart = const Value.absent(),
+                Value<DateTime?> selectedEndExclusive = const Value.absent(),
+                Value<bool> includeFolderLabels = const Value.absent(),
+                Value<String?> artworkType = const Value.absent(),
+                Value<String?> drawingStrokesJson = const Value.absent(),
+                Value<String?> photoPath = const Value.absent(),
+                Value<int> templateVersion = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReceiptsCompanion(
+                id: id,
+                operationId: operationId,
+                displayNumber: displayNumber,
+                title: title,
+                source: source,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                selectedStart: selectedStart,
+                selectedEndExclusive: selectedEndExclusive,
+                includeFolderLabels: includeFolderLabels,
+                artworkType: artworkType,
+                drawingStrokesJson: drawingStrokesJson,
+                photoPath: photoPath,
+                templateVersion: templateVersion,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String operationId,
+                required int displayNumber,
+                required String title,
+                required String source,
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<DateTime?> selectedStart = const Value.absent(),
+                Value<DateTime?> selectedEndExclusive = const Value.absent(),
+                Value<bool> includeFolderLabels = const Value.absent(),
+                Value<String?> artworkType = const Value.absent(),
+                Value<String?> drawingStrokesJson = const Value.absent(),
+                Value<String?> photoPath = const Value.absent(),
+                Value<int> templateVersion = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ReceiptsCompanion.insert(
+                id: id,
+                operationId: operationId,
+                displayNumber: displayNumber,
+                title: title,
+                source: source,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                selectedStart: selectedStart,
+                selectedEndExclusive: selectedEndExclusive,
+                includeFolderLabels: includeFolderLabels,
+                artworkType: artworkType,
+                drawingStrokesJson: drawingStrokesJson,
+                photoPath: photoPath,
+                templateVersion: templateVersion,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ReceiptsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({receiptItemsRefs = false, receiptUsageEventsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (receiptItemsRefs) db.receiptItems,
+                    if (receiptUsageEventsRefs) db.receiptUsageEvents,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (receiptItemsRefs)
+                        await $_getPrefetchedData<
+                          Receipt,
+                          $ReceiptsTable,
+                          ReceiptItem
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ReceiptsTableReferences
+                              ._receiptItemsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ReceiptsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).receiptItemsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.receiptId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (receiptUsageEventsRefs)
+                        await $_getPrefetchedData<
+                          Receipt,
+                          $ReceiptsTable,
+                          ReceiptUsageEvent
+                        >(
+                          currentTable: table,
+                          referencedTable: $$ReceiptsTableReferences
+                              ._receiptUsageEventsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$ReceiptsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).receiptUsageEventsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.receiptId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$ReceiptsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ReceiptsTable,
+      Receipt,
+      $$ReceiptsTableFilterComposer,
+      $$ReceiptsTableOrderingComposer,
+      $$ReceiptsTableAnnotationComposer,
+      $$ReceiptsTableCreateCompanionBuilder,
+      $$ReceiptsTableUpdateCompanionBuilder,
+      (Receipt, $$ReceiptsTableReferences),
+      Receipt,
+      PrefetchHooks Function({
+        bool receiptItemsRefs,
+        bool receiptUsageEventsRefs,
+      })
+    >;
+typedef $$ReceiptItemsTableCreateCompanionBuilder =
+    ReceiptItemsCompanion Function({
+      Value<int> id,
+      required String receiptId,
+      Value<int?> taskId,
+      required int position,
+      required String titleSnapshot,
+      Value<String?> folderSnapshot,
+      required DateTime completedAt,
+    });
+typedef $$ReceiptItemsTableUpdateCompanionBuilder =
+    ReceiptItemsCompanion Function({
+      Value<int> id,
+      Value<String> receiptId,
+      Value<int?> taskId,
+      Value<int> position,
+      Value<String> titleSnapshot,
+      Value<String?> folderSnapshot,
+      Value<DateTime> completedAt,
+    });
+
+final class $$ReceiptItemsTableReferences
+    extends BaseReferences<_$AppDatabase, $ReceiptItemsTable, ReceiptItem> {
+  $$ReceiptItemsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $ReceiptsTable _receiptIdTable(_$AppDatabase db) =>
+      db.receipts.createAlias(
+        $_aliasNameGenerator(db.receiptItems.receiptId, db.receipts.id),
+      );
+
+  $$ReceiptsTableProcessedTableManager get receiptId {
+    final $_column = $_itemColumn<String>('receipt_id')!;
+
+    final manager = $$ReceiptsTableTableManager(
+      $_db,
+      $_db.receipts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_receiptIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TasksTable _taskIdTable(_$AppDatabase db) => db.tasks.createAlias(
+    $_aliasNameGenerator(db.receiptItems.taskId, db.tasks.id),
+  );
+
+  $$TasksTableProcessedTableManager? get taskId {
+    final $_column = $_itemColumn<int>('task_id');
+    if ($_column == null) return null;
+    final manager = $$TasksTableTableManager(
+      $_db,
+      $_db.tasks,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_taskIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ReceiptItemsTableFilterComposer
+    extends Composer<_$AppDatabase, $ReceiptItemsTable> {
+  $$ReceiptItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get titleSnapshot => $composableBuilder(
+    column: $table.titleSnapshot,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get folderSnapshot => $composableBuilder(
+    column: $table.folderSnapshot,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ReceiptsTableFilterComposer get receiptId {
+    final $$ReceiptsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.receiptId,
+      referencedTable: $db.receipts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReceiptsTableFilterComposer(
+            $db: $db,
+            $table: $db.receipts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TasksTableFilterComposer get taskId {
+    final $$TasksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.taskId,
+      referencedTable: $db.tasks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableFilterComposer(
+            $db: $db,
+            $table: $db.tasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ReceiptItemsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ReceiptItemsTable> {
+  $$ReceiptItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get titleSnapshot => $composableBuilder(
+    column: $table.titleSnapshot,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get folderSnapshot => $composableBuilder(
+    column: $table.folderSnapshot,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ReceiptsTableOrderingComposer get receiptId {
+    final $$ReceiptsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.receiptId,
+      referencedTable: $db.receipts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReceiptsTableOrderingComposer(
+            $db: $db,
+            $table: $db.receipts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TasksTableOrderingComposer get taskId {
+    final $$TasksTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.taskId,
+      referencedTable: $db.tasks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableOrderingComposer(
+            $db: $db,
+            $table: $db.tasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ReceiptItemsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ReceiptItemsTable> {
+  $$ReceiptItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get position =>
+      $composableBuilder(column: $table.position, builder: (column) => column);
+
+  GeneratedColumn<String> get titleSnapshot => $composableBuilder(
+    column: $table.titleSnapshot,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get folderSnapshot => $composableBuilder(
+    column: $table.folderSnapshot,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => column,
+  );
+
+  $$ReceiptsTableAnnotationComposer get receiptId {
+    final $$ReceiptsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.receiptId,
+      referencedTable: $db.receipts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReceiptsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.receipts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TasksTableAnnotationComposer get taskId {
+    final $$TasksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.taskId,
+      referencedTable: $db.tasks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ReceiptItemsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ReceiptItemsTable,
+          ReceiptItem,
+          $$ReceiptItemsTableFilterComposer,
+          $$ReceiptItemsTableOrderingComposer,
+          $$ReceiptItemsTableAnnotationComposer,
+          $$ReceiptItemsTableCreateCompanionBuilder,
+          $$ReceiptItemsTableUpdateCompanionBuilder,
+          (ReceiptItem, $$ReceiptItemsTableReferences),
+          ReceiptItem,
+          PrefetchHooks Function({bool receiptId, bool taskId})
+        > {
+  $$ReceiptItemsTableTableManager(_$AppDatabase db, $ReceiptItemsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ReceiptItemsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ReceiptItemsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ReceiptItemsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> receiptId = const Value.absent(),
+                Value<int?> taskId = const Value.absent(),
+                Value<int> position = const Value.absent(),
+                Value<String> titleSnapshot = const Value.absent(),
+                Value<String?> folderSnapshot = const Value.absent(),
+                Value<DateTime> completedAt = const Value.absent(),
+              }) => ReceiptItemsCompanion(
+                id: id,
+                receiptId: receiptId,
+                taskId: taskId,
+                position: position,
+                titleSnapshot: titleSnapshot,
+                folderSnapshot: folderSnapshot,
+                completedAt: completedAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String receiptId,
+                Value<int?> taskId = const Value.absent(),
+                required int position,
+                required String titleSnapshot,
+                Value<String?> folderSnapshot = const Value.absent(),
+                required DateTime completedAt,
+              }) => ReceiptItemsCompanion.insert(
+                id: id,
+                receiptId: receiptId,
+                taskId: taskId,
+                position: position,
+                titleSnapshot: titleSnapshot,
+                folderSnapshot: folderSnapshot,
+                completedAt: completedAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ReceiptItemsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({receiptId = false, taskId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (receiptId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.receiptId,
+                                referencedTable: $$ReceiptItemsTableReferences
+                                    ._receiptIdTable(db),
+                                referencedColumn: $$ReceiptItemsTableReferences
+                                    ._receiptIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+                    if (taskId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.taskId,
+                                referencedTable: $$ReceiptItemsTableReferences
+                                    ._taskIdTable(db),
+                                referencedColumn: $$ReceiptItemsTableReferences
+                                    ._taskIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ReceiptItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ReceiptItemsTable,
+      ReceiptItem,
+      $$ReceiptItemsTableFilterComposer,
+      $$ReceiptItemsTableOrderingComposer,
+      $$ReceiptItemsTableAnnotationComposer,
+      $$ReceiptItemsTableCreateCompanionBuilder,
+      $$ReceiptItemsTableUpdateCompanionBuilder,
+      (ReceiptItem, $$ReceiptItemsTableReferences),
+      ReceiptItem,
+      PrefetchHooks Function({bool receiptId, bool taskId})
+    >;
+typedef $$ReceiptUsageEventsTableCreateCompanionBuilder =
+    ReceiptUsageEventsCompanion Function({
+      Value<int> id,
+      required String operationId,
+      required String receiptId,
+      required DateTime createdAt,
+      required DateTime weekStart,
+      Value<String> grantType,
+    });
+typedef $$ReceiptUsageEventsTableUpdateCompanionBuilder =
+    ReceiptUsageEventsCompanion Function({
+      Value<int> id,
+      Value<String> operationId,
+      Value<String> receiptId,
+      Value<DateTime> createdAt,
+      Value<DateTime> weekStart,
+      Value<String> grantType,
+    });
+
+final class $$ReceiptUsageEventsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ReceiptUsageEventsTable,
+          ReceiptUsageEvent
+        > {
+  $$ReceiptUsageEventsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ReceiptsTable _receiptIdTable(_$AppDatabase db) =>
+      db.receipts.createAlias(
+        $_aliasNameGenerator(db.receiptUsageEvents.receiptId, db.receipts.id),
+      );
+
+  $$ReceiptsTableProcessedTableManager get receiptId {
+    final $_column = $_itemColumn<String>('receipt_id')!;
+
+    final manager = $$ReceiptsTableTableManager(
+      $_db,
+      $_db.receipts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_receiptIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ReceiptUsageEventsTableFilterComposer
+    extends Composer<_$AppDatabase, $ReceiptUsageEventsTable> {
+  $$ReceiptUsageEventsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get operationId => $composableBuilder(
+    column: $table.operationId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get weekStart => $composableBuilder(
+    column: $table.weekStart,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get grantType => $composableBuilder(
+    column: $table.grantType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$ReceiptsTableFilterComposer get receiptId {
+    final $$ReceiptsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.receiptId,
+      referencedTable: $db.receipts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReceiptsTableFilterComposer(
+            $db: $db,
+            $table: $db.receipts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ReceiptUsageEventsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ReceiptUsageEventsTable> {
+  $$ReceiptUsageEventsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get operationId => $composableBuilder(
+    column: $table.operationId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get weekStart => $composableBuilder(
+    column: $table.weekStart,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get grantType => $composableBuilder(
+    column: $table.grantType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ReceiptsTableOrderingComposer get receiptId {
+    final $$ReceiptsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.receiptId,
+      referencedTable: $db.receipts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReceiptsTableOrderingComposer(
+            $db: $db,
+            $table: $db.receipts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ReceiptUsageEventsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ReceiptUsageEventsTable> {
+  $$ReceiptUsageEventsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get operationId => $composableBuilder(
+    column: $table.operationId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get weekStart =>
+      $composableBuilder(column: $table.weekStart, builder: (column) => column);
+
+  GeneratedColumn<String> get grantType =>
+      $composableBuilder(column: $table.grantType, builder: (column) => column);
+
+  $$ReceiptsTableAnnotationComposer get receiptId {
+    final $$ReceiptsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.receiptId,
+      referencedTable: $db.receipts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ReceiptsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.receipts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ReceiptUsageEventsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ReceiptUsageEventsTable,
+          ReceiptUsageEvent,
+          $$ReceiptUsageEventsTableFilterComposer,
+          $$ReceiptUsageEventsTableOrderingComposer,
+          $$ReceiptUsageEventsTableAnnotationComposer,
+          $$ReceiptUsageEventsTableCreateCompanionBuilder,
+          $$ReceiptUsageEventsTableUpdateCompanionBuilder,
+          (ReceiptUsageEvent, $$ReceiptUsageEventsTableReferences),
+          ReceiptUsageEvent,
+          PrefetchHooks Function({bool receiptId})
+        > {
+  $$ReceiptUsageEventsTableTableManager(
+    _$AppDatabase db,
+    $ReceiptUsageEventsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ReceiptUsageEventsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ReceiptUsageEventsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ReceiptUsageEventsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> operationId = const Value.absent(),
+                Value<String> receiptId = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> weekStart = const Value.absent(),
+                Value<String> grantType = const Value.absent(),
+              }) => ReceiptUsageEventsCompanion(
+                id: id,
+                operationId: operationId,
+                receiptId: receiptId,
+                createdAt: createdAt,
+                weekStart: weekStart,
+                grantType: grantType,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String operationId,
+                required String receiptId,
+                required DateTime createdAt,
+                required DateTime weekStart,
+                Value<String> grantType = const Value.absent(),
+              }) => ReceiptUsageEventsCompanion.insert(
+                id: id,
+                operationId: operationId,
+                receiptId: receiptId,
+                createdAt: createdAt,
+                weekStart: weekStart,
+                grantType: grantType,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ReceiptUsageEventsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({receiptId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (receiptId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.receiptId,
+                                referencedTable:
+                                    $$ReceiptUsageEventsTableReferences
+                                        ._receiptIdTable(db),
+                                referencedColumn:
+                                    $$ReceiptUsageEventsTableReferences
+                                        ._receiptIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ReceiptUsageEventsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ReceiptUsageEventsTable,
+      ReceiptUsageEvent,
+      $$ReceiptUsageEventsTableFilterComposer,
+      $$ReceiptUsageEventsTableOrderingComposer,
+      $$ReceiptUsageEventsTableAnnotationComposer,
+      $$ReceiptUsageEventsTableCreateCompanionBuilder,
+      $$ReceiptUsageEventsTableUpdateCompanionBuilder,
+      (ReceiptUsageEvent, $$ReceiptUsageEventsTableReferences),
+      ReceiptUsageEvent,
+      PrefetchHooks Function({bool receiptId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -4257,6 +7495,10 @@ class $AppDatabaseManager {
       $$TasksTableTableManager(_db, _db.tasks);
   $$FocusHistoryTableTableManager get focusHistory =>
       $$FocusHistoryTableTableManager(_db, _db.focusHistory);
+  $$ReceiptsTableTableManager get receipts =>
+      $$ReceiptsTableTableManager(_db, _db.receipts);
+  $$ReceiptItemsTableTableManager get receiptItems =>
+      $$ReceiptItemsTableTableManager(_db, _db.receiptItems);
+  $$ReceiptUsageEventsTableTableManager get receiptUsageEvents =>
+      $$ReceiptUsageEventsTableTableManager(_db, _db.receiptUsageEvents);
 }
-
-

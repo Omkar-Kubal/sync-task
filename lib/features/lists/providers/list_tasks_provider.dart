@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/database/app_database.dart';
+import '../../receipts/providers/today_completed_tasks_provider.dart';
 import '../../tasks/providers/completed_tasks_provider.dart';
 import '../../tasks/providers/task_controller.dart';
 import '../../tasks/providers/today_tasks_provider.dart';
@@ -29,6 +30,7 @@ void invalidateTaskListProviders(
   ref.invalidate(allTasksProvider);
   ref.invalidate(reminderTasksProvider);
   ref.invalidate(completedTasksProvider);
+  ref.invalidate(todayCompletedTasksProvider);
   ref.invalidate(todayTasksProvider);
   ref.invalidate(upcomingTasksProvider);
   ref.invalidate(listSummaryProvider);
@@ -36,5 +38,3 @@ void invalidateTaskListProviders(
     ref.invalidate(folderTasksProvider(folderId));
   }
 }
-
-

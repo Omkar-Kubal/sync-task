@@ -24,12 +24,7 @@ void main() {
     tester,
   ) async {
     await useTallViewport(tester);
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: buildSyncTasksTheme(Brightness.light),
-        home: const ProviderScope(child: ListsScreen()),
-      ),
-    );
+    await _pumpListsScreen(tester);
 
     for (final text in [
       'All',
@@ -59,12 +54,7 @@ void main() {
 
   testWidgets('lists screen uses mockup card grouping', (tester) async {
     await useTallViewport(tester);
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: buildSyncTasksTheme(Brightness.light),
-        home: const ProviderScope(child: ListsScreen()),
-      ),
-    );
+    await _pumpListsScreen(tester);
 
     expect(find.byKey(const Key('lists-primary-section')), findsOneWidget);
     expect(find.byKey(const Key('lists-inbox-section')), findsOneWidget);
@@ -74,12 +64,7 @@ void main() {
 
   testWidgets('lists screen uses shared updated icons', (tester) async {
     await useTallViewport(tester);
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: buildSyncTasksTheme(Brightness.light),
-        home: const ProviderScope(child: ListsScreen()),
-      ),
-    );
+    await _pumpListsScreen(tester);
 
     expect(find.byType(ListFilterIcon), findsWidgets);
     final upcomingCalendar = tester.widget<HugeIcon>(
@@ -100,13 +85,22 @@ void main() {
     expect(completedIcon.icon, HugeIcons.strokeRoundedBookCheck);
     expect(completedIcon.size, 20);
     expect(completedIcon.strokeWidth, 1.5);
+    final insightsIcon = tester.widget<HugeIcon>(
+      find.descendant(
+        of: find.bySemanticsLabel('Open Insights'),
+        matching: find.byType(HugeIcon),
+      ),
+    );
+    expect(insightsIcon.icon, HugeIcons.strokeRoundedAlignBottom);
+    expect(insightsIcon.size, 20);
+    expect(insightsIcon.strokeWidth, 1.5);
     final reminderIcon = tester.widget<HugeIcon>(
       find.descendant(
         of: find.bySemanticsLabel('Open Reminders list'),
         matching: find.byType(HugeIcon),
       ),
     );
-    expect(reminderIcon.icon, HugeIcons.strokeRoundedNotification03);
+    expect(reminderIcon.icon, HugeIcons.strokeRoundedBellDot);
     expect(reminderIcon.size, 20);
     expect(reminderIcon.strokeWidth, 1.5);
     expect(find.byIcon(SyncIcons.upcoming), findsNothing);
@@ -216,4 +210,17 @@ Future<void> _pumpRoutedApp(
   );
 }
 
+Future<void> _pumpListsScreen(WidgetTester tester) async {
+  final db = AppDatabase.memory();
+  addTearDown(db.close);
 
+  await tester.pumpWidget(
+    MaterialApp(
+      theme: buildSyncTasksTheme(Brightness.light),
+      home: ProviderScope(
+        overrides: [appDatabaseProvider.overrideWithValue(db)],
+        child: const ListsScreen(),
+      ),
+    ),
+  );
+}

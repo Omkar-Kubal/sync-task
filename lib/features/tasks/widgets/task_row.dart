@@ -4,6 +4,7 @@ import 'package:flutter/semantics.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
 import '../../../shared/motion/sync_motion.dart';
 import '../../../shared/services/sync_haptics.dart';
+import '../../../shared/services/sync_sounds.dart';
 
 enum TaskRowTextState { normal, overdueIncomplete, completed }
 
@@ -56,6 +57,7 @@ class TaskRow extends StatelessWidget {
     void handleTap() {
       SyncHaptics.selection();
       if (selectionMode) {
+        SyncSounds.play(SyncSoundEffect.select);
         onSelectionToggle?.call();
       } else {
         onTap();
@@ -65,14 +67,19 @@ class TaskRow extends StatelessWidget {
     void handleComplete() {
       SyncHaptics.complete();
       if (selectionMode) {
+        SyncSounds.play(SyncSoundEffect.select);
         onSelectionToggle?.call();
       } else {
+        SyncSounds.play(
+          isCompleted ? SyncSoundEffect.restore : SyncSoundEffect.complete,
+        );
         onComplete();
       }
     }
 
     void handleDelete() {
       SyncHaptics.destructive();
+      SyncSounds.play(SyncSoundEffect.delete);
       onDelete();
     }
 
@@ -108,6 +115,7 @@ class TaskRow extends StatelessWidget {
           onTap: handleTap,
           onLongPress: () {
             SyncHaptics.selection();
+            SyncSounds.play(SyncSoundEffect.select);
             onLongPress?.call();
           },
           borderRadius: BorderRadius.circular(14),

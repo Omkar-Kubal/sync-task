@@ -7,15 +7,19 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../receipts/providers/receipt_feature_provider.dart';
+import '../../receipts/widgets/receipt_pro_paywall_sheet.dart';
 import '../../../shared/sheets/app_bottom_sheet.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
+import '../../../shared/services/sync_sounds.dart';
 import '../../../shared/widgets/sync_grouped_section.dart';
 import '../domain/app_settings.dart';
 import '../providers/settings_controller.dart';
 import '../../tasks/providers/folders_provider.dart';
 
-const syncTasksPrivacyPolicyUrl = 'https://sites.google.com/view/synctask/home';
+const syncTasksPrivacyPolicyUrl =
+    'https://sites.google.com/view/my-todos/privacy-policy';
 const syncTasksFeatureRequestsUrl =
     'mailto:support@appylab.org?subject=Feature%20Request';
 const syncTasksSupportEmailUrl = 'mailto:support@appylab.org';
@@ -37,6 +41,7 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = SyncTasksColorScheme.of(context);
+    final receiptFeatureEnabled = ref.watch(receiptFeatureEnabledProvider);
     final settings = ref
         .watch(settingsProvider)
         .maybeWhen(
@@ -75,7 +80,9 @@ class SettingsScreen extends ConsumerWidget {
                     onTap: () => _showThemeSheet(context, controller),
                   ),
                   _SettingsRow(
-                    icon: SyncIcons.folder,
+                    iconWidget: const _SettingsHugeIcon(
+                      icon: HugeIcons.strokeRoundedFolder02,
+                    ),
                     title: 'Default Folder',
                     value: defaultFolderLabel,
                     onTap: () => _showDefaultFolderSheet(
@@ -86,11 +93,17 @@ class SettingsScreen extends ConsumerWidget {
                     ),
                   ),
                   _SettingsRow(
-                    iconWidget: HugeIcon(
-                      icon: HugeIcons.strokeRoundedNotification03,
-                      size: 20,
-                      color: colors.textPrimary,
-                      strokeWidth: 1.5,
+                    iconWidget: const _SettingsHugeIcon(
+                      icon: HugeIcons.strokeRoundedVolumeUp,
+                    ),
+                    title: 'Sound Effects',
+                    value: settings.soundEffects ? 'On' : 'Off',
+                    onTap: () =>
+                        _showSoundEffectsSheet(context, settings, controller),
+                  ),
+                  _SettingsRow(
+                    iconWidget: const _SettingsHugeIcon(
+                      icon: HugeIcons.strokeRoundedBellDot,
                     ),
                     title: 'Notifications',
                     value: settings.notificationsEnabled ? 'On' : 'Off',
@@ -99,6 +112,23 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                 ],
               ),
+              if (receiptFeatureEnabled) ...[
+                const SizedBox(height: 28),
+                const _SectionLabel('Pro'),
+                const SizedBox(height: 10),
+                SyncGroupedSection(
+                  dividerIndent: 84,
+                  children: [
+                    _SettingsRow(
+                      icon: SyncIcons.premium,
+                      iconColor: SyncIcons.premiumSilver(context),
+                      title: 'SyncTasks Pro',
+                      value: 'Unlimited receipts',
+                      onTap: () => _showProSheet(context),
+                    ),
+                  ],
+                ),
+              ],
               const SizedBox(height: 28),
               const _SectionLabel('Support'),
               const SizedBox(height: 10),
@@ -106,12 +136,16 @@ class SettingsScreen extends ConsumerWidget {
                 dividerIndent: 84,
                 children: [
                   _SettingsRow(
-                    icon: Icons.new_releases_outlined,
+                    iconWidget: const _SettingsHugeIcon(
+                      icon: HugeIcons.strokeRoundedBadgeAlert,
+                    ),
                     title: "What's New",
                     onTap: () => _showWhatsNewSheet(context),
                   ),
                   _SettingsRow(
-                    icon: Icons.chat_bubble_outline_rounded,
+                    iconWidget: const _SettingsHugeIcon(
+                      icon: HugeIcons.strokeRoundedCommentAdd01,
+                    ),
                     title: 'Help & Feedback',
                     onTap: () => _showHelpFeedbackSheet(context),
                   ),
@@ -126,7 +160,9 @@ class SettingsScreen extends ConsumerWidget {
                 dividerIndent: 84,
                 children: [
                   _SettingsRow(
-                    icon: SyncIcons.privacy,
+                    iconWidget: const _SettingsHugeIcon(
+                      icon: HugeIcons.strokeRoundedBiometricAccess,
+                    ),
                     title: 'Privacy Policy',
                     trailingIcon: Icons.open_in_new_rounded,
                     onTap: () => _openPrivacyPolicy(context, ref),
@@ -288,6 +324,54 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
+  void _showSoundEffectsSheet(
+    BuildContext context,
+    AppSettings settings,
+    SettingsController controller,
+  ) {
+    var soundEffects = settings.soundEffects;
+
+    _showSettingsSheet(
+      context,
+      StatefulBuilder(
+        builder: (context, setSheetState) {
+          return _SettingsActionSheet(
+            title: 'Sound Effects',
+            children: [
+              Material(
+                color: Colors.transparent,
+                child: SwitchListTile(
+                  value: soundEffects,
+                  title: const Text('Sound Effects'),
+                  contentPadding: EdgeInsets.zero,
+                  onChanged: (value) async {
+                    setSheetState(() => soundEffects = value);
+                    SyncSounds.enabled = value;
+                    await controller.setSoundEffects(value);
+                  },
+                ),
+              ),
+              Material(
+                color: Colors.transparent,
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(SyncIcons.sound),
+                  title: const Text('Preview'),
+                  onTap: soundEffects
+                      ? () {
+                          SyncHaptics.selection();
+                          SyncSounds.play(SyncSoundEffect.complete);
+                        }
+                      : null,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
   void _showDefaultFolderSheet(
     BuildContext context,
     List<Folder> folders,
@@ -352,6 +436,10 @@ class SettingsScreen extends ConsumerWidget {
       handleGap: 0,
       showHandle: false,
     );
+  }
+
+  void _showProSheet(BuildContext context) {
+    showReceiptProPaywallSheet(context: context);
   }
 
   Future<void> _openSupportUri(
@@ -487,6 +575,7 @@ class _SettingsRow extends StatelessWidget {
     this.icon,
     this.iconWidget,
     this.iconTileKey,
+    this.iconColor,
     this.value,
     this.onTap,
     this.trailingIcon = SyncIcons.chevron,
@@ -496,6 +585,7 @@ class _SettingsRow extends StatelessWidget {
   final IconData? icon;
   final Widget? iconWidget;
   final Key? iconTileKey;
+  final Color? iconColor;
   final String? value;
   final VoidCallback? onTap;
   final IconData trailingIcon;
@@ -514,7 +604,12 @@ class _SettingsRow extends StatelessWidget {
               },
         minVerticalPadding: 6,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        leading: _IconTile(key: iconTileKey, icon: icon, child: iconWidget),
+        leading: _IconTile(
+          key: iconTileKey,
+          icon: icon,
+          iconColor: iconColor,
+          child: iconWidget,
+        ),
         title: Text(
           title,
           maxLines: 1,
@@ -913,9 +1008,10 @@ class _SheetOption extends StatelessWidget {
 }
 
 class _IconTile extends StatelessWidget {
-  const _IconTile({this.icon, this.child, super.key});
+  const _IconTile({this.icon, this.iconColor, this.child, super.key});
 
   final IconData? icon;
+  final Color? iconColor;
   final Widget? child;
 
   @override
@@ -929,7 +1025,24 @@ class _IconTile extends StatelessWidget {
         color: colors.surfaceSecondary,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: child ?? Icon(icon, color: colors.textPrimary, size: 20),
+      child:
+          child ?? Icon(icon, color: iconColor ?? colors.textPrimary, size: 20),
+    );
+  }
+}
+
+class _SettingsHugeIcon extends StatelessWidget {
+  const _SettingsHugeIcon({required this.icon});
+
+  final List<List<dynamic>> icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return HugeIcon(
+      icon: icon,
+      size: 20,
+      color: SyncTasksColorScheme.of(context).textPrimary,
+      strokeWidth: 1.5,
     );
   }
 }

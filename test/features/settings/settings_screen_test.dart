@@ -9,6 +9,7 @@ import 'package:synctasks/features/settings/providers/settings_controller.dart';
 import 'package:synctasks/features/settings/screens/settings_screen.dart';
 import 'package:synctasks/features/tasks/data/folder_repository.dart';
 import 'package:synctasks/features/tasks/providers/task_controller.dart';
+import 'package:synctasks/shared/icons/sync_icons.dart';
 import 'package:synctasks/shared/widgets/sync_grouped_section.dart';
 
 void main() {
@@ -21,14 +22,17 @@ void main() {
 
       expect(find.text('Settings'), findsOneWidget);
       expect(find.text('General'), findsOneWidget);
+      expect(find.text('Pro'), findsOneWidget);
       expect(find.text('Support'), findsOneWidget);
       expect(find.text('About'), findsOneWidget);
-      expect(find.byType(SyncGroupedSection), findsNWidgets(3));
+      expect(find.byType(SyncGroupedSection), findsNWidgets(4));
 
       expect(find.text('Theme'), findsOneWidget);
       expect(find.text('System'), findsOneWidget);
       expect(find.text('Default Folder'), findsOneWidget);
+      expect(find.text('Sound Effects'), findsOneWidget);
       expect(find.text('Notifications'), findsOneWidget);
+      expect(find.text('SyncTasks Pro'), findsOneWidget);
       expect(find.text("What's New"), findsOneWidget);
       expect(find.text('Help & Feedback'), findsOneWidget);
       expect(find.text('SyncTasks'), findsOneWidget);
@@ -37,6 +41,21 @@ void main() {
       expect(find.text('Version 1.0.0+1'), findsOneWidget);
       expect(find.text('Privacy Policy'), findsOneWidget);
       expect(find.text('Local Storage'), findsNothing);
+      expect(
+        find.descendant(
+          of: find.widgetWithText(ListTile, 'SyncTasks Pro'),
+          matching: find.byIcon(SyncIcons.premium),
+        ),
+        findsOneWidget,
+      );
+      final premiumIcon = find.descendant(
+        of: find.widgetWithText(ListTile, 'SyncTasks Pro'),
+        matching: find.byIcon(SyncIcons.premium),
+      );
+      expect(
+        tester.widget<Icon>(premiumIcon).color,
+        SyncIcons.premiumSilver(tester.element(premiumIcon)),
+      );
     },
   );
 
@@ -121,7 +140,7 @@ void main() {
     expect(find.text('Version'), findsNothing);
   });
 
-  testWidgets('settings notifications row uses Hugeicons bell', (tester) async {
+  testWidgets('settings rows use requested Hugeicons', (tester) async {
     await tester.pumpWidget(
       _settingsApp(
         repository: SettingsRepository.memory(),
@@ -129,16 +148,27 @@ void main() {
       ),
     );
 
-    final icon = tester.widget<HugeIcon>(
-      find.descendant(
-        of: find.widgetWithText(ListTile, 'Notifications'),
-        matching: find.byType(HugeIcon),
-      ),
-    );
+    final expectedIcons = {
+      'Default Folder': HugeIcons.strokeRoundedFolder02,
+      'Sound Effects': HugeIcons.strokeRoundedVolumeUp,
+      'Notifications': HugeIcons.strokeRoundedBellDot,
+      "What's New": HugeIcons.strokeRoundedBadgeAlert,
+      'Help & Feedback': HugeIcons.strokeRoundedCommentAdd01,
+      'Privacy Policy': HugeIcons.strokeRoundedBiometricAccess,
+    };
 
-    expect(icon.icon, HugeIcons.strokeRoundedNotification03);
-    expect(icon.size, 20);
-    expect(icon.strokeWidth, 1.5);
+    for (final entry in expectedIcons.entries) {
+      final icon = tester.widget<HugeIcon>(
+        find.descendant(
+          of: find.widgetWithText(ListTile, entry.key),
+          matching: find.byType(HugeIcon),
+        ),
+      );
+
+      expect(icon.icon, entry.value, reason: entry.key);
+      expect(icon.size, 20, reason: entry.key);
+      expect(icon.strokeWidth, 1.5, reason: entry.key);
+    }
   });
 
   testWidgets('theme row opens picker and persists selected mode', (
@@ -182,6 +212,31 @@ void main() {
     await tester.pumpAndSettle();
 
     expect((await repository.load()).notificationSound, isFalse);
+    expect((await repository.load()).soundEffects, isTrue);
+  });
+
+  testWidgets('sound effects row persists app sound preference separately', (
+    tester,
+  ) async {
+    final repository = SettingsRepository.memory();
+
+    await tester.pumpWidget(_settingsApp(repository: repository));
+
+    expect(find.widgetWithText(ListTile, 'Sound Effects'), findsOneWidget);
+    expect(find.text('On'), findsWidgets);
+
+    await tester.tap(find.widgetWithText(ListTile, 'Sound Effects'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Sound Effects'), findsWidgets);
+    expect(find.text('Preview'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(SwitchListTile, 'Sound Effects'));
+    await tester.pumpAndSettle();
+
+    final settings = await repository.load();
+    expect(settings.soundEffects, isFalse);
+    expect(settings.notificationSound, isTrue);
   });
 
   testWidgets('default folder row persists the selected quick-add folder', (
@@ -224,6 +279,7 @@ void main() {
       _settingsApp(repository: SettingsRepository.memory()),
     );
 
+    await tester.scrollUntilVisible(find.text("What's New"), 160);
     await tester.tap(find.widgetWithText(ListTile, "What's New"));
     await tester.pumpAndSettle();
 
@@ -246,6 +302,7 @@ void main() {
       _settingsApp(repository: SettingsRepository.memory()),
     );
 
+    await tester.scrollUntilVisible(find.text('Help & Feedback'), 160);
     await tester.tap(find.widgetWithText(ListTile, 'Help & Feedback'));
     await tester.pumpAndSettle();
 
@@ -297,7 +354,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(launched, [
-      Uri.parse('https://sites.google.com/view/synctask/home'),
+      Uri.parse('https://sites.google.com/view/my-todos/privacy-policy'),
     ]);
   });
 }

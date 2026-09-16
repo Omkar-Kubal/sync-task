@@ -43,10 +43,17 @@ class SyncButton extends StatelessWidget {
                   color: colors.controlForeground.withValues(alpha: 0.72),
                 ),
               )
-            : Text(label),
+            : Text(
+                label,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: (onPressed != null && !isLoading)
+                      ? colors.controlForeground
+                      : colors.controlForeground.withValues(alpha: 0.64),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
       ),
     );
   }
 }
-
-

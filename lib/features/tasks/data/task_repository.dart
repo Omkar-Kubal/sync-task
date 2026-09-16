@@ -254,6 +254,30 @@ class TaskRepository {
         .get();
   }
 
+  Future<List<Task>> listCompletedTasksForLocalDay(DateTime day) {
+    final start = _dateOnly(day);
+    final end = start.add(const Duration(days: 1));
+    return listCompletedTasksInRange(start, end);
+  }
+
+  Future<List<Task>> listCompletedTasksInRange(
+    DateTime startInclusive,
+    DateTime endExclusive,
+  ) {
+    return (_db.select(_db.tasks)
+          ..where(
+            (task) =>
+                task.isCompleted.equals(true) &
+                task.completedAt.isBiggerOrEqualValue(startInclusive) &
+                task.completedAt.isSmallerThanValue(endExclusive),
+          )
+          ..orderBy([
+            (task) => OrderingTerm.asc(task.completedAt),
+            (task) => OrderingTerm.asc(task.id),
+          ]))
+        .get();
+  }
+
   Future<List<Task>> listReminderTasks() async {
     return (_activeTaskQuery()
           ..where((task) => task.reminderTime.isNotNull())
@@ -379,14 +403,11 @@ class TaskRepository {
   }
 
   Future<int> _nextSortOrder() async {
-    final rows = await _db.select(_db.tasks).get();
-    if (rows.isEmpty) {
-      return 1;
-    }
-    return rows
-            .map((task) => task.globalSortOrder)
-            .reduce((a, b) => a > b ? a : b) +
-        1;
+    final maxQuery = _db.selectOnly(_db.tasks)
+      ..addColumns([_db.tasks.globalSortOrder.max()]);
+    final row = await maxQuery.getSingleOrNull();
+    final maxVal = row?.read(_db.tasks.globalSortOrder.max());
+    return (maxVal ?? 0) + 1;
   }
 
   DateTime _dateOnly(DateTime value) =>

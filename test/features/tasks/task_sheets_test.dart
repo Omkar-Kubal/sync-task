@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:synctasks/core/database/app_database.dart';
 import 'package:synctasks/features/tasks/providers/folders_provider.dart';
+import 'package:synctasks/features/tasks/providers/task_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,12 +9,19 @@ import 'package:synctasks/core/theme/app_theme.dart';
 import 'package:synctasks/features/tasks/domain/recurrence_type.dart';
 import 'package:synctasks/features/tasks/widgets/task_create_sheet.dart';
 import 'package:synctasks/features/tasks/widgets/task_edit_sheet.dart';
+import 'package:synctasks/shared/services/sync_haptics.dart';
 import 'package:synctasks/shared/sheets/app_bottom_sheet.dart';
 
 void main() {
   Widget wrap(Widget child, {List overrides = const []}) {
+    final db = AppDatabase.memory();
+    addTearDown(db.close);
+
     return ProviderScope(
-      overrides: overrides.cast(),
+      overrides: [
+        appDatabaseProvider.overrideWithValue(db),
+        ...overrides.cast(),
+      ],
       child: MaterialApp(
         theme: buildSyncTasksTheme(Brightness.light),
         home: Scaffold(body: child),
@@ -65,6 +73,34 @@ void main() {
     );
   });
 
+  testWidgets('app bottom sheets use a visible top-edge shadow', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(TaskCreateSheet(onSubmit: (_, __) {}, onTodaySelected: (_, __) {})),
+    );
+
+    final sheetDecorations = tester
+        .widgetList<Container>(
+          find.descendant(
+            of: find.byType(AppBottomSheet),
+            matching: find.byType(Container),
+          ),
+        )
+        .map((container) => container.decoration)
+        .whereType<BoxDecoration>();
+    final sheetDecoration = sheetDecorations.firstWhere(
+      (decoration) =>
+          decoration.borderRadius ==
+          const BorderRadius.vertical(top: Radius.circular(28)),
+    );
+    final shadow = sheetDecoration.boxShadow!.single;
+
+    expect(shadow.blurRadius, greaterThanOrEqualTo(28));
+    expect(shadow.offset.dy, lessThanOrEqualTo(-6));
+    expect(shadow.color.a, greaterThanOrEqualTo(0.10));
+  });
+
   testWidgets('create sheet notifies when Today is selected', (tester) async {
     final haptics = _captureHaptics(tester);
     var selectedToday = false;
@@ -114,14 +150,12 @@ void main() {
     ];
 
     await tester.pumpWidget(
-      ProviderScope(
-        overrides: [foldersProvider.overrideWith((ref) async => folders)],
-        child: wrap(
-          TaskCreateSheet(
-            onSubmit: (title, folderId) => chosenFolderId = folderId,
-            onTodaySelected: (_, __) {},
-          ),
+      wrap(
+        TaskCreateSheet(
+          onSubmit: (title, folderId) => chosenFolderId = folderId,
+          onTodaySelected: (_, __) {},
         ),
+        overrides: [foldersProvider.overrideWith((ref) async => folders)],
       ),
     );
     await tester.pumpAndSettle();
@@ -167,6 +201,24 @@ void main() {
     expect(find.text('Start Focus'), findsNothing);
     expect(find.byKey(const Key('edit-task-title-field')), findsOneWidget);
     expect(find.text('Task title'), findsNothing);
+  });
+
+  testWidgets('edit sheet title field wraps long task names', (tester) async {
+    await tester.pumpWidget(
+      wrap(
+        TaskEditSheet(
+          title:
+              'Prepare the production release checklist and verify every visible surface before submission',
+          onCancel: () {},
+          onDone: () {},
+        ),
+      ),
+    );
+
+    final textField = tester.widget<TextField>(
+      find.byKey(const Key('edit-task-title-field')),
+    );
+    expect(textField.maxLines, greaterThan(1));
   });
 
   testWidgets('edit sheet opens shorter by default', (tester) async {
@@ -522,6 +574,7 @@ void main() {
 
 List<Object?> _captureHaptics(WidgetTester tester) {
   final calls = <Object?>[];
+  SyncHaptics.resetForTesting();
   tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
     SystemChannels.platform,
     (call) async {
@@ -531,13 +584,12 @@ List<Object?> _captureHaptics(WidgetTester tester) {
       return null;
     },
   );
-  addTearDown(
-    () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+  addTearDown(() {
+    SyncHaptics.resetForTesting();
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
       SystemChannels.platform,
       null,
-    ),
-  );
+    );
+  });
   return calls;
 }
-
-

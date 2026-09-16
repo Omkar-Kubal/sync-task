@@ -69,7 +69,7 @@ void main() {
 
     await tester.pumpWidget(_routedOnboardingApp(repository, router));
 
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 5; i++) {
       await tester.tap(find.bySemanticsLabel('Next onboarding page'));
       await tester.pumpAndSettle();
     }

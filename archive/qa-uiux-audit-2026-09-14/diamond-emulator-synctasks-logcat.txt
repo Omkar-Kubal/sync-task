@@ -1,0 +1,109 @@
+--------- beginning of main
+09-14 15:10:45.601 11800 11800 I libprocessgroup: Created cgroup /sys/fs/cgroup/apps/uid_10228/pid_11800
+09-14 15:10:45.718 11800 11800 I Zygote  : Process 11800 created for com.appylab.synctasks
+09-14 15:10:45.723 11800 11800 I pylab.synctasks: Using generational CollectorTypeCMC GC.
+09-14 15:10:45.773 11800 11800 W pylab.synctasks: Unexpected CPU variant for x86: x86_64.
+09-14 15:10:45.773 11800 11800 W pylab.synctasks: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, pantherlake, default
+09-14 15:10:45.854 11800 11800 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+09-14 15:10:46.490 11800 11800 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+09-14 15:10:46.490 11800 11800 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+09-14 15:10:49.234 11800 11800 D nativeloader: Configuring clns-9 for other apk /data/app/~~v-Y9GmXZ7B5K6JQCOoXASg==/com.appylab.synctasks-FmKW64gXVUcNt3P3zNRsmQ==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~v-Y9GmXZ7B5K6JQCOoXASg==/com.appylab.synctasks-FmKW64gXVUcNt3P3zNRsmQ==/lib/x86_64:/data/app/~~v-Y9GmXZ7B5K6JQCOoXASg==/com.appylab.synctasks-FmKW64gXVUcNt3P3zNRsmQ==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.appylab.synctasks
+09-14 15:10:49.541 11800 11800 V GraphicsEnvironment: Currently set values for:
+09-14 15:10:49.541 11800 11800 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+09-14 15:10:49.541 11800 11800 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+09-14 15:10:49.541 11800 11800 V GraphicsEnvironment: com.appylab.synctasks is not listed in per-application setting
+09-14 15:10:49.546 11800 11800 V GraphicsEnvironment: No special selections for ANGLE, returning default driver choice
+09-14 15:10:49.596 11800 11800 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+09-14 15:10:49.869 11800 11800 D FirebaseSessions: Dependency to CRASHLYTICS added.
+09-14 15:10:49.939 11800 11800 I FirebaseApp: Device unlocked: initializing all Firebase APIs for app [DEFAULT]
+09-14 15:10:49.961 11800 11800 I FirebaseCrashlytics: Initializing Firebase Crashlytics 20.1.0 for com.appylab.synctasks
+09-14 15:10:50.130 11800 11800 D FirebaseSessions: Subscriber CRASHLYTICS registered.
+09-14 15:10:53.654 11800 11826 I DynamiteModule: Considering local module com.google.android.gms.measurement.dynamite:185 and remote module com.google.android.gms.measurement.dynamite:189
+09-14 15:10:53.654 11800 11826 I DynamiteModule: Selected remote version of com.google.android.gms.measurement.dynamite, version >= 189
+09-14 15:10:53.655 11800 11826 V DynamiteModule: Dynamite loader version >= 2, using loadModule2NoCrashUtils
+09-14 15:10:53.819 11800 11800 D nativeloader: Load /data/app/~~v-Y9GmXZ7B5K6JQCOoXASg==/com.appylab.synctasks-FmKW64gXVUcNt3P3zNRsmQ==/base.apk!/lib/x86_64/libdatastore_shared_counter.so using class loader ns clns-9 (caller=/data/app/~~v-Y9GmXZ7B5K6JQCOoXASg==/com.appylab.synctasks-FmKW64gXVUcNt3P3zNRsmQ==/base.apk!classes4.dex): ok
+09-14 15:10:53.833 11800 11800 D FirebaseSessions: Initializing Firebase Sessions 3.0.7.
+09-14 15:10:53.834 11800 11800 I FirebaseInitProvider: FirebaseApp initialization successful
+09-14 15:10:53.945 11800 11800 D WM-WrkMgrInitializer: Initializing WorkManager with default configuration.
+09-14 15:10:53.963 11800 11826 W System  : ClassLoader referenced unknown path: 
+09-14 15:10:53.965 11800 11826 D nativeloader: Configuring clns-10 for other apk . target_sdk_version=37, uses_libraries=, library_path=/data/app/~~fbWaly8b6-daV__uSvHjVg==/com.google.android.gms--IbG6AcBYCXWi0k0wroM_A==/lib/x86_64:/data/app/~~fbWaly8b6-daV__uSvHjVg==/com.google.android.gms--IbG6AcBYCXWi0k0wroM_A==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.gms
+09-14 15:10:53.992 11800 11800 D WM-PackageManagerHelper: Skipping component enablement for androidx.work.impl.background.systemjob.SystemJobService
+09-14 15:10:53.993 11800 11800 D WM-Schedulers: Created SystemJobScheduler and enabled SystemJobService
+09-14 15:10:54.004 11800 11846 D WM-ForceStopRunnable: The default process name was not specified.
+09-14 15:10:54.004 11800 11846 D WM-ForceStopRunnable: Performing cleanup operations.
+--------- beginning of system
+09-14 15:10:54.099 11800 11853 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+09-14 15:10:54.117 11800 11834 I FirebaseCrashlytics: Saved version control info
+09-14 15:10:54.382 11800 11826 D DesktopExperienceFlags: Toggle override initialized to: false
+09-14 15:10:54.453 11800 11839 W pylab.synctasks: Monitor::Inflate: Install failed 0x7032d2b0
+09-14 15:10:54.516 11800 11860 D nativeloader: Load /data/app/~~v-Y9GmXZ7B5K6JQCOoXASg==/com.appylab.synctasks-FmKW64gXVUcNt3P3zNRsmQ==/base.apk!/lib/x86_64/libflutter.so using class loader ns clns-9 (caller=/data/app/~~v-Y9GmXZ7B5K6JQCOoXASg==/com.appylab.synctasks-FmKW64gXVUcNt3P3zNRsmQ==/base.apk!classes4.dex): ok
+09-14 15:10:54.892 11800 11867 D skia    : [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+09-14 15:10:55.032 11800 11874 D WM-PackageManagerHelper: Skipping component enablement for androidx.work.impl.background.systemalarm.RescheduleReceiver
+09-14 15:10:55.392 11800 11831 D FirebaseSessions: Notified CRASHLYTICS of new session 469124fccb664905b2d7a25a30392e2c
+09-14 15:10:55.398 11800 11853 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv1_CM_emulation.so
+09-14 15:10:55.509 11800 11853 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv2_emulation.so
+09-14 15:10:55.624 11800 11853 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+09-14 15:10:55.598 11800 11800 W pylab.synctasks: type=1400 audit(0.0:51): avc:  denied  { read } for  name="max_map_count" dev="proc" ino=41726 scontext=u:r:untrusted_app_34:s0:c228,c256,c512,c768 tcontext=u:object_r:proc_max_map_count:s0 tclass=file permissive=0 app=com.appylab.synctasks
+09-14 15:10:57.498 11800 11879 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+09-14 15:10:57.504 11800 11853 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+09-14 15:10:58.844 11800 11879 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+09-14 15:10:58.873 11800 11880 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+09-14 15:10:59.309 11800 11895 I PhClient: Shared storage file not found for com.google.android.gms.measurement#com.appylab.synctasks
+09-14 15:10:59.364 11800 11884 E pylab.synctasks: No package ID 6a found for resource ID 0x6a0b0013.
+09-14 15:10:59.369 11800 11884 I FA      : App measurement initialized, version: 165000
+09-14 15:10:59.369 11800 11884 I FA      : To enable debug logging run: adb shell setprop log.tag.FA VERBOSE
+09-14 15:10:59.369 11800 11884 I FA      : To enable faster debug mode event logging run:
+09-14 15:10:59.369 11800 11884 I FA      :   adb shell setprop debug.firebase.analytics.app com.appylab.synctasks
+09-14 15:11:01.747 11800 11800 D nativeloader: Load /data/app/~~v-Y9GmXZ7B5K6JQCOoXASg==/com.appylab.synctasks-FmKW64gXVUcNt3P3zNRsmQ==/base.apk!/lib/x86_64/libdartjni.so using class loader ns clns-9 (caller=/data/app/~~v-Y9GmXZ7B5K6JQCOoXASg==/com.appylab.synctasks-FmKW64gXVUcNt3P3zNRsmQ==/base.apk!classes4.dex): ok
+09-14 15:11:02.086 11800 11805 I pylab.synctasks: Background concurrent mark compact GC freed 2755KB AllocSpace bytes, 16(672KB) LOS objects, 49% free, 2968KB/5936KB, paused 4.149ms,35.414ms total 251.173ms
+09-14 15:11:02.104 11800 11800 D CompatChangeReporter: Compat change id reported: 377864165; UID 10228; state: ENABLED
+09-14 15:11:02.135 11800 11800 D FirebaseSessions: App foregrounded on com.appylab.synctasks
+09-14 15:11:02.136 11800 11800 D FirebaseSessions: Process com.appylab.synctasks is stale
+09-14 15:11:02.179 11800 11800 W HWUI    : Unknown dataspace 0
+09-14 15:11:02.206 11800 11884 I FA      : Tag Manager is not found and thus will not be used
+09-14 15:11:02.310 11800 11831 D FirebaseSessions: Cold app start detected
+09-14 15:11:02.310 11800 11831 D FirebaseSessions: Process com.appylab.synctasks is stale
+09-14 15:11:02.425 11800 11943 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+09-14 15:11:02.555 11800 11835 D FirebaseSessions: Notified CRASHLYTICS of new session 0a65ceceb6474fb993f7db510995cdf7
+09-14 15:11:02.634 11800 11831 D FirebaseSessions: Session Event Type: SESSION_START
+09-14 15:11:02.636 11800 11831 D FirebaseSessions: Successfully logged Session Start event.
+09-14 15:11:02.809 11800 11800 I Choreographer: Skipped 530 frames!  The application may be doing too much work on its main thread.
+09-14 15:11:02.816 11800 11800 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@9b7abec
+09-14 15:11:02.868 11800 11800 I WindowExtensionsImpl: Initializing Window Extensions, vendor API level=10, activity embedding enabled=true
+09-14 15:11:02.957 11800 11800 W UiContextUtils: Requested context is a non-UI Context. Creating a UI-Context with display: 0. Context: Context=android.app.Application@7196e53, of which baseContext=android.app.ContextImpl@63a8c25
+09-14 15:11:03.018 11800 11800 D VRI[MainActivity]: WindowInsets changed: 1080x2400 statusBars:[0,63,0,0] navigationBars:[0,0,0,63] mandatorySystemGestures:[0,63,0,84] 
+09-14 15:11:03.204 11800 11800 I Surface : Creating surface for consumer unnamed-11800-0 with slotExpansion=1 for 64 slots
+09-14 15:11:03.226 11800 11800 I Surface : Creating surface for consumer VRI[MainActivity]#0(BLAST Consumer)0 with slotExpansion=1 for 64 slots
+09-14 15:11:03.324 11800 11800 I Surface : Creating surface for consumer unnamed-11800-1 with slotExpansion=1 for 64 slots
+09-14 15:11:03.425 11800 11800 I Surface : Creating surface for consumer 57dff87 SurfaceView[com.appylab.synctasks/com.appylab.synctasks.MainActivity]#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+09-14 15:11:09.119 11800 11800 I Choreographer: Skipped 365 frames!  The application may be doing too much work on its main thread.
+09-14 15:11:09.434 11800 12039 D ProfileInstaller: Installing profile for com.appylab.synctasks
+09-14 15:11:10.034 11800 11800 W GmsClient: IGmsServiceBroker.getService failed
+09-14 15:11:10.034 11800 11800 W GmsClient: android.os.DeadObjectException
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at android.os.BinderProxy.transactNative(Native Method)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at android.os.BinderProxy.transact(BinderProxy.java:626)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at m7.fs.m(:com.google.android.gms.dynamite_measurementdynamite@261631038@26.16.31 (260800-0):180)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at m7.fp.a(:com.google.android.gms.dynamite_measurementdynamite@261631038@26.16.31 (260800-0):14)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at m7.fr.b(:com.google.android.gms.dynamite_measurementdynamite@261631038@26.16.31 (260800-0):7)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at m7.fi.c(:com.google.android.gms.dynamite_measurementdynamite@261631038@26.16.31 (260800-0):7)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at m7.fl.handleMessage(:com.google.android.gms.dynamite_measurementdynamite@261631038@26.16.31 (260800-0):264)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at android.os.Handler.dispatchMessageImpl(Handler.java:142)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at android.os.Handler.dispatchMessage(Handler.java:125)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at android.os.Looper.loopOnce(Looper.java:296)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at android.os.Looper.loop(Looper.java:397)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at android.app.ActivityThread.main(ActivityThread.java:9523)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at java.lang.reflect.Method.invoke(Native Method)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+09-14 15:11:10.034 11800 11800 W GmsClient: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:939)
+09-14 15:11:11.897 11800 11800 D WindowLayoutComponentImpl: Register WindowLayoutInfoListener on Context=com.appylab.synctasks.MainActivity@ed4fe99, of which baseContext=android.app.ContextImpl@a635f6f
+09-14 15:11:11.990 11800 11800 I Choreographer: Skipped 171 frames!  The application may be doing too much work on its main thread.
+09-14 15:11:13.013 11800 12057 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(wmsSync-VRI[MainActivity]#1) as ready
+09-14 15:11:13.014 11800 12057 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(VRI[MainActivity]#2) as ready
+09-14 15:11:14.044 11800 11800 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): io.flutter.embedding.android.FlutterActivity$1@c640714
+09-14 15:11:14.066 11800 11800 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@9b7abec
+09-14 15:11:18.736 11800 11800 D InsetsController: hide(ime())
+09-14 15:11:18.736 11800 11800 I ImeTracker: com.appylab.synctasks:249d6bef: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-14 15:11:52.195 11800 11800 W BillingClient: Async task is taking too long, cancel it!
+09-14 15:11:54.074 11800 12118 W BillingClient: In-app billing API version 3 is not supported on this device.
+09-14 15:11:54.081 11800 12118 D InAppPurchasePlugin: Tried to call onBillingSetupFinished multiple times.
+09-14 15:12:02.956 11800 12618 W FA      : Tasks have been queued for a long time

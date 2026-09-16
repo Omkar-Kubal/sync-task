@@ -12,12 +12,16 @@ void main() {
 
       await controller.setThemeMode(ThemeMode.dark);
       await controller.setNotificationsEnabled(false);
+      await controller.setNotificationSound(false);
+      await controller.setSoundEffects(false);
       await controller.setDefaultFolder(42);
       await controller.completeOnboarding();
 
       final settings = await repository.load();
       expect(settings.themeMode, ThemeMode.dark);
       expect(settings.notificationsEnabled, isFalse);
+      expect(settings.notificationSound, isFalse);
+      expect(settings.soundEffects, isFalse);
       expect(settings.defaultFolderId, 42);
       expect(settings.hasCompletedOnboarding, isTrue);
     },
@@ -34,5 +38,3 @@ void main() {
     expect(settings.defaultFolderId, isNull);
   });
 }
-
-

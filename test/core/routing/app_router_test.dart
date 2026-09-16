@@ -1,3 +1,4 @@
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -5,6 +6,7 @@ import 'package:synctasks/core/database/app_database.dart';
 import 'package:synctasks/core/notifications/notification_service.dart';
 import 'package:synctasks/core/notifications/task_reminder_service.dart';
 import 'package:synctasks/core/routing/app_router.dart';
+import 'package:synctasks/core/routing/safe_back_button_dispatcher.dart';
 import 'package:synctasks/core/theme/app_theme.dart';
 import 'package:synctasks/features/settings/data/settings_repository.dart';
 import 'package:synctasks/features/settings/domain/app_settings.dart';
@@ -15,6 +17,25 @@ import 'package:synctasks/features/tasks/providers/task_controller.dart';
 import 'package:synctasks/shared/sheets/app_bottom_sheet.dart';
 
 void main() {
+  test(
+    'safe back dispatcher ignores empty go_router match stack errors',
+    () async {
+      final dispatcher = SafeBackButtonDispatcher();
+      Future<bool> cb() => Future<bool>.error(StateError('No element'));
+      dispatcher.addCallback(cb);
+      expect(await dispatcher.didPopRoute(), isFalse);
+      dispatcher.removeCallback(cb);
+    },
+  );
+
+  test('safe back dispatcher rethrows unrelated state errors', () async {
+    final dispatcher = SafeBackButtonDispatcher();
+    Future<bool> cb() => Future<bool>.error(StateError('different failure'));
+    dispatcher.addCallback(cb);
+    await expectLater(dispatcher.didPopRoute(), throwsStateError);
+    dispatcher.removeCallback(cb);
+  });
+
   test('app router starts on the splash screen', () {
     final router = appRouter();
 
@@ -28,14 +49,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     expect(find.byKey(const Key('app-splash-logo')), findsOneWidget);
     expect(find.bySemanticsLabel('Today'), findsNothing);
@@ -56,14 +70,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('synctasks://today');
     await tester.pumpAndSettle();
@@ -73,20 +80,54 @@ void main() {
     expect(find.text('Today'), findsOneWidget);
   });
 
+  testWidgets('widget Today deep link handles Android back without exception', (
+    tester,
+  ) async {
+    final router = appRouter();
+    addTearDown(router.dispose);
+
+    await pumpRouterApp(tester, router);
+
+    router.go('synctasks://today');
+    await tester.pumpAndSettle();
+
+    expect(router.routeInformationProvider.value.uri.path, '/today');
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('quick-add route handles Android back without router exception', (
+    tester,
+  ) async {
+    final router = appRouter();
+    addTearDown(router.dispose);
+
+    await pumpRouterApp(tester, router);
+
+    router.go('/quick-add');
+    await tester.pumpAndSettle();
+
+    expect(router.routeInformationProvider.value.uri.path, '/quick-add');
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('splash opens Today when onboarding is complete', (tester) async {
     final repository = SettingsRepository.memory();
     await repository.save(const AppSettings(hasCompletedOnboarding: true));
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [settingsRepositoryProvider.overrideWithValue(repository)],
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
-      ),
+    await pumpRouterApp(
+      tester,
+      router,
+      overrides: [settingsRepositoryProvider.overrideWithValue(repository)],
     );
 
     await tester.pump(const Duration(milliseconds: 700));
@@ -101,14 +142,7 @@ void main() {
   ) async {
     final router = appRouter();
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/lists/settings');
     await tester.pumpAndSettle();
@@ -128,14 +162,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/today');
     await tester.pumpAndSettle();
@@ -162,14 +189,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/today');
     await tester.pumpAndSettle();
@@ -188,14 +208,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/today');
     await tester.pumpAndSettle();
@@ -230,10 +243,7 @@ void main() {
             RecordingNotificationScheduler(),
           ),
         ],
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
+        child: buildRouterApp(router),
       ),
     );
 
@@ -259,14 +269,7 @@ void main() {
       final router = appRouter();
       addTearDown(router.dispose);
 
-      await tester.pumpWidget(
-        ProviderScope(
-          child: MaterialApp.router(
-            theme: buildSyncTasksTheme(Brightness.light),
-            routerConfig: router,
-          ),
-        ),
-      );
+      await pumpRouterApp(tester, router);
 
       router.go('/today');
       await tester.pumpAndSettle();
@@ -296,10 +299,7 @@ void main() {
             RecordingNotificationScheduler(),
           ),
         ],
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
+        child: buildRouterApp(router),
       ),
     );
 
@@ -343,10 +343,7 @@ void main() {
             RecordingNotificationScheduler(),
           ),
         ],
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
+        child: buildRouterApp(router),
       ),
     );
 
@@ -377,10 +374,7 @@ void main() {
             RecordingNotificationScheduler(),
           ),
         ],
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
+        child: buildRouterApp(router),
       ),
     );
 
@@ -432,10 +426,7 @@ void main() {
             RecordingNotificationScheduler(),
           ),
         ],
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
+        child: buildRouterApp(router),
       ),
     );
 
@@ -473,10 +464,7 @@ void main() {
             RecordingNotificationScheduler(),
           ),
         ],
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
+        child: buildRouterApp(router),
       ),
     );
 
@@ -537,7 +525,14 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Close list'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.bySemanticsLabel('Open Reminders list'));
+    await tester.scrollUntilVisible(
+      find.bySemanticsLabel('Open Reminders list'),
+      180,
+    );
+    final remindersRow = tester.getRect(
+      find.bySemanticsLabel('Open Reminders list'),
+    );
+    await tester.tapAt(Offset(remindersRow.center.dx, remindersRow.top + 12));
     await tester.pumpAndSettle();
 
     expect(router.routeInformationProvider.value.uri.path, '/lists');
@@ -567,10 +562,7 @@ void main() {
               RecordingNotificationScheduler(),
             ),
           ],
-          child: MaterialApp.router(
-            theme: buildSyncTasksTheme(Brightness.light),
-            routerConfig: router,
-          ),
+          child: buildRouterApp(router),
         ),
       );
 
@@ -604,10 +596,7 @@ void main() {
             RecordingNotificationScheduler(),
           ),
         ],
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
+        child: buildRouterApp(router),
       ),
     );
 
@@ -635,14 +624,7 @@ void main() {
     final notionRouter = appRouter();
     addTearDown(notionRouter.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: notionRouter,
-        ),
-      ),
-    );
+    await pumpRouterConfigApp(tester, notionRouter);
 
     notionRouter.go('/lists');
     await tester.pumpAndSettle();
@@ -666,10 +648,7 @@ void main() {
             RecordingNotificationScheduler(),
           ),
         ],
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
+        child: buildRouterApp(router),
       ),
     );
 
@@ -707,10 +686,7 @@ void main() {
             RecordingNotificationScheduler(),
           ),
         ],
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
+        child: buildRouterApp(router),
       ),
     );
 
@@ -745,10 +721,7 @@ void main() {
             RecordingNotificationScheduler(),
           ),
         ],
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
+        child: buildRouterApp(router),
       ),
     );
 
@@ -776,14 +749,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/lists');
     await tester.pumpAndSettle();
@@ -806,14 +772,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/lists');
     await tester.pumpAndSettle();
@@ -835,14 +794,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/today');
     await tester.pumpAndSettle();
@@ -867,14 +819,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: router,
-        ),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/lists/settings');
     await tester.pumpAndSettle();
@@ -926,5 +871,59 @@ bool _routeHasActiveSlide(WidgetTester tester) {
   return transitions.any((transition) => transition.position.value.dx != 0);
 }
 
+Future<void> pumpRouterApp(
+  WidgetTester tester,
+  GoRouter router, {
+  List overrides = const [],
+}) async {
+  final db = AppDatabase.memory();
+  addTearDown(db.close);
 
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [
+        appDatabaseProvider.overrideWithValue(db),
+        notificationServiceProvider.overrideWithValue(
+          RecordingNotificationScheduler(),
+        ),
+        ...overrides,
+      ],
+      child: buildRouterApp(router),
+    ),
+  );
+}
 
+Future<void> pumpRouterConfigApp(
+  WidgetTester tester,
+  GoRouter router, {
+  List overrides = const [],
+}) async {
+  final db = AppDatabase.memory();
+  addTearDown(db.close);
+
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [
+        appDatabaseProvider.overrideWithValue(db),
+        notificationServiceProvider.overrideWithValue(
+          RecordingNotificationScheduler(),
+        ),
+        ...overrides,
+      ],
+      child: MaterialApp.router(
+        theme: buildSyncTasksTheme(Brightness.light),
+        routerConfig: router,
+      ),
+    ),
+  );
+}
+
+Widget buildRouterApp(GoRouter router) {
+  return MaterialApp.router(
+    theme: buildSyncTasksTheme(Brightness.light),
+    routerDelegate: router.routerDelegate,
+    routeInformationParser: router.routeInformationParser,
+    routeInformationProvider: router.routeInformationProvider,
+    backButtonDispatcher: SafeBackButtonDispatcher(),
+  );
+}

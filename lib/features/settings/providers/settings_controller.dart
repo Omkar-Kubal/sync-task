@@ -56,6 +56,12 @@ class SettingsController {
     onChanged?.call();
   }
 
+  Future<void> setSoundEffects(bool enabled) async {
+    final settings = await _repository.load();
+    await _repository.save(settings.copyWith(soundEffects: enabled));
+    onChanged?.call();
+  }
+
   Future<void> setMildHaptics(bool enabled) async {
     final settings = await _repository.load();
     await _repository.save(settings.copyWith(mildHaptics: enabled));
@@ -74,5 +80,3 @@ class SettingsController {
     onChanged?.call();
   }
 }
-
-

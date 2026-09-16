@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/analytics/analytics_service.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../receipts/domain/receipt_composer_seed.dart';
+import '../../receipts/providers/receipt_feature_provider.dart';
+import '../../tasks/providers/task_controller.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/widgets/sync_empty_state.dart';
 import '../../../shared/widgets/sync_grouped_section.dart';
@@ -37,16 +41,47 @@ class _ConnectedInsightsScreenState
     final year = DateTime.now().year;
     final summaryValue = ref.watch(insightsProvider);
     final activityValue = ref.watch(activityGridProvider(year));
+    final receiptFeatureEnabled = ref.watch(receiptFeatureEnabledProvider);
 
     return summaryValue.when(
       data: (summary) => InsightsScreen(
         summary: summary,
         activityDays: activityValue.value ?? const <ActivityDay>[],
+        onCreateReceipt: receiptFeatureEnabled
+            ? () => _openReceiptComposer(context)
+            : null,
       ),
       loading: () => const InsightsScreen(),
       error: (error, stackTrace) => const _InsightsErrorScreen(),
     );
   }
+
+  Future<void> _openReceiptComposer(BuildContext context) async {
+    final today = _dateOnly(DateTime.now());
+    final weekStart = today.subtract(
+      Duration(days: today.weekday - DateTime.monday),
+    );
+    final weekEnd = weekStart.add(const Duration(days: 7));
+    final tasks = await ref
+        .read(taskRepositoryProvider)
+        .listCompletedTasksInRange(weekStart, weekEnd);
+    if (!context.mounted) {
+      return;
+    }
+    context.go(
+      '/receipts/new',
+      extra: ReceiptComposerSeed(
+        source: ReceiptEntrySource.insightsPeriod,
+        defaultTitle: "This week's wins",
+        selectedTaskIds: tasks.map((task) => task.id).toList(),
+        periodStart: weekStart,
+        periodEndExclusive: weekEnd,
+      ),
+    );
+  }
+
+  DateTime _dateOnly(DateTime value) =>
+      DateTime(value.year, value.month, value.day);
 }
 
 class InsightsScreen extends StatelessWidget {
@@ -57,11 +92,13 @@ class InsightsScreen extends StatelessWidget {
       currentStreak: 0,
     ),
     this.activityDays = const <ActivityDay>[],
+    this.onCreateReceipt,
     super.key,
   });
 
   final InsightsSummary summary;
   final List<ActivityDay> activityDays;
+  final VoidCallback? onCreateReceipt;
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +154,15 @@ class InsightsScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              if (onCreateReceipt != null)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 18),
+                  child: OutlinedButton.icon(
+                    onPressed: onCreateReceipt,
+                    icon: Icon(SyncIcons.receipt, size: 18),
+                    label: const Text('Create receipt'),
+                  ),
+                ),
               _InsightSection(
                 title: 'Completion Trend',
                 child: _CompletionTrend(points: summary.completionTrend),
@@ -483,5 +529,3 @@ class _SectionEmptyText extends StatelessWidget {
 String _taskCountLabel(int count) =>
     count == 1 ? 'task completed' : 'tasks completed';
 String _dayCountLabel(int count) => count == 1 ? 'day' : 'days';
-
-

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
+import '../../../shared/services/sync_sounds.dart';
 import '../../../shared/sheets/app_bottom_sheet.dart';
 import '../providers/folders_provider.dart';
 
@@ -129,6 +130,7 @@ class _TaskCreateSheetState extends ConsumerState<TaskCreateSheet> {
                       OutlinedButton.icon(
                         onPressed: () {
                           SyncHaptics.selection();
+                          SyncSounds.play(SyncSoundEffect.select);
                           widget.onTodaySelected(
                             _controller.text,
                             _selectedFolderId,
@@ -151,6 +153,7 @@ class _TaskCreateSheetState extends ConsumerState<TaskCreateSheet> {
                   child: IconButton.filled(
                     onPressed: () {
                       SyncHaptics.action();
+                      SyncSounds.play(SyncSoundEffect.action);
                       widget.onSubmit(_controller.text, _selectedFolderId);
                     },
                     style: IconButton.styleFrom(
@@ -176,6 +179,7 @@ class _TaskCreateSheetState extends ConsumerState<TaskCreateSheet> {
   ) async {
     final colors = SyncTasksColorScheme.of(context);
     SyncHaptics.selection();
+    SyncSounds.play(SyncSoundEffect.select);
 
     if (options.isEmpty) {
       return;
@@ -285,5 +289,3 @@ class _FolderMenuOptionRow extends StatelessWidget {
     );
   }
 }
-
-
