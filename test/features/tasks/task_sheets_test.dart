@@ -9,6 +9,7 @@ import 'package:synctasks/core/theme/app_theme.dart';
 import 'package:synctasks/features/tasks/domain/recurrence_type.dart';
 import 'package:synctasks/features/tasks/widgets/task_create_sheet.dart';
 import 'package:synctasks/features/tasks/widgets/task_edit_sheet.dart';
+import 'package:synctasks/shared/services/sync_haptics.dart';
 import 'package:synctasks/shared/sheets/app_bottom_sheet.dart';
 
 void main() {
@@ -200,6 +201,24 @@ void main() {
     expect(find.text('Start Focus'), findsNothing);
     expect(find.byKey(const Key('edit-task-title-field')), findsOneWidget);
     expect(find.text('Task title'), findsNothing);
+  });
+
+  testWidgets('edit sheet title field wraps long task names', (tester) async {
+    await tester.pumpWidget(
+      wrap(
+        TaskEditSheet(
+          title:
+              'Prepare the production release checklist and verify every visible surface before submission',
+          onCancel: () {},
+          onDone: () {},
+        ),
+      ),
+    );
+
+    final textField = tester.widget<TextField>(
+      find.byKey(const Key('edit-task-title-field')),
+    );
+    expect(textField.maxLines, greaterThan(1));
   });
 
   testWidgets('edit sheet opens shorter by default', (tester) async {
@@ -555,6 +574,7 @@ void main() {
 
 List<Object?> _captureHaptics(WidgetTester tester) {
   final calls = <Object?>[];
+  SyncHaptics.resetForTesting();
   tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
     SystemChannels.platform,
     (call) async {
@@ -564,11 +584,12 @@ List<Object?> _captureHaptics(WidgetTester tester) {
       return null;
     },
   );
-  addTearDown(
-    () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+  addTearDown(() {
+    SyncHaptics.resetForTesting();
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
       SystemChannels.platform,
       null,
-    ),
-  );
+    );
+  });
   return calls;
 }

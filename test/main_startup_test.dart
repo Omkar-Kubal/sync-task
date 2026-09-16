@@ -67,4 +67,30 @@ void main() {
 
     expect(registered, isTrue);
   });
+
+  test(
+    'startup does not initialize notifications before user action',
+    () async {
+      SharedPreferences.setMockInitialValues({});
+      var initializedNotifications = false;
+      AppDatabase? capturedDatabase;
+
+      await runSyncTasksApp(
+        getSharedPreferences: SharedPreferences.getInstance,
+        initializeNotifications: () async {
+          initializedNotifications = true;
+        },
+        registerWidgetInteractivity: () async {},
+        createDatabase: AppDatabase.memory,
+        updateWidgetData: (_) async {},
+        appRunner: (widget) {
+          final app = widget as SyncTasksApp;
+          capturedDatabase = app.appDatabase;
+        },
+      );
+      addTearDown(capturedDatabase!.close);
+
+      expect(initializedNotifications, isFalse);
+    },
+  );
 }

@@ -1,0 +1,403 @@
+--------- beginning of main
+09-14 15:09:34.089 10948 11031 I Finsky  : [54] SCH: Scheduling system job Id: 9190, L: 39935475, D: 40835475, C: false, I: false, N: 0
+09-14 15:09:34.090   698  2756 W JobInfo : Job 'com.android.vending/com.google.android.finsky.scheduler.process.mainimpl.PhoneskyJobServiceMain#9190' has a deadline with no functional constraints. The deadline won't improve job execution latency. Consider removing the deadline.
+09-14 15:09:34.091 10949 11124 I tvz     : #getInstalledPackages from MDD
+09-14 15:09:34.091 10949 11124 I tvz     : #GetLanguagePackList
+09-14 15:09:34.091 10949 11124 I tvz     : MDD.getFileGroupsByFilter(langpack-domain_xx-XX_ver_zipfile)
+09-14 15:09:34.096   698   902 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+09-14 15:09:34.100 10949 11124 I DefaultLPManager: #getInstalledPackages
+09-14 15:09:34.101 10949 11124 I tvz     : #getInstalledPackages from MDD
+09-14 15:09:34.101 10949 11124 I tvz     : #GetLanguagePackList
+09-14 15:09:34.101 10949 11124 I tvz     : MDD.getFileGroupsByFilter(langpack-domain_xx-XX_ver_zipfile)
+09-14 15:09:34.102 10949 11124 I DefaultLPManager: #getRequestedPackages
+09-14 15:09:34.106 10949 11124 I ZipLPPopulator: #addNewFileGroups
+09-14 15:09:34.106 10949 11124 I tvz     : #getDownloadableLanguagePacks
+09-14 15:09:34.106 10949 11124 I LanguagePackConfigImpl: Loaded languagepack (LP) flag value from latest config autogen_BatchV3071V3072: [en-US3008, de-DE3003, es-ES3000, fr-FR3003, it-IT3000, en-AU3003, en-GB3002, en-IE3002, en-SG3001, ja-JP3004, de-AT3054, de-BE3054, de-CH3054, de-DE3054, en-AU3054, en-CA3054, en-GB3054, en-IE3054, en-IN3054, en-SG3054, en-US3054, es-ES3054, es-US3054, fr-BE3054, fr-CA3054, fr-CH3054, fr-FR3054, hi-IN3054, id-ID3054, it-CH3054, it-IT3054, ja-JP3054, ko-KR3054, pt-BR3054, th-TH3054, cmn-Hans-CN3056, cmn-Hant-TW3056, de-AT3056, de-BE3056, de-CH3056, de-DE3056, en-CA3056, en-IN3056, en-US3056, es-ES3056, es-US3056, fr-BE3056, fr-CA3056, fr-CH3056, fr-FR3056, hi-IN3056, id-ID3056, it-CH3056, it-IT3056, ja-JP3056, ko-KR3056, pl-PL3056, pt-BR3056, ru-RU3056, th-TH3056, tr-TR3056, vi-VN3056, ja-JP3059, id-ID3059, ko-KR3061, pl-PL3059, ru-RU3059, th-TH3059, tr-TR3059, vi-VN3059, en-AU3071, en-CA3071, en-GB3071, en-IE3071, en-SG3071, en-US3072, hi-IN3072]
+09-14 15:09:34.113 10949 11124 W SystemLPSourceImpl: #getRequestedPackages: There is not reason to call this method, as the result is always empty.
+09-14 15:09:34.114 10949 11124 I DefaultLPManager: #getAvailablePackages
+09-14 15:09:34.115 10949 11124 I tvz     : #getDownloadableLanguagePacks
+09-14 15:09:34.115 10949 11124 I LanguagePackConfigImpl: Loaded languagepack (LP) flag value from latest config autogen_BatchV3071V3072: [en-US3008, de-DE3003, es-ES3000, fr-FR3003, it-IT3000, en-AU3003, en-GB3002, en-IE3002, en-SG3001, ja-JP3004, de-AT3054, de-BE3054, de-CH3054, de-DE3054, en-AU3054, en-CA3054, en-GB3054, en-IE3054, en-IN3054, en-SG3054, en-US3054, es-ES3054, es-US3054, fr-BE3054, fr-CA3054, fr-CH3054, fr-FR3054, hi-IN3054, id-ID3054, it-CH3054, it-IT3054, ja-JP3054, ko-KR3054, pt-BR3054, th-TH3054, cmn-Hans-CN3056, cmn-Hant-TW3056, de-AT3056, de-BE3056, de-CH3056, de-DE3056, en-CA3056, en-IN3056, en-US3056, es-ES3056, es-US3056, fr-BE3056, fr-CA3056, fr-CH3056, fr-FR3056, hi-IN3056, id-ID3056, it-CH3056, it-IT3056, ja-JP3056, ko-KR3056, pl-PL3056, pt-BR3056, ru-RU3056, th-TH3056, tr-TR3056, vi-VN3056, ja-JP3059, id-ID3059, ko-KR3061, pl-PL3059, ru-RU3059, th-TH3059, tr-TR3059, vi-VN3059, en-AU3071, en-CA3071, en-GB3071, en-IE3071, en-SG3071, en-US3072, hi-IN3072]
+09-14 15:09:34.115 10949 11124 W SystemLPSourceImpl: #getAvailablePackages: Note there is not reason to call this method, as getInstalledPackages() returns the same LanguagePacks for this impl.
+09-14 15:09:34.119 10948 11080 I Finsky  : [66] SCH: job service finished with id 9183.
+09-14 15:09:34.174 11125 11125 I Finsky:background: [2] PIM: Ignore install package event for: com.google.android.tts, isid: iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:34.271  2074  2219 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+09-14 15:09:34.272  2074  2219 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+09-14 15:09:34.272  2074  2219 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+09-14 15:09:34.272  2074  2219 V SatelliteController: satelliteConfigParser is not ready
+09-14 15:09:34.272  2074  2219 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+09-14 15:09:34.274  2074  2219 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+09-14 15:09:34.274  2074  2219 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+09-14 15:09:34.274  2074  2219 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+09-14 15:09:34.274  2074  2219 V SatelliteController: satelliteConfigParser is not ready
+09-14 15:09:34.274  2074  2219 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+09-14 15:09:34.301 11472 11542 I SP      : Syncing en-us (83) with slices: [{en-us-x-multi-locomel-r83, m:*:*:*}, {en-us-x-multi-r83, m:*:*:*}, {en-us-x-multi-seanet-r83, m:*:*:*}], metadata: false
+09-14 15:09:34.330  2074  2219 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+09-14 15:09:34.330  2074  2219 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+09-14 15:09:34.330  2074  2219 V SatelliteController: satelliteConfigParser is not ready
+09-14 15:09:34.330  2074  2219 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+09-14 15:09:34.386  2074  2219 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+09-14 15:09:34.386  2074  2219 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+09-14 15:09:34.386  2074  2219 V SatelliteController: satelliteConfigParser is not ready
+09-14 15:09:34.386  2074  2219 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+09-14 15:09:34.387  2074  2219 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+09-14 15:09:34.387  2074  2219 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+09-14 15:09:34.387  2074  2219 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+09-14 15:09:34.387  2074  2219 V SatelliteController: satelliteConfigParser is not ready
+09-14 15:09:34.388  2074  2219 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+09-14 15:09:34.389  2074  2219 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+09-14 15:09:34.389  2074  2219 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+09-14 15:09:34.389  2074  2219 V SatelliteController: satelliteConfigParser is not ready
+09-14 15:09:34.389  2074  2219 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+09-14 15:09:34.414 10948 10948 I Finsky  : [2] IQ::HLD: if pauseAppUpdates is called now, it must wait for these ongoing installs: [[Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING]
+09-14 15:09:34.450 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 23. Ignoring it and its associated features.
+09-14 15:09:34.450 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:34.450 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 23. Ignoring it and its associated features.
+09-14 15:09:34.451 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:34.451 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 23. Ignoring it and its associated features.
+09-14 15:09:34.452 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:34.453 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:34.460 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:34.550 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 23. Ignoring it and its associated features.
+09-14 15:09:34.552 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:34.565 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 23. Ignoring it and its associated features.
+09-14 15:09:34.565 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:34.566 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 23. Ignoring it and its associated features.
+09-14 15:09:34.566 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:34.566 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:34.566 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:34.714 10170 10226 D nativeloader: Load /data/app/~~fbWaly8b6-daV__uSvHjVg==/com.google.android.gms--IbG6AcBYCXWi0k0wroM_A==/base.apk!/lib/x86_64/libAppDataSearch.so using class loader ns clns-9 (caller=/data/app/~~fbWaly8b6-daV__uSvHjVg==/com.google.android.gms--IbG6AcBYCXWi0k0wroM_A==/base.apk): ok
+09-14 15:09:34.853 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 23. Ignoring it and its associated features.
+09-14 15:09:34.858 10170 10226 W native  : W0000 00:00:1789378774.849213   10226 model-utils.cc:17] No CRC32, most likely an old model; skip CRC32 check
+09-14 15:09:34.860 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:34.860 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 23. Ignoring it and its associated features.
+09-14 15:09:34.861 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:34.861 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 23. Ignoring it and its associated features.
+09-14 15:09:34.861 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:34.862 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:34.876 11472 11472 I GoogleTTSServiceImpl: currentLocale = en-US
+09-14 15:09:34.889 10170 10226 I native  : I0000 00:00:1789378774.889832   10226 permission-checker.cc:82] Creating PermissionChecker based on ACL with config_version 1 having 9 permissions defined.
+--------- beginning of system
+09-14 15:09:34.894   698   698 D TextToSpeechManagerPerUserService: Connected successfully to TTS engine: com.google.android.tts
+09-14 15:09:34.906 10170 10226 W native  : W0000 00:00:1789378774.905954   10226 words-map.cc:34] INVALID_ARGUMENT: Empty URI
+09-14 15:09:34.920 10949 11313 I TextToSpeech: Connected to TTS engine
+09-14 15:09:34.956 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:35.017 10170 10226 W native  : W0000 00:00:1789378775.017809   10226 words-map.cc:38] WordsMap was not properly initialized
+09-14 15:09:35.028 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 23. Ignoring it and its associated features.
+09-14 15:09:35.028 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:35.029 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 23. Ignoring it and its associated features.
+09-14 15:09:35.029 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:35.030 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 23. Ignoring it and its associated features.
+09-14 15:09:35.030 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:35.030 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:35.031 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:35.034 11472 11542 I SP      : Sync for en-us succeeded in 947 ms: no changes
+09-14 15:09:35.035 11472 11542 I SP      : GC for 'en-us' (10) with ttl of 0 ms took 1 ms (0/1/0)
+09-14 15:09:35.035 11472 11541 I VoiceDataDownloader: Superpack download completed.
+09-14 15:09:35.036 11472 11541 I VoiceDataDownloader: Download en-us Success true
+09-14 15:09:35.039 11472 11541 I VoiceDataManager: Downloaded voice en-us
+09-14 15:09:35.040 11472 11541 I VoiceDataManager: checkData: Refreshing list of all available voices...
+09-14 15:09:35.071 11472 11541 I VoiceDataDownloader: getAvailableVoicesInfo en-us
+09-14 15:09:35.072 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.072 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.072 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.075 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.075 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.075 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.077 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.078 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.078 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.078 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.078 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.079 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.079 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.079 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.080 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.080 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.122 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.122 10949 11135 I AiAiStatsd: Successfully logged feature enablement for HYBRID_HOTSEAT.
+09-14 15:09:35.122 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.122 11472 11541 I VoiceDataDownloader: No VoiceLM voicepack found.
+09-14 15:09:35.123 11472 11541 I VoiceGenerator: Cache cleared
+09-14 15:09:35.123 11472 11541 I VoiceDataManager: Calling onVoicesDataChange: updated voices
+09-14 15:09:35.308 10949 11135 I AiAiStatsd: Successfully logged feature enablement for ECHO_ALL_APPS.
+09-14 15:09:35.325 10949 10962 W ogle.android.as: Suspending all threads took: 9.106ms
+09-14 15:09:35.701 11456 11467 W libbinder.Binder: Binder transaction to android.content.IContentProvider, function: UNKNOWN_FUNCTION_NAME, code: 21, took 11726ms. Data bytes: 1852 Reply bytes: 1656 Flags: 18
+09-14 15:09:35.714 11125 11324 I Finsky:background: [80] DSC::L: Update all listeners for download <55:RUNNING:45%[45%]> in group com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:35.726 11125 11324 I Finsky:background: [80] DSC::L: Updating listener DownloadServiceManagerListener::amrb@ab8ac92 for download <55:RUNNING:45%[45%]>
+09-14 15:09:35.734 11125 11324 I Finsky:background: [80] DS: Received onProgress request_id=55
+09-14 15:09:35.735 11125 11324 I Finsky:background: [80] RM: receive resource status onProgress download_request_id=55, group_id=config.x86_64 reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 23949508/52294566
+09-14 15:09:35.740 11125 11324 I Finsky:background: [80] DSC::L: Updating listener DownloadServiceManagerListener::rzy@b5c04eb for download <55:RUNNING:45%[45%]>
+09-14 15:09:35.741 11125 11324 I Finsky:background: [80] DSC::L: Updating listener ucj@86fe248 for download <55:RUNNING:45%[45%]>
+09-14 15:09:35.741 11125 11324 I Finsky:background: [80] DS::IDC: updateWith: <55:RUNNING:45%[45%]>
+09-14 15:09:35.756 11125 11231 I Finsky:background: [59] RM: getStatus resourceRequestId=0073f7ba-0040-4c54-862b-117d94864676 requestId=55 package=com.google.android.tts artifact=config.x86_64 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:35.756 11125 11231 I Finsky:background: [59] DSC: reviveDownload(55)
+09-14 15:09:35.763 11125 11231 I Finsky:background: [59] DS: reviveDownload(request_id=55)
+09-14 15:09:35.766 11125 11324 I Finsky:background: [80] DS: DS: onReviveDownload(request_id=55, files_to_download=[config.x86_64(size:52294566)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=23949508, total_bytes=52294566, retry[count=0, next_retry=n/a])
+09-14 15:09:35.770 11125 11125 I Finsky:background: [2] RF: onProgress request_id=55 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:35.770 11125 11125 I Finsky:background: [2] RF: resourceStatus for request_id=55 group=com.google.android.tts artifact=config.x86_64 collectedBytes= 23949508 / 52294566
+09-14 15:09:35.770 11125 11125 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 43054534 / 71687284 for 2 artifacts
+09-14 15:09:35.775 11125 11125 I Finsky:background: [2] Updated time lastBroadcast=2026-09-14T09:39:32.087Z current=2026-09-14T09:39:35.775Z
+09-14 15:09:35.776 11125 11125 I Finsky:background: [2] bytesCompleted/bytesTotal/ratio = 43054534 / 71687284 / 0.600588
+09-14 15:09:35.781 11125 11205 I Finsky:background: [53] IV2: onTaskProgress com.google.android.tts[iid:8] [isid:iQRx5eo8TKqoAUIDitthMQ] status:RESOURCE_FETCH_PROGRESS, size: 43054534/71687284
+09-14 15:09:35.810 11125 11230 I Finsky:background: [58] IQ: Notifying installation update. [Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING, status=DOWNLOADING, status_code=0, reason=auto_update, tsc=PT49M4.788S, attempt=0
+09-14 15:09:35.998 11125 11125 I Finsky:background: [2] PIM: Ignore install package event for: com.google.android.tts, isid: iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:36.015 10721 10721 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.icing.LIGHTWEIGHT_INDEX_SERVICE dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentApiService }
+09-14 15:09:36.016 10721 10721 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.icing.LIGHTWEIGHT_INDEX_SERVICE dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentApiService }
+09-14 15:09:36.016 10948 10948 I Finsky  : [2] IQ::HLD: if pauseAppUpdates is called now, it must wait for these ongoing installs: [[Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING]
+09-14 15:09:36.060 10721 10721 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.scheduler.ACTION_PROXY_SCHEDULE dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+09-14 15:09:36.108 10170 10170 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.feedback.internal.IFeedbackService dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsBoundBrokerService }
+09-14 15:09:36.108 10170 10170 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.feedback.internal.IFeedbackService dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsBoundBrokerService }
+09-14 15:09:36.202   529   529 I adbd    : adbd service requested 'exec:screencap '-p''
+09-14 15:09:36.458 10170 10748 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.gms componentName=null serviceId=30
+09-14 15:09:36.521 11472 11480 I GoogleTTSServiceImpl: currentLocale = en-US
+09-14 15:09:36.594 10170 10245 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.gms componentName=ContactsIndexer serviceId=33
+09-14 15:09:36.723 11545 11545 I MetricsManager: MetricsManager.startCaching():449 Start caching metrics.
+09-14 15:09:37.040 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 23. Ignoring it and its associated features.
+09-14 15:09:37.041 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:37.041 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 23. Ignoring it and its associated features.
+09-14 15:09:37.041 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:37.042 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 23. Ignoring it and its associated features.
+09-14 15:09:37.042 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:37.042 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:37.042 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3054]: 22. Ignoring it and its associated features.
+09-14 15:09:37.068 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 23. Ignoring it and its associated features.
+09-14 15:09:37.068 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:37.068 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 23. Ignoring it and its associated features.
+09-14 15:09:37.068 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:37.068 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 23. Ignoring it and its associated features.
+09-14 15:09:37.069 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:37.074 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:37.074 10949 11124 E VoiceSearchConfigProtoU: Unrecognized recognizer for [ja-JP, 3056]: 22. Ignoring it and its associated features.
+09-14 15:09:37.114 11545 11588 I AccessibilityUtils: AccessibilityUtils.registerContentObserver():477 Register content observer to setting uri content://settings/system/font_scale
+09-14 15:09:37.119 10949 11124 I LPRequestState: [ZipfileRequests] #resolveDesiredLanguagePacks
+09-14 15:09:37.148 11545 11588 I AccessibilityUtils: AccessibilityUtils.registerContentObserver():477 Register content observer to setting uri content://settings/secure/high_text_contrast_enabled
+09-14 15:09:37.155 10949 11124 I LPRequestState: [ManagerRequests] #resolveDesiredLanguagePacks
+09-14 15:09:37.177 10949 11420 I AiAiEcho: SearchBE[AppFetcherV2][PROCESSING]:is initialized with [25] apps [time=17477282300, reason=module is initialized.]
+09-14 15:09:37.185 10949 11194 E AiAiEcho: EchoSearch: SettingsFetcherImpl: DB already exists.
+09-14 15:09:37.195 10949 11124 I LPRequestState: [ManagerRequests] #resolveUnusedLanguagePacks
+09-14 15:09:37.195 10949 11124 I LPRequestState: [ManagerRequests] #resolveDesiredLanguagePacks
+09-14 15:09:37.197   698   902 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+09-14 15:09:37.321   698  1960 W ApplicationInfo: Large ApplicationInfo parcel: size=17564 package=com.google.android.googlequicksearchbox sharedLibs=3 resDirs=1 overlayPaths=1
+09-14 15:09:37.321   698  1960 W PackageInfo: Large parcel: size=17828 pkg=com.google.android.googlequicksearchbox uid=10158 prevAllowSquashing=false
+09-14 15:09:37.441   698  1960 W ActivityManager: Skipping manifest association check for null package. SourceUid: -1, SourcePkg: null, TargetUid: 10167, TargetPkg: com.google.android.inputmethod.latin
+09-14 15:09:37.450 11545 11596 I DeviceStatusMonitor: DeviceStatusMonitor.updateCountryInfo():154 updateCountryInfo(), notifyAnyway = true
+09-14 15:09:37.451   698   716 W ApplicationInfo: Large ApplicationInfo parcel: size=17564 package=com.google.android.googlequicksearchbox sharedLibs=3 resDirs=1 overlayPaths=1
+09-14 15:09:37.451   698   716 W ParceledListSlice: Element #27 is 18732 bytes.
+09-14 15:09:37.452   698   716 W ApplicationInfo: Large ApplicationInfo parcel: size=17564 package=com.google.android.googlequicksearchbox sharedLibs=3 resDirs=1 overlayPaths=1
+09-14 15:09:37.457 11545 11545 I DeviceLockTags: DeviceLockTags.notifyDeviceLockStatusChanged():108 notifyDeviceLockStatusChanged(): deviceLocked=false, blockPersonalData=false
+09-14 15:09:37.460   698   716 W ParceledListSlice: Element #28 is 18912 bytes.
+09-14 15:09:37.460   698   716 W ApplicationInfo: Large ApplicationInfo parcel: size=17564 package=com.google.android.googlequicksearchbox sharedLibs=3 resDirs=1 overlayPaths=1
+09-14 15:09:37.460   698   716 W ParceledListSlice: Element #29 is 19124 bytes.
+09-14 15:09:37.460   698   716 W ApplicationInfo: Large ApplicationInfo parcel: size=17564 package=com.google.android.googlequicksearchbox sharedLibs=3 resDirs=1 overlayPaths=1
+09-14 15:09:37.460   698   716 W ParceledListSlice: Element #30 is 18636 bytes.
+09-14 15:09:37.552 11545 11596 I DeviceStatusMonitor: DeviceStatusMonitor.notifyIfNetworkChanged():200 notifyIfNetworkChanged: newState = NON_METERED, airplaneModeOn = false, notifyAnyway = true
+09-14 15:09:37.712   698   735 I ActivityManager: Test idle failed due to af95c3e 11545:com.google.android.inputmethod.latin/u0a167 runnable at +228ms because NORMAL
+09-14 15:09:37.839   698   716 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@12db1a33 does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+09-14 15:09:37.844 11472 11480 I GoogleTTSServiceImpl: For default lang en-us is name en-US-language (en-us-x-iog-server)
+09-14 15:09:37.845 11472 11480 W libbinder.Binder: Binder transaction to android.speech.tts.ITextToSpeechService, function: UNKNOWN_FUNCTION_NAME, code: 15, took 2892ms. Data bytes: 128 Reply bytes: 40 Flags: 18
+09-14 15:09:37.846 10949 11580 I TextToSpeech: Setting up the connection to TTS engine...
+09-14 15:09:37.852 10949 10949 I AiAiCaptions: TtsSynthesizerImpl::onInit(): status: true(0).
+09-14 15:09:37.943   698   735 W ActivityManager: Skipping manifest association check for null package. SourceUid: -1, SourcePkg: null, TargetUid: 10167, TargetPkg: com.google.android.inputmethod.latin
+09-14 15:09:37.945   454   454 D Zygote  : Forked child process 11598
+09-14 15:09:37.956   698   736 W ActivityManager: Slow operation: 115ms so far, now at startProcess: returned from zygote!
+09-14 15:09:37.959   698   736 W ActivityManager: Slow operation: 119ms so far, now at startProcess: done updating battery stats
+09-14 15:09:37.959   698   736 W ActivityManager: Slow operation: 119ms so far, now at startProcess: building log message
+09-14 15:09:37.959   698   736 I ActivityManager: Start proc 11598:android.process.acore/u0a102 for content provider {com.android.providers.contacts/com.android.providers.contacts.CallLogProvider}
+09-14 15:09:37.964   698   736 W ActivityManager: Slow operation: 124ms so far, now at startProcess: starting to update pids map
+09-14 15:09:37.965   698   736 W ActivityManager: Slow operation: 125ms so far, now at startProcess: done updating pids map
+09-14 15:09:37.971   698   734 D OomAdjuster: Not killing cached processes
+09-14 15:09:37.979 11598 11598 I libprocessgroup: Created cgroup /sys/fs/cgroup/apps/uid_10102/pid_11598
+09-14 15:09:37.983 11545 11545 I OemConfigs: OemConfigs.<init>():150 OEM configs apply status: 1
+09-14 15:09:37.990 11545 11545 I LatinApp: LatinApp.initialize():164 initialize()
+09-14 15:09:37.991 11545 11545 E LibraryModuleRegistry: LibraryModuleRegistry.register():48 Module mobilebert_classifier_android_jni has already been registered to integrated_shared_object
+09-14 15:09:38.000 10170 10226 D SharedPreferencesImpl: Time required to fsync /data/user/0/com.google.android.gms/shared_prefs/AppDataSearch-main-icing-settings.xml: [<1: 0, <2: 0, <4: 0, <8: 0, <16: 0, <32: 0, <64: 0, <128: 0, <256: 0, <512: 1, <1024: 0, <2048: 0, <4096: 0, <8192: 0, <16384: 0, >=16384: 0]
+09-14 15:09:38.016 11598 11598 I Zygote  : Process 11598 created for android.process.acore
+09-14 15:09:38.017 11598 11598 I d.process.acore: Using generational CollectorTypeCMC GC.
+09-14 15:09:38.035 11598 11598 W d.process.acore: Unexpected CPU variant for x86: x86_64.
+09-14 15:09:38.035 11598 11598 W d.process.acore: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, pantherlake, default
+09-14 15:09:38.079 11598 11598 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+09-14 15:09:38.089 11125 11324 I Finsky:background: [80] DSC::L: Update all listeners for download <55:RUNNING:47%[47%]> in group com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:38.089 11125 11324 I Finsky:background: [80] DSC::L: Updating listener DownloadServiceManagerListener::amrb@ab8ac92 for download <55:RUNNING:47%[47%]>
+09-14 15:09:38.089 11125 11324 I Finsky:background: [80] DS: Received onProgress request_id=55
+09-14 15:09:38.089 11125 11324 I Finsky:background: [80] RM: receive resource status onProgress download_request_id=55, group_id=config.x86_64 reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 24965792/52294566
+09-14 15:09:38.090 11125 11324 I Finsky:background: [80] DSC::L: Updating listener DownloadServiceManagerListener::rzy@b5c04eb for download <55:RUNNING:47%[47%]>
+09-14 15:09:38.091 11125 11324 I Finsky:background: [80] DSC::L: Updating listener ucj@86fe248 for download <55:RUNNING:47%[47%]>
+09-14 15:09:38.091 11125 11324 I Finsky:background: [80] DS::IDC: updateWith: <55:RUNNING:47%[47%]>
+09-14 15:09:38.262 11125 11231 I Finsky:background: [59] RM: getStatus resourceRequestId=0073f7ba-0040-4c54-862b-117d94864676 requestId=55 package=com.google.android.tts artifact=config.x86_64 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:38.262 11125 11231 I Finsky:background: [59] DSC: reviveDownload(55)
+09-14 15:09:38.277   698   716 W ActivityManager: Slow operation: 53ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+09-14 15:09:38.395 11125 11231 I Finsky:background: [59] DS: reviveDownload(request_id=55)
+09-14 15:09:38.433 11125 11324 I Finsky:background: [80] DS: DS: onReviveDownload(request_id=55, files_to_download=[config.x86_64(size:52294566)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=24965792, total_bytes=52294566, retry[count=0, next_retry=n/a])
+09-14 15:09:38.504 11598 11598 D CompatChangeReporter: Compat change id reported: 333566037; UID 10102; state: ENABLED
+09-14 15:09:38.525 11545 11597 I CrossProfileSharedPreferences: CrossProfileSharedPreferences.initializeCrossProfile():134 work profile is unavailable
+09-14 15:09:38.552 11125 11125 I Finsky:background: [2] RF: onProgress request_id=55 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:38.552 11125 11125 I Finsky:background: [2] RF: resourceStatus for request_id=55 group=com.google.android.tts artifact=config.x86_64 collectedBytes= 24965792 / 52294566
+09-14 15:09:38.553 11125 11125 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 44070818 / 71687284 for 2 artifacts
+09-14 15:09:38.571 11125 11125 I Finsky:background: [2] Updated time lastBroadcast=2026-09-14T09:39:35.776Z current=2026-09-14T09:39:38.570Z
+09-14 15:09:38.578 11125 11125 I Finsky:background: [2] bytesCompleted/bytesTotal/ratio = 44070818 / 71687284 / 0.614765
+09-14 15:09:38.641 10170 10226 I Icing   : updateResources: need to parse chyk{com.google.android.gms}
+09-14 15:09:38.812 11125 11205 I Finsky:background: [53] IV2: onTaskProgress com.google.android.tts[iid:8] [isid:iQRx5eo8TKqoAUIDitthMQ] status:RESOURCE_FETCH_PROGRESS, size: 44070818/71687284
+09-14 15:09:38.874 11125 11230 I Finsky:background: [58] IQ: Notifying installation update. [Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING, status=DOWNLOADING, status_code=0, reason=auto_update, tsc=PT49M7.852S, attempt=0
+09-14 15:09:38.993 11598 11598 D nativeloader: Configuring clns-shared-9 for other apk /system/priv-app/ContactsProvider/ContactsProvider.apk. target_sdk_version=37, uses_libraries=, library_path=/system/priv-app/ContactsProvider/lib/x86_64:/system/lib64:/system_ext/lib64, permitted_path=/data:/mnt/expand:/data/user/0/com.android.providers.contacts:/system/priv-app/ContactsProvider:/system/lib64:/system_ext/lib64
+09-14 15:09:39.018 11545 11545 D nativeloader: Load /product/app/LatinIMEGooglePrebuilt/LatinIMEGooglePrebuilt.apk!/lib/x86_64/libjni_signalinitializer.so using class loader ns product-clns-9 (caller=/product/app/LatinIMEGooglePrebuilt/LatinIMEGooglePrebuilt.apk): ok
+09-14 15:09:39.018 11545 11545 I NativeLibHelper: NativeLibHelper.loadLibrary():209 Loaded native library:jni_signalinitializer (result=true)
+09-14 15:09:39.037 11125 11125 I Finsky:background: [2] PIM: Ignore install package event for: com.google.android.tts, isid: iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:39.056 10170 10180 W gle.android.gms: Suspending all threads took: 49.232ms
+09-14 15:09:39.096 11598 11598 V GraphicsEnvironment: Currently set values for:
+09-14 15:09:39.096 11598 11598 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+09-14 15:09:39.096 11598 11598 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+09-14 15:09:39.096 11598 11598 V GraphicsEnvironment: com.android.providers.contacts is not listed in per-application setting
+09-14 15:09:39.096 11598 11598 V GraphicsEnvironment: No special selections for ANGLE, returning default driver choice
+09-14 15:09:39.117 11598 11598 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+09-14 15:09:39.128 11598 11598 D CompatChangeReporter: Compat change id reported: 407952621; UID 10102; state: ENABLED
+09-14 15:09:39.128 11598 11598 D CompatChangeReporter: Compat change id reported: 419020719; UID 10102; state: ENABLED
+09-14 15:09:39.155 10948 10948 I Finsky  : [2] IQ::HLD: if pauseAppUpdates is called now, it must wait for these ongoing installs: [[Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING]
+09-14 15:09:39.199 11598 11598 D nativeloader: Configuring clns-shared-10 for other apk /system/priv-app/UserDictionaryProvider/UserDictionaryProvider.apk. target_sdk_version=37, uses_libraries=, library_path=/system/priv-app/UserDictionaryProvider/lib/x86_64:/system/lib64:/system_ext/lib64, permitted_path=/data:/mnt/expand:/data/user/0/com.android.providers.userdictionary:/system/priv-app/UserDictionaryProvider:/system/lib64:/system_ext/lib64
+09-14 15:09:39.381 11598 11598 D nativeloader: Configuring clns-shared-11 for other apk /system/priv-app/BlockedNumberProvider/BlockedNumberProvider.apk. target_sdk_version=37, uses_libraries=, library_path=/system/priv-app/BlockedNumberProvider/lib/x86_64:/system/lib64:/system_ext/lib64, permitted_path=/data:/mnt/expand:/data/user_de/0/com.android.providers.blockednumber:/system/priv-app/BlockedNumberProvider:/system/lib64:/system_ext/lib64
+09-14 15:09:39.505 11545 11545 I ModuleManager: ModuleManager.<init>():173 ModuleManager is created on process com.google.android.inputmethod.latin
+09-14 15:09:39.535   698  1960 D FileUtils: Rounded bytes from 2061815808 to 4000000000
+09-14 15:09:39.688 11598 11598 I ContactsPerf: VoicemailContentProvider.onCreate start
+09-14 15:09:39.713 11598 11598 D CompatChangeReporter: Compat change id reported: 418924588; UID 10102; state: ENABLED
+09-14 15:09:39.804 11125 11324 I Finsky:background: [80] DSC::L: Update all listeners for download <55:RUNNING:48%[48%]> in group com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:39.804 11125 11324 I Finsky:background: [80] DSC::L: Updating listener DownloadServiceManagerListener::amrb@ab8ac92 for download <55:RUNNING:48%[48%]>
+09-14 15:09:39.805 11125 11324 I Finsky:background: [80] DS: Received onProgress request_id=55
+09-14 15:09:39.805 11125 11324 I Finsky:background: [80] RM: receive resource status onProgress download_request_id=55, group_id=config.x86_64 reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 25622864/52294566
+09-14 15:09:39.817 11125 11324 I Finsky:background: [80] DSC::L: Updating listener DownloadServiceManagerListener::rzy@b5c04eb for download <55:RUNNING:48%[48%]>
+09-14 15:09:39.818 11125 11324 I Finsky:background: [80] DSC::L: Updating listener ucj@86fe248 for download <55:RUNNING:48%[48%]>
+09-14 15:09:39.819 11125 11324 I Finsky:background: [80] DS::IDC: updateWith: <55:RUNNING:48%[48%]>
+09-14 15:09:39.838 11598 11598 I ContactsPerf: VoicemailContentProvider.onCreate finish
+09-14 15:09:39.867 11125 11227 I Finsky:background: [55] RM: getStatus resourceRequestId=0073f7ba-0040-4c54-862b-117d94864676 requestId=55 package=com.google.android.tts artifact=config.x86_64 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:39.888 11125 11227 I Finsky:background: [55] DSC: reviveDownload(55)
+09-14 15:09:39.892 11125 11198 I Finsky:background: [51] DS: reviveDownload(request_id=55)
+09-14 15:09:39.894 11125 11324 I Finsky:background: [80] DS: DS: onReviveDownload(request_id=55, files_to_download=[config.x86_64(size:52294566)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=25622864, total_bytes=52294566, retry[count=0, next_retry=n/a])
+09-14 15:09:39.946 11125 11125 I Finsky:background: [2] RF: onProgress request_id=55 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:39.946 11125 11125 I Finsky:background: [2] RF: resourceStatus for request_id=55 group=com.google.android.tts artifact=config.x86_64 collectedBytes= 25622864 / 52294566
+09-14 15:09:39.946 11125 11125 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 44727890 / 71687284 for 2 artifacts
+09-14 15:09:39.949 11125 11125 I Finsky:background: [2] RF: Preventing total bytes update to listeners
+09-14 15:09:39.991 11545 11545 W ModuleManager: ModuleManager.initModules():290 pdd is forbidden by min_api_level (28) or max_api_level (28): 37
+09-14 15:09:40.053 11598 11613 D CompatChangeReporter: Compat change id reported: 458413887; UID 10102; state: ENABLED
+09-14 15:09:40.058 11598 11598 D nativeloader: Configuring clns-shared-12 for other apk /system/priv-app/E2eeContactKeysProvider/E2eeContactKeysProvider.apk. target_sdk_version=37, uses_libraries=, library_path=/system/priv-app/E2eeContactKeysProvider/lib/x86_64:/system/lib64:/system_ext/lib64, permitted_path=/data:/mnt/expand:/data/user/0/com.android.providers.contactkeys:/system/priv-app/E2eeContactKeysProvider:/system/lib64:/system_ext/lib64
+09-14 15:09:40.117 11598 11615 I PhoneAccountHandleMigrationUtils_CallLogDatabaseHelper: updatePhoneAccountHandleMigrationPendingStatus false
+09-14 15:09:40.206 11598 11615 D ActivityThread: Loading provider call_log_shadow: com.android.providers.contacts.ShadowCallLogProvider
+09-14 15:09:40.227 11472 11480 I GoogleTTSServiceImpl: onIsValidVoiceName(en-us-x-tpf-local): SUCCESS
+09-14 15:09:40.237 11472 11480 W libbinder.Binder: Binder transaction to android.speech.tts.ITextToSpeechService, function: UNKNOWN_FUNCTION_NAME, code: 14, took 1198ms. Data bytes: 164 Reply bytes: 8 Flags: 18
+09-14 15:09:40.427 11598 11617 I PhoneAccountHandleMigrationUtils_CallLogDatabaseHelper: updatePhoneAccountHandleMigrationPendingStatus false
+09-14 15:09:40.447   698   902 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+09-14 15:09:40.471 11598 11618 I PhoneAccountHandleMigrationUtils_CallLogDatabaseHelper: updatePhoneAccountHandleMigrationPendingStatus false
+09-14 15:09:40.512 11591 11591 W libbinder.BackendUnifiedServiceManager: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+09-14 15:09:40.517 11591 11591 W libbinder.BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+09-14 15:09:40.524 11591 11591 W libbinder.ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+09-14 15:09:40.620   521   579 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+09-14 15:09:40.621   521   579 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+09-14 15:09:40.621   521   579 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+09-14 15:09:40.626 11598 11615 I CallLogProvider: syncEntriesFrom: fromUserId=0, srcIsShadow=true, forAllUsers=false; previousTimeStamp=0, newTimeStamp=0, entries=0
+09-14 15:09:40.673 11598 11615 I CallLogProvider: delete uid/pid=10102/11598, uri=content://call_log_shadow/calls, numChanged=0
+09-14 15:09:40.758   698   716 D CountryDetector: The first listener is added
+09-14 15:09:40.770 11598 11598 I ContactsDatabaseHelper: updateUseStrictPhoneNumberComparison: US
+09-14 15:09:40.773 11545 11545 I DeviceModeNotification: DeviceModeNotification.getCurrentDeviceMode():75 device mode is unknown before initializing the notification.
+09-14 15:09:40.774 11598 11615 I CallLogProvider: Syncing call composer pics -- source user=0, isShadow=true, forAllUser=false
+09-14 15:09:40.775 11598 11615 I CallLogProvider: Fetching list of Uris to sync
+09-14 15:09:40.783 11598 11615 I CallLogProvider: Will sync following Uris:[]
+09-14 15:09:40.783 11598 11615 I CallLogProvider: Syncing call composer pics -- got []
+09-14 15:09:40.819 11545 11545 I DeviceModeNotification: DeviceModeNotification.getCurrentDeviceMode():75 device mode is unknown before initializing the notification.
+09-14 15:09:40.967 11591 11619 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+09-14 15:09:40.989 11545 11545 I DeviceModeNotification: DeviceModeNotification.getCurrentDeviceMode():75 device mode is unknown before initializing the notification.
+09-14 15:09:40.991 11545 11545 I ModuleManager: ModuleManager.initModules():280 GenAiDelegate is forbidden to run on current process
+09-14 15:09:40.999 11598 11598 I ContactsDatabaseHelper: updateUseStrictPhoneNumberComparison: US
+09-14 15:09:41.062 11598 11620 D ContactsDatabaseHelper: WAL enabled for contacts2.db: true
+09-14 15:09:41.097 11545 11545 I ModuleManager: ModuleManager.initModules():304 hsz is forbidden by device ram size 1966 MB
+09-14 15:09:41.289 11598 11620 I PhoneAccountHandleMigrationUtils_ContactsDatabaseHelper: updatePhoneAccountHandleMigrationPendingStatus false
+09-14 15:09:41.421 11472 11566 I LocalSynthesizer: Attempting to load synthesizer for voice: en-us-x-tpf-seanet-embedded
+09-14 15:09:41.422 11472 11566 I LocalSynthesizer: Voice en-us-x-tpf-seanet-embedded is not supported by any existing synthesizers.
+09-14 15:09:41.428 11472 11566 I ComposerWrapperImpl: Initializing new monolithic pipeline. New voice: en-us-x-tpf-seanet-embedded
+09-14 15:09:41.428 11472 11566 I PipelineReaderImpl: Initializing monolithic pipeline from disk: /data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/pipeline.pb
+09-14 15:09:41.449 11472 11566 I native  : I0000 00:00:1789378781.449622   11566 android_resource_loader.cc:38] Using Android specific resource loader
+09-14 15:09:41.539 10170 10226 I Icing   : Internal init done: storage state 0
+09-14 15:09:41.553   998   998 I wpa_supplicant: wlan0: CTRL-EVENT-BEACON-LOSS 
+09-14 15:09:41.571 11472 11566 I native  : I0000 00:00:1789378781.571675   11566 android_resource_loader.cc:109] Loading resources for en_us_x_embedded_havoc/11336357616641258768
+09-14 15:09:41.617 11545 11550 W putmethod.latin: Suspending all threads took: 14.250ms
+09-14 15:09:41.621 11472 11566 I native  : I0000 00:00:1789378781.620861   11566 data_source.cc:95] Opening data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/burdock_frame_config.pb" (as: FILE) ...
+09-14 15:09:41.621 11472 11566 I native  : I0000 00:00:1789378781.621150   11566 data_source.cc:99] ... Opened data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/burdock_frame_config.pb" of size 68
+09-14 15:09:41.625 11472 11566 I native  : I0000 00:00:1789378781.625758   11566 android_resource_loader.cc:100] Built resource acoustic_frame_config
+09-14 15:09:41.626 11472 11566 I native  : I0000 00:00:1789378781.626730   11566 android_resource_loader.cc:116] Loaded resource:acoustic_frame_config
+09-14 15:09:41.627 11472 11566 I native  : I0000 00:00:1789378781.627278   11566 data_source.cc:95] Opening data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/affixes_en_us_android.far" (as: FILE) ...
+09-14 15:09:41.627 11472 11566 I native  : I0000 00:00:1789378781.627408   11566 data_source.cc:99] ... Opened data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/affixes_en_us_android.far" of size 36782
+09-14 15:09:41.637 11472 11566 I native  : I0000 00:00:1789378781.637617   11566 android_resource_loader.cc:100] Built resource affix_word_splitter_grm
+09-14 15:09:41.637 11472 11566 I native  : I0000 00:00:1789378781.637694   11566 android_resource_loader.cc:116] Loaded resource:affix_word_splitter_grm
+09-14 15:09:41.637 11472 11566 I native  : I0000 00:00:1789378781.637758   11566 data_source.cc:95] Opening data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/affixes_params_en_us.pb" (as: FILE) ...
+09-14 15:09:41.638 11472 11566 I native  : I0000 00:00:1789378781.637977   11566 data_source.cc:99] ... Opened data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/affixes_params_en_us.pb" of size 420
+09-14 15:09:41.643 11472 11566 I native  : I0000 00:00:1789378781.643779   11566 affix_word_splitter_data.cc:33] Ambiguous affix entries for spelling ['s] -- their grammars should disambiguate them.
+09-14 15:09:41.644 11472 11566 I native  : I0000 00:00:1789378781.644095   11566 affix_word_splitter_data.cc:33] Ambiguous affix entries for spelling ['s] -- their grammars should disambiguate them.
+09-14 15:09:41.644 11472 11566 I native  : I0000 00:00:1789378781.644340   11566 affix_word_splitter_data.cc:33] Ambiguous affix entries for spelling ['s] -- their grammars should disambiguate them.
+09-14 15:09:41.644 11472 11566 I native  : I0000 00:00:1789378781.644380   11566 affix_word_splitter_data.cc:33] Ambiguous affix entries for spelling [s] -- their grammars should disambiguate them.
+09-14 15:09:41.644 11472 11566 I native  : I0000 00:00:1789378781.644429   11566 affix_word_splitter_data.cc:33] Ambiguous affix entries for spelling [s] -- their grammars should disambiguate them.
+09-14 15:09:41.644 11472 11566 I native  : I0000 00:00:1789378781.644479   11566 affix_word_splitter_data.cc:33] Ambiguous affix entries for spelling [s] -- their grammars should disambiguate them.
+09-14 15:09:41.644 11472 11566 I native  : I0000 00:00:1789378781.644551   11566 affix_word_splitter_data.cc:33] Ambiguous affix entries for spelling [ed] -- their grammars should disambiguate them.
+09-14 15:09:41.644 11472 11566 I native  : I0000 00:00:1789378781.644609   11566 affix_word_splitter_data.cc:33] Ambiguous affix entries for spelling [ed] -- their grammars should disambiguate them.
+09-14 15:09:41.644 11472 11566 I native  : I0000 00:00:1789378781.644656   11566 affix_word_splitter_data.cc:33] Ambiguous affix entries for spelling [ed] -- their grammars should disambiguate them.
+09-14 15:09:41.644 11472 11566 I native  : I0000 00:00:1789378781.644704   11566 affix_word_splitter_data.cc:89] Loaded affixes in [/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/affixes_params_en_us.pb].
+09-14 15:09:41.652 11472 11566 I native  : I0000 00:00:1789378781.652353   11566 android_resource_loader.cc:100] Built resource affix_word_splitter
+09-14 15:09:41.652 11472 11566 I native  : I0000 00:00:1789378781.652675   11566 android_resource_loader.cc:116] Loaded resource:affix_word_splitter
+09-14 15:09:41.656 11472 11566 I native  : I0000 00:00:1789378781.655476   11566 data_source.cc:95] Opening data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/roman_numeral_android.far" (as: FILE) ...
+09-14 15:09:41.656 11472 11566 I native  : I0000 00:00:1789378781.656853   11566 data_source.cc:99] ... Opened data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/roman_numeral_android.far" of size 5112
+09-14 15:09:41.659 11472 11566 I native  : I0000 00:00:1789378781.659053   11566 android_resource_loader.cc:100] Built resource classify_roman_numerals_grm_fst
+09-14 15:09:41.673 11472 11566 I native  : I0000 00:00:1789378781.673504   11566 android_resource_loader.cc:116] Loaded resource:classify_roman_numerals_grm_fst
+09-14 15:09:41.673 11472 11566 I native  : I0000 00:00:1789378781.673894   11566 data_source.cc:95] Opening data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/en_us_pronounce.far" (as: FILE) ...
+09-14 15:09:41.674 11472 11566 I native  : I0000 00:00:1789378781.674037   11566 data_source.cc:99] ... Opened data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/en_us_pronounce.far" of size 5040
+09-14 15:09:41.680 11472 11566 I native  : I0000 00:00:1789378781.679943   11566 android_resource_loader.cc:100] Built resource compound_pronounce_grm_fst
+09-14 15:09:41.680 11472 11566 I native  : I0000 00:00:1789378781.680147   11566 android_resource_loader.cc:116] Loaded resource:compound_pronounce_grm_fst
+09-14 15:09:41.680 11472 11566 I native  : I0000 00:00:1789378781.680243   11566 data_source.cc:95] Opening data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/disambiguation_rules_en_us.pb" (as: FILE) ...
+09-14 15:09:41.680 11472 11566 I native  : I0000 00:00:1789378781.680503   11566 data_source.cc:99] ... Opened data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/disambiguation_rules_en_us.pb" of size 317147
+09-14 15:09:41.741 10170 10226 I Icing   : Post-init done
+09-14 15:09:41.974 11125 11324 I Finsky:background: [80] DSC::L: Update all listeners for download <55:RUNNING:50%[50%]> in group com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:41.975 11125 11324 I Finsky:background: [80] DSC::L: Updating listener DownloadServiceManagerListener::amrb@ab8ac92 for download <55:RUNNING:50%[50%]>
+09-14 15:09:41.975 11125 11324 I Finsky:background: [80] DS: Received onProgress request_id=55
+09-14 15:09:41.975 11125 11324 I Finsky:background: [80] RM: receive resource status onProgress download_request_id=55, group_id=config.x86_64 reason: auto_update isid: iQRx5eo8TKqoAUIDitthMQ, status_code=RESOURCE_STATUS_IN_PROGRESS, legacy_status_code=192, size: 26208854/52294566
+09-14 15:09:41.976 11125 11324 I Finsky:background: [80] DSC::L: Updating listener DownloadServiceManagerListener::rzy@b5c04eb for download <55:RUNNING:50%[50%]>
+09-14 15:09:41.976 11125 11324 I Finsky:background: [80] DSC::L: Updating listener ucj@86fe248 for download <55:RUNNING:50%[50%]>
+09-14 15:09:41.976 11125 11324 I Finsky:background: [80] DS::IDC: updateWith: <55:RUNNING:50%[50%]>
+09-14 15:09:42.027 11125 11231 I Finsky:background: [59] RM: getStatus resourceRequestId=0073f7ba-0040-4c54-862b-117d94864676 requestId=55 package=com.google.android.tts artifact=config.x86_64 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:42.028 11125 11231 I Finsky:background: [59] DSC: reviveDownload(55)
+09-14 15:09:42.030 11125 11231 I Finsky:background: [59] DS: reviveDownload(request_id=55)
+09-14 15:09:42.038 11125 11324 I Finsky:background: [80] DS: DS: onReviveDownload(request_id=55, files_to_download=[config.x86_64(size:52294566)], context[group_id=com.google.android.tts:iQRx5eo8TKqoAUIDitthMQ], display_data[invisible=true, title=Speech Recognition & Synthesis], network_restrictions=UNMETERED_ONLY status=running, bytes_downloaded=26208854, total_bytes=52294566, retry[count=0, next_retry=n/a])
+09-14 15:09:42.044 11125 11125 I Finsky:background: [2] RF: onProgress request_id=55 isid=iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:42.045 11125 11125 I Finsky:background: [2] RF: resourceStatus for request_id=55 group=com.google.android.tts artifact=config.x86_64 collectedBytes= 26208854 / 52294566
+09-14 15:09:42.045 11125 11125 I Finsky:background: [2] RF: Group=com.google.android.tts totalBytesDownloaded= 45313880 / 71687284 for 2 artifacts
+09-14 15:09:42.046 11125 11125 I Finsky:background: [2] Updated time lastBroadcast=2026-09-14T09:39:38.572Z current=2026-09-14T09:39:42.046Z
+09-14 15:09:42.050 11125 11125 I Finsky:background: [2] bytesCompleted/bytesTotal/ratio = 45313880 / 71687284 / 0.632105
+09-14 15:09:42.098 11125 11205 I Finsky:background: [53] IV2: onTaskProgress com.google.android.tts[iid:8] [isid:iQRx5eo8TKqoAUIDitthMQ] status:RESOURCE_FETCH_PROGRESS, size: 45313880/71687284
+09-14 15:09:42.180 11125 11230 I Finsky:background: [58] IQ: Notifying installation update. [Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING, status=DOWNLOADING, status_code=0, reason=auto_update, tsc=PT49M11.157S, attempt=0
+09-14 15:09:42.226 11598 11620 I ContactLocale: AddressBook Labels [[en_US]]: […, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, Α, Β, Γ, Δ, Ε, Ζ, Η, Θ, Ι, Κ, Λ, Μ, Ν, Ξ, Ο, Π, Ρ, Σ, Τ, Υ, Φ, Χ, Ψ, Ω, …, А, Б, В, Г, Д, Ђ, Е, Є, Ж, З, И, І, Й, Ј, К, Л, Љ, М, Н, Њ, О, П, Р, С, Т, Ћ, У, Ф, Х, Ц, Ч, Џ, Ш, Щ, Ю, Я, …, א, ב, ג, ד, ה, ו, ז, ח, ט, י, כ, ל, מ, נ, ס, ע, פ, צ, ק, ר, ש, ת, …, ا, ب, ت, ث, ج, ح, خ, د, ذ, ر, ز, س, ش, ص, ض, ط, ظ, ع, غ, ف, ق, ك, ل, م, ن, ه, و, ي, …, ก, ข, ฃ, ค, ฅ, ฆ, ง, จ, ฉ, ช, ซ, ฌ, ญ, ฎ, ฏ, ฐ, ฑ, ฒ, ณ, ด, ต, ถ, ท, ธ, น, บ, ป, ผ, ฝ, พ, ฟ, ภ, ม, ย, ร, ฤ, ล, ฦ, ว, ศ, ษ, ส, ห, ฬ, อ, ฮ, …, ㄱ, ㄴ, ㄷ, ㄹ, ㅁ, ㅂ, ㅅ, ㅇ, ㅈ, ㅊ, ㅋ, ㅌ, ㅍ, ㅎ, …, あ, か, さ, た, な, は, ま, や, ら, わ, #, …]
+09-14 15:09:42.334 10949 10962 W ogle.android.as: Suspending all threads took: 32.086ms
+09-14 15:09:42.408 11125 11125 I Finsky:background: [2] PIM: Ignore install package event for: com.google.android.tts, isid: iQRx5eo8TKqoAUIDitthMQ
+09-14 15:09:42.442 10170 10170 I NearbySharing: SharingTileService destroyed
+09-14 15:09:42.463 11598 11608 W libbinder.Binder: Binder transaction to android.content.IContentProvider, function: UNKNOWN_FUNCTION_NAME, code: 1, took 1461ms. Data bytes: 692 Reply bytes: 220 Flags: 18
+09-14 15:09:42.468   529   529 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-t' '400''
+09-14 15:09:42.553 10948 10948 I Finsky  : [2] IQ::HLD: if pauseAppUpdates is called now, it must wait for these ongoing installs: [[Package:com.google.android.tts, isid:iQRx5eo8TKqoAUIDitthMQ] state:DOWNLOADING]
+09-14 15:09:42.578 11472 11566 I native  : I0000 00:00:1789378782.578504   11566 android_resource_loader.cc:100] Built resource disambiguation_rules
+09-14 15:09:42.578 11472 11566 I native  : I0000 00:00:1789378782.578608   11566 android_resource_loader.cc:116] Loaded resource:disambiguation_rules
+09-14 15:09:42.578 11472 11566 I native  : I0000 00:00:1789378782.578648   11566 data_source.cc:95] Opening data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/engine_config_en_us_x_embedded_havoc.pb" (as: FILE) ...
+09-14 15:09:42.578 11472 11566 I native  : I0000 00:00:1789378782.578735   11566 data_source.cc:99] ... Opened data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/engine_config_en_us_x_embedded_havoc.pb" of size 54
+09-14 15:09:42.580 11472 11566 I native  : I0000 00:00:1789378782.580403   11566 android_resource_loader.cc:100] Built resource engine_config
+09-14 15:09:42.580 11472 11566 I native  : I0000 00:00:1789378782.580462   11566 android_resource_loader.cc:116] Loaded resource:engine_config
+09-14 15:09:42.580 11472 11566 I native  : I0000 00:00:1789378782.580511   11566 android_resource_loader.cc:100] Built resource guided_synthesis
+09-14 15:09:42.580 11472 11566 I native  : I0000 00:00:1789378782.580529   11566 android_resource_loader.cc:116] Loaded resource:guided_synthesis
+09-14 15:09:42.580 11472 11566 I native  : I0000 00:00:1789378782.580560   11566 data_source.cc:95] Opening data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/mapping_grammar_en.far" (as: FILE) ...
+09-14 15:09:42.580 11472 11566 I native  : I0000 00:00:1789378782.580609   11566 data_source.cc:99] ... Opened data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/mapping_grammar_en.far" of size 863
+09-14 15:09:42.585 11472 11566 I native  : I0000 00:00:1789378782.584350   11566 android_resource_loader.cc:100] Built resource homograph_mapping_grammar
+09-14 15:09:42.585 11472 11566 I native  : I0000 00:00:1789378782.585250   11566 android_resource_loader.cc:116] Loaded resource:homograph_mapping_grammar
+09-14 15:09:42.585 11472 11566 I native  : I0000 00:00:1789378782.585378   11566 data_source.cc:95] Opening data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/lettuce_model.fb" (as: MEMORY) ...
+09-14 15:09:42.585 11472 11566 I native  : I0000 00:00:1789378782.585560   11566 data_source.cc:99] ... Opened data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/lettuce_model.fb" of size 2100680
+09-14 15:09:42.609 11472 11566 I native  : I0000 00:00:1789378782.609326   11566 android_resource_loader.cc:100] Built resource lettuce_model_resource
+09-14 15:09:42.609 11472 11566 I native  : I0000 00:00:1789378782.609457   11566 android_resource_loader.cc:116] Loaded resource:lettuce_model_resource
+09-14 15:09:42.609 11472 11566 I native  : I0000 00:00:1789378782.609516   11566 android_resource_loader.cc:100] Built resource lettuce_model_scorer
+09-14 15:09:42.609 11472 11566 I native  : I0000 00:00:1789378782.609825   11566 android_resource_loader.cc:116] Loaded resource:lettuce_model_scorer
+09-14 15:09:42.609 11472 11566 I native  : I0000 00:00:1789378782.609895   11566 data_source.cc:95] Opening data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/lettuce_classify_embedded_us_generated_android.far" (as: FILE) ...
+09-14 15:09:42.610 11472 11566 I native  : I0000 00:00:1789378782.610010   11566 data_source.cc:99] ... Opened data source "/data/user_de/0/com.google.android.tts/files/superpacks/en-us/en-us-x-multi-seanet-r83/../en-us-x-multi-r83/lettuce_classify_embedded_us_generated_android.far" of size 4439801
+09-14 15:09:42.728   698   735 I ActivityManager: Test idle passed
+09-14 15:09:42.738 11598 11620 D ContactsDatabaseHelper: WAL enabled for profile.db: false
+09-14 15:09:42.842 11545 11545 I DeviceModeNotification: DeviceModeNotification.getCurrentDeviceMode():75 device mode is unknown before initializing the notification.
+09-14 15:09:42.845 11545 11545 I DeviceModeNotification: DeviceModeNotification.getCurrentDeviceMode():75 device mode is unknown before initializing the notification.
+09-14 15:09:42.899 11545 11545 I ModuleManager: ModuleManager.initModules():280 mak is forbidden to run on current process
+09-14 15:09:42.952 11545 11545 I DeviceModeNotification: DeviceModeNotification.getCurrentDeviceMode():75 device mode is unknown before initializing the notification.
+09-14 15:09:42.989 11545 11545 I CustomStickerGenerationExtensionProvider: CustomStickerGenerationExtensionProvider.getModuleDef():19 

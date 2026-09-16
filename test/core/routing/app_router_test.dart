@@ -17,13 +17,16 @@ import 'package:synctasks/features/tasks/providers/task_controller.dart';
 import 'package:synctasks/shared/sheets/app_bottom_sheet.dart';
 
 void main() {
-  test('safe back dispatcher ignores empty go_router match stack errors', () async {
-    final dispatcher = SafeBackButtonDispatcher();
-    Future<bool> cb() => Future<bool>.error(StateError('No element'));
-    dispatcher.addCallback(cb);
-    expect(await dispatcher.didPopRoute(), isFalse);
-    dispatcher.removeCallback(cb);
-  });
+  test(
+    'safe back dispatcher ignores empty go_router match stack errors',
+    () async {
+      final dispatcher = SafeBackButtonDispatcher();
+      Future<bool> cb() => Future<bool>.error(StateError('No element'));
+      dispatcher.addCallback(cb);
+      expect(await dispatcher.didPopRoute(), isFalse);
+      dispatcher.removeCallback(cb);
+    },
+  );
 
   test('safe back dispatcher rethrows unrelated state errors', () async {
     final dispatcher = SafeBackButtonDispatcher();
@@ -46,11 +49,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: buildRouterApp(router),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     expect(find.byKey(const Key('app-splash-logo')), findsOneWidget);
     expect(find.bySemanticsLabel('Today'), findsNothing);
@@ -71,11 +70,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: buildRouterApp(router),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('synctasks://today');
     await tester.pumpAndSettle();
@@ -91,11 +86,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: buildRouterApp(router),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('synctasks://today');
     await tester.pumpAndSettle();
@@ -114,11 +105,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: buildRouterApp(router),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/quick-add');
     await tester.pumpAndSettle();
@@ -137,11 +124,10 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        overrides: [settingsRepositoryProvider.overrideWithValue(repository)],
-        child: buildRouterApp(router),
-      ),
+    await pumpRouterApp(
+      tester,
+      router,
+      overrides: [settingsRepositoryProvider.overrideWithValue(repository)],
     );
 
     await tester.pump(const Duration(milliseconds: 700));
@@ -156,11 +142,7 @@ void main() {
   ) async {
     final router = appRouter();
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: buildRouterApp(router),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/lists/settings');
     await tester.pumpAndSettle();
@@ -180,11 +162,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: buildRouterApp(router),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/today');
     await tester.pumpAndSettle();
@@ -211,11 +189,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: buildRouterApp(router),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/today');
     await tester.pumpAndSettle();
@@ -234,11 +208,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: buildRouterApp(router),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/today');
     await tester.pumpAndSettle();
@@ -299,11 +269,7 @@ void main() {
       final router = appRouter();
       addTearDown(router.dispose);
 
-      await tester.pumpWidget(
-        ProviderScope(
-          child: buildRouterApp(router),
-        ),
-      );
+      await pumpRouterApp(tester, router);
 
       router.go('/today');
       await tester.pumpAndSettle();
@@ -658,14 +624,7 @@ void main() {
     final notionRouter = appRouter();
     addTearDown(notionRouter.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: MaterialApp.router(
-          theme: buildSyncTasksTheme(Brightness.light),
-          routerConfig: notionRouter,
-        ),
-      ),
-    );
+    await pumpRouterConfigApp(tester, notionRouter);
 
     notionRouter.go('/lists');
     await tester.pumpAndSettle();
@@ -790,11 +749,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: buildRouterApp(router),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/lists');
     await tester.pumpAndSettle();
@@ -817,11 +772,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: buildRouterApp(router),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/lists');
     await tester.pumpAndSettle();
@@ -843,11 +794,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: buildRouterApp(router),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/today');
     await tester.pumpAndSettle();
@@ -872,11 +819,7 @@ void main() {
     final router = appRouter();
     addTearDown(router.dispose);
 
-    await tester.pumpWidget(
-      ProviderScope(
-        child: buildRouterApp(router),
-      ),
-    );
+    await pumpRouterApp(tester, router);
 
     router.go('/lists/settings');
     await tester.pumpAndSettle();
@@ -928,8 +871,52 @@ bool _routeHasActiveSlide(WidgetTester tester) {
   return transitions.any((transition) => transition.position.value.dx != 0);
 }
 
+Future<void> pumpRouterApp(
+  WidgetTester tester,
+  GoRouter router, {
+  List overrides = const [],
+}) async {
+  final db = AppDatabase.memory();
+  addTearDown(db.close);
 
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [
+        appDatabaseProvider.overrideWithValue(db),
+        notificationServiceProvider.overrideWithValue(
+          RecordingNotificationScheduler(),
+        ),
+        ...overrides,
+      ],
+      child: buildRouterApp(router),
+    ),
+  );
+}
 
+Future<void> pumpRouterConfigApp(
+  WidgetTester tester,
+  GoRouter router, {
+  List overrides = const [],
+}) async {
+  final db = AppDatabase.memory();
+  addTearDown(db.close);
+
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [
+        appDatabaseProvider.overrideWithValue(db),
+        notificationServiceProvider.overrideWithValue(
+          RecordingNotificationScheduler(),
+        ),
+        ...overrides,
+      ],
+      child: MaterialApp.router(
+        theme: buildSyncTasksTheme(Brightness.light),
+        routerConfig: router,
+      ),
+    ),
+  );
+}
 
 Widget buildRouterApp(GoRouter router) {
   return MaterialApp.router(

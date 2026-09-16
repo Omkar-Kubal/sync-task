@@ -120,7 +120,8 @@ class SettingsScreen extends ConsumerWidget {
                   dividerIndent: 84,
                   children: [
                     _SettingsRow(
-                      icon: SyncIcons.receipt,
+                      icon: SyncIcons.premium,
+                      iconColor: SyncIcons.premiumSilver(context),
                       title: 'SyncTasks Pro',
                       value: 'Unlimited receipts',
                       onTap: () => _showProSheet(context),
@@ -574,6 +575,7 @@ class _SettingsRow extends StatelessWidget {
     this.icon,
     this.iconWidget,
     this.iconTileKey,
+    this.iconColor,
     this.value,
     this.onTap,
     this.trailingIcon = SyncIcons.chevron,
@@ -583,6 +585,7 @@ class _SettingsRow extends StatelessWidget {
   final IconData? icon;
   final Widget? iconWidget;
   final Key? iconTileKey;
+  final Color? iconColor;
   final String? value;
   final VoidCallback? onTap;
   final IconData trailingIcon;
@@ -601,7 +604,12 @@ class _SettingsRow extends StatelessWidget {
               },
         minVerticalPadding: 6,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        leading: _IconTile(key: iconTileKey, icon: icon, child: iconWidget),
+        leading: _IconTile(
+          key: iconTileKey,
+          icon: icon,
+          iconColor: iconColor,
+          child: iconWidget,
+        ),
         title: Text(
           title,
           maxLines: 1,
@@ -1000,9 +1008,10 @@ class _SheetOption extends StatelessWidget {
 }
 
 class _IconTile extends StatelessWidget {
-  const _IconTile({this.icon, this.child, super.key});
+  const _IconTile({this.icon, this.iconColor, this.child, super.key});
 
   final IconData? icon;
+  final Color? iconColor;
   final Widget? child;
 
   @override
@@ -1016,7 +1025,8 @@ class _IconTile extends StatelessWidget {
         color: colors.surfaceSecondary,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: child ?? Icon(icon, color: colors.textPrimary, size: 20),
+      child:
+          child ?? Icon(icon, color: iconColor ?? colors.textPrimary, size: 20),
     );
   }
 }

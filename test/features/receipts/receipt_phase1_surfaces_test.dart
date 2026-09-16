@@ -14,6 +14,7 @@ import 'package:synctasks/features/receipts/pro/receipt_pro_entitlement.dart';
 import 'package:synctasks/features/tasks/data/task_repository.dart';
 import 'package:synctasks/features/tasks/domain/task.dart' as domain;
 import 'package:synctasks/features/tasks/providers/task_controller.dart';
+import 'package:synctasks/shared/icons/sync_icons.dart';
 
 import 'fake_receipt_pro_billing_service.dart';
 
@@ -188,6 +189,34 @@ void main() {
           )
           .enabled,
       isFalse,
+    );
+  });
+
+  testWidgets('receipt history create preselects completed tasks', (
+    tester,
+  ) async {
+    final taskId = await TaskRepository(
+      db,
+    ).createTask(const domain.TaskDraft(title: 'History-ready win'));
+    await TaskRepository(db).completeTask(taskId);
+    await pumpApp(tester);
+
+    router.go('/receipts');
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(FilledButton, 'Create receipt'));
+    await tester.pumpAndSettle();
+
+    expect(router.routeInformationProvider.value.uri.path, '/receipts/new');
+    expect(find.text('1 task selected'), findsOneWidget);
+    expect(find.text('History-ready win'), findsOneWidget);
+    expect(
+      tester
+          .widget<FilledButton>(
+            find.widgetWithText(FilledButton, 'Generate receipt'),
+          )
+          .enabled,
+      isTrue,
     );
   });
 
@@ -366,10 +395,56 @@ void main() {
       find.byKey(const ValueKey('receipt-pro-brand-title')),
       findsOneWidget,
     );
+    final logoImage = find.descendant(
+      of: find.byKey(const ValueKey('receipt-pro-logo-mark')),
+      matching: find.byType(Image),
+    );
+    expect(logoImage, findsOneWidget);
+    expect(
+      (tester.widget<Image>(logoImage).image as AssetImage).assetName,
+      'assets/images/logo-whitebackground.png',
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('receipt-pro-logo-mark')),
+        matching: find.byIcon(SyncIcons.premium),
+      ),
+      findsNothing,
+    );
     expect(find.byKey(const ValueKey('receipt-pro-badge')), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('receipt-pro-badge')),
+        matching: find.byIcon(SyncIcons.premium),
+      ),
+      findsOneWidget,
+    );
+    final badgePremiumIcon = find.descendant(
+      of: find.byKey(const ValueKey('receipt-pro-badge')),
+      matching: find.byIcon(SyncIcons.premium),
+    );
+    expect(
+      tester.widget<Icon>(badgePremiumIcon).color,
+      SyncIcons.premiumSilverOnFilled(tester.element(badgePremiumIcon)),
+    );
     expect(
       find.byKey(const ValueKey('receipt-pro-lifetime-option-card')),
       findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('receipt-pro-lifetime-option-card')),
+        matching: find.byIcon(SyncIcons.premium),
+      ),
+      findsOneWidget,
+    );
+    final lifetimePremiumIcon = find.descendant(
+      of: find.byKey(const ValueKey('receipt-pro-lifetime-option-card')),
+      matching: find.byIcon(SyncIcons.premium),
+    );
+    expect(
+      tester.widget<Icon>(lifetimePremiumIcon).color,
+      SyncIcons.premiumSilverOnFilled(tester.element(lifetimePremiumIcon)),
     );
     expect(find.text('Unlimited receipts'), findsWidgets);
     expect(
@@ -389,7 +464,7 @@ void main() {
     expect(find.text('Purchasing arrives in Phase 2.'), findsNothing);
   });
 
-  testWidgets('disabled receipt paywall CTA remains readable in dark theme', (
+  testWidgets('unavailable receipt paywall does not show a fallback price', (
     tester,
   ) async {
     final billingService = FakeReceiptProBillingService(available: false);
@@ -407,12 +482,19 @@ void main() {
     await tester.tap(find.widgetWithText(ListTile, 'SyncTasks Pro'));
     await tester.pumpAndSettle();
 
-    final textStyle = tester.widget<Text>(find.text('Unlock for ₹199')).style;
+    expect(find.text('Unlock for ₹199'), findsNothing);
+    expect(find.text('₹199'), findsNothing);
+    expect(find.text('Price unavailable'), findsWidgets);
+    final textStyle = tester
+        .widget<Text>(find.text('Price unavailable').last)
+        .style;
     expect(textStyle?.color, isNotNull);
     expect(textStyle!.color!.computeLuminance(), greaterThan(0.45));
   });
 
-  testWidgets('receipt paywall uses compact SyncTasks sizing', (tester) async {
+  testWidgets('receipt paywall uses shared SyncTasks component scale', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(1080, 2400);
     tester.view.devicePixelRatio = 2.625;
     addTearDown(tester.view.resetPhysicalSize);
@@ -428,23 +510,31 @@ void main() {
     await tester.tap(find.widgetWithText(ListTile, 'SyncTasks Pro'));
     await tester.pumpAndSettle();
 
-    expect(
-      tester
-          .getSize(find.byKey(const ValueKey('receipt-pro-paywall-sheet')))
-          .height,
-      lessThanOrEqualTo(520),
-    );
     final screenHeight =
         tester.view.physicalSize.height / tester.view.devicePixelRatio;
     expect(
       tester
+          .getSize(find.byKey(const ValueKey('receipt-pro-paywall-sheet')))
+          .height,
+      lessThanOrEqualTo(screenHeight * 0.85),
+    );
+    expect(
+      tester
           .getTopLeft(find.byKey(const ValueKey('receipt-pro-paywall-sheet')))
           .dy,
-      greaterThanOrEqualTo(screenHeight * 0.43),
+      greaterThanOrEqualTo(screenHeight * 0.15),
+    );
+    final closeButton = find.byWidgetPredicate(
+      (widget) => widget is IconButton && widget.tooltip == 'Close',
+    );
+    expect(tester.getSize(closeButton), const Size(46, 46));
+    expect(
+      tester.widget<IconButton>(closeButton).style?.side?.resolve({}),
+      BorderSide.none,
     );
     expect(
       tester.getSize(find.byKey(const ValueKey('receipt-pro-logo-mark'))),
-      const Size(38, 38),
+      const Size(40, 40),
     );
     expect(
       tester
@@ -452,12 +542,24 @@ void main() {
             find.byKey(const ValueKey('receipt-pro-lifetime-option-card')),
           )
           .height,
-      lessThanOrEqualTo(54),
+      56,
     );
+    final featureTitle = tester.widget<Text>(
+      find.text('3 free receipts weekly'),
+    );
+    expect(featureTitle.style?.fontSize, 15);
+    expect(featureTitle.style?.fontWeight, FontWeight.w500);
+    final featureBody = tester.widget<Text>(
+      find.text(
+        'Pro unlocks unlimited receipt generation whenever you need it.',
+      ),
+    );
+    expect(featureBody.style?.fontSize, 13);
+    expect(featureBody.style?.fontWeight, FontWeight.w500);
     final unlockButtonSize = tester.getSize(
       find.widgetWithText(FilledButton, 'Unlock for ₹199'),
     );
-    expect(unlockButtonSize.height, 34);
+    expect(unlockButtonSize.height, 56);
     expect(unlockButtonSize.width, greaterThanOrEqualTo(320));
     expect(
       tester

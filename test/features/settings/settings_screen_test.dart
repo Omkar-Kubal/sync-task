@@ -9,6 +9,7 @@ import 'package:synctasks/features/settings/providers/settings_controller.dart';
 import 'package:synctasks/features/settings/screens/settings_screen.dart';
 import 'package:synctasks/features/tasks/data/folder_repository.dart';
 import 'package:synctasks/features/tasks/providers/task_controller.dart';
+import 'package:synctasks/shared/icons/sync_icons.dart';
 import 'package:synctasks/shared/widgets/sync_grouped_section.dart';
 
 void main() {
@@ -40,6 +41,21 @@ void main() {
       expect(find.text('Version 1.0.0+1'), findsOneWidget);
       expect(find.text('Privacy Policy'), findsOneWidget);
       expect(find.text('Local Storage'), findsNothing);
+      expect(
+        find.descendant(
+          of: find.widgetWithText(ListTile, 'SyncTasks Pro'),
+          matching: find.byIcon(SyncIcons.premium),
+        ),
+        findsOneWidget,
+      );
+      final premiumIcon = find.descendant(
+        of: find.widgetWithText(ListTile, 'SyncTasks Pro'),
+        matching: find.byIcon(SyncIcons.premium),
+      );
+      expect(
+        tester.widget<Icon>(premiumIcon).color,
+        SyncIcons.premiumSilver(tester.element(premiumIcon)),
+      );
     },
   );
 

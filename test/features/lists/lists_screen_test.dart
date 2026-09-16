@@ -24,12 +24,7 @@ void main() {
     tester,
   ) async {
     await useTallViewport(tester);
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: buildSyncTasksTheme(Brightness.light),
-        home: const ProviderScope(child: ListsScreen()),
-      ),
-    );
+    await _pumpListsScreen(tester);
 
     for (final text in [
       'All',
@@ -59,12 +54,7 @@ void main() {
 
   testWidgets('lists screen uses mockup card grouping', (tester) async {
     await useTallViewport(tester);
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: buildSyncTasksTheme(Brightness.light),
-        home: const ProviderScope(child: ListsScreen()),
-      ),
-    );
+    await _pumpListsScreen(tester);
 
     expect(find.byKey(const Key('lists-primary-section')), findsOneWidget);
     expect(find.byKey(const Key('lists-inbox-section')), findsOneWidget);
@@ -74,12 +64,7 @@ void main() {
 
   testWidgets('lists screen uses shared updated icons', (tester) async {
     await useTallViewport(tester);
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: buildSyncTasksTheme(Brightness.light),
-        home: const ProviderScope(child: ListsScreen()),
-      ),
-    );
+    await _pumpListsScreen(tester);
 
     expect(find.byType(ListFilterIcon), findsWidgets);
     final upcomingCalendar = tester.widget<HugeIcon>(
@@ -225,4 +210,17 @@ Future<void> _pumpRoutedApp(
   );
 }
 
+Future<void> _pumpListsScreen(WidgetTester tester) async {
+  final db = AppDatabase.memory();
+  addTearDown(db.close);
 
+  await tester.pumpWidget(
+    MaterialApp(
+      theme: buildSyncTasksTheme(Brightness.light),
+      home: ProviderScope(
+        overrides: [appDatabaseProvider.overrideWithValue(db)],
+        child: const ListsScreen(),
+      ),
+    ),
+  );
+}

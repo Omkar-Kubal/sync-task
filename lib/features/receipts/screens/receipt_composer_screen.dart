@@ -203,6 +203,16 @@ class _ReceiptComposerScreenState extends ConsumerState<ReceiptComposerScreen> {
           content: Text('Review the selected tasks before generating.'),
         ),
       );
+    } on ReceiptEmptySelectionException {
+      if (!mounted) {
+        return;
+      }
+      setState(() => _isGenerating = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Choose completed tasks before generating a receipt.'),
+        ),
+      );
     }
   }
 
@@ -346,6 +356,7 @@ class _ReceiptComposerBody extends ConsumerWidget {
           completedAt: tasks[i].completedAt ?? DateTime.now(),
         ),
     ];
+    final canGenerateReceipt = tasks.isNotEmpty;
     final previewHeight = (MediaQuery.sizeOf(context).height * 0.48)
         .clamp(320.0, 430.0)
         .toDouble();
@@ -459,7 +470,7 @@ class _ReceiptComposerBody extends ConsumerWidget {
                         showArtworkPlaceholder:
                             drawingStrokesJson == null && photoPath == null,
                         showReceiptMetadata: false,
-                        onAddArtwork: onPersonalise,
+                        onAddArtwork: canGenerateReceipt ? onPersonalise : null,
                       ),
                     );
                   },
@@ -468,7 +479,7 @@ class _ReceiptComposerBody extends ConsumerWidget {
               if (drawingStrokesJson != null || photoPath != null) ...[
                 const SizedBox(height: 10),
                 OutlinedButton.icon(
-                  onPressed: onPersonalise,
+                  onPressed: canGenerateReceipt ? onPersonalise : null,
                   icon: const Icon(Icons.edit_outlined),
                   label: Text(
                     photoPath == null ? 'Drawing added' : 'Photo added',
@@ -573,7 +584,10 @@ class _ReceiptQuotaProBanner extends StatelessWidget {
                   color: colors.surfaceSecondary,
                   borderRadius: BorderRadius.circular(14),
                 ),
-                child: Icon(SyncIcons.receipt, color: colors.textPrimary),
+                child: Icon(
+                  SyncIcons.premium,
+                  color: SyncIcons.premiumSilver(context),
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(

@@ -4,7 +4,7 @@ import 'package:synctasks/core/notifications/notification_service.dart';
 
 void main() {
   test(
-    'notification service initializes plugin and requests Android permission',
+    'notification service initializes plugin without requesting Android permission',
     () async {
       final plugin = FakeLocalNotificationsPlugin();
       final service = NotificationService(plugin: plugin);
@@ -12,7 +12,7 @@ void main() {
       await service.initialize();
 
       expect(plugin.initialized, isTrue);
-      expect(plugin.requestedNotificationPermission, isTrue);
+      expect(plugin.requestedNotificationPermission, isFalse);
     },
   );
 
@@ -44,6 +44,7 @@ void main() {
         plugin.scheduled.single.details.android?.channelName,
         'Task reminders',
       );
+      expect(plugin.requestedNotificationPermission, isTrue);
     },
   );
 
@@ -97,5 +98,3 @@ class FakeLocalNotificationsPlugin implements LocalNotificationsPlugin {
     cancelled.add(id);
   }
 }
-
-

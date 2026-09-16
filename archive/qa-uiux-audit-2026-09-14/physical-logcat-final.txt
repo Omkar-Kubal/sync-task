@@ -1,0 +1,774 @@
+--------- beginning of main
+09-14 14:31:44.273 10227 10291 I MMKV    : <MemoryFile.cpp:203::mmap> mmap to address [0x7bc14d7000], oldPtr [0x0], [/data/user_de/0/com.heytap.mcs/files/mmkv/oplus_config_com.heytap.mcs]
+09-14 14:31:44.273 10227 10291 I MMKV    : <MemoryFile.cpp:98::open> open fd[0x5f], /data/user_de/0/com.heytap.mcs/files/mmkv/oplus_config_com.heytap.mcs.crc
+09-14 14:31:44.273 10227 10291 I MMKV    : <MemoryFile.cpp:203::mmap> mmap to address [0x7bc14d6000], oldPtr [0x0], [/data/user_de/0/com.heytap.mcs/files/mmkv/oplus_config_com.heytap.mcs.crc]
+09-14 14:31:44.273 10227 10291 I MMKV    : <MMKV_IO.cpp:214::loadMetaInfoAndCheck> meta file [oplus_config_com.heytap.mcs] has flag [0]
+09-14 14:31:44.273 10227 10291 I MMKV    : <MMKV_IO.cpp:84::loadFromFile> loading [oplus_config_com.heytap.mcs] with 2111 actual size, file size 4096, InterProcess 1, meta info version:4
+09-14 14:31:44.273 10227 10291 I MMKV    : <MMKV_IO.cpp:89::loadFromFile> loading [oplus_config_com.heytap.mcs] with crc 3692979779 sequence 5146 version 4
+09-14 14:31:44.273 10227 10291 I MMKV    : <MMKV_IO.cpp:133::loadFromFile> loaded [oplus_config_com.heytap.mcs] with 14 key-values
+--------- beginning of system
+09-14 14:31:44.275 10241 10293 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.startService:1844 android.content.ContextWrapper.startService:786 com.heytap.mcs.g0.h.b:16 com.heytap.mcs.g0.h.a:6 com.heytap.mcs.j.f.b:6 
+09-14 14:31:44.277 10221 10286 D nativeloader: Load /data/app/~~8scBIkywY4n2Gk3tI-8gfQ==/com.heytap.mcs-rhfO1C0mkInw3Hj7qw_jxw==/base.apk!/lib/arm64-v8a/libmmkv.so using class loader ns clns-5 (caller=/data/app/~~8scBIkywY4n2Gk3tI-8gfQ==/com.heytap.mcs-rhfO1C0mkInw3Hj7qw_jxw==/base.apk!classes3.dex): ok
+09-14 14:31:44.277 10221 10286 I MMKV    : current API level = 31, libc++_shared=0
+09-14 14:31:44.277 10221 10286 I MMKV    : <MMKV.cpp:166::initialize> version v1.3.14, page size 4096, arch arm64-v8a
+09-14 14:31:44.277 10221 10286 I MMKV    : <MMKV.cpp:177::initialize> armv8 AES instructions is supported
+09-14 14:31:44.277 10221 10286 I MMKV    : <MMKV.cpp:185::initialize> armv8 CRC32 instructions is supported
+09-14 14:31:44.277 10221 10286 I MMKV    : <MMKV.cpp:225::initializeMMKV> root dir: /data/user_de/0/com.heytap.mcs/files/mmkv
+09-14 14:31:44.277 10221 10286 I MMKV    : <MemoryFile.cpp:98::open> open fd[0x55], /data/user_de/0/com.heytap.mcs/files/mmkv/mmkv_com.heytap.mcs.config
+09-14 14:31:44.277 10221 10286 I MMKV    : <MemoryFile.cpp:203::mmap> mmap to address [0x7bc14d7000], oldPtr [0x0], [/data/user_de/0/com.heytap.mcs/files/mmkv/mmkv_com.heytap.mcs.config]
+09-14 14:31:44.277 10221 10286 I MMKV    : <MemoryFile.cpp:98::open> open fd[0x56], /data/user_de/0/com.heytap.mcs/files/mmkv/mmkv_com.heytap.mcs.config.crc
+09-14 14:31:44.277 10221 10286 I MMKV    : <MemoryFile.cpp:203::mmap> mmap to address [0x7bc17e8000], oldPtr [0x0], [/data/user_de/0/com.heytap.mcs/files/mmkv/mmkv_com.heytap.mcs.config.crc]
+09-14 14:31:44.277 10221 10286 I MMKV    : <MMKV_IO.cpp:214::loadMetaInfoAndCheck> meta file [mmkv_com.heytap.mcs.config] has flag [0]
+09-14 14:31:44.277 10221 10286 I MMKV    : <MMKV_IO.cpp:84::loadFromFile> loading [mmkv_com.heytap.mcs.config] with 16213 actual size, file size 16384, InterProcess 1, meta info version:4
+09-14 14:31:44.277 10221 10286 I MMKV    : <MMKV_IO.cpp:89::loadFromFile> loading [mmkv_com.heytap.mcs.config] with crc 1395280664 sequence 785 version 4
+09-14 14:31:44.278 10221 10286 I MMKV    : <MMKV_IO.cpp:133::loadFromFile> loaded [mmkv_com.heytap.mcs.config] with 83 key-values
+09-14 14:31:44.281 10241 10293 I Process : Sending signal. PID: 10241 SIG: 9
+09-14 14:31:44.294 10221 10295 D NearX.CloudConfig: cloudInit sdk version : unspecified app name : com.heytap.mcs
+09-14 14:31:44.295 10221 10292 D NearX.CloudConfig: cloudInit sdk version : unspecified app name : com.heytap.mcs
+09-14 14:31:44.297 10221 10295 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.297 10221 10292 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.299 10221 10292 I MSP-LOG-SDK-MSP-LOG-SDK-: isDebug=false ,IS_SYSOPEN=false
+09-14 14:31:44.301 10221 10292 E MSP-LOG-SDK-ColorOSVersionUtils: oplus ver:24
+09-14 14:31:44.301 10221 10295 E MSP-LOG-SDK-ColorOSVersionUtils: oplus ver:24
+09-14 14:31:44.301  1916  2477 V ActivityManager: Death received in com.android.server.am.ActivityManagerService$AppDeathRecipient@6c24c12 for thread android.os.BinderProxy@bd40fe3
+09-14 14:31:44.302  1916  2477 I ActivityManager: Process com.heytap.mcs.biz.message (pid 10241) has died: fg  SVC 
+09-14 14:31:44.302   955   955 I Zygote  : Process 10241 exited due to signal 9 (Killed)
+09-14 14:31:44.302  1916  2477 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:1177 com.android.server.am.OplusExtraActivityManagerService.setKeyLockModeNormal:51 com.android.server.am.ActivityManagerServiceExtImpl.setKeyLockModeNormal:881 com.android.server.am.ActivityManagerService.appDiedLocked:3440 com.android.server.am.ActivityManagerService$AppDeathRecipient.binderDied:1534 
+09-14 14:31:44.303  1015  1093 D RilUtility: notify_rild_crash_pid_set certPid:-1, crash:10241, scn:0x0
+09-14 14:31:44.303  4493 10757 V DeepThinker: ProcessManager: onProcessDied pid:10241, uid:1000
+09-14 14:31:44.304  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:31:44.307  1916  3778 W ActivityManager: Receiver with filter android.content.IntentFilter@57abf10 already registered for pid 10221, callerPackage is com.heytap.mcs
+09-14 14:31:44.311  1916  3778 V ActivityManager: Death received in com.android.server.am.ActivityManagerService$AppDeathRecipient@eba58e1 for thread android.os.BinderProxy@b729606
+09-14 14:31:44.312  4493 10757 V DeepThinker: ProcessManager: onProcessDied pid:9574, uid:10135
+09-14 14:31:44.312   955   955 I Zygote  : Process 9574 exited due to signal 9 (Killed)
+09-14 14:31:44.313 10221 10295 D CloudConfig_stgyHelper: 设置本地限频
+09-14 14:31:44.313 10221 10292 D CloudConfig_stgyHelper: 设置本地限频
+09-14 14:31:44.314  1015  1093 D RilUtility: notify_rild_crash_pid_set certPid:-1, crash:9574, scn:0x0
+09-14 14:31:44.314  1916  2125 D ConnectivityService: releasing NetworkRequest [ REQUEST id=36520, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10135 RequestorUid: 10135 RequestorPkg: com.android.vending UnderlyingNetworks: Null] ] (release request)
+09-14 14:31:44.314  1916  2125 D ConnectivityService: releasing NetworkRequest [ REQUEST id=36518, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10135 RequestorUid: 10135 RequestorPkg: com.android.vending UnderlyingNetworks: Null] ] (release request)
+09-14 14:31:44.314  1916  1952 I libprocessgroup: Successfully killed process cgroup uid 1000 pid 10241 in 0ms
+09-14 14:31:44.315 10221 10307 I MSP-LOG-SDK-MspSdk: Sdk init start
+09-14 14:31:44.315 10227 10304 I MMKV    : <MemoryFile.cpp:98::open> open fd[0x64], /data/user_de/0/com.heytap.mcs/files/mmkv/mmkv_com.heytap.mcs.config
+09-14 14:31:44.315 10227 10304 I MMKV    : <MemoryFile.cpp:203::mmap> mmap to address [0x7bc14be000], oldPtr [0x0], [/data/user_de/0/com.heytap.mcs/files/mmkv/mmkv_com.heytap.mcs.config]
+09-14 14:31:44.315 10227 10304 I MMKV    : <MemoryFile.cpp:98::open> open fd[0x65], /data/user_de/0/com.heytap.mcs/files/mmkv/mmkv_com.heytap.mcs.config.crc
+09-14 14:31:44.315 10227 10304 I MMKV    : <MemoryFile.cpp:203::mmap> mmap to address [0x7bc144c000], oldPtr [0x0], [/data/user_de/0/com.heytap.mcs/files/mmkv/mmkv_com.heytap.mcs.config.crc]
+09-14 14:31:44.315 10227 10304 I MMKV    : <MMKV_IO.cpp:214::loadMetaInfoAndCheck> meta file [mmkv_com.heytap.mcs.config] has flag [0]
+09-14 14:31:44.316 10227 10304 I MMKV    : <MMKV_IO.cpp:84::loadFromFile> loading [mmkv_com.heytap.mcs.config] with 16213 actual size, file size 16384, InterProcess 1, meta info version:4
+09-14 14:31:44.316 10227 10304 I MMKV    : <MMKV_IO.cpp:89::loadFromFile> loading [mmkv_com.heytap.mcs.config] with crc 1395280664 sequence 785 version 4
+09-14 14:31:44.316 10227 10304 I MMKV    : <MMKV_IO.cpp:133::loadFromFile> loaded [mmkv_com.heytap.mcs.config] with 83 key-values
+09-14 14:31:44.316 10221 10307 I MSP-LOG-SDK-MspSdk: Sdk init finish, version:2.0.1.14
+09-14 14:31:44.316 10221 10308 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789371069236], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=21600, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?50351?@?1?@?com.heytap.mcs.statistics, has already call 1 times in 21600 seconds before
+09-14 14:31:44.322 10221 10307 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789361577455], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=21600, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?global-domain_1281?@?1?@?com.heytap.mcs.statistics, has already call 1 times in 21600 seconds before
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: 	at $Proxy7.getDynamicCondition(Unknown Source)
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.getDynamicCondition$lambda$0(SourceFile:3)
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.b(SourceFile:0)
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.b.run(SourceFile:8)
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.322 10221 10308 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: 	at $Proxy7.getDynamicCondition(Unknown Source)
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.getDynamicCondition$lambda$0(SourceFile:3)
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.b(SourceFile:0)
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.b.run(SourceFile:8)
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.323 10221 10307 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.338 10221 10261 I MMKV    : <MemoryFile.cpp:98::open> open fd[0x61], /data/user_de/0/com.heytap.mcs/files/mmkv/mmkv_com.heytap.mcs.static.backup
+09-14 14:31:44.338 10221 10261 I MMKV    : <MemoryFile.cpp:203::mmap> mmap to address [0x7bc15b9000], oldPtr [0x0], [/data/user_de/0/com.heytap.mcs/files/mmkv/mmkv_com.heytap.mcs.static.backup]
+09-14 14:31:44.338 10221 10261 I MMKV    : <MemoryFile.cpp:98::open> open fd[0x62], /data/user_de/0/com.heytap.mcs/files/mmkv/mmkv_com.heytap.mcs.static.backup.crc
+09-14 14:31:44.338 10221 10261 I MMKV    : <MemoryFile.cpp:203::mmap> mmap to address [0x7bc15b8000], oldPtr [0x0], [/data/user_de/0/com.heytap.mcs/files/mmkv/mmkv_com.heytap.mcs.static.backup.crc]
+09-14 14:31:44.339 10221 10261 I MMKV    : <MMKV_IO.cpp:214::loadMetaInfoAndCheck> meta file [mmkv_com.heytap.mcs.static.backup] has flag [0]
+09-14 14:31:44.339 10221 10261 I MMKV    : <MMKV_IO.cpp:84::loadFromFile> loading [mmkv_com.heytap.mcs.static.backup] with 244 actual size, file size 4096, InterProcess 1, meta info version:4
+09-14 14:31:44.339 10221 10261 I MMKV    : <MMKV_IO.cpp:89::loadFromFile> loading [mmkv_com.heytap.mcs.static.backup] with crc 2835835766 sequence 167 version 4
+09-14 14:31:44.339 10221 10261 I MMKV    : <MMKV_IO.cpp:133::loadFromFile> loaded [mmkv_com.heytap.mcs.static.backup] with 0 key-values
+09-14 14:31:44.341 10221 10295 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.342 10221 10292 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.343 10221 10295 D CloudConfig_stgyHelper: getSupportKitMode strategyEntity : StrategyEntity(sdkInterval=1800000, strategyMode=1, minSDKVersion=1000, minKitVersion=2014122, validReqPeriod=7200000, maxReqProduct=100, forceKitIfKit=false, backoff=120000, enable=true, defaultLimit=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, productLimits={global-domain_1281=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, 50351=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20123=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20158=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, Push-Overseas=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20142=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}})
+09-14 14:31:44.343 10221 10295 D CloudConfig_stgyHelper: getSupportKitMode localSdkVersion : 1224
+09-14 14:31:44.343 10221 10292 D CloudConfig_stgyHelper: getSupportKitMode strategyEntity : StrategyEntity(sdkInterval=1800000, strategyMode=1, minSDKVersion=1000, minKitVersion=2014122, validReqPeriod=7200000, maxReqProduct=100, forceKitIfKit=false, backoff=120000, enable=true, defaultLimit=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, productLimits={global-domain_1281=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, 50351=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20123=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20158=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, Push-Overseas=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20142=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}})
+09-14 14:31:44.344 10221 10292 D CloudConfig_stgyHelper: getSupportKitMode localSdkVersion : 1224
+09-14 14:31:44.360 10221 10295 D NearX.CloudConfig: cloudInit sdk version : unspecified app name : com.heytap.mcs
+09-14 14:31:44.362 10221 10295 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.363  1916  2475 W ActivityManager: Receiver with filter android.content.IntentFilter@244140e already registered for pid 10221, callerPackage is com.heytap.mcs
+09-14 14:31:44.363 10221 10295 D CloudConfig_stgyHelper: 设置本地限频
+09-14 14:31:44.364 10221 10335 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789359311875], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=21600, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?compass_20123?@?1?@?com.heytap.mcs.statistics, has already call 1 times in 21600 seconds before
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: 	at $Proxy7.getDynamicCondition(Unknown Source)
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.getDynamicCondition$lambda$0(SourceFile:3)
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.b(SourceFile:0)
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.b.run(SourceFile:8)
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.364 10221 10335 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.370   630   630 D TlcTeeKeyMaster: TEE_Begin 4.0
+09-14 14:31:44.370   630   630 D TlcTeeKeyMaster: purpose = 0x00000001
+09-14 14:31:44.372   630   630 D TlcTeeKeyMaster: find_spare_operation_slot: allocate op 0x6458e15b63f98342 to slot #0 (1 ops live)
+09-14 14:31:44.373   630   630 D TlcTeeKeyMaster: TEE_Begin exiting with 0
+09-14 14:31:44.374   630   630 D TlcTeeKeyMaster: TEE_Update
+09-14 14:31:44.374   630   630 D TlcTeeKeyMaster: split_update_chunks
+09-14 14:31:44.376   630   630 D TlcTeeKeyMaster: TEE_Update exiting with 0
+09-14 14:31:44.377 10221 10295 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.378 10221 10295 D CloudConfig_stgyHelper: getSupportKitMode strategyEntity : StrategyEntity(sdkInterval=1800000, strategyMode=1, minSDKVersion=1000, minKitVersion=2014122, validReqPeriod=7200000, maxReqProduct=100, forceKitIfKit=false, backoff=120000, enable=true, defaultLimit=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, productLimits={global-domain_1281=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, 50351=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20123=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20158=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, Push-Overseas=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20142=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}})
+09-14 14:31:44.378 10221 10295 D CloudConfig_stgyHelper: getSupportKitMode localSdkVersion : 1224
+09-14 14:31:44.384   630   630 D TlcTeeKeyMaster: TEE_Finish
+09-14 14:31:44.384   630   630 D TlcTeeKeyMaster: split_update_chunks
+09-14 14:31:44.385   630   630 D TlcTeeKeyMaster: release_operation_slot: release op slot #0 (handle 0x6458e15b63f98342; 0 ops live)
+09-14 14:31:44.385   630   630 D TlcTeeKeyMaster: TEE_Finish exiting with 0
+09-14 14:31:44.393  1055  1055 D vendor.oplus.hardware.mtkmodemaci@1.0-service: open /proc/ccci_lp_mem successful! size:0
+09-14 14:31:44.393  1055  1055 E vendor.oplus.hardware.mtkmodemaci@1.0-service: read mtkmodemaci failed!
+09-14 14:31:44.394  2675  2675 D MtkModemAciHidlUtils: getMtkModemAciStats null
+09-14 14:31:44.394  2675  2675 E ModemAciService: CatchException getIcdIntFromStringArray():java.lang.NumberFormatException: s == null
+09-14 14:31:44.395  2675  2675 E ModemAciService: CatchException getIcdIntFromStringArray():java.lang.NumberFormatException: s == null
+09-14 14:31:44.395  2675  2675 I ModemAciService: UMF LO: OplusModemActivityInfo{ date=09-14 14:31:44.392 sleepTimeMs=0 idleTimeMs=0 rxTimeMs=0 5gRxTimeMs=0 mtkTxTimeMs[]=[0, 0, 0, 0, 0, 0, 0, 0] mtk5gTxTimeMs[]=[0, 0, 0, 0, 0, 0, 0, 0] rrcConn10sC[]=[0, 0] rrcConn20sC[]=[0, 0] rrcConnMore20sC[]=[0, 0] rrcConnC[]=[0, 0] csChangedC[]=[0, 0] psChangedC[]=[0, 0] iRatC[]=[0, 0] cellUpdateC[]=[0, 0] nwSrchC[]=[0, 0] nwSrchT[]=[0, 0] lteRrcConnT[]=[0, 0] psRegT[]=[0, 0] csRegT[]=[0, 0] psNoRegT[]=[333, 333] csNoRegT[]=[333, 333] sigGrid0T[]=[0, 0] endcActT[]=[0, 0] saRrcConn10sC[]=[0, 0] saRrcConn20sC[]=[0, 0] saRrcConnMore20sC[]=[0, 0] saRrcConnC[]=[0, 0] saRrcConnT[]=[0, 0]}
+09-14 14:31:44.395  2675  2675 I ModemAciService: UMF CH: OplusModemActivityInfo{ date=09-14 14:31:44.392 sleepTimeMs=0 idleTimeMs=0 rxTimeMs=0 5gRxTimeMs=0 mtkTxTimeMs[]=[0, 0, 0, 0, 0, 0, 0, 0] mtk5gTxTimeMs[]=[0, 0, 0, 0, 0, 0, 0, 0] rrcConn10sC[]=[0, 0] rrcConn20sC[]=[0, 0] rrcConnMore20sC[]=[0, 0] rrcConnC[]=[0, 0] csChangedC[]=[0, 0] psChangedC[]=[0, 0] iRatC[]=[0, 0] cellUpdateC[]=[0, 0] nwSrchC[]=[0, 0] nwSrchT[]=[0, 0] lteRrcConnT[]=[0, 0] psRegT[]=[0, 0] csRegT[]=[0, 0] psNoRegT[]=[333, 333] csNoRegT[]=[333, 333] sigGrid0T[]=[0, 0] endcActT[]=[0, 0] saRrcConn10sC[]=[0, 0] saRrcConn20sC[]=[0, 0] saRrcConnMore20sC[]=[0, 0] saRrcConnC[]=[0, 0] saRrcConnT[]=[0, 0]}
+09-14 14:31:44.395  2675  2675 I ModemAciService: UMF LS: OplusModemActivityInfo{ date=09-14 14:31:44.392 sleepTimeMs=0 idleTimeMs=0 rxTimeMs=0 5gRxTimeMs=0 mtkTxTimeMs[]=[0, 0, 0, 0, 0, 0, 0, 0] mtk5gTxTimeMs[]=[0, 0, 0, 0, 0, 0, 0, 0] rrcConn10sC[]=[0, 0] rrcConn20sC[]=[0, 0] rrcConnMore20sC[]=[0, 0] rrcConnC[]=[0, 0] csChangedC[]=[0, 0] psChangedC[]=[0, 0] iRatC[]=[0, 0] cellUpdateC[]=[0, 0] nwSrchC[]=[0, 0] nwSrchT[]=[0, 0] lteRrcConnT[]=[0, 0] psRegT[]=[0, 0] csRegT[]=[0, 0] psNoRegT[]=[333, 333] csNoRegT[]=[333, 333] sigGrid0T[]=[0, 0] endcActT[]=[0, 0] saRrcConn10sC[]=[0, 0] saRrcConn20sC[]=[0, 0] saRrcConnMore20sC[]=[0, 0] saRrcConnC[]=[0, 0] saRrcConnT[]=[0, 0]}
+09-14 14:31:44.396  2675  2675 E PowerMitigationService: onPowerKpiChanged():SettleObj{ what=LO date=09-14 14:31:44.395 duration=333 screenOnRatio=0 screenOffRatio=0 power=0 current=0 networkType=null dataNetworkType=0 signalStrength=0 aodState=0 softAp=false charge=false simCount=0 defaultPhone=0 apssSleepC=0 apssSleepRatio=0 mpssSleepC=0 mpssSleepRatio=0 vminSleepC=0 vminSleepRatio=0 modemPowermA[]=[0,0,0] sleepRatio=0 idleRatio=100.00 rxRatio=0 5gRxRatio=0 txSumRatio=0 5gTxSumRatio=0 mtkTxRatio[]=[0,0,0,0,0,0,0,0] mtk5gTxRatio[]=[0,0,0,0,0,0,0,0] rrcConn10sC[]=[0, 0] rrcConn20sC[]=[0, 0] rrcConnMore20sC[]=[0, 0] rrcConnC[]=[0, 0] csChangedC[]=[0, 0] psChangedC[]=[0, 0] iRatC[]=[0, 0] cellUpdateC[]=[0, 0] nwSrchC[]=[0, 0] nwSrchRatio[]=[0,0] lteRrcConnRatio[]=[0,0] psRegRatio[]=[0,0] csRegRatio[]=[0,0] psNoRegRatio[]=[99.91,99.91] csNoRegRatio[]=[99.91,99.91] sigGrid0Ratio[]=[0,0] endcActRatio[]=[0,0] allWakeupC={} appInWakeupC={} appOutWakeupC={} appWakeupRatio={} appTrafficC={} saRrcConn10sC[]=[0, 0] saRrcConn20sC[]=[0, 0] saRrcConnMore20sC[]=[0, 0] saRrcConnC[]=[0, 0] saRrcConnRatio[]=[0,0]}
+09-14 14:31:44.396  2675  2675 D PowerMitigationService: checkAbnormalState SALTEPINGPONG isAbnormalState=[0, 0] isRestrainState=[0, 0] SAACTIVEHIGH isAbnormalState=[0, 0] isRestrainState=[0, 0] NOSIMLOWSLEEPRATIO isAbnormalState=[0] isRestrainState=[0] FREQUENTMODEMDATA isAbnormalState=[0, 0] isRestrainState=[0, 0] 5GRXACTIVEHIGH isAbnormalState=[0, 0] isRestrainState=[0, 0] 
+09-14 14:31:44.398  2675  2675 D PowerMitigationService: SceneObj actionString={ sceneType=SALTEPINGPONG sceneEnable=true actionPhoneNum=2 isAbnormalState=[0, 0] isRestrainState=[0, 0] deviceState=0 networkState=0 operatorState=[0, 0] countState=[0, 0] [currCount, Max]=[[0, 0],10] powerSceneSate=[0, 0] powerActionID=[17, 17] powerLastActionID=[0, 0] powerDelayActionID=[0, 0]}
+09-14 14:31:44.399  2675  2675 D PowerMitigationService: SceneObj actionString={ sceneType=SAACTIVEHIGH sceneEnable=true actionPhoneNum=2 isAbnormalState=[0, 0] isRestrainState=[0, 0] deviceState=0 networkState=0 operatorState=[0, 0] countState=[0, 0] [currCount, Max]=[[0, 0],10] powerSceneSate=[0, 0] powerActionID=[17, 17] powerLastActionID=[0, 0] powerDelayActionID=[0, 0]}
+09-14 14:31:44.399  2675  2675 D PowerMitigationService: SceneObj actionString={ sceneType=NOSIMLOWSLEEPRATIO sceneEnable=false actionPhoneNum=1 isAbnormalState=[0] isRestrainState=[0] deviceState=0 networkState=0 operatorState=[0] countState=[0] [currCount, Max]=[[0],10] powerSceneSate=[0] powerActionID=[0] powerLastActionID=[0] powerDelayActionID=[0]}
+09-14 14:31:44.399 10221 10325 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.399 10221 10324 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.400 10221 10312 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.400  2675  2675 D PowerMitigationService: SceneObj actionString={ sceneType=FREQUENTMODEMDATA sceneEnable=true actionPhoneNum=2 isAbnormalState=[0, 0] isRestrainState=[0, 0] deviceState=0 networkState=0 operatorState=[0, 0] countState=[0, 0] [currCount, Max]=[[0, 0],3] powerSceneSate=[0, 0] powerActionID=[0, 0] powerLastActionID=[0, 0] powerDelayActionID=[0, 0]}
+09-14 14:31:44.400  2675  2675 D PowerMitigationService: SceneObj actionString={ sceneType=5GRXACTIVEHIGH sceneEnable=false actionPhoneNum=2 isAbnormalState=[0, 0] isRestrainState=[0, 0] deviceState=0 networkState=0 operatorState=[0, 0] countState=[0, 0] [currCount, Max]=[[0, 0],3] powerSceneSate=[0, 0] powerActionID=[6, 6] powerLastActionID=[0, 0] powerDelayActionID=[0, 0]}
+09-14 14:31:44.400  2675  2675 D PowerMitigationService: handleMessage: { when=-5ms what=10 target=com.oplus.nhs.pwr.a.b$2 }
+09-14 14:31:44.401 10221 10325 D CloudConfig_stgyHelper: getSupportKitMode strategyEntity : StrategyEntity(sdkInterval=1800000, strategyMode=1, minSDKVersion=1000, minKitVersion=2014122, validReqPeriod=7200000, maxReqProduct=100, forceKitIfKit=false, backoff=120000, enable=true, defaultLimit=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, productLimits={global-domain_1281=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, 50351=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20123=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20158=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, Push-Overseas=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20142=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}})
+09-14 14:31:44.401 10221 10324 D CloudConfig_stgyHelper: getSupportKitMode strategyEntity : StrategyEntity(sdkInterval=1800000, strategyMode=1, minSDKVersion=1000, minKitVersion=2014122, validReqPeriod=7200000, maxReqProduct=100, forceKitIfKit=false, backoff=120000, enable=true, defaultLimit=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, productLimits={global-domain_1281=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, 50351=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20123=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20158=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, Push-Overseas=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20142=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}})
+09-14 14:31:44.401 10221 10324 D CloudConfig_stgyHelper: getSupportKitMode localSdkVersion : 1224
+09-14 14:31:44.401 10221 10325 D CloudConfig_stgyHelper: getSupportKitMode localSdkVersion : 1224
+09-14 14:31:44.401 10221 10312 D CloudConfig_stgyHelper: getSupportKitMode strategyEntity : StrategyEntity(sdkInterval=1800000, strategyMode=1, minSDKVersion=1000, minKitVersion=2014122, validReqPeriod=7200000, maxReqProduct=100, forceKitIfKit=false, backoff=120000, enable=true, defaultLimit=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, productLimits={global-domain_1281=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, 50351=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20123=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20158=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, Push-Overseas=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20142=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}})
+09-14 14:31:44.402 10221 10312 D CloudConfig_stgyHelper: getSupportKitMode localSdkVersion : 1224
+09-14 14:31:44.403 10221 10324 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.403 10221 10325 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.403 10221 10312 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.404 10221 10324 D CloudConfig_stgyHelper: getSupportKitMode strategyEntity : StrategyEntity(sdkInterval=1800000, strategyMode=1, minSDKVersion=1000, minKitVersion=2014122, validReqPeriod=7200000, maxReqProduct=100, forceKitIfKit=false, backoff=120000, enable=true, defaultLimit=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, productLimits={global-domain_1281=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, 50351=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20123=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20158=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, Push-Overseas=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20142=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}})
+09-14 14:31:44.404 10221 10325 D CloudConfig_stgyHelper: getSupportKitMode strategyEntity : StrategyEntity(sdkInterval=1800000, strategyMode=1, minSDKVersion=1000, minKitVersion=2014122, validReqPeriod=7200000, maxReqProduct=100, forceKitIfKit=false, backoff=120000, enable=true, defaultLimit=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, productLimits={global-domain_1281=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, 50351=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20123=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20158=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, Push-Overseas=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20142=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}})
+09-14 14:31:44.404 10221 10312 D CloudConfig_stgyHelper: getSupportKitMode strategyEntity : StrategyEntity(sdkInterval=1800000, strategyMode=1, minSDKVersion=1000, minKitVersion=2014122, validReqPeriod=7200000, maxReqProduct=100, forceKitIfKit=false, backoff=120000, enable=true, defaultLimit=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, productLimits={global-domain_1281=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, 50351=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20123=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20158=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, Push-Overseas=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, compass_20142=RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}})
+09-14 14:31:44.404 10221 10312 D CloudConfig_stgyHelper: getSupportKitMode localSdkVersion : 1224
+09-14 14:31:44.404 10221 10325 D CloudConfig_stgyHelper: getSupportKitMode localSdkVersion : 1224
+09-14 14:31:44.404 10221 10324 D CloudConfig_stgyHelper: getSupportKitMode localSdkVersion : 1224
+09-14 14:31:44.407 10221 10308 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.407 10221 10341 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789370519602], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?global-domain_1281?@?2?@?com.heytap.mcs.statistics, has already call 1 times in 7200 seconds before
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789372229405], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?50351?@?2?@?com.heytap.mcs.statistics, has already call 1 times in 7200 seconds before
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: 	at $Proxy7.getConfigData(Unknown Source)
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.getConfigData$lambda$1(SourceFile:3)
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.d(SourceFile:0)
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.d.run(SourceFile:8)
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.408 10221 10308 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: 	at $Proxy7.getConfigData(Unknown Source)
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.getConfigData$lambda$1(SourceFile:3)
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.d(SourceFile:0)
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.d.run(SourceFile:8)
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.408 10221 10341 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.408 10221 10307 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.409 10221 10342 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789371069236], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=21600, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?50351?@?1?@?com.heytap.mcs.statistics, has already call 1 times in 21600 seconds before
+09-14 14:31:44.409 10221 10341 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: 	at $Proxy7.getDynamicCondition(Unknown Source)
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.getDynamicCondition$lambda$0(SourceFile:3)
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.b(SourceFile:0)
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.b.run(SourceFile:8)
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.409 10221 10307 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.409 10221 10307 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789361577455], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=21600, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?global-domain_1281?@?1?@?com.heytap.mcs.statistics, has already call 1 times in 21600 seconds before
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789359311875], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=21600, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?compass_20123?@?1?@?com.heytap.mcs.statistics, has already call 1 times in 21600 seconds before
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: 	at $Proxy7.getDynamicCondition(Unknown Source)
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.getDynamicCondition$lambda$0(SourceFile:3)
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.b(SourceFile:0)
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.b.run(SourceFile:8)
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.410 10221 10307 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: 	at $Proxy7.getDynamicCondition(Unknown Source)
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.getDynamicCondition$lambda$0(SourceFile:3)
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.b(SourceFile:0)
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.b.run(SourceFile:8)
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.410 10221 10341 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789373939690], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?compass_20123?@?2?@?com.heytap.mcs.statistics, has already call 1 times in 7200 seconds before
+09-14 14:31:44.411 10221 10312 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.411 10221 10325 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: 	at $Proxy7.getConfigData(Unknown Source)
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.getConfigData$lambda$1(SourceFile:3)
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.d(SourceFile:0)
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.d.run(SourceFile:8)
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.411 10221 10342 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.411 10221 10324 D CloudConfig_stgyHelper: mspVersionCanSupport mspKitVersion : 52612
+09-14 14:31:44.412 10221 10307 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.412 10221 10341 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.413 10221 10335 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789359311875], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=21600, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?compass_20123?@?1?@?com.heytap.mcs.statistics, has already call 1 times in 21600 seconds before
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: 	at $Proxy7.getDynamicCondition(Unknown Source)
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.getDynamicCondition$lambda$0(SourceFile:3)
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.b(SourceFile:0)
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.b.run(SourceFile:8)
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.413 10221 10341 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.413 10221 10335 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789373084489], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?50351?@?4?@?com.heytap.mcs.statistics, has already call 1 times in 7200 seconds before
+09-14 14:31:44.414 10221 10308 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: 	at $Proxy7.checkUpdateConfig(Unknown Source)
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.checkUpdateConfig$lambda$3(SourceFile:3)
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.c(SourceFile:0)
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.c.run(SourceFile:8)
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.414 10221 10335 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.414 10221 10342 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789371069236], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=21600, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?50351?@?1?@?com.heytap.mcs.statistics, has already call 1 times in 21600 seconds before
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789371374578], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?global-domain_1281?@?4?@?com.heytap.mcs.statistics, has already call 1 times in 7200 seconds before
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: 	at $Proxy7.checkUpdateConfig(Unknown Source)
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.checkUpdateConfig$lambda$3(SourceFile:3)
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.c(SourceFile:0)
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.c.run(SourceFile:8)
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.414 10221 10342 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: 	at $Proxy7.getDynamicCondition(Unknown Source)
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.getDynamicCondition$lambda$0(SourceFile:3)
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.b(SourceFile:0)
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.b.run(SourceFile:8)
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.414 10221 10308 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.414 10221 10307 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789373084488], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=7200, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?compass_20123?@?4?@?com.heytap.mcs.statistics, has already call 1 times in 7200 seconds before
+09-14 14:31:44.415 10221 10341 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.14
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: 	at $Proxy7.checkUpdateConfig(Unknown Source)
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.checkUpdateConfig$lambda$3(SourceFile:3)
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.c(SourceFile:0)
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.c.run(SourceFile:8)
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.415 10221 10307 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.415 10221 10341 E MSP-LOG-SDK-RateLimitManager: not_allow_invoke because of time_window_not_allow queue = [1789361577455], config = RateLimitConfig{maxCalls=1, timeWindowSeconds=21600, callIntervalSeconds=0}, ipcInvokeTimeQueueMapKey = com.heytap.nearx.tangramconfig.kit.client.ICloudCtrlServiceModule?@?global-domain_1281?@?1?@?com.heytap.mcs.statistics, has already call 1 times in 21600 seconds before
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: MspSdkException{code=3014,message=com.heytap.mspsdk.ratelimit.MspRateLimitExceededException: ipc rate limit exceeded in time window}
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.ratelimit.d.a(SourceFile:5)
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.c.a(SourceFile:7)
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.proceed(SourceFile:5)
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.g.invoke(SourceFile:22)
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: 	at $Proxy7.getDynamicCondition(Unknown Source)
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.getDynamicCondition$lambda$0(SourceFile:3)
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.KitProxy.b(SourceFile:0)
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: 	at com.heytap.nearx.tangramconfig.kit.client.b.run(SourceFile:8)
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:31:44.416 10221 10341 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:31:44.421 10221 10302 D nativeloader: Load libconscrypt_jni.so using class loader ns clns-5 (caller=/data/app/~~8scBIkywY4n2Gk3tI-8gfQ==/com.heytap.mcs-rhfO1C0mkInw3Hj7qw_jxw==/base.apk!classes8.dex): dlopen failed: library "libconscrypt_jni.so" not found
+09-14 14:31:44.422 10221 10302 E .mcs.statistic: No implementation found for java.lang.String[] org.conscrypt.NativeCrypto.get_cipher_names(java.lang.String) (tried Java_org_conscrypt_NativeCrypto_get_1cipher_1names and Java_org_conscrypt_NativeCrypto_get_1cipher_1names__Ljava_lang_String_2) - is the library loaded, e.g. System.loadLibrary?
+09-14 14:31:45.016 10221 10302 W FeatureFlagsImplExport: java.lang.NoClassDefFoundError: Class not found using the boot class loader; no stack trace available
+09-14 14:31:46.064  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:31:46.611  1335 16494 D AALLightSensor: oldLux=236 [SA:231 LA:231] newLux=236 (oriLux: 231)
+09-14 14:31:46.981   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:31:47.836   998  1052 E VirtualSensors: pedo minute, step_count = 20130, report_count = 21695 move_statust = 0 ,time_gap = 0 , step_run_count = 129 , step_walk_count = 20001
+09-14 14:31:47.837   998  1052 E power   : ISystemSuspend::getService() failed.
+09-14 14:31:47.837   998  1052 E VirtualSensors: post_events : call
+09-14 14:31:47.839  1916  2025 D CompatibilityChangeReporter: Compat change id reported: 151105954; UID 1000; state: ENABLED
+09-14 14:31:47.844  1916  2025 E AppOps  : attributionTag  not declared in manifest of com.oplus.notificationmanager
+09-14 14:31:47.846  2877  2877 I StepApp_StepDataPreHandler: (main)onSensorChanged raw data: step=20130.0 state=0.0 minuteDelta=0.0 timestamp=1301721504695514 steprun=129.0 stepwalk=20001.0 formatted data: step=20130 state=0 timestamp=1301721504695514 time=1789376507835 steprun=129 stepwalk=20001
+09-14 14:31:47.849  1916  2025 E AppOps  : attributionTag  not declared in manifest of com.oplus.notificationmanager
+09-14 14:31:49.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:31:49.364 10221 10221 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.startService:1844 android.content.ContextWrapper.startService:786 com.heytap.mcs.biz.statistics.StaticProcessTrackStatusManager.exitCurrentProcess:11 com.heytap.mcs.biz.statistics.StaticProcessTrackStatusManager$1.handleMessage:3 android.os.Handler.dispatchMessage:102 
+09-14 14:31:49.373 10221 10221 I Process : Sending signal. PID: 10221 SIG: 9
+09-14 14:31:49.397  1015  1039 D power@timer: [mtkPowerTimer] visRead:0
+09-14 14:31:49.424  1916  2477 V ActivityManager: Death received in com.android.server.am.ActivityManagerService$AppDeathRecipient@3df7fba for thread android.os.BinderProxy@2f03e6b
+09-14 14:31:49.424  1916  2125 D ConnectivityService: releasing NetworkRequest [ REQUEST id=36532, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 1000 RequestorUid: 1000 RequestorPkg: com.heytap.mcs UnderlyingNetworks: Null] ] (release request)
+09-14 14:31:49.424  1916  2477 I ActivityManager: Process com.heytap.mcs.statistics (pid 10221) has died: fg  SVC 
+09-14 14:31:49.425   955   955 I Zygote  : Process 10221 exited due to signal 9 (Killed)
+09-14 14:31:49.425  1916  2477 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:1177 com.android.server.am.OplusExtraActivityManagerService.setKeyLockModeNormal:51 com.android.server.am.ActivityManagerServiceExtImpl.setKeyLockModeNormal:881 com.android.server.am.ActivityManagerService.appDiedLocked:3440 com.android.server.am.ActivityManagerService$AppDeathRecipient.binderDied:1534 
+09-14 14:31:49.425  1916  1952 I libprocessgroup: Successfully killed process cgroup uid 1000 pid 10221 in 0ms
+09-14 14:31:49.427 10227 10227 I ActivityThread: Removing dead content provider:android.content.ContentProviderProxy@265cd15
+09-14 14:31:49.427  4493 10757 V DeepThinker: ProcessManager: onProcessDied pid:10221, uid:1000
+09-14 14:31:49.427  1015  1093 D RilUtility: notify_rild_crash_pid_set certPid:-1, crash:10221, scn:0x0
+09-14 14:31:50.611  1335 16494 D AALLightSensor: oldLux=236 [SA:231 LA:231] newLux=236 (oriLux: 231)
+09-14 14:31:51.637  1106  1120 D ccci_mdinit: (1):monitor_time_update_thread round:38091 ########
+09-14 14:31:52.323 10227 10227 I Process : Sending signal. PID: 10227 SIG: 9
+09-14 14:31:52.363  1916  3286 V ActivityManager: Death received in com.android.server.am.ActivityManagerService$AppDeathRecipient@2f5dd86 for thread android.os.BinderProxy@7d25647
+09-14 14:31:52.364  1916  3286 I ActivityManager: Process com.heytap.mcs.appservice (pid 10227) has died: cch+5 CEM 
+09-14 14:31:52.364   955   955 I Zygote  : Process 10227 exited due to signal 9 (Killed)
+09-14 14:31:52.364  1916  1952 I libprocessgroup: Successfully killed process cgroup uid 1000 pid 10227 in 0ms
+09-14 14:31:52.364  1916  3286 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:1177 com.android.server.am.OplusExtraActivityManagerService.setKeyLockModeNormal:51 com.android.server.am.ActivityManagerServiceExtImpl.setKeyLockModeNormal:881 com.android.server.am.ActivityManagerService.appDiedLocked:3440 com.android.server.am.ActivityManagerService$AppDeathRecipient.binderDied:1534 
+09-14 14:31:52.366  4493 10757 V DeepThinker: ProcessManager: onProcessDied pid:10227, uid:1000
+09-14 14:31:52.367  1015  1093 D RilUtility: notify_rild_crash_pid_set certPid:-1, crash:10227, scn:0x0
+09-14 14:31:54.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:31:54.386   629 10336 I keystore2: keystore2::watchdog: Watchdog thread idle -> terminating. Have a great day.
+09-14 14:31:54.611  1335 16494 D AALLightSensor: oldLux=236 [SA:229 LA:229] newLux=236 (oriLux: 229)
+09-14 14:31:54.690  2645 31744 D IpClient/wlan0: interfaceLinkStateChanged: ifindex 33 up
+09-14 14:31:55.840  2380  2380 D SystemUi--: getDebugState, e = android.provider.Settings$SettingNotFoundException: systemui_internal_debug
+09-14 14:31:55.881  1096  1096 I OplusPerfParmCount: The num of client composition of Internal display in last 60382 ms is: 11
+09-14 14:31:55.882  1096  1096 I OplusPerfParmCount: The num of blur fliter in last 60382 ms is: 33
+09-14 14:31:55.883  1096  1096 I Quality : SFJankCountInfo: 24;0;0-0-0-0-0-0-0-0-0-0;1-0-0-0-0-0-0-0-0-0;2-0-0-0-0-0-0-0-0-0;3-0-0-0-0-0-0-0-0-0;4-0-0-0-0-0-0-0-0-0;5-0-0-0-0-0-0-0-0-0;6-0-0-0-0-0-0-0-0-0;7-0-0-0-0-0-0-0-0-0;8-0-0-0-0-0-0-0-0-0;9-0-0-0-0-0-0-0-0-0;
+09-14 14:31:55.883  1096  1096 I OplusPerfParmCount: The layer number in last 60382ms is: 4 layer, 36 time, 
+09-14 14:31:56.031  2777  3364 D AtCmdParser: parserAtcmdUrc can not find parser for +EBARRING
+09-14 14:31:56.040  2777  3591 D AtCmdParser: parserAtcmdUrc can not find parser for +EREG
+09-14 14:31:56.040  2777  3591 D AtCmdParser: parserAtcmdUrc can not find parser for +EGREG
+09-14 14:31:56.053   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:31:56.063  2756  2756 D OplusNecManager: broadcastServiceStateChanged slotId:0oos:true
+09-14 14:31:56.078  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:31:56.085  2756  2756 D ServiceStateProvider: subId=-1
+09-14 14:31:58.611  1335 16494 D AALLightSensor: oldLux=236 [SA:229 LA:229] newLux=236 (oriLux: 229)
+09-14 14:31:59.053   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:31:59.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:32:00.008  2380  2380 D SingleClockView: updateTime,  24hfmt=true, h=14, m=32
+09-14 14:32:00.016  1916  3782 E OplusCustomizeRestrictionManagerService: isBiometricDisabled start
+09-14 14:32:00.019  1916  2475 E OplusCustomizeRestrictionManagerService: isBiometricDisabled start
+09-14 14:32:00.233   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:02.077   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:02.811  1335 16494 D AALLightSensor: oldLux=236 [SA:229 LA:228] newLux=236 (oriLux: 230)
+09-14 14:32:04.072  1015  1093 I libPowerHal: perfUserScnCheckAll
+09-14 14:32:04.073  1015  1093 I libPowerHal: perfScnDumpAll cmd:0
+09-14 14:32:04.073  1015  1093 I libPowerHal: ========================
+09-14 14:32:04.073  1015  1093 I libPowerHal: system_server - freq:-1, -1, HL:-1, -1
+09-14 14:32:04.073  1015  1093 I libPowerHal: system_server - freq:-1, -1, HL:-1, 1733000
+09-14 14:32:04.073  1015  1093 I libPowerHal: system_server - gpu freq min:-1, max:-1, scn_action:1
+09-14 14:32:04.073  1015  1093 I libPowerHal: ========================
+09-14 14:32:04.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:32:06.098  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:32:06.811  1335 16494 D AALLightSensor: oldLux=236 [SA:228 LA:228] newLux=236 (oriLux: 228)
+09-14 14:32:09.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:32:10.785  1916  1941 D AES     : AEEIOCTL_GET/SET_SF_STATE IOCTL,cmd= 1074294797, lParam=0. 
+09-14 14:32:10.785  1916  1941 D AES     : AEEIOCTL_RT_MON_Kick IOCTL,cmd= 2147774474, lParam=300. 
+09-14 14:32:11.010  1335 16494 D AALLightSensor: oldLux=236 [SA:230 LA:228] newLux=236 (oriLux: 230)
+09-14 14:32:11.129   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:11.686   973  4353 D [BT]    : mtk_bt_op: BT_VND_OP_LPM_WAKE_SET_STATE
+09-14 14:32:11.689  9638 10322 I bt_hci  : system/bt/main/bte_logmsg.cc:205 LogMsg: command complete for: pc:0x7a8a913f94
+09-14 14:32:11.689  9638 10322 I bt_btm  : system/bt/main/bte_logmsg.cc:205 LogMsg: btm_gen_resolve_paddr_low private_addr:49:dc:d4:76:da:50, pre_addr:73:9a:5c:a8:76:59
+09-14 14:32:11.689  9638 10322 I bt_btm  : system/bt/main/bte_logmsg.cc:202 LogMsg: btm_ble_stop_auto_conn
+09-14 14:32:14.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:32:15.010  1335 16494 D AALLightSensor: oldLux=236 [SA:230 LA:228] newLux=236 (oriLux: 230)
+09-14 14:32:16.123  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:32:17.153   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:19.011  1335 16494 D AALLightSensor: oldLux=236 [SA:230 LA:228] newLux=236 (oriLux: 230)
+09-14 14:32:19.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:32:20.177   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:21.668  1106  1120 D ccci_mdinit: (1):monitor_time_update_thread round:38092 ########
+09-14 14:32:21.692   973 10300 D [BT]    : mtk_bt_op: BT_VND_OP_LPM_WAKE_SET_STATE
+09-14 14:32:23.011  1335 16494 D AALLightSensor: oldLux=236 [SA:230 LA:228] newLux=236 (oriLux: 230)
+09-14 14:32:24.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:32:26.142  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:32:27.211  1335 16494 D AALLightSensor: oldLux=236 [SA:228 LA:228] newLux=236 (oriLux: 228)
+09-14 14:32:29.225   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:29.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:32:31.411  1335 16494 D AALLightSensor: oldLux=236 [SA:228 LA:228] newLux=236 (oriLux: 228)
+09-14 14:32:33.013  1916  2116 D OplusNetKit: interface name from LP: [wlan0]
+09-14 14:32:33.014  1916  2116 D OplusNetKit: in getLpByInterface name from LP: [wlan0]
+09-14 14:32:33.014  1916  2116 D OplusNetKit: in getLpByInterface name from LP: [wlan0]
+09-14 14:32:33.014  1916  2116 D OplusNetKit: Route is ipv4 on wlan0 found, break
+09-14 14:32:33.068  2645 31744 D IpClient/wlan0: interfaceLinkStateChanged: ifindex 33 up
+09-14 14:32:33.230  2380  2380 D OplusPrivacyDotViewController: scheduleUpdate: 
+09-14 14:32:33.230  2380  3285 D OplusPrivacyDotViewController: processNextViewState: 
+09-14 14:32:33.231  2380  3285 D OplusPrivacyDotViewController: resolveState ViewState(systemPrivacyEventIsActive=false, shadeExpanded=false, qsExpanded=false, rtl=false, rotation=0, height=12, x=46, y=62, cornerIndex=1, designatedCorner=android.widget.FrameLayout{9412231 G.E...... ......ID 0,0-12,12 #7f0b03f4 app:id/icons_container}, contentDescription=null, chipAnimationStart=false, preDraw=false) shouldShowDot false
+09-14 14:32:33.231  2380  3285 D OplusPrivacyDotViewController: updatePosition:46:62
+09-14 14:32:33.231  2380  3285 D OplusPrivacyDotViewController: updatePosition:46:62
+09-14 14:32:33.421   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:34.062  1916  2116 E OplusArpPeer_euclid_psw: ARP read failure: android.system.ErrnoException: read failed: EAGAIN (Try again)
+09-14 14:32:34.066  1916  2116 E OplusArpPeer_euclid_psw:  OplusArpPeer close
+09-14 14:32:34.307  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:32:35.273   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:35.411  1335 16494 D AALLightSensor: oldLux=236 [SA:226 LA:226] newLux=236 (oriLux: 226)
+09-14 14:32:36.158  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:32:37.990  1916  3466 I OplusCpuLoadTrack: total: 2
+09-14 14:32:37.990  1916  3466 I OplusCpuLoadTrack: cpu0: 4
+09-14 14:32:37.990  1916  3466 I OplusCpuLoadTrack: cpu1: 4
+09-14 14:32:37.990  1916  3466 I OplusCpuLoadTrack: cpu2: 3
+09-14 14:32:37.990  1916  3466 I OplusCpuLoadTrack: cpu3: 2
+09-14 14:32:37.990  1916  3466 I OplusCpuLoadTrack: cpu4: 2
+09-14 14:32:37.990  1916  3466 I OplusCpuLoadTrack: cpu5: 1
+09-14 14:32:37.990  1916  3466 I OplusCpuLoadTrack: cpu6: 1
+09-14 14:32:37.990  1916  3466 I OplusCpuLoadTrack: cpu7: 1
+09-14 14:32:38.273   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:39.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:32:39.411  1335 16494 D AALLightSensor: oldLux=236 [SA:226 LA:226] newLux=236 (oriLux: 227)
+09-14 14:32:40.786  1916  1941 D AES     : AEEIOCTL_GET/SET_SF_STATE IOCTL,cmd= 1074294797, lParam=0. 
+09-14 14:32:40.786  1916  1941 D AES     : AEEIOCTL_RT_MON_Kick IOCTL,cmd= 2147774474, lParam=300. 
+09-14 14:32:41.297   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:43.411  1335 16494 D AALLightSensor: oldLux=236 [SA:229 LA:227] newLux=236 (oriLux: 229)
+09-14 14:32:44.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:32:46.177  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:32:47.321   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:47.611  1335 16494 D AALLightSensor: oldLux=236 [SA:229 LA:227] newLux=236 (oriLux: 229)
+09-14 14:32:47.836   998  1052 E VirtualSensors: pedo minute, step_count = 20130, report_count = 21696 move_statust = 0 ,time_gap = 0 , step_run_count = 129 , step_walk_count = 20001
+09-14 14:32:47.837   998  1052 E power   : ISystemSuspend::getService() failed.
+09-14 14:32:47.837   998  1052 E VirtualSensors: post_events : call
+09-14 14:32:47.843  1916  2025 E AppOps  : attributionTag  not declared in manifest of com.oplus.notificationmanager
+09-14 14:32:47.844  2877  2877 I StepApp_StepDataPreHandler: (main)onSensorChanged raw data: step=20130.0 state=0.0 minuteDelta=0.0 timestamp=1301781504695783 steprun=129.0 stepwalk=20001.0 formatted data: step=20130 state=0 timestamp=1301781504695783 time=1789376567835 steprun=129 stepwalk=20001
+09-14 14:32:47.848  1916  2025 E AppOps  : attributionTag  not declared in manifest of com.oplus.notificationmanager
+09-14 14:32:49.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:32:49.417  1015  1039 D power@timer: [mtkPowerTimer] visRead:0
+09-14 14:32:50.345   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:51.611  1335 16494 D AALLightSensor: oldLux=236 [SA:228 LA:227] newLux=236 (oriLux: 228)
+09-14 14:32:51.691  1106  1120 D ccci_mdinit: (1):monitor_time_update_thread round:38093 ########
+09-14 14:32:53.369   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:54.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:32:55.611  1335 16494 D AALLightSensor: oldLux=236 [SA:228 LA:227] newLux=236 (oriLux: 228)
+09-14 14:32:56.175  2380  2380 D SystemUi--: getDebugState, e = android.provider.Settings$SettingNotFoundException: systemui_internal_debug
+09-14 14:32:56.197  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:32:56.202  1096  1096 I OplusPerfParmCount: The num of client composition of Internal display in last 60318 ms is: 15
+09-14 14:32:56.202  1096  1096 I OplusPerfParmCount: The num of blur fliter in last 60318 ms is: 45
+09-14 14:32:56.203  1096  1096 I Quality : SFJankCountInfo: 31;0;0-0-0-0-0-0-0-0-0-0;1-0-0-0-0-0-0-0-0-0;2-0-0-0-0-0-0-0-0-0;3-0-0-0-0-0-0-0-0-0;4-0-0-0-0-0-0-0-0-0;5-0-0-0-0-0-0-0-0-0;6-0-0-0-0-0-0-0-0-0;7-0-0-0-0-0-0-0-0-0;8-0-0-0-0-0-0-0-0-0;9-0-0-0-0-0-0-0-0-0;
+09-14 14:32:56.203  1096  1096 I OplusPerfParmCount: The layer number in last 60318ms is: 4 layer, 48 time, 
+09-14 14:32:56.369   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:32:59.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:32:59.611  1335 16494 D AALLightSensor: oldLux=236 [SA:227 LA:227] newLux=236 (oriLux: 227)
+09-14 14:33:00.007  2380  2380 D SingleClockView: updateTime,  24hfmt=true, h=14, m=33
+09-14 14:33:00.018  1916  3778 E OplusCustomizeRestrictionManagerService: isBiometricDisabled start
+09-14 14:33:00.021  1916  3286 E OplusCustomizeRestrictionManagerService: isBiometricDisabled start
+09-14 14:33:00.229   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:00.669  1916  3832 D UsageStatsService: User[0] type=0 b=1789375112579 e=1789376580669 cb=1789372389363 ce=1789376504205 disk=0 all=1
+09-14 14:33:01.514  9582  9769 I PlayCommon: [97900] Preparing logs for uploading
+09-14 14:33:01.520  9582  9769 I PlayCommon: [97900] Connecting to server: https://play.googleapis.com/play/log?format=raw&proto_v2=true
+09-14 14:33:01.727  9582  9769 I PlayCommon: [97900] Successfully uploaded logs.
+09-14 14:33:02.417   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:03.611  1335 16494 D AALLightSensor: oldLux=236 [SA:227 LA:227] newLux=236 (oriLux: 227)
+09-14 14:33:03.709 30420 30434 W ap.mcs:msp_cor: Reducing the number of considered missed Gc histogram windows from 551 to 100
+09-14 14:33:04.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:33:04.306  9906  9994 I MMKV    : Disable checkProcessMode()
+09-14 14:33:04.307  9906  9994 I MMKV    : <MMKV.cpp:207::initializeMMKV> root dir: /data/user_de/0/com.oplus.statistics.rom/files/mmkv
+09-14 14:33:04.307  9906  9994 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.11
+09-14 14:33:04.307  9906  9994 I MSP-LOG-SDK-ApiProxy: interfaces length 1
+09-14 14:33:04.307  9906  9994 I MSP-LOG-SDK-ApiProxy: interfaces clazz name is e
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: MspSdkException{code=2007,message=com.heytap.mspsdk.exception.MspSdkException: target is not a interface class}
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.f.a(PackageReplaceIPCInterceptor.java:162)
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.b(StandardListChain.java:38)
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.b.a(CompatCheckInterceptor.java:34)
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.b(StandardListChain.java:38)
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.d.invoke(InnerInvocationHandler.java:191)
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: 	at $Proxy4.init(Unknown Source)
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: 	at xg.h$e.init(OneIdOsTokenKitSdk.java:3)
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: 	at xg.h.r(OneIdOsTokenKitSdk.java:10)
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: 	at xg.h.q(OneIdOsTokenKitSdk.java:66)
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: 	at com.oplus.statistics.rom.application.DcsModule$d.run(DcsModule.kt:11)
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: 	at java.util.TimerThread.mainLoop(Timer.java:596)
+09-14 14:33:04.313  9906  9994 E MSP-LOG-SDK-: 	at java.util.TimerThread.run(Timer.java:540)
+09-14 14:33:04.314  9906  9994 I AC_SDK_AcAccountManager: getClient,appI=37246566
+09-14 14:33:04.317  9906  9994 E OplusFeatureCache: invalid oplus feature oppo.specialversion.exp.sellmode
+09-14 14:33:04.349   630   630 D TlcTeeKeyMaster: TEE_Begin 4.0
+09-14 14:33:04.349   630   630 D TlcTeeKeyMaster: purpose = 0x00000001
+09-14 14:33:04.350   630   630 D TlcTeeKeyMaster: find_spare_operation_slot: allocate op 0x789ac42a3037ba1d to slot #0 (1 ops live)
+09-14 14:33:04.351   630   630 D TlcTeeKeyMaster: TEE_Begin exiting with 0
+09-14 14:33:04.352   630   630 D TlcTeeKeyMaster: TEE_Update
+09-14 14:33:04.352   630   630 D TlcTeeKeyMaster: split_update_chunks
+09-14 14:33:04.354  9906 10373 I AcDeviceInfoUtil: getDeviceRegionMark in 12.1:IN
+09-14 14:33:04.354   630   630 D TlcTeeKeyMaster: TEE_Update exiting with 0
+09-14 14:33:04.356   630   630 D TlcTeeKeyMaster: TEE_Finish
+09-14 14:33:04.356   630   630 D TlcTeeKeyMaster: split_update_chunks
+09-14 14:33:04.357   630   630 D TlcTeeKeyMaster: release_operation_slot: release op slot #0 (handle 0x789ac42a3037ba1d; 0 ops live)
+09-14 14:33:04.357   630   630 D TlcTeeKeyMaster: TEE_Finish exiting with 0
+09-14 14:33:04.361  9906  9994 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.11
+09-14 14:33:04.362  9906  9994 I MSP-LOG-SDK-ApiProxy: interfaces length 1
+09-14 14:33:04.362  9906  9994 I MSP-LOG-SDK-ApiProxy: interfaces clazz name is e
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: MspSdkException{code=2007,message=com.heytap.mspsdk.exception.MspSdkException: target is not a interface class}
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.f.a(PackageReplaceIPCInterceptor.java:162)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.b(StandardListChain.java:38)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.b.a(CompatCheckInterceptor.java:34)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.b(StandardListChain.java:38)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.d.invoke(InnerInvocationHandler.java:191)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: 	at $Proxy4.c(Unknown Source)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: 	at xg.h$e.c(OneIdOsTokenKitSdk.java:3)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: 	at xg.h.c(OneIdOsTokenKitSdk.java:22)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: 	at xg.h.l(OneIdOsTokenKitSdk.java:49)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: 	at com.oplus.statistics.rom.application.DcsModule$d.run(DcsModule.kt:14)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: 	at java.util.TimerThread.mainLoop(Timer.java:596)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-: 	at java.util.TimerThread.run(Timer.java:540)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: NewUpdateOneId exception
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: MspSdkException{code=2007,message=com.heytap.mspsdk.exception.MspSdkException: target is not a interface class}
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at com.heytap.mspsdk.proxy.f.a(PackageReplaceIPCInterceptor.java:162)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at com.heytap.mspsdk.interceptor.c.b(StandardListChain.java:38)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at com.heytap.mspsdk.proxy.b.a(CompatCheckInterceptor.java:34)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at com.heytap.mspsdk.interceptor.c.b(StandardListChain.java:38)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at com.heytap.mspsdk.proxy.d.invoke(InnerInvocationHandler.java:191)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at $Proxy4.c(Unknown Source)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at xg.h$e.c(OneIdOsTokenKitSdk.java:3)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at xg.h.c(OneIdOsTokenKitSdk.java:22)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at xg.h.l(OneIdOsTokenKitSdk.java:49)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at com.oplus.statistics.rom.application.DcsModule$d.run(DcsModule.kt:14)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at java.util.TimerThread.mainLoop(Timer.java:596)
+09-14 14:33:04.363  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at java.util.TimerThread.run(Timer.java:540)
+09-14 14:33:04.364  9906 10373 I AcIntercept.AcHeader: calculate  bytes.length:13, md5:991c8f9669abc5934156f2eecaa47eb9
+09-14 14:33:04.364  9906  9994 E MSP-LOG-SDK-OneIdOsTokenKitSdk: unbind success
+09-14 14:33:04.364  9906  9994 I AC_SDK_AcAccountManager: getClient,appI=37246566
+09-14 14:33:04.367  9906 10375 I MSP-LOG-SDK-MspSdk: Sdk has initialized! version:2.0.1.11
+09-14 14:33:04.367  9906 10375 I MSP-LOG-SDK-ApiProxy: interfaces length 1
+09-14 14:33:04.367  9906 10375 I MSP-LOG-SDK-ApiProxy: interfaces clazz name is e
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: MspSdkException{code=2007,message=com.heytap.mspsdk.exception.MspSdkException: target is not a interface class}
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.f.a(PackageReplaceIPCInterceptor.java:162)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.b(StandardListChain.java:38)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.b.a(CompatCheckInterceptor.java:34)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.interceptor.c.b(StandardListChain.java:38)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at com.heytap.mspsdk.proxy.d.invoke(InnerInvocationHandler.java:191)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at $Proxy4.c(Unknown Source)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at xg.h$e.c(OneIdOsTokenKitSdk.java:3)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at xg.h.c(OneIdOsTokenKitSdk.java:22)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at xg.h.s(OneIdOsTokenKitSdk.java:1)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at xg.h.a(OneIdOsTokenKitSdk.java:1)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at xg.f.run(R8$$SyntheticClass:3)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: NewUpdateOneId exception
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: MspSdkException{code=2007,message=com.heytap.mspsdk.exception.MspSdkException: target is not a interface class}
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at com.heytap.mspsdk.proxy.f.a(PackageReplaceIPCInterceptor.java:162)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at com.heytap.mspsdk.interceptor.c.b(StandardListChain.java:38)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at com.heytap.mspsdk.proxy.b.a(CompatCheckInterceptor.java:34)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at com.heytap.mspsdk.interceptor.c.b(StandardListChain.java:38)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at com.heytap.mspsdk.proxy.d.invoke(InnerInvocationHandler.java:191)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at java.lang.reflect.Proxy.invoke(Proxy.java:1009)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at $Proxy4.c(Unknown Source)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at xg.h$e.c(OneIdOsTokenKitSdk.java:3)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at xg.h.c(OneIdOsTokenKitSdk.java:22)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at xg.h.s(OneIdOsTokenKitSdk.java:1)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at xg.h.a(OneIdOsTokenKitSdk.java:1)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at xg.f.run(R8$$SyntheticClass:3)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: 	at java.lang.Thread.run(Thread.java:1572)
+09-14 14:33:04.369  9906 10375 E MSP-LOG-SDK-OneIdOsTokenKitSdk: unbind success
+09-14 14:33:04.525  9906 10373 D RealConnection:: Platform.get().getSelectedProtocol(sslSocket):http/1.1
+09-14 14:33:04.525  9906 10373 D RealConnection:: supportsTlsExtensions:true
+09-14 14:33:04.525  9906 10373 D RealConnection:: maybeProtocol:http/1.1
+09-14 14:33:04.525  9906 10373 D RealConnection:: protocol:http/1.1
+09-14 14:33:05.988  9967  9967 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.securitystate.provider.api.SecurityStateUpdateInfoRegistrationApiService.START dat=chimera-action: cmp=com.google.android.gms/.chimera.GmsApiService }
+09-14 14:33:06.217  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:33:06.371  2645 31744 D IpClient/wlan0: interfaceLinkStateChanged: ifindex 33 up
+09-14 14:33:07.611  1335 16494 D AALLightSensor: oldLux=236 [SA:227 LA:227] newLux=236 (oriLux: 227)
+09-14 14:33:08.441   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:09.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:33:10.787  1916  1941 D AES     : AEEIOCTL_GET/SET_SF_STATE IOCTL,cmd= 1074294797, lParam=0. 
+09-14 14:33:10.788  1916  1941 D AES     : AEEIOCTL_RT_MON_Kick IOCTL,cmd= 2147774474, lParam=300. 
+09-14 14:33:11.465   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:11.611  1335 16494 D AALLightSensor: oldLux=236 [SA:227 LA:227] newLux=236 (oriLux: 228)
+09-14 14:33:14.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:33:14.358   629 10374 I keystore2: keystore2::watchdog: Watchdog thread idle -> terminating. Have a great day.
+09-14 14:33:14.489   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:15.611  1335 16494 D AALLightSensor: oldLux=236 [SA:228 LA:227] newLux=236 (oriLux: 229)
+09-14 14:33:16.236  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:33:17.513   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:19.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:33:19.611  1335 16494 D AALLightSensor: oldLux=236 [SA:228 LA:227] newLux=236 (oriLux: 228)
+09-14 14:33:20.517   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:21.705  1106  1120 D ccci_mdinit: (1):monitor_time_update_thread round:38094 ########
+09-14 14:33:23.541   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:23.611  1335 16494 D AALLightSensor: oldLux=236 [SA:226 LA:226] newLux=236 (oriLux: 227)
+09-14 14:33:24.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:33:26.252  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:33:26.565   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:27.611  1335 16494 D AALLightSensor: oldLux=236 [SA:226 LA:226] newLux=236 (oriLux: 226)
+09-14 14:33:28.189  1916  2475 I OplusCustomizeService: pkg:com.android.systemui isPlatformSigned, return true drectly 
+09-14 14:33:28.191  1916  2475 I OplusCustomizeService: pkg:com.android.systemui isPlatformSigned, return true drectly 
+09-14 14:33:29.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:33:29.565   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:31.117  2645 31744 D IpClient/wlan0: interfaceLinkStateChanged: ifindex 33 up
+09-14 14:33:31.611  1335 16494 D AALLightSensor: oldLux=236 [SA:225 LA:225] newLux=236 (oriLux: 226)
+09-14 14:33:32.589   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:32.599  1096  1096 D OplusSurfaceFlinger: RESOLUTION > bounds(0,0,1080,2400), frame(0,0,1080,2400) FHD(1080, 2400), QHD(1080, 2400) mCurrentResolution=2 orientation = 0
+09-14 14:33:33.232  2380  2380 D OplusPrivacyDotViewController: scheduleUpdate: 
+09-14 14:33:33.232  2380  3285 D OplusPrivacyDotViewController: processNextViewState: 
+09-14 14:33:33.232  2380  3285 D OplusPrivacyDotViewController: resolveState ViewState(systemPrivacyEventIsActive=false, shadeExpanded=false, qsExpanded=false, rtl=false, rotation=0, height=12, x=45, y=62, cornerIndex=1, designatedCorner=android.widget.FrameLayout{9412231 G.E...... ......ID 0,0-12,12 #7f0b03f4 app:id/icons_container}, contentDescription=null, chipAnimationStart=false, preDraw=false) shouldShowDot false
+09-14 14:33:33.232  2380  3285 D OplusPrivacyDotViewController: updatePosition:45:62
+09-14 14:33:33.233  2380  3285 D OplusPrivacyDotViewController: updatePosition:45:62
+09-14 14:33:33.421   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:33.789  1916  2475 I OplusCustomizeService: pkg:com.android.systemui isPlatformSigned, return true drectly 
+09-14 14:33:33.791  1916  2475 I OplusCustomizeService: pkg:com.android.systemui isPlatformSigned, return true drectly 
+09-14 14:33:34.070  1916  2116 D OplusNetKit: interface name from LP: [wlan0]
+09-14 14:33:34.070  1916  2116 D OplusNetKit: in getLpByInterface name from LP: [wlan0]
+09-14 14:33:34.070  1916  2116 D OplusNetKit: in getLpByInterface name from LP: [wlan0]
+09-14 14:33:34.070  1916  2116 D OplusNetKit: Route is ipv4 on wlan0 found, break
+09-14 14:33:34.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:33:35.118  1916  2116 E OplusArpPeer_euclid_psw: ARP read failure: android.system.ErrnoException: read failed: EAGAIN (Try again)
+09-14 14:33:35.120  1916  2116 E OplusArpPeer_euclid_psw:  OplusArpPeer close
+09-14 14:33:35.613   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:35.811  1335 16494 D AALLightSensor: oldLux=236 [SA:224 LA:224] newLux=236 (oriLux: 224)
+09-14 14:33:36.271  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:33:37.324 25746 25932 I DRS_LOG_ThreadTimer[DRS-Scheduler-1]: NON_REALTIME triggered, next=15m, base=15m, config:15min(OBUS), policy=FixedInterval
+09-14 14:33:37.325 25746 25932 I DRS_LOG_UploadPipelineV2[DRS-Scheduler-1]: triggerNr() called, channelMode=STANDALONE, gate=UploadGateFacade{
+09-14 14:33:37.325 25746 25932 I DRS_LOG_UploadPipelineV2[DRS-Scheduler-1]:   BusinessRuleGate{mode=STANDALONE, enableNetRequest=true}
+09-14 14:33:37.325 25746 25932 I DRS_LOG_UploadPipelineV2[DRS-Scheduler-1]:   NetworkGate{networkReady=true, isWifi=true}
+09-14 14:33:37.325 25746 25932 I DRS_LOG_UploadPipelineV2[DRS-Scheduler-1]:   PerformanceGate{skipped(STANDALONE)}
+09-14 14:33:37.325 25746 25932 I DRS_LOG_UploadPipelineV2[DRS-Scheduler-1]:   EnvRecoveryDetector: EnvRecoveryDetector{standalone=true, state=IDLE, snapshot=EnvSnapshot{net=true, normalOk=true, rtOk=true}, lastNormalOk=true, lastRtOk=true}
+09-14 14:33:37.325 25746 25932 I DRS_LOG_UploadPipelineV2[DRS-Scheduler-1]:   envRecoveryListeners: 2
+09-14 14:33:37.325 25746 25932 I DRS_LOG_UploadPipelineV2[DRS-Scheduler-1]: }
+09-14 14:33:37.326 25746 25932 I DRS_LOG_GateStateManager[DRS-Scheduler-1]: resetCompensationBudget[NonRealtime]: budget=2
+09-14 14:33:37.326 25746 25932 I DRS_LOG_ChannelTaskRunner[DRS-Scheduler-1]: [NR] upload_trigger request=ChannelTaskRequest{channelType=NonRealtime, triggerReason=NR_PERIODIC, requestTimeMs=1789376617326, skipGateCheck=false, scheduledRun=false}
+09-14 14:33:37.327 25746 25932 I DRS_LOG_ThreadTimer[DRS-Scheduler-1]: NON_REALTIME thread scheduled, reason=loop, delay=15m
+09-14 14:33:37.327 25746 26633 I DRS_LOG_ChannelTaskRunner[DRS-Upload-Nr-1]: [NR] task_start submitMode=NEW_TASK request=ChannelTaskRequest{channelType=NonRealtime, triggerReason=NR_PERIODIC, requestTimeMs=1789376617326, skipGateCheck=false, scheduledRun=false}
+09-14 14:33:37.332 25746 26633 I DRS_LOG_UploadBatchAssembler[DRS-Upload-Nr-1]: [NR-biz] initial_snapshot round=1 appIdCount=0 appIds=[] wifi=true allowDcs=true cacheGen=1
+09-14 14:33:37.333 25746 26633 I DRS_LOG_UploadBatchAssembler[DRS-Upload-Nr-1]: [NR-biz] final_supplement previousRound=1 knownAppIds=0 supplementedAppIds=[]
+09-14 14:33:37.334 25746 26633 I DRS_LOG_UploadBatchAssembler[DRS-Upload-Nr-1]: [NR-tech] initial_snapshot round=1 appIdCount=0 appIds=[] wifi=true allowDcs=true cacheGen=1
+09-14 14:33:37.335 25746 26633 I DRS_LOG_UploadBatchAssembler[DRS-Upload-Nr-1]: [NR-tech] final_supplement previousRound=1 knownAppIds=0 supplementedAppIds=[]
+09-14 14:33:37.335 25746 26633 I DRS_LOG_ChannelTaskRunner[DRS-Upload-Nr-1]: [NR] prepare_empty hadSuccess=false claimMissStop=false allUploaded=false loop=1
+09-14 14:33:37.336 25746 26633 I DRS_LOG_ChannelTaskRunner[DRS-Upload-Nr-1]: [NR] task_finish completed=true stopReason=TASK_COMPLETED successApps=0 skippedBatches=0 appErrors=0 envScenario=null allUploaded=false newDataDuringTask=false
+09-14 14:33:38.118  1916  3466 I OplusCpuLoadTrack: total: 2
+09-14 14:33:38.118  1916  3466 I OplusCpuLoadTrack: cpu0: 3
+09-14 14:33:38.118  1916  3466 I OplusCpuLoadTrack: cpu1: 4
+09-14 14:33:38.118  1916  3466 I OplusCpuLoadTrack: cpu2: 3
+09-14 14:33:38.118  1916  3466 I OplusCpuLoadTrack: cpu3: 2
+09-14 14:33:38.118  1916  3466 I OplusCpuLoadTrack: cpu4: 2
+09-14 14:33:38.118  1916  3466 I OplusCpuLoadTrack: cpu5: 1
+09-14 14:33:38.118  1916  3466 I OplusCpuLoadTrack: cpu6: 1
+09-14 14:33:38.118  1916  3466 I OplusCpuLoadTrack: cpu7: 1
+09-14 14:33:38.613   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:39.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:33:39.811  1335 16494 D AALLightSensor: oldLux=236 [SA:224 LA:224] newLux=236 (oriLux: 224)
+09-14 14:33:40.789  1916  1941 D AES     : AEEIOCTL_GET/SET_SF_STATE IOCTL,cmd= 1074294797, lParam=0. 
+09-14 14:33:40.789  1916  1941 D AES     : AEEIOCTL_RT_MON_Kick IOCTL,cmd= 2147774474, lParam=300. 
+09-14 14:33:43.811  1335 16494 D AALLightSensor: oldLux=236 [SA:224 LA:224] newLux=236 (oriLux: 224)
+09-14 14:33:44.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:33:44.661   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:46.286  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:33:47.811  1335 16494 D AALLightSensor: oldLux=236 [SA:224 LA:224] newLux=236 (oriLux: 225)
+09-14 14:33:47.836   998  1052 E VirtualSensors: pedo minute, step_count = 20130, report_count = 21697 move_statust = 0 ,time_gap = 0 , step_run_count = 129 , step_walk_count = 20001
+09-14 14:33:47.837   998  1052 E power   : ISystemSuspend::getService() failed.
+09-14 14:33:47.837   998  1052 E VirtualSensors: post_events : call
+09-14 14:33:47.842  1916  2025 E AppOps  : attributionTag  not declared in manifest of com.oplus.notificationmanager
+09-14 14:33:47.843  2877  2877 I StepApp_StepDataPreHandler: (main)onSensorChanged raw data: step=20130.0 state=0.0 minuteDelta=0.0 timestamp=1301841504695882 steprun=129.0 stepwalk=20001.0 formatted data: step=20130 state=0 timestamp=1301841504695882 time=1789376627835 steprun=129 stepwalk=20001
+09-14 14:33:47.847  1916  2025 E AppOps  : attributionTag  not declared in manifest of com.oplus.notificationmanager
+09-14 14:33:49.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:33:49.425  1015  1039 D power@timer: [mtkPowerTimer] visRead:0
+09-14 14:33:50.685   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:51.725  1106  1120 D ccci_mdinit: (1):monitor_time_update_thread round:38095 ########
+09-14 14:33:51.811  1335 16494 D AALLightSensor: oldLux=236 [SA:224 LA:224] newLux=236 (oriLux: 224)
+09-14 14:33:53.709   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:54.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:33:56.011  1335 16494 D AALLightSensor: oldLux=236 [SA:224 LA:224] newLux=236 (oriLux: 225)
+09-14 14:33:56.302  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:33:56.515  2380  2380 D SystemUi--: getDebugState, e = android.provider.Settings$SettingNotFoundException: systemui_internal_debug
+09-14 14:33:56.537  2645 31744 D IpClient/wlan0: interfaceLinkStateChanged: ifindex 33 up
+09-14 14:33:56.541  1096  1096 I OplusPerfParmCount: The num of client composition of Internal display in last 60337 ms is: 18
+09-14 14:33:56.541  1096  1096 I OplusPerfParmCount: The num of blur fliter in last 60337 ms is: 54
+09-14 14:33:56.542  1096  1096 I Quality : SFJankCountInfo: 37;0;0-0-0-0-0-0-0-0-0-0;1-0-0-0-0-0-0-0-0-0;2-0-0-0-0-0-0-0-0-0;3-0-0-0-0-0-0-0-0-0;4-0-0-0-0-0-0-0-0-0;5-0-0-0-0-0-0-0-0-0;6-0-0-0-0-0-0-0-0-0;7-0-0-0-0-0-0-0-0-0;8-0-0-0-0-0-0-0-0-0;9-0-0-0-0-0-0-0-0-0;
+09-14 14:33:56.542  1096  1096 I OplusPerfParmCount: The layer number in last 60337ms is: 4 layer, 58 time, 
+09-14 14:33:56.709   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:33:59.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:33:59.733   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:34:00.008  2380  2380 D SingleClockView: updateTime,  24hfmt=true, h=14, m=34
+09-14 14:34:00.011  1335 16494 D AALLightSensor: oldLux=236 [SA:225 LA:224] newLux=236 (oriLux: 226)
+09-14 14:34:00.018  1916  2475 E OplusCustomizeRestrictionManagerService: isBiometricDisabled start
+09-14 14:34:00.020  1916  3286 E OplusCustomizeRestrictionManagerService: isBiometricDisabled start
+09-14 14:34:00.169   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:34:02.757   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:34:04.011  1335 16494 D AALLightSensor: oldLux=236 [SA:226 LA:224] newLux=236 (oriLux: 226)
+09-14 14:34:04.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:34:05.761   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:34:06.316  1300  1300 I thermal_repeater: [recvMdThermalInfo] ret=30, strLen=127,  2, 32767, -127, 197, 32767, 1
+09-14 14:34:08.011  1335 16494 D AALLightSensor: oldLux=236 [SA:225 LA:224] newLux=236 (oriLux: 226)
+09-14 14:34:09.305  1067  1067 D PerformanceService: open /proc/task_cpustats failed! err:No such file or directory, Linux version 4.14.186
+09-14 14:34:10.790  1916  1941 D AES     : AEEIOCTL_GET/SET_SF_STATE IOCTL,cmd= 1074294797, lParam=0. 
+09-14 14:34:10.790  1916  1941 D AES     : AEEIOCTL_RT_MON_Kick IOCTL,cmd= 2147774474, lParam=300. 
+09-14 14:34:11.785   983  1424 I hwcomposer: [HWC] (0)fire a callback of refresh to SF[4]  
+09-14 14:34:12.011  1335 16494 D AALLightSensor: oldLux=236 [SA:225 LA:224] newLux=236 (oriLux: 225)
+09-14 14:34:12.808  1173  1173 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-t' '500''

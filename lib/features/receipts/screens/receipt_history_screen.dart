@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/widgets/sync_empty_state.dart';
+import '../../tasks/providers/completed_tasks_provider.dart';
 import '../data/receipt_repository.dart';
 import '../domain/receipt_composer_seed.dart';
 import '../providers/receipt_feature_provider.dart';
@@ -20,6 +22,8 @@ class ReceiptHistoryScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final enabled = ref.watch(receiptFeatureEnabledProvider);
     final historyValue = ref.watch(receiptHistoryProvider);
+    final completedTasksValue = ref.watch(completedTasksProvider);
+    final completedTasks = completedTasksValue.value ?? const [];
     final colors = SyncTasksColorScheme.of(context);
     final content = Scaffold(
       backgroundColor: colors.scaffold,
@@ -49,7 +53,7 @@ class ReceiptHistoryScreen extends ConsumerWidget {
                             actionLabel: 'Create receipt',
                             onAction: () => context.go(
                               '/receipts/new',
-                              extra: const ReceiptComposerSeed.empty(),
+                              extra: _composerSeed(completedTasks),
                             ),
                           );
                         }
@@ -65,7 +69,7 @@ class ReceiptHistoryScreen extends ConsumerWidget {
                                   SyncHaptics.action();
                                   context.go(
                                     '/receipts/new',
-                                    extra: const ReceiptComposerSeed.empty(),
+                                    extra: _composerSeed(completedTasks),
                                   );
                                 },
                                 icon: const Icon(SyncIcons.receipt),
@@ -108,6 +112,17 @@ class ReceiptHistoryScreen extends ConsumerWidget {
   void _returnToLists(BuildContext context) {
     SyncHaptics.selection();
     context.go('/lists');
+  }
+
+  ReceiptComposerSeed _composerSeed(List<Task> completedTasks) {
+    if (completedTasks.isEmpty) {
+      return const ReceiptComposerSeed.empty();
+    }
+    return ReceiptComposerSeed(
+      source: ReceiptEntrySource.history,
+      defaultTitle: 'Completed tasks',
+      selectedTaskIds: [for (final task in completedTasks) task.id],
+    );
   }
 }
 

@@ -9,6 +9,7 @@ import 'package:synctasks/core/notifications/task_reminder_service.dart';
 import 'package:synctasks/core/routing/app_router.dart';
 import 'package:synctasks/core/theme/app_theme.dart';
 import 'package:synctasks/features/receipts/data/receipt_repository.dart';
+import 'package:synctasks/features/receipts/providers/receipt_repository_provider.dart';
 import 'package:synctasks/features/receipts/domain/receipt_composer_seed.dart';
 import 'package:synctasks/features/receipts/providers/receipt_feature_provider.dart';
 import 'package:synctasks/features/receipts/pro/receipt_pro_entitlement.dart';
@@ -19,6 +20,7 @@ import 'package:synctasks/features/tasks/data/folder_repository.dart';
 import 'package:synctasks/features/tasks/data/task_repository.dart';
 import 'package:synctasks/features/tasks/domain/task.dart' as domain;
 import 'package:synctasks/features/tasks/providers/task_controller.dart';
+import 'package:synctasks/shared/icons/sync_icons.dart';
 
 import 'fake_receipt_pro_billing_service.dart';
 
@@ -39,6 +41,7 @@ void main() {
 
   Future<void> pumpApp(
     WidgetTester tester, {
+    ReceiptRepository? receiptRepository,
     ReceiptPhotoCaptureService? photoCaptureService,
     ReceiptPhotoProcessor? photoProcessor,
     ReceiptPrintingFeedback? printingFeedback,
@@ -52,6 +55,10 @@ void main() {
             RecordingNotificationScheduler(),
           ),
           receiptFeatureEnabledProvider.overrideWithValue(true),
+          receiptRepositoryProvider.overrideWithValue(
+            receiptRepository ??
+                ReceiptRepository(db, now: () => DateTime(2026, 9, 10, 12)),
+          ),
           if (receiptProBillingService != null)
             receiptProBillingServiceProvider.overrideWithValue(
               receiptProBillingService,
@@ -111,6 +118,11 @@ void main() {
     );
     expect(find.text('0 of 3 free receipts used'), findsOneWidget);
     expect(find.text('Pro unlocks unlimited receipts'), findsOneWidget);
+    expect(find.byIcon(SyncIcons.premium), findsOneWidget);
+    expect(
+      tester.widget<Icon>(find.byIcon(SyncIcons.premium)).color,
+      SyncIcons.premiumSilver(tester.element(find.byIcon(SyncIcons.premium))),
+    );
     expect(find.text('Title'), findsOneWidget);
     expect(find.text('Write the migration'), findsOneWidget);
     expect(
@@ -160,6 +172,48 @@ void main() {
     expect(find.text('Share receipt'), findsOneWidget);
     expect(find.text('Done'), findsOneWidget);
   });
+
+  testWidgets(
+    'composer lower action tap saves receipt instead of opening Lists',
+    (tester) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 2.625;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      final taskId = await completedTask('Ship from the bottom CTA');
+      await pumpApp(tester);
+
+      router.go(
+        '/receipts/new',
+        extra: ReceiptComposerSeed(
+          source: ReceiptEntrySource.completedSelection,
+          defaultTitle: 'Completed tasks',
+          selectedTaskIds: [taskId],
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final button = find.widgetWithText(FilledButton, 'Generate receipt');
+      final buttonRect = tester.getRect(button);
+      await tester.tapAt(buttonRect.bottomCenter - const Offset(0, 8));
+      await tester.pump();
+
+      expect(find.text('Printing your wins...'), findsOneWidget);
+      expect(router.routeInformationProvider.value.uri.path, '/receipts/new');
+      expect(await ReceiptRepository(db).listReceipts(), hasLength(1));
+
+      await tester.pumpAndSettle(const Duration(seconds: 4));
+
+      expect(
+        router.routeInformationProvider.value.uri.path,
+        startsWith('/receipts/'),
+      );
+      expect(router.routeInformationProvider.value.uri.path, isNot('/lists'));
+      expect(find.text('Your receipt'), findsOneWidget);
+      expect(find.text('Ship from the bottom CTA'), findsOneWidget);
+    },
+  );
 
   testWidgets('composer personalises with a drawing before printing receipt', (
     tester,
@@ -305,6 +359,67 @@ void main() {
     ).listReceipts()).single.id;
     final savedReceipt = await ReceiptRepository(db).getReceipt(savedReceiptId);
     expect(savedReceipt?.photoPath, 'D:\\temp\\receipt-photo_pixelite.png');
+  });
+
+  testWidgets('empty composer does not open personalise generation', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+
+    router.go(
+      '/receipts/new',
+      extra: const ReceiptComposerSeed(
+        source: ReceiptEntrySource.completedSelection,
+        defaultTitle: 'Completed tasks',
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('No completed tasks selected'), findsOneWidget);
+    expect(
+      tester
+          .widget<FilledButton>(
+            find.widgetWithText(FilledButton, 'Generate receipt'),
+          )
+          .enabled,
+      isFalse,
+    );
+
+    await tester.tap(find.text('Add photo or drawing').first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Photo'), findsNothing);
+    expect(find.text('Drawing'), findsNothing);
+    expect(await ReceiptRepository(db).listReceipts(), isEmpty);
+  });
+
+  testWidgets('empty selection generation failure clears busy state', (
+    tester,
+  ) async {
+    final taskId = await completedTask('Do not spin forever');
+    await pumpApp(
+      tester,
+      receiptRepository: _EmptySelectionReceiptRepository(db),
+    );
+
+    router.go(
+      '/receipts/new',
+      extra: ReceiptComposerSeed(
+        source: ReceiptEntrySource.completedSelection,
+        defaultTitle: 'Completed tasks',
+        selectedTaskIds: [taskId],
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(FilledButton, 'Generate receipt'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+    expect(
+      find.text('Choose completed tasks before generating a receipt.'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('history lists generated receipts and reopens detail', (
@@ -514,6 +629,15 @@ class _FakeReceiptPhotoCaptureService implements ReceiptPhotoCaptureService {
 
   @override
   Future<String?> capturePhoto() async => path;
+}
+
+class _EmptySelectionReceiptRepository extends ReceiptRepository {
+  _EmptySelectionReceiptRepository(super.db);
+
+  @override
+  Future<SavedReceipt> generateReceipt(ReceiptCreateRequest request) async {
+    throw const ReceiptEmptySelectionException();
+  }
 }
 
 class _FakeReceiptPhotoProcessor implements ReceiptPhotoProcessor {

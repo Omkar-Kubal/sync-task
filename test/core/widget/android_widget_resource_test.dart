@@ -49,6 +49,30 @@ void main() {
     expect(manifest, contains('@xml/widget_today_info'));
   });
 
+  test('Android manifest restores scheduled reminders after reboot', () {
+    final manifest = File(
+      'android/app/src/main/AndroidManifest.xml',
+    ).readAsStringSync();
+
+    expect(manifest, contains('android.permission.RECEIVE_BOOT_COMPLETED'));
+    expect(
+      manifest,
+      contains(
+        'com.dexterous.flutterlocalnotifications.'
+        'ScheduledNotificationReceiver',
+      ),
+    );
+    expect(
+      manifest,
+      contains(
+        'com.dexterous.flutterlocalnotifications.'
+        'ScheduledNotificationBootReceiver',
+      ),
+    );
+    expect(manifest, contains('android.intent.action.BOOT_COMPLETED'));
+    expect(manifest, contains('android.intent.action.MY_PACKAGE_REPLACED'));
+  });
+
   test('Android widget provider metadata points at the three layouts', () {
     final providerLayouts = {
       'android/app/src/main/res/xml/widget_progress_info.xml':

@@ -79,6 +79,7 @@ class NotificationService implements NotificationScheduler {
 
   final LocalNotificationsPlugin _plugin;
   var _initialized = false;
+  var _notificationPermissionRequested = false;
 
   Future<void> initialize() async {
     if (_initialized) {
@@ -92,13 +93,13 @@ class NotificationService implements NotificationScheduler {
         android: AndroidInitializationSettings('@mipmap/ic_launcher'),
       ),
     );
-    await _plugin.requestAndroidNotificationPermission();
     _initialized = true;
   }
 
   @override
   Future<void> schedule(ScheduledNotification notification) async {
     await initialize();
+    await _requestAndroidNotificationPermission();
     await _plugin.zonedSchedule(
       id: notification.id,
       title: notification.title,
@@ -116,6 +117,14 @@ class NotificationService implements NotificationScheduler {
     );
   }
 
+  Future<void> _requestAndroidNotificationPermission() async {
+    if (_notificationPermissionRequested) {
+      return;
+    }
+    await _plugin.requestAndroidNotificationPermission();
+    _notificationPermissionRequested = true;
+  }
+
   @override
   Future<void> cancel(int id) async {
     await initialize();
@@ -128,8 +137,8 @@ class NotificationService implements NotificationScheduler {
     }
 
     try {
-      final timezoneName = await FlutterTimezone.getLocalTimezone();
-      tz.setLocalLocation(tz.getLocation(timezoneName));
+      final timezone = await FlutterTimezone.getLocalTimezone();
+      tz.setLocalLocation(tz.getLocation(timezone.identifier));
     } on Object {
       tz.setLocalLocation(tz.UTC);
     }
@@ -158,7 +167,7 @@ class FlutterLocalNotificationsAdapter implements LocalNotificationsPlugin {
 
   @override
   Future<void> initialize(InitializationSettings settings) async {
-    await _plugin.initialize(settings);
+    await _plugin.initialize(settings: settings);
   }
 
   @override
@@ -179,22 +188,17 @@ class FlutterLocalNotificationsAdapter implements LocalNotificationsPlugin {
     required NotificationDetails details,
   }) async {
     await _plugin.zonedSchedule(
-      id,
-      title,
-      body,
-      tz.TZDateTime.from(scheduledAt, tz.local),
-      details,
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: tz.TZDateTime.from(scheduledAt, tz.local),
+      notificationDetails: details,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
 
   @override
   Future<void> cancel(int id) {
-    return _plugin.cancel(id);
+    return _plugin.cancel(id: id);
   }
 }
-
-
-
