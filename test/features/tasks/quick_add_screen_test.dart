@@ -80,7 +80,8 @@ void main() {
       expect(find.widgetWithText(OutlinedButton, 'Work'), findsOneWidget);
 
       await tester.enterText(find.byType(TextField), 'Draft launch');
-      await tester.tap(find.bySemanticsLabel('Submit task'));
+      await tester.pump();
+      await tester.tap(find.widgetWithText(FilledButton, 'Add'));
       await tester.pump();
 
       expect(find.text('Added'), findsOneWidget);
@@ -97,4 +98,61 @@ void main() {
       expect(await container.read(todayTasksProvider.future), hasLength(1));
     },
   );
+
+  testWidgets('quick add Schedule preserves its draft and parses dates', (
+    tester,
+  ) async {
+    final work = await FolderRepository(db).createFolder('Work');
+    await settingsRepository.save(AppSettings(defaultFolderId: work.id));
+    final platformCalls = <String>[];
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+      SystemChannels.platform,
+      (call) async {
+        platformCalls.add(call.method);
+        return null;
+      },
+    );
+    addTearDown(
+      () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        null,
+      ),
+    );
+
+    await tester.pumpWidget(
+      wrap(QuickAddScreen(now: () => DateTime(2026, 9, 7, 10))),
+    );
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'Draft launch tomorrow');
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Schedule'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('New task'), findsOneWidget);
+    expect(
+      tester
+          .widget<TextField>(find.byKey(const Key('edit-task-title-field')))
+          .controller!
+          .text,
+      'Draft launch',
+    );
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<TextField>(find.byType(TextField)).controller!.text,
+      'Draft launch tomorrow',
+    );
+
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Schedule'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('create-task-options-button')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 700));
+
+    final tasks = await db.select(db.tasks).get();
+    expect(tasks, hasLength(1));
+    expect(tasks.single.title, 'Draft launch');
+    expect(tasks.single.folderId, work.id);
+    expect(tasks.single.scheduledDate, DateTime(2026, 9, 8));
+    expect(platformCalls, contains('SystemNavigator.pop'));
+  });
 }

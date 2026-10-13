@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/widgets/sync_empty_state.dart';
@@ -152,7 +153,6 @@ class _ReceiptHistoryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     final date = DateFormat('d MMM yyyy').format(receipt.createdAt);
     return Material(
       color: colors.surface,
@@ -195,19 +195,14 @@ class _ReceiptHistoryRow extends StatelessWidget {
                       receipt.title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: textTheme.titleMedium?.copyWith(
-                        color: colors.textPrimary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: SyncTypography.of(
+                        context,
+                      ).cardTitle.copyWith(color: colors.textPrimary),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       '${_taskCountLabel(receipt.taskCount)} · $date',
-                      style: textTheme.bodySmall?.copyWith(
-                        color: colors.textSecondary,
-                        fontSize: 12,
-                      ),
+                      style: SyncTypography.of(context).supporting,
                     ),
                   ],
                 ),

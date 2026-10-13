@@ -123,6 +123,28 @@ class TaskController {
     unawaited(WidgetDataUpdater.update(_repository));
   }
 
+  Future<void> rescheduleTaskOccurrence({
+    required int taskId,
+    required String title,
+    required DateTime scheduledDate,
+    required DateTime? scheduledTime,
+    required DateTime? reminderTime,
+  }) async {
+    await _repository.rescheduleTaskOccurrence(
+      taskId: taskId,
+      scheduledDate: scheduledDate,
+      scheduledTime: scheduledTime,
+      reminderTime: reminderTime,
+    );
+    await _reminderService?.reconcileTask(
+      taskId: taskId,
+      title: title,
+      reminderTime: reminderTime,
+      isCompleted: false,
+    );
+    unawaited(WidgetDataUpdater.update(_repository));
+  }
+
   Future<void> moveTasksToFolder(Iterable<int> taskIds, int folderId) async {
     await _repository.moveTasksToFolder(taskIds, folderId);
     unawaited(WidgetDataUpdater.update(_repository));

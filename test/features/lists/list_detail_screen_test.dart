@@ -29,7 +29,7 @@ void main() {
     expect(find.bySemanticsLabel('Close list'), findsOneWidget);
     expect(find.bySemanticsLabel('Back to Lists'), findsNothing);
     final title = tester.widget<Text>(find.text('All'));
-    expect(title.style?.fontSize, 25);
+    expect(title.style?.fontSize, 22);
   });
 
   testWidgets('folder route displays folder name and creates tasks there', (
@@ -52,7 +52,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Work'), findsWidgets);
     await tester.enterText(find.byType(TextField), 'Folder task');
-    await tester.tap(find.bySemanticsLabel('Submit task'));
+    await tester.pump();
+    await tester.tap(find.widgetWithText(FilledButton, 'Add'));
     await tester.pumpAndSettle();
 
     final folderTasks = await TaskRepository(db).listFolderTasks(folder.id);
@@ -83,7 +84,8 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.enterText(find.byType(TextField), 'Chosen folder task');
-    await tester.tap(find.bySemanticsLabel('Submit task'));
+    await tester.pump();
+    await tester.tap(find.widgetWithText(FilledButton, 'Add'));
     await tester.pumpAndSettle();
 
     expect(await TaskRepository(db).listFolderTasks(work.id), isEmpty);
@@ -208,7 +210,8 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Create new task'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'Reminder task');
-    await tester.tap(find.bySemanticsLabel('Submit task'));
+    await tester.pump();
+    await tester.tap(find.widgetWithText(FilledButton, 'Add'));
     await tester.pumpAndSettle();
 
     expect(find.text('Reminder task'), findsOneWidget);
@@ -237,7 +240,8 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Create task'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'Created from Today');
-    await tester.tap(find.bySemanticsLabel('Submit task'));
+    await tester.pump();
+    await tester.tap(find.widgetWithText(FilledButton, 'Add'));
     await tester.pumpAndSettle();
 
     router.go('/lists/all');
@@ -307,5 +311,3 @@ Future<void> _pumpApp(
     ),
   );
 }
-
-

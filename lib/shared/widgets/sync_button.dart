@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/theme/synctasks_color_scheme.dart';
+import '../../core/theme/sync_typography.dart';
 
 class SyncButton extends StatelessWidget {
   const SyncButton.primary({
@@ -45,12 +46,10 @@ class SyncButton extends StatelessWidget {
               )
             : Text(
                 label,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                style: SyncTypography.of(context).button.copyWith(
                   color: (onPressed != null && !isLoading)
                       ? colors.controlForeground
                       : colors.controlForeground.withValues(alpha: 0.64),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
                 ),
               ),
       ),

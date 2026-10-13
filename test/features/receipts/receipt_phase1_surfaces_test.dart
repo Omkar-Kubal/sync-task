@@ -104,9 +104,18 @@ void main() {
       router.go('/today');
       await tester.pumpAndSettle();
 
-      expect(find.text('1 completed today · Create receipt →'), findsOneWidget);
+      expect(find.text('1 task completed today'), findsOneWidget);
+      expect(
+        find.text('A keepsake of tasks you finished today.'),
+        findsOneWidget,
+      );
+      expect(find.byKey(const Key('today-receipt-entry')), findsOneWidget);
+      expect(
+        tester.getTopLeft(find.byKey(const Key('today-receipt-entry'))).dy,
+        greaterThan(tester.getBottomLeft(find.text('Today').first).dy),
+      );
 
-      await tester.tap(find.text('1 completed today · Create receipt →'));
+      await tester.tap(find.widgetWithText(FilledButton, 'Create receipt'));
       await tester.pumpAndSettle();
 
       expect(router.routeInformationProvider.value.uri.path, '/receipts/new');
@@ -130,7 +139,7 @@ void main() {
 
     router.go('/today');
     await tester.pumpAndSettle();
-    expect(find.text('1 completed today · Create receipt →'), findsOneWidget);
+    expect(find.text('1 task completed today'), findsOneWidget);
 
     await tester.tap(find.bySemanticsLabel('Lists'));
     await tester.pumpAndSettle();
@@ -249,7 +258,7 @@ void main() {
     router.go('/today');
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('1 completed today · Create receipt →'));
+    await tester.tap(find.widgetWithText(FilledButton, 'Create receipt'));
     await tester.pumpAndSettle();
     expect(router.routeInformationProvider.value.uri.path, '/receipts/new');
 
@@ -547,15 +556,15 @@ void main() {
     final featureTitle = tester.widget<Text>(
       find.text('3 free receipts weekly'),
     );
-    expect(featureTitle.style?.fontSize, 15);
+    expect(featureTitle.style?.fontSize, 14);
     expect(featureTitle.style?.fontWeight, FontWeight.w500);
     final featureBody = tester.widget<Text>(
       find.text(
         'Pro unlocks unlimited receipt generation whenever you need it.',
       ),
     );
-    expect(featureBody.style?.fontSize, 13);
-    expect(featureBody.style?.fontWeight, FontWeight.w500);
+    expect(featureBody.style?.fontSize, 12);
+    expect(featureBody.style?.fontWeight, FontWeight.w400);
     final unlockButtonSize = tester.getSize(
       find.widgetWithText(FilledButton, 'Unlock for ₹199'),
     );

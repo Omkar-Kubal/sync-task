@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart' as cupertino;
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/sheets/app_bottom_sheet.dart';
@@ -41,6 +42,7 @@ class TaskEditSheet extends StatefulWidget {
     this.recurrenceType,
     this.recurrenceInterval,
     this.customRepeatLabel,
+    this.isCreating = false,
     this.onSave,
     this.onSaveTitle,
     super.key,
@@ -54,6 +56,7 @@ class TaskEditSheet extends StatefulWidget {
   final RecurrenceType? recurrenceType;
   final int? recurrenceInterval;
   final String? customRepeatLabel;
+  final bool isCreating;
   final VoidCallback onCancel;
   final VoidCallback onDone;
   final Future<void> Function(TaskEditUpdate update)? onSave;
@@ -72,6 +75,7 @@ class _TaskEditSheetState extends State<TaskEditSheet> {
   late RecurrenceType? _recurrenceType;
   late _ReminderPreset _reminderPreset;
   var _customRepeatSelected = false;
+  var _isSaving = false;
   String? _customRepeatLabel;
   int? _customRepeatInterval;
 
@@ -138,13 +142,8 @@ class _TaskEditSheetState extends State<TaskEditSheet> {
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          'Edit Task',
-                          style: Theme.of(context).textTheme.titleLarge
-                              ?.copyWith(
-                                fontSize: 19,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0,
-                              ),
+                          widget.isCreating ? 'New task' : 'Edit Task',
+                          style: SyncTypography.of(context).pageTitle,
                         ),
                       ),
                     ),
@@ -152,13 +151,19 @@ class _TaskEditSheetState extends State<TaskEditSheet> {
                   SizedBox(
                     width: 76,
                     child: OutlinedButton(
-                      key: const Key('edit-task-done-button'),
-                      onPressed: () {
-                        SyncHaptics.action();
-                        _saveAndClose();
-                      },
+                      key: Key(
+                        widget.isCreating
+                            ? 'create-task-options-button'
+                            : 'edit-task-done-button',
+                      ),
+                      onPressed: _isSaving
+                          ? null
+                          : () {
+                              SyncHaptics.action();
+                              _saveAndClose();
+                            },
                       style: _topActionStyle(context),
-                      child: const Text('Done'),
+                      child: Text(widget.isCreating ? 'Create' : 'Done'),
                     ),
                   ),
                 ],
@@ -171,13 +176,9 @@ class _TaskEditSheetState extends State<TaskEditSheet> {
                 maxLines: 3,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.done,
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: colors.textPrimary,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0,
-                  height: 1.1,
-                ),
+                style: SyncTypography.of(
+                  context,
+                ).bodyTitle.copyWith(color: colors.textPrimary),
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   enabledBorder: InputBorder.none,
@@ -226,7 +227,7 @@ class _TaskEditSheetState extends State<TaskEditSheet> {
                       child: _QuickDateAction(
                         icon: SyncIcons.noDate,
                         label: 'No Date',
-                        color: colors.destructive,
+                        color: colors.textPrimary,
                         onPressed: () => _saveQuickDate(null),
                       ),
                     ),
@@ -340,6 +341,9 @@ class _TaskEditSheetState extends State<TaskEditSheet> {
         );
       }
     });
+    if (widget.isCreating) {
+      return;
+    }
     await _saveAndClose();
   }
 
@@ -840,12 +844,25 @@ class _TaskEditSheetState extends State<TaskEditSheet> {
   }
 
   Future<void> _saveAndClose() async {
+    if (_isSaving) {
+      return;
+    }
     final update = _buildUpdate();
     if (update == null) {
       return;
     }
-    await _saveUpdate(update);
-    widget.onDone();
+    setState(() => _isSaving = true);
+    try {
+      await _saveUpdate(update);
+      if (mounted) {
+        widget.onDone();
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(() => _isSaving = false);
+      }
+      rethrow;
+    }
   }
 
   Future<void> _saveUpdate(TaskEditUpdate update) async {
@@ -909,11 +926,7 @@ class _TaskEditSheetState extends State<TaskEditSheet> {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       side: BorderSide.none,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-        fontSize: 15,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0,
-      ),
+      textStyle: SyncTypography.of(context).action,
     );
   }
 }
@@ -974,12 +987,7 @@ class _QuickDateAction extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               label,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: color,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0,
-              ),
+              style: SyncTypography.of(context).action.copyWith(color: color),
             ),
           ],
         ),
@@ -1044,14 +1052,7 @@ class _SheetRow extends StatelessWidget {
             children: [
               Icon(icon, color: colors.textPrimary, size: 24),
               const SizedBox(width: 14),
-              Text(
-                label,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0,
-                ),
-              ),
+              Text(label, style: SyncTypography.of(context).bodyTitle),
               const SizedBox(width: 8),
               Expanded(
                 child: Align(
@@ -1097,12 +1098,9 @@ class _MenuOptionRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: colors.textPrimary,
-              fontSize: 17,
-              fontWeight: FontWeight.w400,
-              letterSpacing: 0,
-            ),
+            style: SyncTypography.of(
+              context,
+            ).bodyTitle.copyWith(color: colors.textPrimary),
           ),
         ),
         if (showChevron)
@@ -1155,14 +1153,7 @@ class _ValuePill extends StatelessWidget {
       ),
       child: FittedBox(
         fit: BoxFit.scaleDown,
-        child: Text(
-          label,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0,
-          ),
-        ),
+        child: Text(label, style: SyncTypography.of(context).rowTitle),
       ),
     );
 
@@ -1201,12 +1192,9 @@ class _PlainValueTrailing extends StatelessWidget {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: colors.textPrimary,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0,
-          ),
+          style: SyncTypography.of(
+            context,
+          ).bodyTitle.copyWith(color: colors.textPrimary),
         ),
         if (showClear) ...[
           const SizedBox(width: 10),
@@ -1333,11 +1321,7 @@ class _CustomReminderSheetState extends State<_CustomReminderSheet> {
                 child: Center(
                   child: Text(
                     'Custom Reminder',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0,
-                    ),
+                    style: SyncTypography.of(context).pageTitle,
                   ),
                 ),
               ),
@@ -1426,12 +1410,7 @@ class _CustomReminderSheetState extends State<_CustomReminderSheet> {
             alignment: Alignment.centerLeft,
             child: Text(
               _summary(),
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: colors.textSecondary,
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0,
-              ),
+              style: SyncTypography.of(context).supporting,
             ),
           ),
         ],
@@ -1505,11 +1484,7 @@ class _CustomReminderSheetState extends State<_CustomReminderSheet> {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       side: BorderSide.none,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
-      textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-        fontSize: 15,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0,
-      ),
+      textStyle: SyncTypography.of(context).action,
     );
   }
 }
@@ -1521,14 +1496,7 @@ class _PickerSelectedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      label,
-      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-        fontSize: 24,
-        fontWeight: FontWeight.w500,
-        letterSpacing: 0,
-      ),
-    );
+    return Text(label, style: SyncTypography.of(context).pageTitle);
   }
 }
 
@@ -1614,11 +1582,7 @@ class _CustomRepeatSheetState extends State<_CustomRepeatSheet> {
                 child: Center(
                   child: Text(
                     'Custom Repeat',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0,
-                    ),
+                    style: SyncTypography.of(context).pageTitle,
                   ),
                 ),
               ),
@@ -1668,11 +1632,7 @@ class _CustomRepeatSheetState extends State<_CustomRepeatSheet> {
                           Center(
                             child: Text(
                               '$value',
-                              style: Theme.of(context).textTheme.titleLarge
-                                  ?.copyWith(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                              style: SyncTypography.of(context).cardTitle,
                             ),
                           ),
                       ],
@@ -1695,11 +1655,7 @@ class _CustomRepeatSheetState extends State<_CustomRepeatSheet> {
                           Center(
                             child: Text(
                               _unitName(unit, _amount),
-                              style: Theme.of(context).textTheme.titleLarge
-                                  ?.copyWith(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                              style: SyncTypography.of(context).cardTitle,
                             ),
                           ),
                       ],
@@ -1714,12 +1670,7 @@ class _CustomRepeatSheetState extends State<_CustomRepeatSheet> {
             alignment: Alignment.centerLeft,
             child: Text(
               _summary(),
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: colors.textSecondary,
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0,
-              ),
+              style: SyncTypography.of(context).supporting,
             ),
           ),
         ],
@@ -1769,11 +1720,7 @@ class _CustomRepeatSheetState extends State<_CustomRepeatSheet> {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       side: BorderSide.none,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
-      textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-        fontSize: 15,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0,
-      ),
+      textStyle: SyncTypography.of(context).action,
     );
   }
 }

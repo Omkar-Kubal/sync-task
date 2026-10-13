@@ -11,6 +11,7 @@ import 'package:synctasks/features/tasks/data/task_repository.dart';
 import 'package:synctasks/features/tasks/domain/task.dart';
 import 'package:synctasks/features/tasks/providers/task_controller.dart';
 import 'package:synctasks/features/tasks/screens/upcoming_screen.dart';
+import 'package:synctasks/features/tasks/widgets/task_row.dart';
 
 void main() {
   late AppDatabase db;
@@ -55,7 +56,7 @@ void main() {
     expect(find.bySemanticsLabel('Create task'), findsOneWidget);
 
     final titleText = tester.widget<Text>(find.text('Upcoming'));
-    expect(titleText.style?.fontSize, 29);
+    expect(titleText.style?.fontSize, 22);
   });
 
   testWidgets('upcoming empty state explains there are no upcoming tasks', (
@@ -106,6 +107,30 @@ void main() {
     expect(find.text('Future agenda task'), findsOneWidget);
     expect(find.text('Old task'), findsNothing);
     expect(find.text('Loose task'), findsNothing);
+  });
+
+  testWidgets('all upcoming view chips wrap on a narrow screen', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(320, 640);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(wrap());
+    await tester.pumpAndSettle();
+
+    final labels = ['Agenda', 'Week', 'Overdue', 'No date', 'Folders'];
+    final tops = <double>{};
+    for (final label in labels) {
+      final chip = find.widgetWithText(ChoiceChip, label);
+      expect(chip, findsOneWidget);
+      final rect = tester.getRect(chip);
+      expect(rect.left, greaterThanOrEqualTo(0));
+      expect(rect.right, lessThanOrEqualTo(320));
+      tops.add(rect.top);
+    }
+    expect(tops.length, greaterThan(1));
   });
 
   testWidgets('upcoming week view only shows the next seven days', (
@@ -163,6 +188,52 @@ void main() {
     expect(find.byKey(const Key('upcoming-section-no-date')), findsOneWidget);
     expect(find.text('Someday idea'), findsOneWidget);
     expect(find.text('Pay late invoice'), findsNothing);
+  });
+
+  testWidgets('a passed time today moves from Agenda into Overdue', (
+    tester,
+  ) async {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final pastMinute = now.subtract(const Duration(minutes: 2));
+    await controller.create(
+      TaskDraft(
+        title: 'Timed task past due',
+        scheduledDate: today,
+        scheduledTime: DateTime(
+          today.year,
+          today.month,
+          today.day,
+          pastMinute.hour,
+          pastMinute.minute,
+        ),
+      ),
+    );
+    await controller.create(
+      TaskDraft(
+        title: 'Timed task still due',
+        scheduledDate: today,
+        scheduledTime: now.add(const Duration(minutes: 2)),
+      ),
+    );
+
+    await tester.pumpWidget(wrap());
+    await tester.pumpAndSettle();
+
+    expect(find.text('Timed task still due'), findsOneWidget);
+    expect(find.text('Timed task past due'), findsNothing);
+
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Overdue'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Timed task past due'), findsOneWidget);
+    expect(find.text('Timed task still due'), findsNothing);
+    final rowLabel = tester.getSemantics(find.byType(TaskRow)).label;
+    expect(rowLabel, contains('Timed task past due'));
+    expect(rowLabel, endsWith(', overdue'));
+    expect(find.text('Timed task past due, overdue'), findsNothing);
+    final title = tester.widget<Text>(find.text('Timed task past due'));
+    expect(title.style?.color, const Color(0xFFD92D20));
   });
 
   testWidgets('upcoming folders view groups active tasks by folder', (
@@ -386,7 +457,7 @@ void main() {
     expect(find.text('Nothing scheduled yet.'), findsOneWidget);
   });
 
-  testWidgets('Today chip in upcoming create sheet creates a today task', (
+  testWidgets('Schedule in upcoming keeps its tomorrow default date', (
     tester,
   ) async {
     await tester.pumpWidget(wrap());
@@ -395,14 +466,15 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Create task'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'Back to today');
-    await tester.tap(find.widgetWithText(OutlinedButton, 'Today'));
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Schedule'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const Key('edit-task-done-button')));
+    expect(find.text('New task'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('create-task-options-button')));
     await tester.pumpAndSettle();
 
     expect(find.text('Back to today'), findsOneWidget);
-    expect(find.byKey(const Key('upcoming-section-today')), findsOneWidget);
-    expect(find.byKey(const Key('upcoming-section-tomorrow')), findsNothing);
+    expect(find.byKey(const Key('upcoming-section-tomorrow')), findsOneWidget);
+    expect(find.byKey(const Key('upcoming-section-today')), findsNothing);
   });
 }
 
@@ -410,5 +482,3 @@ DateTime _today() {
   final now = DateTime.now();
   return DateTime(now.year, now.month, now.day);
 }
-
-

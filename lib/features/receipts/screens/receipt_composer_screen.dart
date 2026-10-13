@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/sheets/app_sheet_shadow.dart';
 import '../../../shared/services/sync_haptics.dart';
@@ -338,7 +339,6 @@ class _ReceiptComposerBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     final quotaValue = ref.watch(receiptQuotaProvider);
     final proValue = ref.watch(receiptProEntitlementProvider);
     final isPro = proValue.value?.isPro == true;
@@ -376,22 +376,15 @@ class _ReceiptComposerBody extends ConsumerWidget {
                 ),
                 loading: () => Text(
                   'Checking receipts created this week...',
-                  style: _supportingStyle(textTheme, colors),
+                  style: _supportingStyle(context),
                 ),
                 error: (_, _) => Text(
                   'Receipt count unavailable',
-                  style: _supportingStyle(textTheme, colors),
+                  style: _supportingStyle(context),
                 ),
               ),
               const SizedBox(height: 10),
-              Text(
-                'Title',
-                style: textTheme.labelLarge?.copyWith(
-                  color: colors.textSecondary,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+              Text('Title', style: SyncTypography.of(context).sectionLabel),
               const SizedBox(height: 6),
               SizedBox(
                 height: 56,
@@ -414,11 +407,9 @@ class _ReceiptComposerBody extends ConsumerWidget {
                           focusedBorder: InputBorder.none,
                           isCollapsed: true,
                         ),
-                        style: textTheme.titleMedium?.copyWith(
-                          color: colors.textPrimary,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w700,
-                        ),
+                        style: SyncTypography.of(
+                          context,
+                        ).bodyTitle.copyWith(color: colors.textPrimary),
                       ),
                     ),
                   ),
@@ -440,11 +431,9 @@ class _ReceiptComposerBody extends ConsumerWidget {
                           tasks.isEmpty
                               ? _emptySelectionLabel(seed.source)
                               : _taskCountLabel(tasks.length),
-                          style: textTheme.bodyLarge?.copyWith(
-                            color: colors.textPrimary,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: SyncTypography.of(
+                            context,
+                          ).rowTitle.copyWith(color: colors.textPrimary),
                         ),
                       ),
                       TextButton(onPressed: null, child: const Text('Edit')),
@@ -522,15 +511,8 @@ class _ReceiptComposerBody extends ConsumerWidget {
     );
   }
 
-  TextStyle? _supportingStyle(
-    TextTheme textTheme,
-    SyncTasksColorScheme colors,
-  ) {
-    return textTheme.bodySmall?.copyWith(
-      color: colors.textSecondary,
-      fontSize: 13,
-      fontWeight: FontWeight.w600,
-    );
+  TextStyle _supportingStyle(BuildContext context) {
+    return SyncTypography.of(context).supporting;
   }
 
   String _taskCountLabel(int count) {
@@ -558,7 +540,6 @@ class _ReceiptQuotaProBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     final title = isPro
         ? 'Unlimited receipts active'
         : '${status.usedThisWeek} of ${status.freeLimit} free receipts used';
@@ -596,22 +577,14 @@ class _ReceiptQuotaProBanner extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: textTheme.bodyLarge?.copyWith(
-                        color: colors.textPrimary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: 0,
-                      ),
+                      style: SyncTypography.of(
+                        context,
+                      ).rowTitle.copyWith(color: colors.textPrimary),
                     ),
                     const SizedBox(height: 3),
                     Text(
                       subtitle,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: colors.textSecondary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0,
-                      ),
+                      style: SyncTypography.of(context).supporting,
                     ),
                   ],
                 ),
@@ -629,12 +602,9 @@ class _ReceiptQuotaProBanner extends StatelessWidget {
                   ),
                   child: Text(
                     'PRO',
-                    style: textTheme.labelSmall?.copyWith(
-                      color: colors.surface,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 0,
-                    ),
+                    style: SyncTypography.of(
+                      context,
+                    ).sectionLabel.copyWith(color: colors.surface),
                   ),
                 ),
               ],
@@ -681,8 +651,6 @@ class _ReceiptPrintingViewState extends ConsumerState<_ReceiptPrintingView> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -771,10 +739,7 @@ class _ReceiptPrintingViewState extends ConsumerState<_ReceiptPrintingView> {
           child: Text(
             'Printing your wins...',
             textAlign: TextAlign.center,
-            style: textTheme.bodyLarge?.copyWith(
-              color: colors.textSecondary,
-              fontSize: 14,
-            ),
+            style: SyncTypography.of(context).supporting,
           ),
         ),
       ],
@@ -829,7 +794,6 @@ class _ReceiptPersonaliseSheetState
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -857,12 +821,7 @@ class _ReceiptPersonaliseSheetState
                 Expanded(
                   child: Text(
                     'Personalise',
-                    style: textTheme.titleLarge?.copyWith(
-                      color: colors.textPrimary,
-                      fontSize: 29,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0,
-                    ),
+                    style: SyncTypography.of(context).pageTitle,
                   ),
                 ),
                 IconButton(
@@ -953,10 +912,7 @@ class _ReceiptPersonaliseSheetState
                   ? 'A signature, a doodle, anything you like.'
                   : 'Snap a photo to add it to your receipt.',
               textAlign: TextAlign.center,
-              style: textTheme.bodySmall?.copyWith(
-                color: colors.textSecondary,
-                fontSize: 12,
-              ),
+              style: SyncTypography.of(context).supporting,
             ),
             const SizedBox(height: 8),
             FilledButton(
@@ -991,10 +947,7 @@ class _ReceiptPersonaliseSheetState
       minimumSize: const Size(0, 40),
       padding: const EdgeInsets.symmetric(horizontal: 8),
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-        fontSize: 14,
-        fontWeight: FontWeight.w700,
-      ),
+      textStyle: SyncTypography.of(context).button,
     );
   }
 
@@ -1136,7 +1089,6 @@ class _ReceiptPersonaliseTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     final foreground = selected ? colors.controlForeground : colors.textPrimary;
     return Expanded(
       child: Material(
@@ -1151,11 +1103,9 @@ class _ReceiptPersonaliseTab extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   label,
-                  style: textTheme.bodyLarge?.copyWith(
-                    color: foreground,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: SyncTypography.of(
+                    context,
+                  ).button.copyWith(color: foreground),
                 ),
               ],
             ),
@@ -1180,7 +1130,6 @@ class _PhotoCapturePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -1201,17 +1150,14 @@ class _PhotoCapturePanel extends StatelessWidget {
                   const SizedBox(height: 12),
                   Text(
                     'Take photo',
-                    style: textTheme.titleMedium?.copyWith(
-                      color: colors.textPrimary,
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: SyncTypography.of(
+                      context,
+                    ).bodyTitle.copyWith(color: colors.textPrimary),
                   ),
                   const SizedBox(height: 6),
                   Text(
                     'Use your camera for this receipt.',
-                    style: textTheme.bodySmall?.copyWith(
-                      color: colors.textSecondary,
-                    ),
+                    style: SyncTypography.of(context).supporting,
                   ),
                   const SizedBox(height: 18),
                   OutlinedButton.icon(

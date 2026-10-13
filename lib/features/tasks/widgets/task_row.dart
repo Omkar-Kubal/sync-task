@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../../shared/motion/sync_motion.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/services/sync_sounds.dart';
@@ -21,7 +22,7 @@ class TaskRow extends StatelessWidget {
     this.isSelected = false,
     this.onSelectionToggle,
     this.onLongPress,
-    this.onRescheduleToday,
+    this.onReschedule,
     super.key,
   });
 
@@ -36,12 +37,15 @@ class TaskRow extends StatelessWidget {
   final bool isSelected;
   final VoidCallback? onSelectionToggle;
   final VoidCallback? onLongPress;
-  final VoidCallback? onRescheduleToday;
+  final VoidCallback? onReschedule;
 
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final label = metadata == null ? title : '$title, $metadata';
+    final baseLabel = metadata == null ? title : '$title, $metadata';
+    final label = textState == TaskRowTextState.overdueIncomplete
+        ? '$baseLabel, overdue'
+        : baseLabel;
     final showCheckmark = selectionMode ? isSelected : isCompleted;
     final effectiveTextState =
         textState == TaskRowTextState.normal && isCompleted
@@ -201,18 +205,13 @@ class TaskRow extends StatelessWidget {
                         title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              color: titleColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              letterSpacing: 0,
-                              height: 1.08,
-                              decoration: isCompletedText
-                                  ? TextDecoration.lineThrough
-                                  : null,
-                              decorationColor: colors.textSecondary,
-                            ),
+                        style: SyncTypography.of(context).rowTitle.copyWith(
+                          color: titleColor,
+                          decoration: isCompletedText
+                              ? TextDecoration.lineThrough
+                              : null,
+                          decorationColor: colors.textSecondary,
+                        ),
                       ),
                       if (metadata != null) ...[
                         const SizedBox(height: 2),
@@ -220,26 +219,19 @@ class TaskRow extends StatelessWidget {
                           metadata!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(
-                                color: colors.textSecondary.withValues(
-                                  alpha: 0.82,
-                                ),
-                                fontSize: 11,
-                                fontWeight: FontWeight.w400,
-                                letterSpacing: 0,
-                                height: 1.1,
-                              ),
+                          style: SyncTypography.of(context).supporting.copyWith(
+                            color: colors.textSecondary.withValues(alpha: 0.82),
+                          ),
                         ),
                       ],
-                      if (!selectionMode && onRescheduleToday != null) ...[
+                      if (!selectionMode && onReschedule != null) ...[
                         const SizedBox(height: 2),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: TextButton.icon(
-                            onPressed: onRescheduleToday,
+                            onPressed: onReschedule,
                             style: TextButton.styleFrom(
-                              foregroundColor: colors.destructive,
+                              foregroundColor: colors.textPrimary,
                               visualDensity: VisualDensity.compact,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               padding: EdgeInsets.zero,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/theme/sync_typography.dart';
+
 import '../sheets/app_bottom_sheet.dart';
 
 class WheelPickerSheet extends StatelessWidget {
@@ -20,17 +22,17 @@ class WheelPickerSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(title, style: Theme.of(context).textTheme.titleMedium),
+          Text(title, style: SyncTypography.of(context).pageTitle),
           const SizedBox(height: 24),
           Text(
             '${initialMinutes ~/ 60}'.padLeft(2, '0'),
-            style: Theme.of(context).textTheme.headlineLarge,
+            style: SyncTypography.of(context).pageTitle,
           ),
           const Text('hours'),
           const SizedBox(height: 12),
           Text(
             '${initialMinutes % 60}'.padLeft(2, '0'),
-            style: Theme.of(context).textTheme.headlineLarge,
+            style: SyncTypography.of(context).pageTitle,
           ),
           const Text('minutes'),
           const SizedBox(height: 24),
@@ -52,5 +54,3 @@ class WheelPickerSheet extends StatelessWidget {
     );
   }
 }
-
-

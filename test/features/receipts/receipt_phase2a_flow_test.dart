@@ -114,7 +114,7 @@ void main() {
 
     expect(
       tester.widget<Text>(find.text('Create receipt')).style?.fontSize,
-      29,
+      22,
     );
     expect(find.text('0 of 3 free receipts used'), findsOneWidget);
     expect(find.text('Pro unlocks unlimited receipts'), findsOneWidget);
@@ -163,7 +163,7 @@ void main() {
     );
     expect(printingFeedback.stops, 1);
     expect(find.text('Your receipt'), findsOneWidget);
-    expect(tester.widget<Text>(find.text('Your receipt')).style?.fontSize, 29);
+    expect(tester.widget<Text>(find.text('Your receipt')).style?.fontSize, 22);
     expect(find.text('Migration wins'), findsOneWidget);
     expect(find.text('Write the migration'), findsOneWidget);
     expect(find.text('ITEM'), findsOneWidget);
@@ -240,7 +240,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Personalise'), findsOneWidget);
-    expect(tester.widget<Text>(find.text('Personalise')).style?.fontSize, 29);
+    expect(tester.widget<Text>(find.text('Personalise')).style?.fontSize, 22);
     expect(find.text('Hand drawn'), findsOneWidget);
     expect(find.text('Photo'), findsOneWidget);
 

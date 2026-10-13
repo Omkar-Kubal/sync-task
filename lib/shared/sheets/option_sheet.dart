@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/theme/sync_typography.dart';
+
 import 'app_bottom_sheet.dart';
 
 class OptionSheet<T> extends StatelessWidget {
@@ -21,7 +23,7 @@ class OptionSheet<T> extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(title, style: Theme.of(context).textTheme.titleMedium),
+          Text(title, style: SyncTypography.of(context).pageTitle),
           const SizedBox(height: 12),
           for (final entry in options.entries)
             Material(
@@ -36,5 +38,3 @@ class OptionSheet<T> extends StatelessWidget {
     );
   }
 }
-
-

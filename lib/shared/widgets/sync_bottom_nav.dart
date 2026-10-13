@@ -2,6 +2,7 @@ import '../icons/list_filter_icon.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/theme/synctasks_color_scheme.dart';
+import '../../core/theme/sync_typography.dart';
 import '../services/sync_haptics.dart';
 import '../services/sync_sounds.dart';
 
@@ -20,32 +21,43 @@ class SyncBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
+    final media = MediaQuery.of(context);
+    final textScale = media.textScaler.scale(14) / 14;
+    final navHeight = 56 + ((textScale - 1) * 18).clamp(0.0, 32.0).toDouble();
+    final desiredWidth =
+        184 + ((textScale - 1) * 136).clamp(0.0, 220).toDouble();
+    final maxWidth = (media.size.width - 24)
+        .clamp(0.0, desiredWidth)
+        .toDouble();
     return SafeArea(
       top: false,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(12, 4, 12, 6),
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints.tightFor(width: 184),
-            child: Container(
-              key: const Key('sync-bottom-nav-pill'),
-              height: 44,
-              decoration: BoxDecoration(
-                color: colors.surface.withAlpha(0xD9),
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Row(
-                children: [
-                  for (var i = 0; i < _items.length; i++)
-                    Expanded(
-                      child: _SyncBottomNavButton(
-                        index: i,
-                        item: _items[i],
-                        selected: currentIndex == i,
-                        onTap: () => onTap(i),
+            constraints: BoxConstraints(maxWidth: maxWidth),
+            child: SizedBox(
+              width: desiredWidth,
+              child: Container(
+                key: const Key('sync-bottom-nav-pill'),
+                height: navHeight,
+                decoration: BoxDecoration(
+                  color: colors.surface.withAlpha(0xD9),
+                  borderRadius: BorderRadius.circular(28),
+                ),
+                child: Row(
+                  children: [
+                    for (var i = 0; i < _items.length; i++)
+                      Expanded(
+                        child: _SyncBottomNavButton(
+                          index: i,
+                          item: _items[i],
+                          selected: currentIndex == i,
+                          onTap: () => onTap(i),
+                        ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -72,28 +84,50 @@ class _SyncBottomNavButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
     final iconColor = colors.textPrimary;
+    void selectItem() {
+      SyncHaptics.selection();
+      SyncSounds.play(SyncSoundEffect.select);
+      onTap();
+    }
+
     return Semantics(
+      container: true,
       selected: selected,
       button: true,
       label: item.label,
+      onTap: selectItem,
       child: Tooltip(
         message: item.label,
+        excludeFromSemantics: true,
         child: InkResponse(
-          onTap: () {
-            SyncHaptics.selection();
-            SyncSounds.play(SyncSoundEffect.select);
-            onTap();
-          },
+          onTap: selectItem,
           radius: 26,
           containedInkWell: true,
           customBorder: const CircleBorder(),
           child: SizedBox.expand(
             child: Center(
-              child: ExcludeSemantics(
-                child: _SyncNavIcon(
-                  index: index,
-                  color: iconColor,
-                  selected: selected,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ExcludeSemantics(
+                      child: _SyncNavIcon(
+                        index: index,
+                        color: iconColor,
+                        selected: selected,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    ExcludeSemantics(
+                      child: Text(
+                        item.label,
+                        style: SyncTypography.of(
+                          context,
+                        ).button.copyWith(color: colors.textPrimary),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -155,18 +189,11 @@ class _TodayIcon extends StatelessWidget {
       ),
       child: Text(
         today,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          color: foreground,
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0,
-          height: 1,
-        ),
+        style: SyncTypography.of(context).action.copyWith(color: foreground),
       ),
     );
   }
 }
-
 
 class _ListsNavIcon extends StatelessWidget {
   const _ListsNavIcon({required this.color, required this.selected});

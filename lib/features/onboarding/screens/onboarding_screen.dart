@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../../features/settings/providers/settings_controller.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
@@ -192,7 +193,6 @@ class _OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -211,24 +211,12 @@ class _OnboardingPage extends StatelessWidget {
                 Text(
                   data.title,
                   textAlign: TextAlign.left,
-                  style: textTheme.displaySmall?.copyWith(
-                    color: colors.textPrimary,
-                    fontSize: 31,
-                    fontWeight: FontWeight.w700,
-                    height: 1.08,
-                    letterSpacing: 0,
-                  ),
+                  style: SyncTypography.of(
+                    context,
+                  ).heroMetric.copyWith(color: colors.textPrimary),
                 ),
                 const SizedBox(height: 12),
-                Text(
-                  data.body,
-                  style: textTheme.bodyLarge?.copyWith(
-                    color: colors.textSecondary,
-                    fontSize: 15,
-                    height: 1.42,
-                    letterSpacing: 0,
-                  ),
-                ),
+                Text(data.body, style: SyncTypography.of(context).supporting),
               ],
             ),
           ),
@@ -401,20 +389,9 @@ class _SchedulePreviewRow extends StatelessWidget {
           Icon(icon, size: 19, color: colors.textPrimary),
           const SizedBox(width: 10),
           Expanded(
-            child: Text(
-              label,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
-            ),
+            child: Text(label, style: SyncTypography.of(context).rowTitle),
           ),
-          Text(
-            value ?? '',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: colors.textSecondary,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          Text(value ?? '', style: SyncTypography.of(context).sectionLabel),
         ],
       ),
     );
@@ -465,12 +442,7 @@ class _ListPreviewRow extends StatelessWidget {
           Icon(icon, size: 19),
           const SizedBox(width: 12),
           Expanded(
-            child: Text(
-              label,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
-            ),
+            child: Text(label, style: SyncTypography.of(context).rowTitle),
           ),
           if (count != null)
             Container(
@@ -481,10 +453,7 @@ class _ListPreviewRow extends StatelessWidget {
               ),
               child: Text(
                 count!,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: colors.textSecondary,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: SyncTypography.of(context).sectionLabel,
               ),
             ),
         ],
@@ -570,9 +539,7 @@ class _FinishPill extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+              style: SyncTypography.of(context).sectionLabel,
             ),
           ),
         ],
@@ -629,17 +596,12 @@ class _OnboardingPageData {
   final _OnboardingVisual visual;
 }
 
-
-
-
-
 class _WidgetsVisual extends StatelessWidget {
   const _WidgetsVisual();
 
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
 
     return Container(
       width: 214,
@@ -667,22 +629,16 @@ class _WidgetsVisual extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
-                Icons.today_rounded,
-                size: 16,
-                color: colors.textPrimary,
-              ),
+              Icon(Icons.today_rounded, size: 16, color: colors.textPrimary),
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
                   'Today Widget',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: textTheme.labelLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 13,
-                    color: colors.textPrimary,
-                  ),
+                  style: SyncTypography.of(
+                    context,
+                  ).rowTitle.copyWith(color: colors.textPrimary),
                 ),
               ),
               const SizedBox(width: 6),
@@ -694,11 +650,7 @@ class _WidgetsVisual extends StatelessWidget {
                 ),
                 child: Text(
                   '3/5 done',
-                  style: textTheme.bodySmall?.copyWith(
-                    color: colors.textSecondary,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: SyncTypography.of(context).sectionLabel,
                 ),
               ),
             ],
@@ -798,21 +750,13 @@ class _WidgetTaskItem extends StatelessWidget {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
+            style: SyncTypography.of(context).rowTitle.copyWith(
               color: isDone ? colors.textSecondary : colors.textPrimary,
               decoration: isDone ? TextDecoration.lineThrough : null,
             ),
           ),
         ),
-        Text(
-          time,
-          style: TextStyle(
-            fontSize: 11,
-            color: colors.textSecondary,
-          ),
-        ),
+        Text(time, style: SyncTypography.of(context).supporting),
       ],
     );
   }

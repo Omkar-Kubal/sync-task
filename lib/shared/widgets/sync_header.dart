@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme/synctasks_color_scheme.dart';
+import '../../core/theme/sync_typography.dart';
 
 class SyncHeader extends StatelessWidget {
   const SyncHeader({
@@ -18,7 +18,6 @@ class SyncHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTasksColorScheme.of(context);
     return Padding(
       padding: compact
           ? const EdgeInsets.fromLTRB(20, 18, 20, 16)
@@ -32,17 +31,10 @@ class SyncHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: Theme.of(context).textTheme.titleLarge),
+                Text(title, style: SyncTypography.of(context).pageTitle),
                 if (subtitle != null) ...[
                   const SizedBox(height: 6),
-                  Text(
-                    subtitle!,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: colors.textSecondary,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
+                  Text(subtitle!, style: SyncTypography.of(context).supporting),
                 ],
               ],
             ),
@@ -53,5 +45,3 @@ class SyncHeader extends StatelessWidget {
     );
   }
 }
-
-

@@ -2,23 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/services/sync_sounds.dart';
 import '../../../shared/sheets/app_bottom_sheet.dart';
 import '../providers/folders_provider.dart';
+import 'task_edit_sheet.dart';
+
+class TaskCreateScheduleDraft {
+  const TaskCreateScheduleDraft({
+    required this.title,
+    required this.scheduledDate,
+  });
+
+  final String title;
+  final DateTime? scheduledDate;
+}
 
 class TaskCreateSheet extends ConsumerStatefulWidget {
   const TaskCreateSheet({
     required this.onSubmit,
-    required this.onTodaySelected,
+    required this.onSchedule,
+    required this.onScheduledDone,
+    this.prepareSchedule,
+    this.initialScheduledDate,
+    this.initialReminderTime,
     this.folderLabel = 'Inbox',
     this.initialFolderId,
     super.key,
   });
 
   final void Function(String title, int? folderId) onSubmit;
-  final void Function(String title, int? folderId) onTodaySelected;
+  final Future<void> Function(
+    String title,
+    int? folderId,
+    TaskEditUpdate update,
+  )
+  onSchedule;
+  final VoidCallback onScheduledDone;
+  final TaskCreateScheduleDraft Function(
+    String title,
+    DateTime? initialScheduledDate,
+  )?
+  prepareSchedule;
+  final DateTime? initialScheduledDate;
+  final DateTime? initialReminderTime;
   final String folderLabel;
   final int? initialFolderId;
 
@@ -33,17 +62,26 @@ class _TaskCreateSheetState extends ConsumerState<TaskCreateSheet> {
   late String _selectedFolderLabel;
   late int? _selectedFolderId;
   var _hasChosenFolder = false;
+  var _isScheduling = false;
+  var _hasSubmitted = false;
+  var _lastSubmittedTitle = '';
+  late String _scheduleTitle;
+  late DateTime? _scheduleDate;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    _controller.addListener(_resetSubmissionOnDraftChange);
     _selectedFolderLabel = widget.folderLabel;
     _selectedFolderId = widget.initialFolderId;
+    _scheduleTitle = '';
+    _scheduleDate = widget.initialScheduledDate;
   }
 
   @override
   void dispose() {
+    _controller.removeListener(_resetSubmissionOnDraftChange);
     _controller.dispose();
     super.dispose();
   }
@@ -64,6 +102,19 @@ class _TaskCreateSheetState extends ConsumerState<TaskCreateSheet> {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
+    if (_isScheduling) {
+      return TaskEditSheet(
+        title: _scheduleTitle,
+        scheduledDate: _scheduleDate,
+        reminderTime: widget.initialReminderTime,
+        isCreating: true,
+        onCancel: () => setState(() => _isScheduling = false),
+        onDone: widget.onScheduledDone,
+        onSave: (update) =>
+            widget.onSchedule(update.title, _selectedFolderId, update),
+      );
+    }
+
     final folders = ref.watch(foldersProvider).value ?? const [];
     final folderOptions = <int, String>{
       _inboxFolderOptionId: 'Inbox',
@@ -82,12 +133,10 @@ class _TaskCreateSheetState extends ConsumerState<TaskCreateSheet> {
             child: TextField(
               controller: _controller,
               autofocus: true,
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0,
-                height: 1.15,
-              ),
+              textInputAction: TextInputAction.done,
+              onSubmitted: (_) => _submit(),
+              onChanged: (_) => setState(() {}),
+              style: SyncTypography.of(context).bodyTitle,
               cursorColor: const Color(0xFF9BCFFF),
               cursorWidth: 3,
               decoration: InputDecoration(
@@ -101,11 +150,8 @@ class _TaskCreateSheetState extends ConsumerState<TaskCreateSheet> {
                 border: _titleBorder(colors),
                 enabledBorder: _titleBorder(colors),
                 focusedBorder: _titleBorder(colors),
-                hintStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                hintStyle: SyncTypography.of(context).bodyTitle.copyWith(
                   color: colors.textSecondary.withValues(alpha: 0.72),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
                 ),
               ),
             ),
@@ -131,39 +177,46 @@ class _TaskCreateSheetState extends ConsumerState<TaskCreateSheet> {
                         onPressed: () {
                           SyncHaptics.selection();
                           SyncSounds.play(SyncSoundEffect.select);
-                          widget.onTodaySelected(
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          final prepared = widget.prepareSchedule?.call(
                             _controller.text,
-                            _selectedFolderId,
+                            widget.initialScheduledDate,
                           );
+                          setState(() {
+                            _scheduleTitle =
+                                prepared?.title ?? _controller.text;
+                            _scheduleDate = prepared == null
+                                ? widget.initialScheduledDate
+                                : prepared.scheduledDate;
+                            _isScheduling = true;
+                          });
                         },
                         style: _chipStyle(context),
                         icon: const Icon(SyncIcons.date, size: 18),
-                        label: const Text('Today'),
+                        label: const Text('Schedule'),
                       ),
                     ],
                   ),
                 ),
               ),
               const SizedBox(width: 8),
-              Semantics(
-                label: 'Submit task',
-                button: true,
-                child: SizedBox.square(
-                  dimension: 44,
-                  child: IconButton.filled(
-                    onPressed: () {
-                      SyncHaptics.action();
-                      SyncSounds.play(SyncSoundEffect.action);
-                      widget.onSubmit(_controller.text, _selectedFolderId);
-                    },
-                    style: IconButton.styleFrom(
-                      backgroundColor: colors.controlPrimary,
-                      foregroundColor: colors.controlForeground,
-                      side: BorderSide.none,
-                      shape: const CircleBorder(),
-                    ),
-                    icon: const Icon(SyncIcons.submit, size: 22),
+              ValueListenableBuilder<TextEditingValue>(
+                valueListenable: _controller,
+                builder: (context, value, _) => FilledButton.icon(
+                  onPressed: value.text.trim().isEmpty || _hasSubmitted
+                      ? null
+                      : _submit,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: colors.controlPrimary,
+                    foregroundColor: colors.controlForeground,
+                    disabledBackgroundColor: colors.surfaceSecondary,
+                    disabledForegroundColor: colors.textSecondary,
+                    minimumSize: const Size(78, 44),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    shape: const StadiumBorder(),
                   ),
+                  icon: const Icon(SyncIcons.submit, size: 18),
+                  label: const Text('Add'),
                 ),
               ),
             ],
@@ -171,6 +224,23 @@ class _TaskCreateSheetState extends ConsumerState<TaskCreateSheet> {
         ],
       ),
     );
+  }
+
+  void _submit() {
+    if (_controller.text.trim().isEmpty || _hasSubmitted) {
+      return;
+    }
+    _lastSubmittedTitle = _controller.text;
+    setState(() => _hasSubmitted = true);
+    SyncHaptics.action();
+    SyncSounds.play(SyncSoundEffect.action);
+    widget.onSubmit(_controller.text, _selectedFolderId);
+  }
+
+  void _resetSubmissionOnDraftChange() {
+    if (_hasSubmitted && _controller.text != _lastSubmittedTitle) {
+      setState(() => _hasSubmitted = false);
+    }
   }
 
   Future<void> _showFolderPicker(
@@ -224,6 +294,7 @@ class _TaskCreateSheetState extends ConsumerState<TaskCreateSheet> {
 
     setState(() {
       _hasChosenFolder = true;
+      _hasSubmitted = false;
       _selectedFolderId = selectedId == _inboxFolderOptionId
           ? null
           : selectedId;
@@ -240,11 +311,7 @@ class _TaskCreateSheetState extends ConsumerState<TaskCreateSheet> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       side: BorderSide(color: colors.divider, width: 1.5),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-      textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-        fontSize: 14,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0,
-      ),
+      textStyle: SyncTypography.of(context).button,
     );
   }
 
@@ -277,12 +344,9 @@ class _FolderMenuOptionRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: colors.textPrimary,
-              fontSize: 17,
-              fontWeight: FontWeight.w400,
-              letterSpacing: 0,
-            ),
+            style: SyncTypography.of(
+              context,
+            ).bodyTitle.copyWith(color: colors.textPrimary),
           ),
         ),
       ],

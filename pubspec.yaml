@@ -56,25 +56,17 @@ flutter:
     - assets/images/logo-whitebackground.png
     - assets/images/notion-icon.webp
     - assets/sounds/
+    - assets/fonts/GoogleSans-OFL.txt
+    - assets/fonts/GoogleSans-TRADEMARKS.md
   fonts:
-    - family: Geist
+    - family: Google Sans
       fonts:
-        - asset: assets/fonts/Geist-Regular.ttf
+        - asset: assets/fonts/GoogleSans-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Geist-Medium.ttf
+        - asset: assets/fonts/GoogleSans-Medium.ttf
           weight: 500
-        - asset: assets/fonts/Geist-SemiBold.ttf
+        - asset: assets/fonts/GoogleSans-SemiBold.ttf
           weight: 600
-        - asset: assets/fonts/Geist-Bold.ttf
-          weight: 700
-    - family: Poppins
-      fonts:
-        - asset: assets/fonts/Poppins-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/Poppins-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Poppins-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/Poppins-Bold.ttf
+        - asset: assets/fonts/GoogleSans-Bold.ttf
           weight: 700
 

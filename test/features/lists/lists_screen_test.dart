@@ -40,9 +40,9 @@ void main() {
       expect(find.text(text), findsWidgets);
     }
 
-    expect(find.text('Lists'), findsOneWidget);
-    final title = tester.widget<Text>(find.text('Lists'));
-    expect(title.style?.fontSize, 29);
+    expect(find.text('Lists'), findsWidgets);
+    final title = tester.widget<Text>(find.text('Lists').first);
+    expect(title.style?.fontSize, 22);
     expect(find.text('Organization Hub'), findsNothing);
     expect(find.bySemanticsLabel('More list options'), findsNothing);
     expect(find.bySemanticsLabel('Settings'), findsNothing);
@@ -132,7 +132,8 @@ void main() {
     expect(find.text('Inbox'), findsWidgets);
 
     await tester.enterText(find.byType(TextField), 'Inbox from Lists');
-    await tester.tap(find.bySemanticsLabel('Submit task'));
+    await tester.pump();
+    await tester.tap(find.widgetWithText(FilledButton, 'Add'));
     await tester.pumpAndSettle();
 
     final tasks = await TaskRepository(db).listAllActiveTasks();
@@ -143,7 +144,7 @@ void main() {
     expect(find.text('Inbox from Lists'), findsOneWidget);
   });
 
-  testWidgets('lists screen create sheet can hand off to edit sheet', (
+  testWidgets('lists screen create sheet opens new task options', (
     tester,
   ) async {
     await useTallViewport(tester);
@@ -160,12 +161,13 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Create task'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'Edit from Lists');
-    await tester.tap(find.widgetWithText(OutlinedButton, 'Today'));
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Schedule'));
     await tester.pumpAndSettle();
 
+    expect(find.text('New task'), findsOneWidget);
     expect(find.byKey(const Key('edit-task-title-field')), findsOneWidget);
 
-    await tester.tap(find.byKey(const Key('edit-task-done-button')));
+    await tester.tap(find.byKey(const Key('create-task-options-button')));
     await tester.pumpAndSettle();
 
     final tasks = await TaskRepository(db).listAllActiveTasks();

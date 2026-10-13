@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/sheets/app_sheet_shadow.dart';
 import '../../../shared/services/sync_haptics.dart';
@@ -175,7 +176,6 @@ class _PaywallHeaderLockup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     return Row(
       children: [
         _PaywallCloseButton(onClose: onClose),
@@ -194,10 +194,9 @@ class _PaywallHeaderLockup extends StatelessWidget {
                       key: const ValueKey('receipt-pro-brand-title'),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: textTheme.titleMedium?.copyWith(
-                        color: colors.textPrimary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: SyncTypography.of(
+                        context,
+                      ).cardTitle.copyWith(color: colors.textPrimary),
                     ),
                   ),
                   const SizedBox(width: 6),
@@ -213,11 +212,7 @@ class _PaywallHeaderLockup extends StatelessWidget {
                   child: Text(
                     'Unlimited receipts for your completed work.',
                     maxLines: 1,
-                    style: textTheme.bodySmall?.copyWith(
-                      color: colors.textSecondary,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: SyncTypography.of(context).supporting,
                   ),
                 ),
               ),
@@ -313,10 +308,9 @@ class _ReceiptProCheckout extends StatelessWidget {
               'Restore purchases',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.labelLarge?.copyWith(
-                color: colors.textPrimary,
-                fontWeight: FontWeight.w600,
-              ),
+              style: SyncTypography.of(
+                context,
+              ).action.copyWith(color: colors.textPrimary),
             ),
           ),
         ),
@@ -382,7 +376,6 @@ class _PaywallProBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     return Container(
       key: const ValueKey('receipt-pro-badge'),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
@@ -401,13 +394,9 @@ class _PaywallProBadge extends StatelessWidget {
           const SizedBox(width: 3),
           Text(
             'PRO',
-            style: textTheme.labelLarge?.copyWith(
-              color: colors.scaffold,
-              fontSize: 9,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0,
-              height: 1,
-            ),
+            style: SyncTypography.of(
+              context,
+            ).sectionLabel.copyWith(color: colors.scaffold),
           ),
         ],
       ),
@@ -469,23 +458,15 @@ class _LifetimeOption extends StatelessWidget {
                     'Lifetime',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: textTheme.titleMedium?.copyWith(
-                      color: colors.textPrimary,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 0,
-                    ),
+                    style: SyncTypography.of(
+                      context,
+                    ).rowTitle.copyWith(color: colors.textPrimary),
                   ),
                   Text(
                     'One-time receipt upgrade',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: colors.textSecondary,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 0,
-                    ),
+                    style: SyncTypography.of(context).supporting,
                   ),
                 ],
               ),
@@ -500,12 +481,9 @@ class _LifetimeOption extends StatelessWidget {
                   priceLabel,
                   maxLines: 1,
                   textAlign: TextAlign.end,
-                  style: textTheme.titleMedium?.copyWith(
-                    color: colors.textPrimary,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0,
-                  ),
+                  style: SyncTypography.of(
+                    context,
+                  ).inlineAmount.copyWith(color: colors.textPrimary),
                 ),
               ),
             ),
@@ -533,11 +511,7 @@ class _InlineBillingStatus extends StatelessWidget {
           textAlign: TextAlign.center,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: colors.textSecondary,
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
-          ),
+          style: SyncTypography.of(context).supporting,
         ),
       ),
     );
@@ -725,22 +699,11 @@ class _PaywallFeatureRow extends StatelessWidget {
       leading: _PaywallIconTile(icon: icon, colors: colors),
       title: Text(
         title,
-        style: textTheme.titleMedium?.copyWith(
-          color: colors.textPrimary,
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 0,
-        ),
+        style: SyncTypography.of(
+          context,
+        ).rowTitle.copyWith(color: colors.textPrimary),
       ),
-      subtitle: Text(
-        body,
-        style: textTheme.bodyLarge?.copyWith(
-          color: colors.textSecondary,
-          fontSize: 13,
-          fontWeight: FontWeight.w500,
-          letterSpacing: 0,
-        ),
-      ),
+      subtitle: Text(body, style: SyncTypography.of(context).supporting),
     );
   }
 }

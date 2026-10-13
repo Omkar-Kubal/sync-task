@@ -13,17 +13,17 @@ void main() {
     expect(colors.textPrimary, const Color(0xFF000000));
     expect(colors.controlPrimary, const Color(0xFF000000));
     expect(colors.controlForeground, const Color(0xFFFFFFFF));
-    expect(theme.textTheme.displayLarge!.fontFamily, 'Poppins');
-    expect(theme.textTheme.displayMedium!.fontFamily, 'Poppins');
-    expect(theme.textTheme.displaySmall!.fontFamily, 'Poppins');
-    expect(theme.textTheme.titleLarge!.fontFamily, 'Poppins');
-    expect(theme.textTheme.headlineMedium!.fontFamily, 'Geist');
-    expect(theme.textTheme.titleMedium!.fontFamily, 'Geist');
-    expect(theme.textTheme.bodyLarge!.fontFamily, 'Geist');
-    expect(theme.textTheme.labelLarge!.fontFamily, 'Geist');
-    expect(theme.textTheme.displayLarge!.fontSize, 64);
-    expect(theme.textTheme.displayLarge!.fontWeight, FontWeight.w700);
-    expect(theme.textTheme.titleLarge!.fontSize, 29);
+    expect(theme.textTheme.displayLarge!.fontFamily, 'Google Sans');
+    expect(theme.textTheme.displayMedium!.fontFamily, 'Google Sans');
+    expect(theme.textTheme.displaySmall!.fontFamily, 'Google Sans');
+    expect(theme.textTheme.titleLarge!.fontFamily, 'Google Sans');
+    expect(theme.textTheme.headlineMedium!.fontFamily, 'Google Sans');
+    expect(theme.textTheme.titleMedium!.fontFamily, 'Google Sans');
+    expect(theme.textTheme.bodyLarge!.fontFamily, 'Google Sans');
+    expect(theme.textTheme.labelLarge!.fontFamily, 'Google Sans');
+    expect(theme.textTheme.displayLarge!.fontSize, 32);
+    expect(theme.textTheme.displayLarge!.fontWeight, FontWeight.w600);
+    expect(theme.textTheme.titleLarge!.fontSize, 22);
     expect(theme.textTheme.titleLarge!.letterSpacing, 0);
     expect(theme.textTheme.bodyLarge!.fontSize, 16);
   });
@@ -72,5 +72,3 @@ void main() {
     expect(colors.controlForeground, const Color(0xFF000000));
   });
 }
-
-

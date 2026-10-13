@@ -37,7 +37,7 @@ void main() {
 
     expect(find.text('Today'), findsOneWidget);
     final title = tester.widget<Text>(find.text('Today'));
-    expect(title.style?.fontSize, 29);
+    expect(title.style?.fontSize, 22);
     expect(find.text('Monday, August 31'), findsOneWidget);
     expect(find.bySemanticsLabel('Search'), findsOneWidget);
   });
@@ -58,7 +58,7 @@ void main() {
     expect(tester.getSize(find.bySemanticsLabel('Search')), const Size(44, 44));
   });
 
-  testWidgets('bottom navigation exposes Today and Lists icon-only tabs', (
+  testWidgets('bottom navigation shows text beside Today and Lists icons', (
     tester,
   ) async {
     await tester.pumpWidget(
@@ -69,10 +69,10 @@ void main() {
     expect(find.bySemanticsLabel('Upcoming'), findsNothing);
     expect(find.bySemanticsLabel('Focus'), findsNothing);
     expect(find.bySemanticsLabel('Lists'), findsOneWidget);
-    expect(find.text('Today'), findsNothing);
+    expect(find.text('Today'), findsOneWidget);
     expect(find.text('Upcoming'), findsNothing);
     expect(find.text('Focus'), findsNothing);
-    expect(find.text('Lists'), findsNothing);
+    expect(find.text('Lists'), findsOneWidget);
   });
 
   testWidgets('bottom navigation uses the shared task-list icon', (
@@ -84,6 +84,31 @@ void main() {
 
     expect(find.byType(ListFilterIcon), findsOneWidget);
     expect(find.byIcon(Icons.format_list_bulleted_rounded), findsNothing);
+  });
+
+  testWidgets('bottom navigation grows for enlarged text', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildSyncTasksTheme(Brightness.light),
+        home: MediaQuery(
+          data: MediaQueryData.fromView(
+            tester.view,
+          ).copyWith(textScaler: const TextScaler.linear(2)),
+          child: Scaffold(
+            body: const SizedBox.expand(),
+            bottomNavigationBar: SyncBottomNav(currentIndex: 0, onTap: (_) {}),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('Today'), findsOneWidget);
+    expect(find.text('Lists'), findsOneWidget);
+    expect(
+      tester.getSize(find.byKey(const Key('sync-bottom-nav-pill'))).height,
+      greaterThan(56),
+    );
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('bottom navigation emits haptics when Lists is tapped', (
@@ -151,12 +176,12 @@ void main() {
     final todayTile = find.byKey(const Key('sync-bottom-nav-today-tile'));
     final listIcon = tester.widget<ListFilterIcon>(find.byType(ListFilterIcon));
 
-    expect(tester.getSize(navPill), const Size(184, 44));
+    expect(tester.getSize(navPill), const Size(184, 56));
     expect(tester.getSize(todayTile), const Size(28, 28));
     expect(listIcon.size, 22);
     expect(navDecoration.color, const Color(0xD9FFFFFF));
     expect(navDecoration.border, isNull);
-    expect(navDecoration.borderRadius, BorderRadius.circular(24));
+    expect(navDecoration.borderRadius, BorderRadius.circular(28));
   });
 
   testWidgets('bottom navigation highlights Lists tile when selected', (
@@ -190,7 +215,7 @@ void main() {
     final left = tester.getTopLeft(navPill).dx;
     final right = tester.getTopRight(navPill).dx;
 
-    expect(tester.getSize(navPill).width, lessThanOrEqualTo(220));
+    expect(tester.getSize(navPill).width, 184);
     expect(left, closeTo((430 - tester.getSize(navPill).width) / 2, 0.1));
     expect(right, lessThanOrEqualTo(430 - 12));
   });
