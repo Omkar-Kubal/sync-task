@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/widgets/sync_empty_state.dart';
@@ -78,7 +79,6 @@ class _ReceiptDetailBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTasksColorScheme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -117,11 +117,7 @@ class _ReceiptDetailBody extends StatelessWidget {
               Text(
                 'Drag to play',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: colors.textSecondary,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: SyncTypography.of(context).supporting,
               ),
             ],
           ),

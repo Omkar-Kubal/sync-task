@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 
 class ReceiptScreenHeader extends StatelessWidget {
   const ReceiptScreenHeader({
@@ -20,8 +21,6 @@ class ReceiptScreenHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 18, 20, 8),
       child: ConstrainedBox(
@@ -42,12 +41,7 @@ class ReceiptScreenHeader extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: centerTitle ? TextAlign.center : TextAlign.start,
-                style: textTheme.titleLarge?.copyWith(
-                  color: colors.textPrimary,
-                  fontSize: 29,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0,
-                ),
+                style: SyncTypography.of(context).pageTitle,
               ),
             ),
             if (trailing != null) ...[

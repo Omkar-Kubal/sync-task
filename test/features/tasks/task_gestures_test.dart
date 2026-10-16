@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:synctasks/core/theme/app_theme.dart';
 import 'package:synctasks/features/tasks/widgets/task_row.dart';
+import 'package:synctasks/shared/services/sync_haptics.dart';
 import 'package:synctasks/shared/services/sync_sounds.dart';
 
 void main() {
+  setUp(SyncHaptics.resetForTesting);
   tearDown(SyncSounds.resetForTesting);
 
   testWidgets('task row exposes complete and delete semantic actions', (
@@ -245,7 +247,7 @@ void main() {
     expect(decoration.border?.top.width, 1.6);
     expect(decoration.border?.top.color, const Color(0xFF000000));
     expect(titleText.style?.fontSize, 14);
-    expect(folderText.style?.fontSize, 11);
+    expect(folderText.style?.fontSize, 12);
   });
 
   testWidgets('task row keeps a production tap target while staying compact', (
@@ -290,7 +292,7 @@ void main() {
             onTap: () {},
             onComplete: () {},
             onDelete: () {},
-            onRescheduleToday: () => rescheduled = true,
+            onReschedule: () => rescheduled = true,
           ),
         ),
       ),
@@ -299,7 +301,12 @@ void main() {
     final titleText = tester.widget<Text>(find.text('File taxes'));
 
     expect(titleText.style?.color, const Color(0xFFD92D20));
-    expect(titleText.style?.decoration, TextDecoration.none);
+    expect(titleText.style?.decoration, isNull);
+    expect(
+      tester.getSemantics(find.byType(TaskRow)).label,
+      'File taxes, overdue',
+    );
+    expect(find.text('Overdue'), findsNothing);
     expect(find.widgetWithText(TextButton, 'Reschedule'), findsOneWidget);
 
     await tester.tap(find.widgetWithText(TextButton, 'Reschedule'));
@@ -353,7 +360,7 @@ void main() {
     final titleText = tester.widget<Text>(find.text('Write report'));
 
     expect(titleText.style?.color, const Color(0xFF000000));
-    expect(titleText.style?.decoration, TextDecoration.none);
+    expect(titleText.style?.decoration, isNull);
     expect(find.widgetWithText(TextButton, 'Reschedule'), findsNothing);
   });
 }

@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../receipts/providers/receipt_feature_provider.dart';
 import '../../receipts/widgets/receipt_pro_paywall_sheet.dart';
 import '../../../shared/sheets/app_bottom_sheet.dart';
@@ -506,10 +507,7 @@ class _SettingsHeader extends StatelessWidget {
           Expanded(
             child: Text(
               'Settings',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontSize: 29,
-                color: colors.textPrimary,
-              ),
+              style: SyncTypography.of(context).pageTitle,
             ),
           ),
           if (showClose)
@@ -553,18 +551,9 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTasksColorScheme.of(context);
     return Padding(
       padding: const EdgeInsets.only(left: 8),
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-          color: colors.textSecondary,
-          fontSize: 15,
-          fontWeight: FontWeight.w700,
-          letterSpacing: 0,
-        ),
-      ),
+      child: Text(label, style: SyncTypography.of(context).sectionLabel),
     );
   }
 }
@@ -614,12 +603,9 @@ class _SettingsRow extends StatelessWidget {
           title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: colors.textPrimary,
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0,
-          ),
+          style: SyncTypography.of(
+            context,
+          ).rowTitle.copyWith(color: colors.textPrimary),
         ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
@@ -631,11 +617,7 @@ class _SettingsRow extends StatelessWidget {
                   value!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: colors.textSecondary,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: SyncTypography.of(context).supporting,
                 ),
               ),
               const SizedBox(width: 4),
@@ -666,11 +648,9 @@ class _SettingsActionSheet extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: colors.textPrimary,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: SyncTypography.of(
+                  context,
+                ).pageTitle.copyWith(color: colors.textPrimary),
               ),
             ),
             Semantics(
@@ -721,24 +701,16 @@ class _WhatsNewSheet extends StatelessWidget {
                   ),
                   child: Text(
                     'v1.0.0',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: colors.textPrimary,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0,
-                    ),
+                    style: SyncTypography.of(
+                      context,
+                    ).cardTitle.copyWith(color: colors.textPrimary),
                   ),
                 ),
               ),
               const SizedBox(width: 14),
               Text(
                 'September 8, 2026',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: colors.textSecondary,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0,
-                ),
+                style: SyncTypography.of(context).supporting,
               ),
             ],
           ),
@@ -829,12 +801,9 @@ class _CenteredSheetTitle extends StatelessWidget {
     return Text(
       title,
       textAlign: TextAlign.center,
-      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-        color: colors.textPrimary,
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0,
-      ),
+      style: SyncTypography.of(
+        context,
+      ).pageTitle.copyWith(color: colors.textPrimary),
     );
   }
 }
@@ -846,16 +815,7 @@ class _SheetSectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTasksColorScheme.of(context);
-    return Text(
-      label,
-      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-        color: colors.textSecondary,
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0,
-      ),
-    );
+    return Text(label, style: SyncTypography.of(context).sectionLabel);
   }
 }
 
@@ -886,24 +846,12 @@ class _ChangelogItem extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: colors.textPrimary,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0,
-                  ),
+                  style: SyncTypography.of(
+                    context,
+                  ).cardTitle.copyWith(color: colors.textPrimary),
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  body,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: colors.textSecondary,
-                    fontSize: 15,
-                    height: 1.32,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                  ),
-                ),
+                Text(body, style: SyncTypography.of(context).supporting),
               ],
             ),
           ),
@@ -944,12 +892,9 @@ class _SupportActionRow extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: colors.textPrimary,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0,
-                  ),
+                  style: SyncTypography.of(
+                    context,
+                  ).cardTitle.copyWith(color: colors.textPrimary),
                 ),
               ),
               Icon(
@@ -1077,29 +1022,22 @@ class _AppIdentityCard extends StatelessWidget {
                 children: [
                   Text(
                     AppConstants.appName,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: colors.textPrimary,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: SyncTypography.of(
+                      context,
+                    ).cardTitle.copyWith(color: colors.textPrimary),
                   ),
                   const SizedBox(height: 3),
                   Text(
                     'Fast, local-first task planning',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: colors.textSecondary,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: SyncTypography.of(context).supporting,
                   ),
                   const SizedBox(height: 3),
                   Text(
                     'Version 1.0.0+1',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    style: SyncTypography.of(context).supporting.copyWith(
                       color: colors.textSecondary.withValues(alpha: 0.74),
-                      fontSize: 12,
                     ),
                   ),
                 ],

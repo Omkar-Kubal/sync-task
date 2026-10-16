@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/clock/local_clock_provider.dart';
+import '../../tasks/domain/task_due_status.dart';
 import '../../tasks/providers/task_controller.dart';
 
 class ListSummaryData {
@@ -31,16 +33,31 @@ final listSummaryProvider = FutureProvider<ListSummaryData>((ref) async {
     db.tasks,
   )..where((t) => t.isCompleted.equals(true))).get();
 
-  final now = DateTime.now();
-  final todayDate = DateTime(now.year, now.month, now.day);
+  final now = ref.watch(localClockProvider);
 
   final todayCount = allActive
-      .where((t) => t.scheduledDate == todayDate)
+      .where((task) {
+        final status = taskDueStatus(
+          isCompleted: task.isCompleted,
+          scheduledDate: task.scheduledDate,
+          scheduledTime: task.scheduledTime,
+          now: now,
+        );
+        return status == TaskDueStatus.today ||
+            status == TaskDueStatus.overdue;
+      })
       .length;
   final upcomingCount = allActive
-      .where(
-        (t) => t.scheduledDate != null && !t.scheduledDate!.isBefore(todayDate),
-      )
+      .where((task) {
+        final status = taskDueStatus(
+          isCompleted: task.isCompleted,
+          scheduledDate: task.scheduledDate,
+          scheduledTime: task.scheduledTime,
+          now: now,
+        );
+        return status == TaskDueStatus.today ||
+            status == TaskDueStatus.upcoming;
+      })
       .length;
 
   final inboxFolder = await (db.select(

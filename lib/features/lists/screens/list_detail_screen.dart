@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../receipts/domain/receipt_composer_seed.dart';
 import '../../receipts/providers/receipt_feature_provider.dart';
 import '../../../shared/icons/sync_icons.dart';
@@ -478,26 +479,16 @@ class ListDetailScreen extends ConsumerWidget {
           child: TaskCreateSheet(
             folderLabel: folderLabel,
             initialFolderId: createFolderId,
+            initialScheduledDate: _todayDate(),
+            initialReminderTime: createWithReminder
+                ? _defaultReminderTime()
+                : null,
             onSubmit: (title, chosenFolderId) => unawaited(
               _createTask(sheetContext, ref, title, chosenFolderId),
             ),
-            onTodaySelected: (title, chosenFolderId) {
-              Navigator.of(sheetContext).pop();
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (context.mounted) {
-                  _showEditSheet(
-                    context,
-                    ref,
-                    null,
-                    initialTitle: title.trim(),
-                    initialScheduledDate: _todayDate(),
-                    initialReminderTime: createWithReminder
-                        ? _defaultReminderTime()
-                        : null,
-                  );
-                }
-              });
-            },
+            onSchedule: (title, chosenFolderId, update) =>
+                _createScheduledTaskFromUpdate(ref, update, chosenFolderId),
+            onScheduledDone: () => Navigator.of(sheetContext).pop(),
           ),
         );
       },
@@ -603,6 +594,26 @@ class ListDetailScreen extends ConsumerWidget {
     );
   }
 
+  Future<void> _createScheduledTaskFromUpdate(
+    WidgetRef ref,
+    TaskEditUpdate update,
+    int? folderId,
+  ) async {
+    final id = await ref
+        .read(taskControllerProvider)
+        .create(
+          _draftFromUpdate(update, folderId: folderId, useSelectedFolder: true),
+        );
+    final task = await ref.read(taskRepositoryProvider).getTask(id);
+    invalidateTaskListProviders(
+      ref,
+      folderIds: [
+        if (task != null) task.folderId,
+        if (folderId != null) folderId,
+      ],
+    );
+  }
+
   Future<void> _updateTask(
     WidgetRef ref,
     Task task,
@@ -638,10 +649,12 @@ class ListDetailScreen extends ConsumerWidget {
   domain.TaskDraft _draftFromUpdate(
     TaskEditUpdate update, {
     bool defaultReminder = false,
+    int? folderId,
+    bool useSelectedFolder = false,
   }) {
     return domain.TaskDraft(
       title: update.title,
-      folderId: createFolderId,
+      folderId: useSelectedFolder ? folderId : createFolderId,
       scheduledDate: update.scheduledDate,
       scheduledTime: update.scheduledTime,
       reminderTime:
@@ -682,13 +695,9 @@ class _ListDetailHeader extends StatelessWidget {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              color: colors.textPrimary,
-              fontSize: 25,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0,
-              height: 1.15,
-            ),
+            style: SyncTypography.of(
+              context,
+            ).pageTitle.copyWith(color: colors.textPrimary),
           ),
         ),
         const SizedBox(width: 12),
@@ -876,10 +885,9 @@ class _CompletedReceiptActionBar extends StatelessWidget {
         children: [
           Text(
             '$selectedCount selected',
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: colors.textPrimary,
-              fontWeight: FontWeight.w700,
-            ),
+            style: SyncTypography.of(
+              context,
+            ).rowTitle.copyWith(color: colors.textPrimary),
           ),
           const Spacer(),
           TextButton.icon(
@@ -912,16 +920,7 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = SyncTasksColorScheme.of(context);
-    return Text(
-      label,
-      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-        color: colors.textSecondary,
-        fontSize: 11,
-        fontWeight: FontWeight.w600,
-        letterSpacing: 0.8,
-      ),
-    );
+    return Text(label, style: SyncTypography.of(context).sectionLabel);
   }
 }
 
@@ -939,7 +938,6 @@ class _EmptyListState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     return LayoutBuilder(
       builder: (context, constraints) {
         return ListView(
@@ -966,25 +964,17 @@ class _EmptyListState extends StatelessWidget {
                           const SizedBox(height: 18),
                           Text(
                             'No tasks found',
-                            style: textTheme.titleLarge?.copyWith(
-                              color: colors.textPrimary,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 0,
-                              height: 1.12,
-                            ),
+                            style: SyncTypography.of(
+                              context,
+                            ).cardTitle.copyWith(color: colors.textPrimary),
                           ),
                           const SizedBox(height: 10),
                           Text(
                             message,
                             textAlign: TextAlign.center,
-                            style: textTheme.bodyLarge?.copyWith(
-                              color: colors.textSecondary,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: 0,
-                              height: 1.34,
-                            ),
+                            style: SyncTypography.of(
+                              context,
+                            ).supporting.copyWith(color: colors.textSecondary),
                           ),
                           if (onCreate != null) ...[
                             const SizedBox(height: 18),
@@ -1000,20 +990,12 @@ class _EmptyListState extends StatelessWidget {
                                   horizontal: 18,
                                 ),
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                textStyle: textTheme.titleMedium?.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 0,
-                                ),
+                                textStyle: SyncTypography.of(context).button,
                               ),
                               child: Text(
                                 'Create new task',
-                                style: textTheme.titleMedium?.copyWith(
-                                  color: colors.controlForeground,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 0,
-                                ),
+                                style: SyncTypography.of(context).button
+                                    .copyWith(color: colors.controlForeground),
                               ),
                             ),
                           ],

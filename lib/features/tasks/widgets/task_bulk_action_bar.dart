@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 
 class TaskBulkActionBar extends StatelessWidget {
   const TaskBulkActionBar({
@@ -34,10 +35,9 @@ class TaskBulkActionBar extends StatelessWidget {
         children: [
           Text(
             '$selectedCount selected',
-            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: colors.textPrimary,
-              fontWeight: FontWeight.w700,
-            ),
+            style: SyncTypography.of(
+              context,
+            ).rowTitle.copyWith(color: colors.textPrimary),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -125,5 +125,3 @@ class _BulkActionButton extends StatelessWidget {
     );
   }
 }
-
-

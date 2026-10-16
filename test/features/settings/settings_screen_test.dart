@@ -71,7 +71,7 @@ void main() {
     );
     final closeSize = tester.getSize(find.bySemanticsLabel('Close settings'));
 
-    expect(title.style?.fontSize, 29);
+    expect(title.style?.fontSize, 22);
     expect(titleTopLeft.dx, lessThan(closeTopLeft.dx));
     expect(closeSize, const Size(46, 46));
   });
@@ -86,9 +86,9 @@ void main() {
     final themeText = tester.widget<Text>(find.text('Theme'));
     final valueText = tester.widget<Text>(find.text('System'));
 
-    expect(themeText.style?.fontSize, 15);
+    expect(themeText.style?.fontSize, 14);
     expect(themeText.style?.fontWeight, FontWeight.w500);
-    expect(valueText.style?.fontSize, 13);
+    expect(valueText.style?.fontSize, 12);
     expect(
       tester.getSize(find.byKey(const Key('settings-theme-icon-tile'))),
       const Size(40, 40),

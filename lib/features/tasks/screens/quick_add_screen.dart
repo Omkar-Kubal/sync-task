@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../settings/domain/app_settings.dart';
 import '../../settings/providers/settings_controller.dart';
 import '../../lists/providers/list_tasks_provider.dart';
@@ -12,6 +13,7 @@ import '../domain/task.dart';
 import '../providers/folders_provider.dart';
 import '../providers/task_controller.dart';
 import '../widgets/task_create_sheet.dart';
+import '../widgets/task_edit_sheet.dart';
 
 class QuickAddScreen extends ConsumerStatefulWidget {
   const QuickAddScreen({this.now, super.key});
@@ -46,16 +48,21 @@ class _QuickAddScreenState extends ConsumerState<QuickAddScreen> {
                 child: TaskCreateSheet(
                   folderLabel: defaultFolder?.name ?? 'Inbox',
                   initialFolderId: defaultFolder?.id,
+                  initialScheduledDate: _today(),
+                  prepareSchedule: (title, initialScheduledDate) {
+                    final parsed = parseQuickAdd(title, now: _now());
+                    return TaskCreateScheduleDraft(
+                      title: parsed.title,
+                      scheduledDate: parsed.hasDateInstruction
+                          ? parsed.scheduledDate
+                          : initialScheduledDate,
+                    );
+                  },
                   onSubmit: (title, folderId) async {
                     await _createFromQuickAdd(title, folderId);
                   },
-                  onTodaySelected: (title, folderId) async {
-                    await _createFromQuickAdd(
-                      title,
-                      folderId,
-                      scheduledDateOverride: _today(),
-                    );
-                  },
+                  onSchedule: _createScheduledFromOptions,
+                  onScheduledDone: _showAddedThenClose,
                 ),
               ),
             ),
@@ -92,7 +99,7 @@ class _QuickAddScreenState extends ConsumerState<QuickAddScreen> {
           .create(
             TaskDraft(
               title: title,
-              folderId: folderId ?? defaultFolder?.id,
+              folderId: folderId,
               scheduledDate: parsed.hasDateInstruction
                   ? parsed.scheduledDate
                   : _today(),
@@ -112,6 +119,44 @@ class _QuickAddScreenState extends ConsumerState<QuickAddScreen> {
     }
 
     await _close();
+  }
+
+  Future<void> _createScheduledFromOptions(
+    String title,
+    int? folderId,
+    TaskEditUpdate update,
+  ) async {
+    if (_isSubmitting) {
+      return;
+    }
+    _isSubmitting = true;
+    final settings = ref.read(settingsProvider).value ?? const AppSettings();
+    final folders = ref.read(foldersProvider).value ?? const <Folder>[];
+    final defaultFolder = _defaultFolder(settings.defaultFolderId, folders);
+    final taskId = await ref
+        .read(taskControllerProvider)
+        .create(
+          TaskDraft(
+            title: update.title.trim(),
+            folderId: folderId,
+            scheduledDate: update.scheduledDate,
+            scheduledTime: update.scheduledTime,
+            reminderTime: update.reminderTime,
+            focusDurationMinutes: update.focusDurationMinutes,
+            recurrenceType: update.recurrenceType,
+            recurrenceInterval: update.recurrenceInterval,
+            customRepeatLabel: update.customRepeatLabel,
+          ),
+        );
+    final task = await ref.read(taskRepositoryProvider).getTask(taskId);
+    invalidateTaskListProviders(
+      ref,
+      folderIds: [
+        if (task != null) task.folderId,
+        if (folderId != null) folderId,
+        if (defaultFolder != null) defaultFolder.id,
+      ],
+    );
   }
 
   Future<void> _showAddedThenClose() async {
@@ -175,12 +220,9 @@ class _QuickAddSuccessAffordance extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
               child: Text(
                 'Added',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: colors.controlForeground,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0,
-                ),
+                style: SyncTypography.of(
+                  context,
+                ).button.copyWith(color: colors.controlForeground),
               ),
             ),
           ),

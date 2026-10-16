@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../receipts/providers/receipt_feature_provider.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/sheets/app_sheet_shadow.dart';
@@ -30,7 +31,6 @@ class ListsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     final summaryValue = ref.watch(listSummaryProvider);
     final foldersValue = ref.watch(foldersProvider);
     final receiptFeatureEnabled = ref.watch(receiptFeatureEnabledProvider);
@@ -54,13 +54,7 @@ class ListsScreen extends ConsumerWidget {
                     children: [
                       Text(
                         'Lists',
-                        style: textTheme.displaySmall?.copyWith(
-                          color: colors.textPrimary,
-                          fontSize: 29,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0,
-                          height: 1.18,
-                        ),
+                        style: SyncTypography.of(context).pageTitle,
                       ),
                     ],
                   ),
@@ -325,48 +319,10 @@ class ListsScreen extends ConsumerWidget {
           child: TaskCreateSheet(
             onSubmit: (title, folderId) =>
                 unawaited(_createTask(sheetContext, ref, title, folderId)),
-            onTodaySelected: (title, folderId) {
-              Navigator.of(sheetContext).pop();
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (context.mounted) {
-                  _showEditSheet(
-                    context,
-                    ref,
-                    initialTitle: title.trim(),
-                    initialScheduledDate: _todayDate(),
-                  );
-                }
-              });
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  void _showEditSheet(
-    BuildContext context,
-    WidgetRef ref, {
-    required String initialTitle,
-    DateTime? initialScheduledDate,
-  }) {
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      useRootNavigator: true,
-      barrierColor: Theme.of(context).bottomSheetTheme.modalBarrierColor,
-      backgroundColor: Colors.transparent,
-      builder: (sheetContext) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.viewInsetsOf(sheetContext).bottom,
-          ),
-          child: TaskEditSheet(
-            title: initialTitle,
-            scheduledDate: initialScheduledDate,
-            onCancel: () => Navigator.of(sheetContext).pop(),
-            onDone: () => Navigator.of(sheetContext).pop(),
-            onSave: (update) => _createTaskFromUpdate(ref, update),
+            initialScheduledDate: _todayDate(),
+            onSchedule: (title, folderId, update) =>
+                _createTaskFromUpdate(ref, update, folderId: folderId),
+            onScheduledDone: () => Navigator.of(sheetContext).pop(),
           ),
         );
       },
@@ -402,11 +358,12 @@ class ListsScreen extends ConsumerWidget {
 
   Future<void> _createTaskFromUpdate(
     WidgetRef ref,
-    TaskEditUpdate update,
-  ) async {
+    TaskEditUpdate update, {
+    int? folderId,
+  }) async {
     final id = await ref
         .read(taskControllerProvider)
-        .create(_draftFromUpdate(update));
+        .create(_draftFromUpdate(update, folderId: folderId));
     final task = await ref.read(taskRepositoryProvider).getTask(id);
     invalidateTaskListProviders(
       ref,
@@ -414,9 +371,10 @@ class ListsScreen extends ConsumerWidget {
     );
   }
 
-  domain.TaskDraft _draftFromUpdate(TaskEditUpdate update) {
+  domain.TaskDraft _draftFromUpdate(TaskEditUpdate update, {int? folderId}) {
     return domain.TaskDraft(
       title: update.title,
+      folderId: folderId,
       scheduledDate: update.scheduledDate,
       scheduledTime: update.scheduledTime,
       reminderTime: update.reminderTime,
@@ -448,9 +406,7 @@ class ListsScreen extends ConsumerWidget {
           ),
           title: Text(
             'New Folder',
-            style: Theme.of(
-              dialogContext,
-            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+            style: SyncTypography.of(dialogContext).pageTitle,
           ),
           content: TextField(
             controller: controller,
@@ -616,13 +572,9 @@ class _ListRow extends StatelessWidget {
                           label,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(
-                                color: colors.textPrimary,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                letterSpacing: 0,
-                              ),
+                          style: SyncTypography.of(
+                            context,
+                          ).rowTitle.copyWith(color: colors.textPrimary),
                         ),
                       ],
                     ),
@@ -639,11 +591,7 @@ class _ListRow extends StatelessWidget {
                       ),
                       child: Text(
                         count.toString(),
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: colors.textSecondary,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: SyncTypography.of(context).sectionLabel,
                       ),
                     ),
                     const SizedBox(width: 8),
@@ -680,13 +628,9 @@ class _DateIcon extends StatelessWidget {
       ),
       child: Text(
         today,
-        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-          color: colors.textPrimary,
-          fontSize: 12,
-          fontWeight: FontWeight.w700,
-          height: 1,
-          letterSpacing: 0,
-        ),
+        style: SyncTypography.of(
+          context,
+        ).button.copyWith(color: colors.textPrimary),
       ),
     );
   }
@@ -705,15 +649,7 @@ class _SectionLabel extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Row(
         children: [
-          Text(
-            label,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-              color: colors.textSecondary,
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0.8,
-            ),
-          ),
+          Text(label, style: SyncTypography.of(context).sectionLabel),
           if (onAddPressed != null) ...[
             const Spacer(),
             InkWell(

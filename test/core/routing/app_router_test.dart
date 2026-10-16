@@ -77,7 +77,7 @@ void main() {
 
     expect(router.routeInformationProvider.value.uri.path, '/today');
     expect(find.text('Page Not Found'), findsNothing);
-    expect(find.text('Today'), findsOneWidget);
+    expect(find.text('Today'), findsWidgets);
   });
 
   testWidgets('widget Today deep link handles Android back without exception', (
@@ -134,7 +134,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(router.routeInformationProvider.value.uri.path, '/today');
-    expect(find.text('Today'), findsOneWidget);
+    expect(find.text('Today'), findsWidgets);
   });
 
   testWidgets('settings renders outside the shared bottom navigation shell', (
@@ -179,7 +179,7 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Close Upcoming'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Today'), findsOneWidget);
+    expect(find.text('Today'), findsWidgets);
     expect(find.text('Upcoming'), findsNothing);
   });
 
@@ -285,7 +285,7 @@ void main() {
     },
   );
 
-  testWidgets('Today edit sheet can save a new task', (tester) async {
+  testWidgets('Today Schedule options can save a new task', (tester) async {
     final db = AppDatabase.memory();
     final router = appRouter();
     addTearDown(router.dispose);
@@ -308,13 +308,14 @@ void main() {
 
     await tester.tap(find.bySemanticsLabel('Create task'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(OutlinedButton, 'Today'));
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Schedule'));
     await tester.pumpAndSettle();
+    expect(find.text('New task'), findsOneWidget);
     await tester.enterText(
       find.byKey(const Key('edit-task-title-field')),
       'Saved from edit',
     );
-    await tester.tap(find.byKey(const Key('edit-task-done-button')));
+    await tester.tap(find.byKey(const Key('create-task-options-button')));
     await tester.pumpAndSettle();
 
     expect(find.text('Saved from edit'), findsOneWidget);
@@ -384,12 +385,14 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Create task'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'Plan tomorrow');
-    await tester.tap(find.widgetWithText(OutlinedButton, 'Today'));
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Schedule'));
     await tester.pumpAndSettle();
 
     expect(find.text('Plan tomorrow'), findsOneWidget);
 
     await tester.tap(find.text('Tomorrow'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('create-task-options-button')));
     await tester.pumpAndSettle();
 
     expect(router.routeInformationProvider.value.uri.path, '/today');
@@ -529,10 +532,9 @@ void main() {
       find.bySemanticsLabel('Open Reminders list'),
       180,
     );
-    final remindersRow = tester.getRect(
-      find.bySemanticsLabel('Open Reminders list'),
-    );
-    await tester.tapAt(Offset(remindersRow.center.dx, remindersRow.top + 12));
+    await tester.drag(find.byType(ListView).first, const Offset(0, -160));
+    await tester.pumpAndSettle();
+    await tester.tap(find.bySemanticsLabel('Open Reminders list'));
     await tester.pumpAndSettle();
 
     expect(router.routeInformationProvider.value.uri.path, '/lists');
@@ -659,7 +661,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(router.routeInformationProvider.value.uri.path, '/lists');
-    expect(find.text('Lists'), findsOneWidget);
+    expect(find.text('Lists'), findsWidgets);
 
     router.go('/lists/more');
     await tester.pumpAndSettle();
@@ -702,7 +704,7 @@ void main() {
 
     expect(router.routeInformationProvider.value.uri.path, '/lists');
     expect(find.byType(BottomSheet), findsNothing);
-    expect(find.text('Lists'), findsOneWidget);
+    expect(find.text('Lists'), findsWidgets);
   });
 
   testWidgets('Android back on direct Lists sub routes returns to Lists', (
@@ -732,7 +734,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(router.routeInformationProvider.value.uri.path, '/lists');
-    expect(find.text('Lists'), findsOneWidget);
+    expect(find.text('Lists'), findsWidgets);
 
     router.go('/lists/more');
     await tester.pumpAndSettle();
@@ -754,10 +756,10 @@ void main() {
     router.go('/lists');
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Today'));
+    await tester.tap(find.bySemanticsLabel('Today'));
     await tester.pumpAndSettle();
-    expect(find.text('Today'), findsOneWidget);
-    expect(find.text('Lists'), findsNothing);
+    expect(router.routeInformationProvider.value.uri.path, '/today');
+    expect(find.text('Today'), findsWidgets);
 
     router.go('/lists');
     await tester.pumpAndSettle();
@@ -777,15 +779,17 @@ void main() {
     router.go('/lists');
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byKey(const Key('lists-today-shortcut-row')));
+    await tester.ensureVisible(find.bySemanticsLabel('Open Today list'));
+    await tester.tap(find.bySemanticsLabel('Open Today list'));
     await tester.pumpAndSettle();
-    expect(find.text('Today'), findsOneWidget);
-    expect(find.text('Lists'), findsNothing);
+    expect(find.text("You're clear for today."), findsOneWidget);
+    expect(find.text('Today'), findsWidgets);
 
     await tester.binding.handlePopRoute();
     await tester.pumpAndSettle();
 
-    expect(find.text('Lists'), findsOneWidget);
+    expect(router.routeInformationProvider.value.uri.path, '/lists');
+    expect(find.text('Lists'), findsWidgets);
   });
 
   testWidgets('bottom nav route transitions follow navigation direction', (
@@ -831,7 +835,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(router.routeInformationProvider.value.uri.path, '/today');
-    expect(find.text('Today'), findsOneWidget);
+    expect(find.text('Today'), findsWidgets);
 
     router.go('/lists/settings');
     await tester.pumpAndSettle();
@@ -840,7 +844,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(router.routeInformationProvider.value.uri.path, '/today');
-    expect(find.text('Today'), findsOneWidget);
+    expect(find.text('Today'), findsWidgets);
   });
 }
 
@@ -848,7 +852,8 @@ Future<void> _createTodayTask(WidgetTester tester, String title) async {
   await tester.tap(find.bySemanticsLabel('Create task'));
   await tester.pumpAndSettle();
   await tester.enterText(find.byType(TextField), title);
-  await tester.tap(find.bySemanticsLabel('Submit task'));
+  await tester.pump();
+  await tester.tap(find.widgetWithText(FilledButton, 'Add'));
   await tester.pumpAndSettle();
 }
 

@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import '../../../core/database/app_database.dart';
 import '../domain/recurrence_type.dart';
 import '../domain/services/recurrence_engine.dart';
+import '../domain/task_due_status.dart';
 import '../domain/task.dart' as domain;
 
 class TaskRepository {
@@ -200,6 +201,22 @@ class TaskRepository {
     );
   }
 
+  Future<void> rescheduleTaskOccurrence({
+    required int taskId,
+    required DateTime scheduledDate,
+    required DateTime? scheduledTime,
+    required DateTime? reminderTime,
+  }) {
+    return (_db.update(_db.tasks)..where((task) => task.id.equals(taskId)))
+        .write(
+          TasksCompanion(
+            scheduledDate: Value(_dateOnlyOrNull(scheduledDate)),
+            scheduledTime: Value(scheduledTime),
+            reminderTime: Value(reminderTime),
+          ),
+        );
+  }
+
   Future<void> moveTasksToFolder(Iterable<int> ids, int folderId) {
     final taskIds = ids.toSet();
     if (taskIds.isEmpty) {
@@ -236,11 +253,24 @@ class TaskRepository {
   }
 
   Future<List<Task>> listUpcomingTasks() async {
-    final today = _dateOnly(_now());
-    return (_activeTaskQuery()
+    final now = _now();
+    final today = _dateOnly(now);
+    final tasks = await (_activeTaskQuery()
           ..where((task) => task.scheduledDate.isBiggerOrEqualValue(today))
           ..orderBy(_taskOrdering))
         .get();
+    return tasks
+        .where(
+          (task) =>
+              taskDueStatus(
+                isCompleted: task.isCompleted,
+                scheduledDate: task.scheduledDate,
+                scheduledTime: task.scheduledTime,
+                now: now,
+              ) !=
+              TaskDueStatus.overdue,
+        )
+        .toList(growable: false);
   }
 
   Future<List<Task>> listAllActiveTasks() async {

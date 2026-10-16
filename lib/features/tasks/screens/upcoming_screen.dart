@@ -6,13 +6,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/database/app_database.dart';
+import '../../../core/clock/local_clock_provider.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/widgets/sync_empty_state.dart';
 import '../../../shared/widgets/sync_fab.dart';
 import '../../lists/providers/list_tasks_provider.dart';
 import '../domain/task.dart' as domain;
+import '../domain/task_due_status.dart';
 import '../providers/folders_provider.dart';
 import '../providers/task_controller.dart';
 import '../providers/upcoming_tasks_provider.dart';
@@ -20,6 +23,7 @@ import '../widgets/task_create_sheet.dart';
 import '../widgets/task_edit_sheet.dart';
 import '../widgets/task_metadata.dart';
 import '../widgets/task_row.dart';
+import '../widgets/task_reschedule_picker.dart';
 
 enum _UpcomingView {
   agenda('Agenda'),
@@ -47,9 +51,8 @@ class _UpcomingScreenState extends ConsumerState<UpcomingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final now = DateTime.now();
+    final now = ref.watch(localClockProvider);
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     final tasksValue = ref.watch(upcomingTasksProvider);
     final foldersById = _foldersById(ref.watch(foldersProvider).value);
 
@@ -65,13 +68,7 @@ class _UpcomingScreenState extends ConsumerState<UpcomingScreen> {
                 Expanded(
                   child: Text(
                     'Upcoming',
-                    style: textTheme.displaySmall?.copyWith(
-                      color: colors.textPrimary,
-                      fontSize: 29,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0,
-                      height: 1.18,
-                    ),
+                    style: SyncTypography.of(context).pageTitle,
                   ),
                 ),
                 if (widget.onClose != null) ...[
@@ -106,13 +103,7 @@ class _UpcomingScreenState extends ConsumerState<UpcomingScreen> {
             const SizedBox(height: 14),
             Text(
               _subtitleFor(now),
-              style: textTheme.titleLarge?.copyWith(
-                color: colors.textSecondary,
-                fontSize: 13,
-                fontWeight: FontWeight.w400,
-                letterSpacing: 0,
-                height: 1.33,
-              ),
+              style: SyncTypography.of(context).supporting,
             ),
             const SizedBox(height: 22),
             _UpcomingViewChips(
@@ -127,10 +118,13 @@ class _UpcomingScreenState extends ConsumerState<UpcomingScreen> {
               child: _UpcomingTaskList(
                 tasksValue: tasksValue,
                 view: _selectedView,
+                now: now,
                 folderNamesById: foldersById,
                 onTaskTap: (task) => _showEditSheet(context, ref, task: task),
                 onComplete: (task) => unawaited(_completeTask(ref, task)),
                 onDelete: (task) => unawaited(_deleteTask(ref, task)),
+                onReschedule: (task) =>
+                    unawaited(_showReschedulePicker(context, ref, task)),
               ),
             ),
           ],
@@ -162,19 +156,10 @@ class _UpcomingScreenState extends ConsumerState<UpcomingScreen> {
             onSubmit: (title, folderId) => unawaited(
               _createUpcomingTask(sheetContext, ref, title, folderId),
             ),
-            onTodaySelected: (title, folderId) {
-              Navigator.of(sheetContext).pop();
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (context.mounted) {
-                  _showEditSheet(
-                    context,
-                    ref,
-                    initialTitle: title.trim(),
-                    initialScheduledDate: _todayDate(),
-                  );
-                }
-              });
-            },
+            initialScheduledDate: _tomorrowDate(),
+            onSchedule: (title, folderId, update) =>
+                _createTaskFromUpdate(ref, update, folderId: folderId),
+            onScheduledDone: () => Navigator.of(sheetContext).pop(),
           ),
         );
       },
@@ -273,11 +258,12 @@ class _UpcomingScreenState extends ConsumerState<UpcomingScreen> {
 
   Future<void> _createTaskFromUpdate(
     WidgetRef ref,
-    TaskEditUpdate update,
-  ) async {
+    TaskEditUpdate update, {
+    int? folderId,
+  }) async {
     final id = await ref
         .read(taskControllerProvider)
-        .create(_draftFromUpdate(update));
+        .create(_draftFromUpdate(update, folderId: folderId));
     final task = await ref.read(taskRepositoryProvider).getTask(id);
     invalidateTaskListProviders(
       ref,
@@ -305,9 +291,10 @@ class _UpcomingScreenState extends ConsumerState<UpcomingScreen> {
     );
   }
 
-  domain.TaskDraft _draftFromUpdate(TaskEditUpdate update) {
+  domain.TaskDraft _draftFromUpdate(TaskEditUpdate update, {int? folderId}) {
     return domain.TaskDraft(
       title: update.title,
+      folderId: folderId,
       scheduledDate: update.scheduledDate,
       scheduledTime: update.scheduledTime,
       reminderTime: update.reminderTime,
@@ -323,14 +310,38 @@ class _UpcomingScreenState extends ConsumerState<UpcomingScreen> {
     return DateTime(tomorrow.year, tomorrow.month, tomorrow.day);
   }
 
-  DateTime _todayDate() {
-    final now = DateTime.now();
-    return DateTime(now.year, now.month, now.day);
-  }
-
   Future<void> _deleteTask(WidgetRef ref, Task task) async {
     await ref.read(taskControllerProvider).delete(task.id);
     invalidateTaskListProviders(ref, folderIds: [task.folderId]);
+  }
+
+  Future<void> _showReschedulePicker(
+    BuildContext context,
+    WidgetRef ref,
+    Task task,
+  ) async {
+    final selection = await showTaskReschedulePicker(context, task);
+    if (selection == null || !context.mounted) {
+      return;
+    }
+    await ref
+        .read(taskControllerProvider)
+        .rescheduleTaskOccurrence(
+          taskId: task.id,
+          title: task.title,
+          scheduledDate: selection.date,
+          scheduledTime: selection.time,
+          reminderTime: selection.reminderTime,
+        );
+    if (!context.mounted) {
+      return;
+    }
+    invalidateTaskListProviders(ref, folderIds: [task.folderId]);
+    if (selection.reminderRemoved) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Past reminder removed.')));
+    }
   }
 
   Map<int, String> _foldersById(List<Folder>? folders) {
@@ -357,34 +368,29 @@ class _UpcomingViewChips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          for (final view in _UpcomingView.values)
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: ChoiceChip(
-                label: Text(view.label),
-                selected: selectedView == view,
-                onSelected: (_) => onSelected(view),
-                showCheckmark: false,
-                selectedColor: colors.textPrimary,
-                backgroundColor: colors.surface,
-                labelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: selectedView == view
-                      ? colors.controlForeground
-                      : colors.textPrimary,
-                  fontWeight: FontWeight.w700,
-                ),
-                side: BorderSide.none,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18),
-                ),
-              ),
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        for (final view in _UpcomingView.values)
+          ChoiceChip(
+            label: Text(view.label),
+            selected: selectedView == view,
+            onSelected: (_) => onSelected(view),
+            showCheckmark: false,
+            selectedColor: colors.textPrimary,
+            backgroundColor: colors.surface,
+            labelStyle: SyncTypography.of(context).button.copyWith(
+              color: selectedView == view
+                  ? colors.controlForeground
+                  : colors.textPrimary,
             ),
-        ],
-      ),
+            side: BorderSide.none,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
+          ),
+      ],
     );
   }
 }
@@ -393,18 +399,22 @@ class _UpcomingTaskList extends StatelessWidget {
   const _UpcomingTaskList({
     required this.tasksValue,
     required this.view,
+    required this.now,
     required this.folderNamesById,
     required this.onTaskTap,
     required this.onComplete,
     required this.onDelete,
+    required this.onReschedule,
   });
 
   final AsyncValue<List<Task>> tasksValue;
   final _UpcomingView view;
+  final DateTime now;
   final Map<int, String> folderNamesById;
   final ValueChanged<Task> onTaskTap;
   final ValueChanged<Task> onComplete;
   final ValueChanged<Task> onDelete;
+  final ValueChanged<Task> onReschedule;
 
   @override
   Widget build(BuildContext context) {
@@ -442,6 +452,26 @@ class _UpcomingTaskList extends StatelessWidget {
                       onTap: () => onTaskTap(task),
                       onComplete: () => onComplete(task),
                       onDelete: () => onDelete(task),
+                      textState:
+                          taskDueStatus(
+                                isCompleted: task.isCompleted,
+                                scheduledDate: task.scheduledDate,
+                                scheduledTime: task.scheduledTime,
+                                now: now,
+                              ) ==
+                              TaskDueStatus.overdue
+                          ? TaskRowTextState.overdueIncomplete
+                          : TaskRowTextState.normal,
+                      onReschedule:
+                          taskDueStatus(
+                                isCompleted: task.isCompleted,
+                                scheduledDate: task.scheduledDate,
+                                scheduledTime: task.scheduledTime,
+                                now: now,
+                              ) ==
+                              TaskDueStatus.overdue
+                          ? () => onReschedule(task)
+                          : null,
                     ),
                   ),
                 ),
@@ -460,13 +490,20 @@ class _UpcomingTaskList extends StatelessWidget {
   }
 
   List<_UpcomingTaskSection> _sectionsFor(List<Task> tasks) {
-    final today = _dateOnly(DateTime.now());
+    final today = _dateOnly(now);
     final tomorrow = today.add(const Duration(days: 1));
     return switch (view) {
       _UpcomingView.agenda => _dateSections(
         tasks.where((task) {
           final date = task.scheduledDate;
-          return date != null && !_dateOnly(date).isBefore(today);
+          final dueStatus = taskDueStatus(
+            isCompleted: task.isCompleted,
+            scheduledDate: date,
+            scheduledTime: task.scheduledTime,
+            now: now,
+          );
+          return dueStatus == TaskDueStatus.today ||
+              dueStatus == TaskDueStatus.upcoming;
         }),
         today,
         tomorrow,
@@ -478,7 +515,15 @@ class _UpcomingTaskList extends StatelessWidget {
             return false;
           }
           final day = _dateOnly(date);
-          return !day.isBefore(today) &&
+          final dueStatus = taskDueStatus(
+            isCompleted: task.isCompleted,
+            scheduledDate: date,
+            scheduledTime: task.scheduledTime,
+            now: now,
+          );
+          return (dueStatus == TaskDueStatus.today ||
+                  dueStatus == TaskDueStatus.upcoming) &&
+              !day.isBefore(today) &&
               day.isBefore(today.add(const Duration(days: 7)));
         }),
         today,
@@ -490,7 +535,13 @@ class _UpcomingTaskList extends StatelessWidget {
           key: const Key('upcoming-section-overdue'),
           tasks: tasks.where((task) {
             final date = task.scheduledDate;
-            return date != null && _dateOnly(date).isBefore(today);
+            return taskDueStatus(
+                  isCompleted: task.isCompleted,
+                  scheduledDate: date,
+                  scheduledTime: task.scheduledTime,
+                  now: now,
+                ) ==
+                TaskDueStatus.overdue;
           }).toList()..sort(_byScheduledDateThenOrder),
         ),
       ].where((section) => section.tasks.isNotEmpty).toList(),
@@ -681,13 +732,9 @@ class _UpcomingSectionHeader extends StatelessWidget {
     final colors = SyncTasksColorScheme.of(context);
     return Text(
       label,
-      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-        color: colors.textPrimary,
-        fontSize: 16,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-        height: 1.1,
-      ),
+      style: SyncTypography.of(
+        context,
+      ).cardTitle.copyWith(color: colors.textPrimary),
     );
   }
 }
@@ -704,5 +751,3 @@ class _UpcomingSectionDivider extends StatelessWidget {
     );
   }
 }
-
-

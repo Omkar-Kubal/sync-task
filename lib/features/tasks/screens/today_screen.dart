@@ -7,7 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../../../core/database/app_database.dart';
+import '../../../core/clock/local_clock_provider.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../../shared/icons/sync_icons.dart';
 import '../../../shared/services/sync_haptics.dart';
 import '../../../shared/widgets/sync_empty_state.dart';
@@ -18,6 +20,7 @@ import '../../receipts/providers/today_completed_tasks_provider.dart';
 import '../../lists/providers/list_tasks_provider.dart';
 import '../../settings/screens/settings_screen.dart';
 import '../domain/task.dart' as domain;
+import '../domain/task_due_status.dart';
 import '../providers/folders_provider.dart';
 import '../providers/task_controller.dart';
 import '../providers/today_tasks_provider.dart';
@@ -26,6 +29,7 @@ import '../widgets/task_create_sheet.dart';
 import '../widgets/task_edit_sheet.dart';
 import '../widgets/task_metadata.dart';
 import '../widgets/task_row.dart';
+import '../widgets/task_reschedule_picker.dart';
 import 'upcoming_screen.dart';
 
 class TodayScreen extends ConsumerStatefulWidget {
@@ -40,14 +44,14 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final now = DateTime.now();
+    final now = ref.watch(localClockProvider);
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     final tasksValue = ref.watch(todayTasksProvider);
     final receiptFeatureEnabled = ref.watch(receiptFeatureEnabledProvider);
     final completedTodayValue = receiptFeatureEnabled
         ? ref.watch(todayCompletedTasksProvider)
         : const AsyncData<List<Task>>(<Task>[]);
+    final completedToday = completedTodayValue.value ?? const <Task>[];
     final foldersById = _foldersById(ref.watch(foldersProvider).value);
     return Scaffold(
       body: Padding(
@@ -64,35 +68,17 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                     children: [
                       Text(
                         'Today',
-                        style: textTheme.displaySmall?.copyWith(
-                          color: colors.textPrimary,
-                          fontSize: 29,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0,
-                          height: 1.18,
-                        ),
+                        style: SyncTypography.of(context).pageTitle,
                       ),
                       const SizedBox(height: 8),
                       Text(
                         '${now.day}',
-                        style: textTheme.headlineLarge?.copyWith(
-                          color: colors.textPrimary,
-                          fontSize: 19,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0,
-                          height: 1,
-                        ),
+                        style: SyncTypography.of(context).cardTitle,
                       ),
                       const SizedBox(height: 8),
                       Text(
                         _monthLabel(now.month),
-                        style: textTheme.titleLarge?.copyWith(
-                          color: colors.textSecondary,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 0,
-                          height: 1.43,
-                        ),
+                        style: SyncTypography.of(context).supporting,
                       ),
                     ],
                   ),
@@ -208,6 +194,14 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
                 ),
               ],
             ),
+            if (completedToday.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 12, bottom: 4),
+                child: _TodayReceiptCard(
+                  completedCount: completedToday.length,
+                  onTap: () => _openTodayReceipt(context, completedToday),
+                ),
+              ),
             if (_selectedTaskIds.isNotEmpty)
               TaskBulkActionBar(
                 selectedCount: _selectedTaskIds.length,
@@ -220,18 +214,17 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
             Expanded(
               child: _TodayBody(
                 tasksValue: tasksValue,
-                completedTodayValue: completedTodayValue,
+                now: now,
                 folderNamesById: foldersById,
                 onCreate: () => _showCreateSheet(context, ref),
-                onCreateReceipt: (tasks) => _openTodayReceipt(context, tasks),
                 onTaskTap: (task) => _showEditSheet(context, ref, task: task),
                 selectionMode: _selectedTaskIds.isNotEmpty,
                 selectedTaskIds: _selectedTaskIds,
                 onTaskLongPress: _selectTask,
                 onSelectionToggle: _toggleTaskSelection,
                 onComplete: (task) => unawaited(_completeTask(ref, task)),
-                onRescheduleToday: (task) =>
-                    unawaited(_rescheduleTaskToToday(ref, task)),
+                onReschedule: (task) =>
+                    unawaited(_showReschedulePicker(context, ref, task)),
                 onDelete: (task) => unawaited(_deleteTask(ref, task)),
               ),
             ),
@@ -476,14 +469,10 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
           child: TaskCreateSheet(
             onSubmit: (title, folderId) =>
                 unawaited(_createTask(sheetContext, ref, title, folderId)),
-            onTodaySelected: (title, folderId) {
-              Navigator.of(sheetContext).pop();
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (context.mounted) {
-                  _showEditSheet(context, ref, initialTitle: title.trim());
-                }
-              });
-            },
+            initialScheduledDate: _todayDate(),
+            onSchedule: (title, folderId, update) =>
+                _createTaskFromUpdate(ref, update, folderId: folderId),
+            onScheduledDone: () => Navigator.of(sheetContext).pop(),
           ),
         );
       },
@@ -587,11 +576,12 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
 
   Future<void> _createTaskFromUpdate(
     WidgetRef ref,
-    TaskEditUpdate update,
-  ) async {
+    TaskEditUpdate update, {
+    int? folderId,
+  }) async {
     final id = await ref
         .read(taskControllerProvider)
-        .create(_draftFromUpdate(update));
+        .create(_draftFromUpdate(update, folderId: folderId));
     final task = await ref.read(taskRepositoryProvider).getTask(id);
     invalidateTaskListProviders(
       ref,
@@ -604,11 +594,33 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
     invalidateTaskListProviders(ref, folderIds: [task.folderId]);
   }
 
-  Future<void> _rescheduleTaskToToday(WidgetRef ref, Task task) async {
-    await ref.read(taskControllerProvider).rescheduleTasks([
-      task.id,
-    ], _todayDate());
+  Future<void> _showReschedulePicker(
+    BuildContext context,
+    WidgetRef ref,
+    Task task,
+  ) async {
+    final selection = await showTaskReschedulePicker(context, task);
+    if (selection == null || !context.mounted) {
+      return;
+    }
+    await ref
+        .read(taskControllerProvider)
+        .rescheduleTaskOccurrence(
+          taskId: task.id,
+          title: task.title,
+          scheduledDate: selection.date,
+          scheduledTime: selection.time,
+          reminderTime: selection.reminderTime,
+        );
+    if (!context.mounted) {
+      return;
+    }
     invalidateTaskListProviders(ref, folderIds: [task.folderId]);
+    if (selection.reminderRemoved) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Past reminder removed.')),
+      );
+    }
   }
 
   Future<void> _updateTask(
@@ -626,9 +638,13 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
     );
   }
 
-  domain.TaskDraft _draftFromUpdate(TaskEditUpdate update) {
+  domain.TaskDraft _draftFromUpdate(
+    TaskEditUpdate update, {
+    int? folderId,
+  }) {
     return domain.TaskDraft(
       title: update.title,
+      folderId: folderId,
       scheduledDate: update.scheduledDate,
       scheduledTime: update.scheduledTime,
       reminderTime: update.reminderTime,
@@ -660,13 +676,12 @@ class _TodayScreenState extends ConsumerState<TodayScreen> {
 class _TodayBody extends StatelessWidget {
   const _TodayBody({
     required this.tasksValue,
-    required this.completedTodayValue,
+    required this.now,
     required this.folderNamesById,
     required this.onCreate,
-    required this.onCreateReceipt,
     required this.onTaskTap,
     required this.onComplete,
-    required this.onRescheduleToday,
+    required this.onReschedule,
     required this.onDelete,
     required this.selectionMode,
     required this.selectedTaskIds,
@@ -675,13 +690,12 @@ class _TodayBody extends StatelessWidget {
   });
 
   final AsyncValue<List<Task>> tasksValue;
-  final AsyncValue<List<Task>> completedTodayValue;
+  final DateTime now;
   final Map<int, String> folderNamesById;
   final VoidCallback onCreate;
-  final ValueChanged<List<Task>> onCreateReceipt;
   final ValueChanged<Task> onTaskTap;
   final ValueChanged<Task> onComplete;
-  final ValueChanged<Task> onRescheduleToday;
+  final ValueChanged<Task> onReschedule;
   final ValueChanged<Task> onDelete;
   final bool selectionMode;
   final Set<int> selectedTaskIds;
@@ -692,33 +706,22 @@ class _TodayBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return tasksValue.when(
       data: (tasks) {
-        final completedToday = completedTodayValue.value ?? const <Task>[];
         if (tasks.isEmpty) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(child: _EmptyTodayState(onCreate: onCreate)),
-              if (completedToday.isNotEmpty)
-                _TodayReceiptEntry(
-                  completedCount: completedToday.length,
-                  onTap: () => onCreateReceipt(completedToday),
-                ),
-              const SizedBox(height: 108),
-            ],
-          );
+          return _EmptyTodayState(onCreate: onCreate);
         }
 
         return ListView.separated(
           padding: const EdgeInsets.only(top: 26, bottom: 108),
           itemBuilder: (context, index) {
-            if (index == tasks.length) {
-              return _TodayReceiptEntry(
-                completedCount: completedToday.length,
-                onTap: () => onCreateReceipt(completedToday),
-              );
-            }
             final task = tasks[index];
-            final isOverdueIncomplete = _isOverdueIncomplete(task);
+            final isOverdueIncomplete =
+                taskDueStatus(
+                  isCompleted: task.isCompleted,
+                  scheduledDate: task.scheduledDate,
+                  scheduledTime: task.scheduledTime,
+                  now: now,
+                ) ==
+                TaskDueStatus.overdue;
             return TaskRow(
               title: task.title,
               metadata: taskMetadataFor(
@@ -735,14 +738,14 @@ class _TodayBody extends StatelessWidget {
               onLongPress: () => onTaskLongPress(task),
               onTap: () => onTaskTap(task),
               onComplete: () => onComplete(task),
-              onRescheduleToday: isOverdueIncomplete
-                  ? () => onRescheduleToday(task)
+              onReschedule: isOverdueIncomplete
+                  ? () => onReschedule(task)
                   : null,
               onDelete: () => onDelete(task),
             );
           },
           separatorBuilder: (context, index) => const SizedBox(height: 2),
-          itemCount: tasks.length + (completedToday.isNotEmpty ? 1 : 0),
+          itemCount: tasks.length,
         );
       },
       loading: () => _EmptyTodayState(onCreate: onCreate),
@@ -750,21 +753,13 @@ class _TodayBody extends StatelessWidget {
     );
   }
 
-  bool _isOverdueIncomplete(Task task) {
-    final scheduledDate = task.scheduledDate;
-    if (task.isCompleted || scheduledDate == null) {
-      return false;
-    }
-    return _dateOnly(scheduledDate).isBefore(_dateOnly(DateTime.now()));
-  }
-
-  DateTime _dateOnly(DateTime value) {
-    return DateTime(value.year, value.month, value.day);
-  }
 }
 
-class _TodayReceiptEntry extends StatelessWidget {
-  const _TodayReceiptEntry({required this.completedCount, required this.onTap});
+class _TodayReceiptCard extends StatelessWidget {
+  const _TodayReceiptCard({
+    required this.completedCount,
+    required this.onTap,
+  });
 
   final int completedCount;
   final VoidCallback onTap;
@@ -772,42 +767,46 @@ class _TodayReceiptEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final label =
-        '$completedCount ${completedCount == 1 ? 'completed' : 'completed'} today · Create receipt →';
     return Semantics(
-      button: true,
-      label: 'Create receipt from completed tasks',
-      child: InkWell(
+      container: true,
+      child: Container(
         key: const Key('today-receipt-entry'),
-        onTap: () {
-          SyncHaptics.selection();
-          onTap();
-        },
-        borderRadius: BorderRadius.circular(14),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 44),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 44, right: 4),
-            child: Row(
-              children: [
-                Icon(SyncIcons.receipt, size: 18, color: colors.textSecondary),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: colors.textPrimary,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0,
-                    ),
-                  ),
-                ),
-              ],
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: colors.surface,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              completedCount == 1
+                  ? '1 task completed today'
+                  : '$completedCount tasks completed today',
+              style: SyncTypography.of(
+                context,
+              ).bodyTitle.copyWith(color: colors.textPrimary),
             ),
-          ),
+            const SizedBox(height: 4),
+            Text(
+              'A keepsake of tasks you finished today.',
+              style: SyncTypography.of(context).supporting,
+            ),
+            const SizedBox(height: 12),
+            FilledButton.icon(
+              onPressed: () {
+                SyncHaptics.selection();
+                onTap();
+              },
+              style: FilledButton.styleFrom(
+                backgroundColor: colors.controlPrimary,
+                foregroundColor: colors.controlForeground,
+                minimumSize: const Size.fromHeight(48),
+              ),
+              icon: const Icon(SyncIcons.receipt),
+              label: const Text('Create receipt'),
+            ),
+          ],
         ),
       ),
     );

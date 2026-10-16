@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:intl/intl.dart';
 import 'package:synctasks/core/database/app_database.dart';
 import 'package:synctasks/core/notifications/notification_service.dart';
 import 'package:synctasks/core/notifications/task_reminder_service.dart';
@@ -13,6 +14,7 @@ import 'package:synctasks/features/tasks/providers/task_controller.dart';
 import 'package:synctasks/features/tasks/data/task_repository.dart';
 import 'package:synctasks/features/tasks/data/folder_repository.dart';
 import 'package:synctasks/features/tasks/domain/task.dart' as domain;
+import 'package:synctasks/features/tasks/widgets/task_row.dart';
 
 void main() {
   late AppDatabase db;
@@ -53,7 +55,7 @@ void main() {
 
     expect(find.text('Task title'), findsOneWidget);
     expect(find.text('Inbox'), findsOneWidget);
-    expect(find.widgetWithText(OutlinedButton, 'Today'), findsOneWidget);
+    expect(find.widgetWithText(OutlinedButton, 'Schedule'), findsOneWidget);
   });
 
   testWidgets('empty home state matches the mockup content and actions', (
@@ -61,9 +63,9 @@ void main() {
   ) async {
     await tester.pumpWidget(wrap());
 
-    expect(find.text('Today'), findsOneWidget);
+    expect(find.text('Today'), findsWidgets);
     expect(find.text('${DateTime.now().day}'), findsOneWidget);
-    expect(find.text('Sept'), findsOneWidget);
+    expect(find.text(DateFormat('MMM').format(DateTime.now())), findsOneWidget);
     expect(find.text("You're clear for today."), findsOneWidget);
     expect(
       find.text('Create a task whenever something pops up.'),
@@ -81,7 +83,7 @@ void main() {
   ) async {
     await tester.pumpWidget(wrap());
 
-    final titleText = tester.widget<Text>(find.text('Today'));
+    final titleText = tester.widget<Text>(find.text('Today').first);
     final dateText = tester.widget<Text>(find.text('${DateTime.now().day}'));
     final topActionsSize = tester.getSize(
       find.byKey(const Key('today-top-actions-pill')),
@@ -90,8 +92,8 @@ void main() {
     final searchSize = tester.getSize(find.bySemanticsLabel('Search tasks'));
     final settingsSize = tester.getSize(find.bySemanticsLabel('Settings'));
 
-    expect(titleText.style?.fontSize, 29);
-    expect(dateText.style?.fontSize, 19);
+    expect(titleText.style?.fontSize, 22);
+    expect(dateText.style?.fontSize, 16);
     expect(topActionsSize.height, 52);
     expect(upcomingSize, const Size(46, 46));
     expect(searchSize, const Size(46, 46));
@@ -160,7 +162,7 @@ void main() {
 
     expect(find.byType(TodayScreen), findsOneWidget);
     expect(find.byType(SettingsScreen), findsNothing);
-    expect(find.text('Today'), findsOneWidget);
+    expect(find.text('Today'), findsWidgets);
   });
 
   testWidgets('upcoming top action uses Hugeicons Calendar 04', (tester) async {
@@ -219,9 +221,11 @@ void main() {
   ) async {
     await tester.pumpWidget(wrap());
 
-    final titleBottom = tester.getBottomLeft(find.text('Today')).dy;
+    final titleBottom = tester.getBottomLeft(find.text('Today').first).dy;
     final dateTop = tester.getTopLeft(find.text('${DateTime.now().day}')).dy;
-    final monthTop = tester.getTopLeft(find.text('Sept')).dy;
+    final monthTop = tester
+        .getTopLeft(find.text(DateFormat('MMM').format(DateTime.now())))
+        .dy;
 
     expect(dateTop, greaterThan(titleBottom));
     expect(monthTop, greaterThan(dateTop));
@@ -260,7 +264,7 @@ void main() {
 
     expect(find.text('Task title'), findsOneWidget);
     expect(find.text('Inbox'), findsOneWidget);
-    expect(find.widgetWithText(OutlinedButton, 'Today'), findsOneWidget);
+    expect(find.widgetWithText(OutlinedButton, 'Schedule'), findsOneWidget);
   });
 
   testWidgets('submitting a task creates it in the Today list', (tester) async {
@@ -269,7 +273,8 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Create task'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'Plan sprint');
-    await tester.tap(find.bySemanticsLabel('Submit task'));
+    await tester.pump();
+    await tester.tap(find.widgetWithText(FilledButton, 'Add'));
     await tester.pumpAndSettle();
 
     expect(find.text('Plan sprint'), findsOneWidget);
@@ -312,6 +317,9 @@ void main() {
 
     await tester.tap(find.widgetWithText(TextButton, 'Reschedule'));
     await tester.pumpAndSettle();
+    expect(find.byType(DatePickerDialog), findsOneWidget);
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
 
     final today = DateTime.now();
     final expectedDate = DateTime(today.year, today.month, today.day);
@@ -321,6 +329,72 @@ void main() {
     expect(task?.scheduledDate, expectedDate);
     expect(titleText.style?.color, const Color(0xFF000000));
     expect(find.widgetWithText(TextButton, 'Reschedule'), findsNothing);
+  });
+
+  testWidgets('canceling the reschedule calendar leaves the task unchanged', (
+    tester,
+  ) async {
+    final repository = TaskRepository(db);
+    final yesterday = DateTime.now().subtract(const Duration(days: 1));
+    final taskId = await repository.createTask(
+      domain.TaskDraft(
+        title: 'Keep original date',
+        scheduledDate: DateTime(yesterday.year, yesterday.month, yesterday.day),
+      ),
+    );
+
+    await tester.pumpWidget(wrap());
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(TextButton, 'Reschedule'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+
+    final task = await repository.getTask(taskId);
+    expect(
+      task?.scheduledDate,
+      DateTime(yesterday.year, yesterday.month, yesterday.day),
+    );
+    expect(find.text('Keep original date'), findsOneWidget);
+  });
+
+  testWidgets('rescheduling a passed time today requires a new future time', (
+    tester,
+  ) async {
+    final repository = TaskRepository(db);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final past = now.subtract(const Duration(minutes: 2));
+    final pastTime = DateTime(
+      today.year,
+      today.month,
+      today.day,
+      past.hour,
+      past.minute,
+    );
+    final taskId = await repository.createTask(
+      domain.TaskDraft(
+        title: 'Past timed task',
+        scheduledDate: today,
+        scheduledTime: pastTime,
+      ),
+    );
+
+    await tester.pumpWidget(wrap());
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(TextButton, 'Reschedule'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('OK'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(TimePickerDialog), findsOneWidget);
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+
+    final task = await repository.getTask(taskId);
+    expect(task?.scheduledDate, today);
+    expect(task?.scheduledTime?.hour, pastTime.hour);
+    expect(task?.scheduledTime?.minute, pastTime.minute);
   });
 
   testWidgets('today incomplete task stays normal instead of red', (
@@ -340,13 +414,47 @@ void main() {
     expect(find.widgetWithText(TextButton, 'Reschedule'), findsNothing);
   });
 
+  testWidgets('a passed time today is red and announced as overdue', (
+    tester,
+  ) async {
+    final repository = TaskRepository(db);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final past = now.subtract(const Duration(minutes: 2));
+    await repository.createTask(
+      domain.TaskDraft(
+        title: 'Timed follow up',
+        scheduledDate: today,
+        scheduledTime: DateTime(
+          today.year,
+          today.month,
+          today.day,
+          past.hour,
+          past.minute,
+        ),
+      ),
+    );
+
+    await tester.pumpWidget(wrap());
+    await tester.pumpAndSettle();
+
+    final title = tester.widget<Text>(find.text('Timed follow up'));
+    expect(title.style?.color, const Color(0xFFD92D20));
+    final rowLabel = tester.getSemantics(find.byType(TaskRow)).label;
+    expect(rowLabel, contains('Timed follow up'));
+    expect(rowLabel, endsWith(', overdue'));
+    expect(find.text('Overdue'), findsNothing);
+    expect(find.widgetWithText(TextButton, 'Reschedule'), findsOneWidget);
+  });
+
   testWidgets('editing a task title updates the Today list', (tester) async {
     await tester.pumpWidget(wrap());
 
     await tester.tap(find.bySemanticsLabel('Create task'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'Plan sprint');
-    await tester.tap(find.bySemanticsLabel('Submit task'));
+    await tester.pump();
+    await tester.tap(find.widgetWithText(FilledButton, 'Add'));
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Plan sprint'));
@@ -375,7 +483,8 @@ void main() {
     await tester.tap(find.bySemanticsLabel('Create task'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), 'Plan sprint');
-    await tester.tap(find.bySemanticsLabel('Submit task'));
+    await tester.pump();
+    await tester.tap(find.widgetWithText(FilledButton, 'Add'));
     await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const Key('task-row-checkbox-button')));
@@ -506,18 +615,17 @@ void main() {
     expect(second?.folderId, workFolder.id);
   });
 
-  testWidgets('selecting Today opens the edit task sheet', (tester) async {
+  testWidgets('Schedule opens create options for a new task', (tester) async {
     await tester.pumpWidget(wrap());
 
     await tester.tap(find.bySemanticsLabel('Create task'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(OutlinedButton, 'Today'));
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Schedule'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Edit Task'), findsOneWidget);
-    expect(find.text('Done'), findsOneWidget);
+    expect(find.text('New task'), findsOneWidget);
+    expect(find.text('Create'), findsOneWidget);
     expect(find.text('Date'), findsOneWidget);
-    expect(find.text('None'), findsWidgets);
   });
 
   testWidgets('task sheets use the design-system modal veil', (tester) async {

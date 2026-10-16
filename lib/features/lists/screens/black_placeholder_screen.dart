@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../../shared/icons/sync_icons.dart';
 
 class BlackPlaceholderScreen extends StatelessWidget {
@@ -52,31 +53,19 @@ class BlackPlaceholderScreen extends StatelessWidget {
                         Text(
                           'Coming soon',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleLarge
-                              ?.copyWith(
-                                color: SyncTasksColorScheme.of(
-                                  context,
-                                ).textPrimary,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 0,
-                                height: 1.12,
-                              ),
+                          style: SyncTypography.of(context).cardTitle.copyWith(
+                            color: SyncTasksColorScheme.of(context).textPrimary,
+                          ),
                         ),
                         const SizedBox(height: 10),
                         Text(
                           message,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(
-                                color: SyncTasksColorScheme.of(
-                                  context,
-                                ).textSecondary,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400,
-                                letterSpacing: 0,
-                                height: 1.34,
-                              ),
+                          style: SyncTypography.of(context).supporting.copyWith(
+                            color: SyncTasksColorScheme.of(
+                              context,
+                            ).textSecondary,
+                          ),
                         ),
                       ],
                     ),
@@ -117,13 +106,9 @@ class _PlaceholderHeader extends StatelessWidget {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              color: colors.textPrimary,
-              fontSize: 25,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0,
-              height: 1.15,
-            ),
+            style: SyncTypography.of(
+              context,
+            ).pageTitle.copyWith(color: colors.textPrimary),
           ),
         ),
         const SizedBox(width: 12),
@@ -152,5 +137,3 @@ class _PlaceholderHeader extends StatelessWidget {
     );
   }
 }
-
-

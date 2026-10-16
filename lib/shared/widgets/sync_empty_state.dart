@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/theme/synctasks_color_scheme.dart';
+import '../../core/theme/sync_typography.dart';
 import '../services/sync_haptics.dart';
 import '../services/sync_sounds.dart';
 
@@ -23,7 +24,6 @@ class SyncEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     return Center(
       child: Transform.translate(
         offset: const Offset(0, -24),
@@ -39,25 +39,17 @@ class SyncEmptyState extends StatelessWidget {
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: textTheme.titleLarge?.copyWith(
-                  color: colors.textPrimary,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0,
-                  height: 1.12,
-                ),
+                style: SyncTypography.of(
+                  context,
+                ).cardTitle.copyWith(color: colors.textPrimary),
               ),
               const SizedBox(height: 10),
               Text(
                 message,
                 textAlign: TextAlign.center,
-                style: textTheme.bodyLarge?.copyWith(
-                  color: colors.textSecondary,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
-                  height: 1.34,
-                ),
+                style: SyncTypography.of(
+                  context,
+                ).supporting.copyWith(color: colors.textSecondary),
               ),
               if (actionLabel != null && onAction != null) ...[
                 const SizedBox(height: 18),
@@ -72,20 +64,13 @@ class SyncEmptyState extends StatelessWidget {
                     minimumSize: const Size(160, 40),
                     padding: const EdgeInsets.symmetric(horizontal: 18),
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    textStyle: textTheme.titleMedium?.copyWith(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0,
-                    ),
+                    textStyle: SyncTypography.of(context).button,
                   ),
                   child: Text(
                     actionLabel!,
-                    style: textTheme.titleMedium?.copyWith(
-                      color: colors.controlForeground,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0,
-                    ),
+                    style: SyncTypography.of(
+                      context,
+                    ).button.copyWith(color: colors.controlForeground),
                   ),
                 ),
               ],

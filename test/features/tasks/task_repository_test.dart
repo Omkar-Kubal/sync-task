@@ -118,6 +118,67 @@ void main() {
     expect(upcoming.map((task) => task.title), ['Today task', 'Future task']);
   });
 
+  test(
+    'upcoming excludes today tasks whose scheduled minute has passed',
+    () async {
+      await tasks.createTask(
+        TaskDraft(
+          title: 'Passed time',
+          scheduledDate: DateTime(2026, 8, 31),
+          scheduledTime: DateTime(2026, 8, 31, 8, 59),
+        ),
+      );
+      await tasks.createTask(
+        TaskDraft(
+          title: 'Current minute',
+          scheduledDate: DateTime(2026, 8, 31),
+          scheduledTime: DateTime(2026, 8, 31, 9, 0),
+        ),
+      );
+      await tasks.createTask(
+        TaskDraft(title: 'Date only', scheduledDate: DateTime(2026, 8, 31)),
+      );
+
+      final upcoming = await tasks.listUpcomingTasks();
+      expect(upcoming.map((task) => task.title), [
+        'Current minute',
+        'Date only',
+      ]);
+    },
+  );
+
+  test(
+    'rescheduling a recurring occurrence leaves its sibling unchanged',
+    () async {
+      final originalDate = DateTime(2026, 8, 30);
+      final originalId = await tasks.createTask(
+        TaskDraft(
+          title: 'Weekly review',
+          scheduledDate: originalDate,
+          recurrenceType: RecurrenceType.weekly,
+        ),
+      );
+      final snapshot = await tasks.completeTask(originalId);
+      final successorId = snapshot.generatedSuccessorId!;
+      final nextDate = DateTime(2026, 9, 10);
+
+      await tasks.rescheduleTaskOccurrence(
+        taskId: successorId,
+        scheduledDate: nextDate,
+        scheduledTime: DateTime(2026, 9, 10, 14, 30),
+        reminderTime: null,
+      );
+
+      final original = await tasks.getTask(originalId);
+      final successor = await tasks.getTask(successorId);
+      expect(original?.scheduledDate, originalDate);
+      expect(original?.isCompleted, isTrue);
+      expect(successor?.scheduledDate, nextDate);
+      expect(successor?.scheduledTime, DateTime(2026, 9, 10, 14, 30));
+      expect(successor?.seriesId, original?.seriesId);
+    },
+  );
+
   test('updates an existing task title', () async {
     final taskId = await tasks.createTask(
       TaskDraft(title: 'Draft title', scheduledDate: DateTime(2026, 8, 31)),

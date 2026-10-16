@@ -13,6 +13,21 @@ import 'package:synctasks/shared/services/sync_haptics.dart';
 import 'package:synctasks/shared/sheets/app_bottom_sheet.dart';
 
 void main() {
+  setUp(SyncHaptics.resetForTesting);
+
+  TaskCreateSheet createSheet({
+    void Function(String, int?)? onSubmit,
+    Future<void> Function(String, int?, TaskEditUpdate)? onSchedule,
+    VoidCallback? onScheduledDone,
+  }) {
+    return TaskCreateSheet(
+      key: UniqueKey(),
+      onSubmit: onSubmit ?? (_, __) {},
+      onSchedule: onSchedule ?? (_, __, ___) async {},
+      onScheduledDone: onScheduledDone ?? () {},
+    );
+  }
+
   Widget wrap(Widget child, {List overrides = const []}) {
     final db = AppDatabase.memory();
     addTearDown(db.close);
@@ -32,23 +47,19 @@ void main() {
   testWidgets('create sheet renders task title and quick selectors', (
     tester,
   ) async {
-    await tester.pumpWidget(
-      wrap(TaskCreateSheet(onSubmit: (_, __) {}, onTodaySelected: (_, __) {})),
-    );
+    await tester.pumpWidget(wrap(createSheet()));
 
     expect(find.text('Task title'), findsOneWidget);
     expect(find.text('Inbox'), findsOneWidget);
     expect(find.widgetWithText(OutlinedButton, 'Inbox'), findsOneWidget);
-    expect(find.widgetWithText(OutlinedButton, 'Today'), findsOneWidget);
+    expect(find.widgetWithText(OutlinedButton, 'Schedule'), findsOneWidget);
     expect(find.bySemanticsLabel('Flag task'), findsNothing);
   });
 
   testWidgets('create sheet uses compact outlined title input chrome', (
     tester,
   ) async {
-    await tester.pumpWidget(
-      wrap(TaskCreateSheet(onSubmit: (_, __) {}, onTodaySelected: (_, __) {})),
-    );
+    await tester.pumpWidget(wrap(createSheet()));
 
     final textField = tester.widget<TextField>(find.byType(TextField));
     expect(textField.decoration!.border, isA<OutlineInputBorder>());
@@ -62,23 +73,35 @@ void main() {
   testWidgets('create sheet uses home two compact composer sizing', (
     tester,
   ) async {
-    await tester.pumpWidget(
-      wrap(TaskCreateSheet(onSubmit: (_, __) {}, onTodaySelected: (_, __) {})),
-    );
+    await tester.pumpWidget(wrap(createSheet()));
 
     expect(tester.getSize(find.byType(AppBottomSheet)).height, 176);
+    final addSize = tester.getSize(find.widgetWithText(FilledButton, 'Add'));
+    expect(addSize.width, greaterThanOrEqualTo(78));
+    expect(addSize.height, greaterThanOrEqualTo(44));
+  });
+
+  testWidgets('Add is disabled until the task has a title', (tester) async {
+    await tester.pumpWidget(wrap(createSheet()));
+    final addButton = tester.widget<FilledButton>(
+      find.widgetWithText(FilledButton, 'Add'),
+    );
+    expect(addButton.onPressed, isNull);
+
+    await tester.enterText(find.byType(TextField), 'A task');
+    await tester.pump();
     expect(
-      tester.getSize(find.bySemanticsLabel('Submit task')),
-      const Size(44, 44),
+      tester
+          .widget<FilledButton>(find.widgetWithText(FilledButton, 'Add'))
+          .onPressed,
+      isNotNull,
     );
   });
 
   testWidgets('app bottom sheets use a visible top-edge shadow', (
     tester,
   ) async {
-    await tester.pumpWidget(
-      wrap(TaskCreateSheet(onSubmit: (_, __) {}, onTodaySelected: (_, __) {})),
-    );
+    await tester.pumpWidget(wrap(createSheet()));
 
     final sheetDecorations = tester
         .widgetList<Container>(
@@ -101,41 +124,101 @@ void main() {
     expect(shadow.color.a, greaterThanOrEqualTo(0.10));
   });
 
-  testWidgets('create sheet notifies when Today is selected', (tester) async {
+  testWidgets('Schedule opens create options and cancel preserves the draft', (
+    tester,
+  ) async {
     final haptics = _captureHaptics(tester);
-    var selectedToday = false;
+    var scheduled = false;
+    var submittedTitle = '';
     await tester.pumpWidget(
       wrap(
-        TaskCreateSheet(
-          onSubmit: (_, __) {},
-          onTodaySelected: (_, __) => selectedToday = true,
+        createSheet(
+          onSubmit: (title, _) => submittedTitle = title,
+          onSchedule: (title, _, __) async {
+            scheduled = true;
+          },
         ),
       ),
     );
 
-    await tester.tap(find.widgetWithText(OutlinedButton, 'Today'));
+    await tester.enterText(find.byType(TextField), 'Draft task');
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Schedule'));
+    await tester.pumpAndSettle();
 
-    expect(selectedToday, isTrue);
+    expect(find.text('New task'), findsOneWidget);
+    expect(find.text('Create'), findsOneWidget);
+    expect(
+      tester
+          .widget<TextField>(find.byKey(const Key('edit-task-title-field')))
+          .controller!
+          .text,
+      'Draft task',
+    );
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+    expect(find.widgetWithText(OutlinedButton, 'Schedule'), findsOneWidget);
+    expect(
+      tester.widget<TextField>(find.byType(TextField)).controller!.text,
+      'Draft task',
+    );
+    expect(scheduled, isFalse);
+    expect(submittedTitle, isEmpty);
     expect(haptics, contains('HapticFeedbackType.selectionClick'));
+  });
+
+  testWidgets('Create saves the scheduled draft exactly once', (tester) async {
+    var saveCount = 0;
+    var savedTitle = '';
+    var doneCount = 0;
+    await tester.pumpWidget(
+      wrap(
+        createSheet(
+          onSchedule: (title, _, update) async {
+            saveCount++;
+            savedTitle = update.title;
+          },
+          onScheduledDone: () => doneCount++,
+        ),
+      ),
+    );
+    await tester.enterText(find.byType(TextField), 'Scheduled draft');
+    await tester.tap(find.widgetWithText(OutlinedButton, 'Schedule'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('create-task-options-button')));
+    await tester.pumpAndSettle();
+    expect(saveCount, 1);
+    expect(doneCount, 1);
+    expect(savedTitle, 'Scheduled draft');
   });
 
   testWidgets('create sheet emits haptics when submitting a task', (
     tester,
   ) async {
     final haptics = _captureHaptics(tester);
-    var submitted = false;
+    var submitCount = 0;
+    var submittedTitle = '';
     await tester.pumpWidget(
       wrap(
-        TaskCreateSheet(
-          onSubmit: (_, __) => submitted = true,
-          onTodaySelected: (_, __) {},
+        createSheet(
+          onSubmit: (title, _) {
+            submitCount++;
+            submittedTitle = title;
+          },
         ),
       ),
     );
 
-    await tester.tap(find.bySemanticsLabel('Submit task'));
+    await tester.enterText(find.byType(TextField), 'Submit once');
+    await tester.tap(find.widgetWithText(FilledButton, 'Add'));
+    await tester.pump();
+    await tester.tap(
+      find.widgetWithText(FilledButton, 'Add'),
+      warnIfMissed: false,
+    );
 
-    expect(submitted, isTrue);
+    expect(submitCount, 1);
+    expect(submittedTitle, 'Submit once');
     expect(haptics, contains('HapticFeedbackType.selectionClick'));
     expect(haptics, isNot(contains('HapticFeedbackType.lightImpact')));
   });
@@ -144,6 +227,7 @@ void main() {
     tester,
   ) async {
     int? chosenFolderId;
+    var submittedTitle = '';
     final folders = [
       Folder(id: 1, name: 'Inbox', sortOrder: 0, createdAt: DateTime(2026)),
       Folder(id: 2, name: 'Work', sortOrder: 1, createdAt: DateTime(2026)),
@@ -151,9 +235,11 @@ void main() {
 
     await tester.pumpWidget(
       wrap(
-        TaskCreateSheet(
-          onSubmit: (title, folderId) => chosenFolderId = folderId,
-          onTodaySelected: (_, __) {},
+        createSheet(
+          onSubmit: (title, folderId) {
+            submittedTitle = title;
+            chosenFolderId = folderId;
+          },
         ),
         overrides: [foldersProvider.overrideWith((ref) async => folders)],
       ),
@@ -172,7 +258,21 @@ void main() {
 
     expect(find.widgetWithText(OutlinedButton, 'Work'), findsOneWidget);
 
-    await tester.tap(find.bySemanticsLabel('Submit task'));
+    await tester.enterText(find.byType(TextField), 'Folder task');
+    await tester.pump();
+    expect(
+      tester.widget<TextField>(find.byType(TextField)).controller!.text,
+      'Folder task',
+    );
+    expect(
+      tester
+          .widget<FilledButton>(find.widgetWithText(FilledButton, 'Add'))
+          .onPressed,
+      isNotNull,
+    );
+    await tester.tap(find.widgetWithText(FilledButton, 'Add'));
+    await tester.pump();
+    expect(submittedTitle, 'Folder task');
     expect(chosenFolderId, 2);
   });
 
@@ -201,6 +301,27 @@ void main() {
     expect(find.text('Start Focus'), findsNothing);
     expect(find.byKey(const Key('edit-task-title-field')), findsOneWidget);
     expect(find.text('Task title'), findsNothing);
+    final noDateText = tester.widget<Text>(find.text('No Date'));
+    expect(noDateText.style?.color, isNot(const Color(0xFFD92D20)));
+  });
+
+  testWidgets('create options are labeled New task and Create', (tester) async {
+    await tester.pumpWidget(
+      wrap(
+        TaskEditSheet(
+          title: 'Draft',
+          isCreating: true,
+          onCancel: () {},
+          onDone: () {},
+        ),
+      ),
+    );
+
+    expect(find.text('New task'), findsOneWidget);
+    expect(find.text('Create'), findsOneWidget);
+    expect(find.byKey(const Key('create-task-options-button')), findsOneWidget);
+    expect(find.text('Edit Task'), findsNothing);
+    expect(find.text('Done'), findsNothing);
   });
 
   testWidgets('edit sheet title field wraps long task names', (tester) async {

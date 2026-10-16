@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../../core/analytics/analytics_service.dart';
 import '../../../core/theme/synctasks_color_scheme.dart';
+import '../../../core/theme/sync_typography.dart';
 import '../../receipts/domain/receipt_composer_seed.dart';
 import '../../receipts/providers/receipt_feature_provider.dart';
 import '../../tasks/providers/task_controller.dart';
@@ -227,7 +228,6 @@ class _InsightSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 18),
       child: SyncGroupedSection(
@@ -240,12 +240,9 @@ class _InsightSection extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: textTheme.titleMedium?.copyWith(
-                    color: colors.textPrimary,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0,
-                  ),
+                  style: SyncTypography.of(
+                    context,
+                  ).cardTitle.copyWith(color: colors.textPrimary),
                 ),
                 const SizedBox(height: 14),
                 child,
@@ -272,7 +269,6 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     return DecoratedBox(
       decoration: BoxDecoration(
         color: colors.surfaceSecondary.withValues(alpha: 0.62),
@@ -288,25 +284,18 @@ class _MetricCard extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.labelLarge?.copyWith(
-                color: colors.textSecondary,
-                fontSize: 11,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0.1,
-              ),
+              style: SyncTypography.of(
+                context,
+              ).chartLabel.copyWith(color: colors.textSecondary),
             ),
             const SizedBox(height: 8),
             Text(
               '$value $caption',
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: textTheme.titleMedium?.copyWith(
-                color: colors.textPrimary,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0,
-                height: 1.08,
-              ),
+              style: SyncTypography.of(
+                context,
+              ).cardTitle.copyWith(color: colors.textPrimary),
             ),
           ],
         ),
@@ -365,7 +354,6 @@ class _TrendBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = SyncTasksColorScheme.of(context);
-    final textTheme = Theme.of(context).textTheme;
     final height = 16 + (count / maxCount * 58);
     return Semantics(
       label: '$label: $count completed tasks',
@@ -374,12 +362,9 @@ class _TrendBar extends StatelessWidget {
         children: [
           Text(
             '$count',
-            style: textTheme.bodySmall?.copyWith(
-              color: colors.textSecondary,
-              fontSize: 10,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 0,
-            ),
+            style: SyncTypography.of(
+              context,
+            ).chartLabel.copyWith(color: colors.textSecondary),
           ),
           const SizedBox(height: 5),
           AnimatedContainer(
@@ -397,12 +382,9 @@ class _TrendBar extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             label,
-            style: textTheme.bodySmall?.copyWith(
-              color: colors.textSecondary,
-              fontSize: 10,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0,
-            ),
+            style: SyncTypography.of(
+              context,
+            ).chartLabel.copyWith(color: colors.textSecondary),
           ),
         ],
       ),
@@ -475,12 +457,9 @@ class _PrimaryLine extends StatelessWidget {
     final colors = SyncTasksColorScheme.of(context);
     return Text(
       text,
-      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-        color: colors.textPrimary,
-        fontSize: 17,
-        fontWeight: FontWeight.w700,
-        letterSpacing: 0,
-      ),
+      style: SyncTypography.of(
+        context,
+      ).cardTitle.copyWith(color: colors.textPrimary),
     );
   }
 }
@@ -495,12 +474,9 @@ class _SecondaryLine extends StatelessWidget {
     final colors = SyncTasksColorScheme.of(context);
     return Text(
       text,
-      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-        color: colors.textSecondary,
-        fontSize: 13,
-        fontWeight: FontWeight.w500,
-        letterSpacing: 0,
-      ),
+      style: SyncTypography.of(
+        context,
+      ).supporting.copyWith(color: colors.textSecondary),
     );
   }
 }
@@ -515,13 +491,9 @@ class _SectionEmptyText extends StatelessWidget {
     final colors = SyncTasksColorScheme.of(context);
     return Text(
       text,
-      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-        color: colors.textSecondary,
-        fontSize: 13,
-        fontWeight: FontWeight.w500,
-        letterSpacing: 0,
-        height: 1.34,
-      ),
+      style: SyncTypography.of(
+        context,
+      ).supporting.copyWith(color: colors.textSecondary),
     );
   }
 }
